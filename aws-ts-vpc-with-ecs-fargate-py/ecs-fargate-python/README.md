@@ -1,10 +1,9 @@
+# NGINX on AWS ECS Fargate using Python with a vpc built in Typescript
 [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
 
-# NGINX on AWS ECS Fargate using Python with a vpc built in Typescript
+## What Is This?
 
-### What Is This?
-
-This example demonstrates the ability to deploy resources in Pulumi using one language (TypeScript) and then reference those resources from another Pulumi application using a different language (Python). 
+This example demonstrates the ability to deploy resources in Pulumi using one language (TypeScript) and then reference those resources from another Pulumi application using a different language (Python).
 
 [`vpc-crosswalk-ts`](./vpc-crosswalk-ts) deploys an AWS VPC using TypeScript
 
@@ -14,7 +13,7 @@ It provisions a full [Amazon Elastic Container Service (ECS) "Fargate"](https://
 related infrastructure, running a load-balanced NGINX web server accessible over the Internet on port 80.
 This example is inspired by [Docker's Getting Started Tutorial](https://docs.docker.com/get-started/).
 
-### Why would you do this?  
+## Why would you do this?  
 An example showing that you can easily infrastructure written in a different language than the one you are used to.  The vpc outputs from vpc-crosswalk-ts folder are used as inputs via [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies)
 
 ## Prerequisites
@@ -23,7 +22,7 @@ An example showing that you can easily infrastructure written in a different lan
 * [Configure Pulumi to Use AWS](https://www.pulumi.com/docs/intro/cloud-providers/aws/setup/) (if your AWS CLI is configured, no further changes are required)
 
 
-### Mandatory AWS Pre-REQ: AWS Console Fix for Tags:
+## Mandatory AWS Pre-REQ: AWS Console Fix for Tags:
 
 This is necessary so that the tags work properly in ecs
 [Tagging your Amazon ECS resources](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html)
@@ -35,7 +34,7 @@ This has to be done per region until AWS enables it as default across the board(
 AWS Console -> Elastic Container Service ->  Account Settings -> 
 
 BEFORE
-```
+```bash
 Resource                My IAM user or role account settings 
 Container Instance      Undefined
 Service                 Undefined
@@ -43,7 +42,7 @@ Task                    Undefined
 ```
 
 AFTER
-```
+```bash
 Resource                My IAM user or role account settings 
 Container Instance      Enabled
 Service                 Enabled
@@ -55,13 +54,13 @@ Task                    Enabled
 1. Initialize a new stack called: `ecs-fargate-dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
 
    ```
-   $ pulumi stack init ecs-fargate-dev
+   pulumi stack init ecs-fargate-dev
    ```
 
 1. View the current config settings. This will be empty.
 
    ```
-   $ pulumi config
+   pulumi config
    ```
 
    ```
@@ -79,14 +78,14 @@ Task                    Enabled
    e.g.:  `team-qa/crosswalk-vpc/vpc-fargate-dev`
 
    ```
-   $ pulumi config set aws:region us-east-2 # must match vpc region
-   $ pulumi config set config set mystackpath team-qa/crosswalk-vpc/vpc-fargate
+   pulumi config set aws:region us-east-2 # must match vpc region
+   pulumi config set config set mystackpath team-qa/crosswalk-vpc/vpc-fargate
    ```
 
 1. View the current config settings
 
    ```
-   $ pulumi config
+   pulumi config
    ```
 
    ```
@@ -98,7 +97,7 @@ Task                    Enabled
 1. Launch
 
    ```
-   $ pulumi up
+   pulumi up
    ```
 
    select `y` to continue
@@ -107,16 +106,16 @@ Task                    Enabled
 
    console view that matches above code as an example:
 
-   https://app.pulumi.com/`team-qa`/fargate-with-crosswalk-vpc/ecs-fargate-dev/
+   `https://app.pulumi.com/`team-qa`/fargate-with-crosswalk-vpc/ecs-fargate-dev/`
 
    console view with YOUR ORG NAME:
 
-   https://app.pulumi.com/`team-prod`/fargate-with-crosswalk-vpc/ecs-fargate-dev/
+   `https://app.pulumi.com/`team-prod`/fargate-with-crosswalk-vpc/ecs-fargate-dev/`
 
 1. View the outputs
 
    ```
-   $ pulumi stack output
+   pulumi stack output
    ```
 
    ```
@@ -130,6 +129,6 @@ Task                    Enabled
 1. Cleanup.
 
    ```
-   $ pulumi destroy -y
-   $ pulumi rm ecs-fargate-dev
+   pulumi destroy -y
+   pulumi rm ecs-fargate-dev
    ```
