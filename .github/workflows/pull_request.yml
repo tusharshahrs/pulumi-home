@@ -25,7 +25,7 @@ jobs:
         uses: pulumi/setup-pulumi@v1
       - uses: pulumi/actions@v3
         with:
-          command: preview
+          command: pulumi preview --non-interactive
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}

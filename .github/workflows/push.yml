@@ -22,7 +22,7 @@ jobs:
       - run: npm install
       - uses: pulumi/actions@v3
         with:
-          command: up --non-interactive
+          command: pulumi up --non-interactive
           stack-name: dev
       - name: Setup Python
         uses: actions/setup-python@v2
