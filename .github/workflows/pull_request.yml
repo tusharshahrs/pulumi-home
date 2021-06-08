@@ -28,6 +28,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -r requirements.txt
+      - uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
