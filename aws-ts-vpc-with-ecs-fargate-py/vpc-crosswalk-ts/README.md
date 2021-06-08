@@ -23,8 +23,7 @@ An example showing that you can easily integrate infrastructure from another Pul
       ```bash
       pulumi stack init vpc-fargate-dev
       ```
-
-2. Now, install dependencies:
+2. Now, install dependencies.
 
    ```bash
    npm install
@@ -33,7 +32,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    ```bash
    pulumi config
    ```
-   ```
+   ```bash
    KEY                     VALUE
    ```
 3. Populate the config.
@@ -52,7 +51,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    pulumi config
    ```
 
-   ```
+   ```bash
    KEY                     VALUE
    aws:region              us-east-2
    number_of_nat_gateways  3
@@ -66,9 +65,9 @@ An example showing that you can easily integrate infrastructure from another Pul
    pulumi up
    ```
 
-6. Expected output:
+6. Expected output
 
-   ```
+   ```bash
    Previewing update (vpc-fargate-dev)
 
    View Live: https://app.pulumi.com/myuser/crosswalk-vpc/vpc-fargate-dev/previews/0da8c31d-5cb4-4fee-9a3d-69d9d5d21511
@@ -128,7 +127,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    details
    ```
 
-You need to select `yes` to continue.  The url will look similar to the url below and you will need to replace the `shaht` with your own org, `team-qa`:   
+You need to select `yes` to continue.  The url will look similar to the url below and you will need to replace the `shaht` with your own org, `team-qa`:
    `https://app.pulumi.com/`myuser`/crosswalk-vpc/vpc-fargate-dev/`
 
 8. The stack outputs will be used as [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) for ECS fargate (resides in ecs-fargate-python folder)
@@ -148,7 +147,7 @@ You need to select `yes` to continue.  The url will look similar to the url belo
       pulumic_vpc_number_of_nat_gateways  3
       ```
 
-9. The value to use in a [`StackReference`](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) can be retrieved from the last line. 
+9. The value to use in a [`StackReference`](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) can be retrieved from the last line.
    ```bash
       pulumi stack
    ```
@@ -165,6 +164,6 @@ You need to select `yes` to continue.  The url will look similar to the url belo
 
 10. Cleanup.  Destroy the vpc only if all there are no other resources running in it such as ecs fargate.
    ```
-   $ pulumi destroy -y
-   $ pulumi stack rm vpc-fargate
+   pulumi destroy -y
+   pulumi stack rm vpc-fargate
    ```
