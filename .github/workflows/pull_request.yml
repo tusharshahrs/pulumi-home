@@ -23,7 +23,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: pulumi/actions@v3
         with:
-          command: "preview --non-interactive"
+          command: preview --non-interactive
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
