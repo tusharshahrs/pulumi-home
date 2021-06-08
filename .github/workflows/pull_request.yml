@@ -25,16 +25,6 @@ jobs:
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: pulumi/actions@v3
-        with:
-          command: preview --non-interactive
-          stack-name: dev
-          comment-on-pr: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
