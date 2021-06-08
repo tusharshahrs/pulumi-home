@@ -32,7 +32,7 @@ jobs:
         uses: pulumi/setup-pulumi@v2
       - uses: pulumi/actions@v3
         with:
-          command: pulumi up --non-interactive
+          command: up --non-interactive
           stack-name: dev
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

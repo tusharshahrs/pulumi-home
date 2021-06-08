@@ -53,13 +53,20 @@ Task                    Enabled
 
 1. Initialize a new stack called: `ecs-fargate-dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
 
-   ```
+   ```bash
    pulumi stack init ecs-fargate-dev
+   ```
+
+1. Create a Python virtualenv, activate it, and install dependencies:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip3 install -r requirements.txt
    ```
 
 1. View the current config settings. This will be empty.
 
-   ```
+   ```bash
    pulumi config
    ```
 
@@ -77,14 +84,14 @@ Task                    Enabled
 
    e.g.:  `team-qa/crosswalk-vpc/vpc-fargate-dev`
 
-   ```
+   ```bash
    pulumi config set aws:region us-east-2 # must match vpc region
    pulumi config set config set mystackpath team-qa/crosswalk-vpc/vpc-fargate
    ```
 
 1. View the current config settings
 
-   ```
+   ```bash
    pulumi config
    ```
 
@@ -96,7 +103,7 @@ Task                    Enabled
 
 1. Launch
 
-   ```
+   ```bash
    pulumi up
    ```
 
@@ -114,7 +121,7 @@ Task                    Enabled
 
 1. View the outputs
 
-   ```
+   ```bash
    pulumi stack output
    ```
 
@@ -128,7 +135,7 @@ Task                    Enabled
 
 1. Cleanup.
 
-   ```
+   ```bash
    pulumi destroy -y
    pulumi rm ecs-fargate-dev
    ```
