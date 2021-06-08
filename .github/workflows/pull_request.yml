@@ -19,6 +19,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          command: preview --non-interactive
+          stack-name: dev
+          comment-on-pr: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
