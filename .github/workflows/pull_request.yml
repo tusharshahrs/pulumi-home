@@ -1,4 +1,4 @@
-name: Pulumi
+name: Pulumi_Pull_Request
 on:
   - pull_request
 jobs:
