@@ -23,19 +23,19 @@ An example showing that you can easily integrate infrastructure from another Pul
       ```bash
       pulumi stack init vpc-fargate-dev
       ```
-2. Now, install dependencies.
+ 1. Now, install dependencies.
 
    ```bash
    npm install
    ```
-3. View the current config settings. This will be empty.
+ 1. View the current config settings. This will be empty.
    ```bash
    pulumi config
    ```
    ```bash
    KEY                     VALUE
    ```
-3. Populate the config.
+ 1. Populate the config.
 
    Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
    ```bash
@@ -46,7 +46,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    pulumi config set number_of_nat_gateways 3 # number of nat gateways. 1 to N(where N is zone_number). recommended to keep at least 2 for high availability.
    ```
    
-4. View the current config settings
+1. View the current config settings
    ```bash
    pulumi config
    ```
@@ -60,12 +60,12 @@ An example showing that you can easily integrate infrastructure from another Pul
    zone_number             3
    ```
 
-5. Launch
+1. Launch
    ```bash
    pulumi up
    ```
 
-6. Expected output
+1. Expected output
 
    ```bash
    Previewing update (vpc-fargate-dev)
@@ -127,14 +127,16 @@ An example showing that you can easily integrate infrastructure from another Pul
    details
    ```
 
-You need to select `yes` to continue.  The url will look similar to the url below and you will need to replace the `shaht` with your own org, `team-qa`:
-   `https://app.pulumi.com/`myuser`/crosswalk-vpc/vpc-fargate-dev/`
+   You need to select `yes` to continue.  The url will look similar to the url below and you will need to replace the `shaht` with your own org, `team-qa`:
+      `https://app.pulumi.com/`myuser`/crosswalk-vpc/vpc-fargate-dev/`
 
-8. The stack outputs will be used as [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) for ECS fargate (resides in ecs-fargate-python folder)
+1. The stack outputs will be used as [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) for ECS fargate (resides in ecs-fargate-python folder)
 
-   ```$ pulumi stack output```
-
+   ```bash
+   pulumi stack output
    ```
+
+   ```bash
    Current stack outputs (8):
       OUTPUT                              VALUE
       pulumi_vpc_aws_tags                 {"Name":"vpc-fargate-dev","availability_zones_used":"3","cidr_block":"10.0.0.0/24","cost_center":"1234","crosswalk":"yes","demo":"true","number_of_nat_gateways":"3","pulumi:Configs":"Pulumi.vpc-fargate-dev.yaml","pulumi:Project":"crosswalk-vpc","pulumi:Stack":"vpc-fargate-dev"}
@@ -163,7 +165,7 @@ You need to select `yes` to continue.  The url will look similar to the url belo
    ```
 
 10. Cleanup.  Destroy the vpc only if all there are no other resources running in it such as ecs fargate.
-   ```
+   ```bash
    pulumi destroy -y
    pulumi stack rm vpc-fargate
    ```

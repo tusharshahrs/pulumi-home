@@ -31,7 +31,7 @@ As per AWS:  `You must opt in to the new Amazon Resource Name (ARN) and resource
 
 This has to be done per region until AWS enables it as default across the board(April 1, 2021).
 
-AWS Console -> Elastic Container Service ->  Account Settings -> 
+AWS Console -> Elastic Container Service ->  Account Settings ->
 
 BEFORE
 ```bash
@@ -125,7 +125,7 @@ Task                    Enabled
    pulumi stack output
    ```
 
-   ```
+   ```bash
    Current stack outputs (2):
    OUTPUT             VALUE
    ECS Cluster Tags   {"Name":"pulumi-fargate-ecs-cluster","application":"fargate","costcenter":"1234","crosswalk-vpc":"yes","demo":"yes","env":"dev","pulumi:Config":"Pulumi.ecs-fargate-dev.yaml","pulumi:project":"fargate-with-crosswalk-vpc","pulumi:stack":"ecs-fargate-dev","vpc_cidr":"10.0.0.0/24","vpc_name":"vpc-fargate-dev"}
