@@ -8,26 +8,38 @@ jobs:
   up:
     name: Update
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ '3.7.x']
+        node-version: [ '14.x']
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          command: pulumi up --non-interactive
+          stack-name: dev
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Pulumi CLI
+        uses: pulumi/setup-pulumi@v1
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: dev
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1
-      - run: npm install
-      - uses: pulumi/actions@v3
-        with:
-          command: up
-          stack-name: dev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
