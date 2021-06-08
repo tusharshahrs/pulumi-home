@@ -22,5 +22,8 @@ jobs:
       - name: Run Super-Linter
         uses: docker://ghcr.io/github/super-linter:slim-v4
         env:
+          VALIDATE_PYTHON_BLACK: false
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_ISORT: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
