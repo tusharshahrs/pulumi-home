@@ -1,7 +1,6 @@
-## Examples
+# Examples
 
-This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, 
-this may graduate to [pulumi examples](https://github.com/pulumi/examples)
+This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, this may graduate to [pulumi examples](https://github.com/pulumi/examples)
 
 ## Definitions
 ts = typescript
