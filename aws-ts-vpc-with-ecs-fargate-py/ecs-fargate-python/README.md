@@ -22,7 +22,7 @@ An example showing that you can easily infrastructure written in a different lan
 * [Configure Pulumi to Use AWS](https://www.pulumi.com/docs/intro/cloud-providers/aws/setup/) (if your AWS CLI is configured, no further changes are required)
 
 
-## Mandatory AWS Pre-REQ: AWS Console Fix for Tags:
+## Mandatory AWS Pre-REQ: AWS Console Fix for Tags
 
 This is necessary so that the tags work properly in ecs
 [Tagging your Amazon ECS resources](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html)
@@ -31,11 +31,11 @@ As per AWS:  `You must opt in to the new Amazon Resource Name (ARN) and resource
 
 This has to be done per region until AWS enables it as default across the board(April 1, 2021).
 
-AWS Console -> Elastic Container Service ->  Account Settings -> 
+AWS Console -> Elastic Container Service ->  Account Settings ->
 
 BEFORE
 ```bash
-Resource                My IAM user or role account settings 
+Resource                My IAM user or role account settings
 Container Instance      Undefined
 Service                 Undefined
 Task                    Undefined
@@ -70,7 +70,7 @@ Task                    Enabled
    pulumi config
    ```
 
-   ```
+   ```bash
    KEY                     VALUE
    ```
 
@@ -95,7 +95,7 @@ Task                    Enabled
    pulumi config
    ```
 
-   ```
+   ```bash
    KEY                     VALUE
    aws:region           us-east-2
    mystackpath          team-qa/crosswalk-vpc/vpc-fargate
@@ -125,7 +125,7 @@ Task                    Enabled
    pulumi stack output
    ```
 
-   ```
+   ```bash
    Current stack outputs (2):
    OUTPUT             VALUE
    ECS Cluster Tags   {"Name":"pulumi-fargate-ecs-cluster","application":"fargate","costcenter":"1234","crosswalk-vpc":"yes","demo":"yes","env":"dev","pulumi:Config":"Pulumi.ecs-fargate-dev.yaml","pulumi:project":"fargate-with-crosswalk-vpc","pulumi:stack":"ecs-fargate-dev","vpc_cidr":"10.0.0.0/24","vpc_name":"vpc-fargate-dev"}
