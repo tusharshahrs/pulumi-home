@@ -14,7 +14,9 @@ Example   | Description |
 
 
 ## Pulumi Github Actions Setup (Optional)
-We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). Pulumi’s [GitHub Actions](https://docs.github.com/en/actions) help you deploy apps and infrastructure to your cloud of choice, using nothing but code in your favorite language and GitHub. This includes previewing, validating, and collaborating on proposed deployments in the context of Pull Requests, and triggering deployments or promotions between different environments by merging or directly committing changes.
+We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). 
+
+ 1. Pulumi’s [GitHub Actions](https://docs.github.com/en/actions) help you deploy apps and infrastructure to your cloud of choice, using nothing but code in your favorite language and GitHub. This includes previewing, validating, and collaborating on proposed deployments in the context of Pull Requests, and triggering deployments or promotions between different environments by merging or directly committing changes.
 
  1. Located in [.github/workflows](.github/workflows)
 
