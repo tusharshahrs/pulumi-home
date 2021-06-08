@@ -22,10 +22,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1
+        uses: pulumi/setup-pulumi@v1
       - uses: pulumi/actions@v3
         with:
-          command: preview
+          command: preview --non-interactive
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
