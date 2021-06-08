@@ -11,3 +11,6 @@ py = python
 Example   | Description |
 --------- | ----------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences
+
+## SuperLinter
+[super-linter](https://github.com/github/super-linter)
