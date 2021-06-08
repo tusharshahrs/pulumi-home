@@ -45,7 +45,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    pulumi config set zone_number 3 # number of availability zones
    pulumi config set number_of_nat_gateways 3 # number of nat gateways. 1 to N(where N is zone_number). recommended to keep at least 2 for high availability.
    ```
-   
+
 1. View the current config settings
    ```bash
    pulumi config
@@ -151,13 +151,13 @@ An example showing that you can easily integrate infrastructure from another Pul
 
 9. The value to use in a [`StackReference`](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) can be retrieved from the last line.
    ```bash
-      pulumi stack
+   pulumi stack
    ```
 
-   ```
+   ```bash
    ...
    ...
-   More information at: https://app.pulumi.com/shaht/crosswalk-vpc/vpc-fargate-dev
+   More information at: https://app.pulumi.com/myuser/crosswalk-vpc/vpc-fargate-dev
    ```
    Here is what we need from above to launch things in here.  
    ```bash
