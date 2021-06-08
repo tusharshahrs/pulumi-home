@@ -8,15 +8,27 @@ jobs:
   up:
     name: Update
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ '3.7.x', '3.8.x', '3.9.x']
+        node-version: [ '14.x', '15.x', '16.x' ]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: ${{ matrix.node-version }}
       - run: npm install
       - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: dev
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
         with:
           command: up
           stack-name: dev
