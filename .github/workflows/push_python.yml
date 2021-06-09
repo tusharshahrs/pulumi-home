@@ -1,4 +1,4 @@
-name: Pulumi_Push_Request
+name: Pulumi_Push_Request_Python
 on:
   push:
     branches:
