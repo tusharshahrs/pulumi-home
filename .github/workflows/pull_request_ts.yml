@@ -1,19 +1,14 @@
-name: Pulumi_Push_Request
+name: Pulumi_Pull_Request_Typescript
 on:
-  push:
-    branches:
-      - master
-      - main
+  - pull_request
 jobs:
-  up:
-    name: Update
+  preview:
+    name: Preview
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.7.x']
         node-version: [ '14.x']
         typescript-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
-        python-example: ['aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,8 +28,11 @@ jobs:
         working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
-          command: up
+          command: preview
           stack-name: dev
+          comment-on-pr: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          work-dir: ${{ matrix.typescript-example}}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
