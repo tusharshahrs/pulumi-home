@@ -20,11 +20,17 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
 
  1. Located in [.github/workflows](.github/workflows)
 
- 1. Pull WorkFlow File for Python
-    - [pull_request.yml with comments by github actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#comments-by-github-actions)
+ 1. Pull WorkFlow Files for Python with comments by github actions
+    - [pull_request_python.yml](.github/workflows/pull_request_python.yml)
 
- 1. Push WorkFlow File
-    - [push.yml](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#the-push-workflow-file)
+ 1. Push WorkFlow File for Python with comments by github actions
+    - [push_python.yml](.github/workflows/push_typescript.yml)
+
+ 1. Pull WorkFlow Files for Typescript with comments by github actions
+    - [pull_request_ts.yml](.github/workflows/pull_request_typescript.yml)
+
+ 1. Push WorkFlow File for Typscript with comments by github actions
+    - [push_typescript.yml](.github/workflows/push_typescript.yml)
 
  1. SuperLinter setup
     - [super-linter](https://github.com/github/super-linter) setup
