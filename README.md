@@ -11,7 +11,7 @@ py = python
 Example   | Description |
 --------- | ----------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences
-
+[aws-sshkey-ts](aws-sshkey-ts)| ssh key
 
 ## Pulumi Github Actions Setup (Optional)
 We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). 

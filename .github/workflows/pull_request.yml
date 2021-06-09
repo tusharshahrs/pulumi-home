@@ -9,11 +9,13 @@ jobs:
       matrix:
         python-version: [ '3.7.x']
         node-version: [ '14.x']
+        typescript-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
+        python-example: ['aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python']
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - name: Configure AWS Credentials
@@ -25,12 +27,14 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/setup-pulumi@v2
       - run: npm install
+        working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
-          command: "preview"
+          command: preview
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          work-dir: ${{ matrix.typescript-example }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
