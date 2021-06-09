@@ -20,7 +20,7 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
 
  1. Located in [.github/workflows](.github/workflows)
 
- 1. Pull WorkFlow File
+ 1. Pull WorkFlow File for Python
     - [pull_request.yml with comments by github actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#comments-by-github-actions)
 
  1. Push WorkFlow File
