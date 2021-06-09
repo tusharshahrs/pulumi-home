@@ -9,7 +9,8 @@ jobs:
       matrix:
         python-version: [ '3.7.x']
         node-version: [ '14.x']
-        ts-code: ['aws-ts-sshkey']
+        typescript-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
+        python-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -26,14 +27,14 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/setup-pulumi@v2
       - run: npm install
-        working-directory: ${{ matrix.ts-code }}
+        working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          work-dir: ${{ matrix.ts-code }}
+          work-dir: ${{ matrix.typescript-example }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
