@@ -32,7 +32,7 @@ jobs:
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          work-dir: '**aws-ts
+          work-dir: '**aws-ts'
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
