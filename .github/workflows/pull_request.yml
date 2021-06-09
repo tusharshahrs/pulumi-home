@@ -25,14 +25,14 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/setup-pulumi@v2
       - run: npm install
-        working-directory: [aws-ts-*]
+        working-directory: ./aws-ts-*
       - uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          work-dir: [aws-ts-*]
+          work-dir: ./aws-ts-*
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
