@@ -12,6 +12,8 @@ jobs:
       matrix:
         python-version: [ '3.7.x']
         node-version: [ '14.x']
+        typescript-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
+        python-example: ['aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -28,6 +30,7 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/setup-pulumi@v2
       - run: npm install
+        working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
           command: up
