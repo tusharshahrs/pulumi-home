@@ -14,6 +14,7 @@ jobs:
         node-version: [ '14.x']
         typescript-example: ['aws-ts-sshkey', 'aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts']
         python-example: ['aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python']
+        code-examples: [ ${{matrix.typescript-example}},${{matrix.python-example}}]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -35,6 +36,7 @@ jobs:
         with:
           command: up
           stack-name: dev
+          work-dir: ${{ matrix.code-examples }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
