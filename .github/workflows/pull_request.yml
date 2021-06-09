@@ -28,13 +28,18 @@ jobs:
         uses: pulumi/setup-pulumi@v2
       - run: npm install
         working-directory: ${{ matrix.typescript-example }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
+        working-directory: ${{ matrix.python-example }}
       - uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          work-dir: ${{ matrix.typescript-example }}
+          work-dir: ${{ matrix.typescript-example, matrix.python-example }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
