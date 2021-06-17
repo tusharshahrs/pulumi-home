@@ -102,9 +102,11 @@ This is in typescript
       https://functionapp1bc0168d.azurewebsites.net/api/hello
 
     You can now open the resulting endpoint in the browser or curl it:
+
+   ```bash
+   curl $(pulumi stack output endpoint)
    ```
-    $ curl "$(pulumi stack output endpoint)"
     You've successfully deployed a Function App!
-    ```
+   
 
   
