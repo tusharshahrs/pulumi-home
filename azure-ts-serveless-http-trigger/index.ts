@@ -57,7 +57,6 @@ const app = new web.WebApp("functionapp", {
             { name: "FUNCTIONS_WORKER_RUNTIME", value: "node" },
             { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~14" },
             { name: "WEBSITE_RUN_FROM_PACKAGE", value: "https://github.com/tusharshahrs/demo/raw/main/content/lab/pulumi/azure-native/typescript/app.zip" },
-            //{ name: "WEBSITE_RUN_FROM_PACKAGE", value: "https://mikhailworkshop.blob.core.windows.net/zips/app.zip" },
         ]    
     },
 });

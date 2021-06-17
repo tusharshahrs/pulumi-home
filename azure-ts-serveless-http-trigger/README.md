@@ -104,7 +104,7 @@ This is in typescript
     You can now open the resulting endpoint in the browser or curl it:
    ```
     $ curl "$(pulumi stack output endpoint)"
-    Hello from Python in Pulumi! You have stood up a serverless function in Azure!
+    You've successfully deployed a Function App!
     ```
 
   
