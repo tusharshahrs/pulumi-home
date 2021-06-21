@@ -8,3 +8,8 @@ Native Providers for [Azure](https://www.pulumi.com/blog/pulumi-3-0/#native-prov
 - These native providers are automatically generated from cloud provider APIs and resource models that are maintained directly by cloud provider service teams. 
 - This enables native providers to offer 100% API coverage, same-day support for new features, the exact same API designed by the provider service team, and fewer bugs and reliability issues. 
 - This makes native providers the best way to manage infrastructure in the supported cloud platforms, combining the benefits of Pulumi Infrastructure as Code with the resource models and pace of delivery of the cloud provider themselves.
+
+## Prerequisities
+
+Before Proceeding, ensure your machine is ready to go:
+* [Installing Prerequisites](./00-installing-prerequisites.md)
