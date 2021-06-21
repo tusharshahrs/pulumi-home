@@ -2,16 +2,22 @@
 
 This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, this may graduate to [pulumi examples](https://github.com/pulumi/examples)
 
-## Definitions
-ts = typescript
+## Examples are in different languages 
 
-py = python
+**ts** = `typescript`
+
+**py** = `python`
 
 ## AWS
 Example   | Description |
 --------- | ----------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences
-[aws-sshkey-ts](aws-sshkey-ts)| ssh key
+[aws-ts-sshkey](aws-ts-sshkey)| ssh key
+
+## Azure
+Example   | Description |
+--------- | ----------- |
+[azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure serverless http trigger function workshop code
 
 ## Pulumi Github Actions Setup (Optional)
 We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). 
