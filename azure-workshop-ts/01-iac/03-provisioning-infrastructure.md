@@ -7,14 +7,14 @@ Now that you have a project configured to use Azure, you'll create some basic in
 Add the following to your `index.ts` file:
 
 ```ts
-...
 const resourceGroup = new resources.ResourceGroup("myresourcegroup", {
 });
 ```
 
 Feel free to choose any Azure region that supports the services used in these labs ([see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions).
 
-Note that we specified the resource name twice. The first name is a logical name of the Pulumi resource that you see in the previews and logs. The second name is the physical name of the resource in Azure. The names may match, as above, but may also be different, if that makes sense in your case.
+Note that we skipped naming the resource.  This is because we are going to have our resources use [Auto-Naming](https://www.pulumi.com/docs/intro/concepts/resources/#autonaming). The main reason for this is that it allows
+allows Pulumi to do zero-downtime resource updates.
 
 > :white_check_mark: After this change, your `index.ts` should [look like this](./code/03/index.ts).
 
