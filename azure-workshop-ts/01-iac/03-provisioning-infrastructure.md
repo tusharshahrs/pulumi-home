@@ -7,8 +7,7 @@ Now that you have a project configured to use Azure, you'll create some basic in
 Add the following to your `index.ts` file:
 
 ```ts
-const resourceGroup = new resources.ResourceGroup("myresourcegroup", {
-});
+const resourceGroup = new resources.ResourceGroup("myresourcegroup");
 ```
 
 Feel free to choose any Azure region that supports the services used in these labs ([see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions).
