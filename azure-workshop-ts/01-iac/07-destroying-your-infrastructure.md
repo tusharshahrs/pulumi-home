@@ -13,21 +13,25 @@ pulumi destroy
 This will show you a preview, much like the `pulumi up` command does:
 
 ```
-Previewing destroy (prod):
+Previewing destroy (prod)
 
-     Type                         Name               Plan
- -   pulumi:pulumi:Stack                              iac-workshop-prod  delete     
- -   ├─ azure-nextgen:storage/latest:BlobContainer    mycontainer        delete     
- -   ├─ azure-nextgen:storage/latest:StorageAccount   mystorage          delete     
- -   └─ azure-nextgen:resources/latest:ResourceGroup  my-group           delete
+View Live: https://app.pulumi.com/shaht/iac-workshop/prod/previews/2853f6ba-ad92-44c6-9efc-d8919b6bc7ee
 
+     Type                                     Name               Plan       
+ -   pulumi:pulumi:Stack                      iac-workshop-prod  delete     
+ -   ├─ azure-native:storage:BlobContainer    mycontainer        delete     
+ -   ├─ azure-native:storage:StorageAccount   storageaccount     delete     
+ -   └─ azure-native:resources:ResourceGroup  myresourcegroup    delete     
+ 
 Outputs:
-  - AccountName: "myuniquename"
+  - blobcontainer : "htmlprod"
+  - resourcegroup : "myresourcegroup3c76c8d2"
+  - storageaccount: "storageaccount356a1219"
 
 Resources:
     - 4 to delete
 
-Do you want to perform this destroy?
+Do you want to perform this destroy?  [Use arrows to move, enter to select, type to filter]
   yes
 > no
   details
@@ -36,26 +40,25 @@ Do you want to perform this destroy?
 To proceed, select `yes`.
 
 ```
-Destroying (prod):
+Destroying (prod)
 
-     Type                                             Name               Status
- -   pulumi:pulumi:Stack                              iac-workshop-prod  deleted
- -   ├─ azure-nextgen:storage/latest:BlobContainer    mycontainer        deleted     
- -   ├─ azure-nextgen:storage/latest:StorageAccount   mystorage          deleted     
- -   └─ azure-nextgen:resources/latest:ResourceGroup  my-group           deleted
+View Live: https://app.pulumi.com/shaht/iac-workshop/prod/updates/2
 
+     Type                                     Name               Status      
+ -   pulumi:pulumi:Stack                      iac-workshop-prod  deleted     
+ -   ├─ azure-native:storage:BlobContainer    mycontainer        deleted     
+ -   ├─ azure-native:storage:StorageAccount   storageaccount     deleted     
+ -   └─ azure-native:resources:ResourceGroup  myresourcegroup    deleted     
+ 
 Outputs:
-  - AccountName: "myuniquename"
+  - blobcontainer : "htmlprod"
+  - resourcegroup : "myresourcegroup3c76c8d2"
+  - storageaccount: "storageaccount356a1219"
 
 Resources:
     - 4 deleted
 
-Duration: 1m0s
-
-Permalink: https://app.pulumi.com/myuser/iac-workshop/prod/updates/2
-The resources in the stack have been deleted, but the history and configuration
-associated with the stack are still maintained. If you want to remove the stack
-completely, run 'pulumi stack rm prod'.
+Duration: 53s
 ```
 
 ## Step 2 &mdash;  Remove the Stack
