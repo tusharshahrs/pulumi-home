@@ -8,9 +8,7 @@ This demonstrates how declarative infrastructure as code tools can be used not j
 
 Add this line to the `index.ts` right after the `import resources` at the top
 ```ts
-...
 import * as storage from "@pulumi/azure-native/storage";
-...
 ```
 And then add these lines to `index.ts` right after creating the resource group:
 
