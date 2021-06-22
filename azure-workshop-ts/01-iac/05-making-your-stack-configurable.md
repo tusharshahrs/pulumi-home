@@ -15,9 +15,11 @@ const config = new Config();
 export const containerName = config.require("container");
 ```
 
+> :white_check_mark: After this change, your `config.ts` should [look like this](./code/05/config.ts).
+
 ## Step 2 &mdash; Populating the Container Based on Config
 
-Add this line to your `index.ts` file's import statements:
+Add this line to your `index.ts` file after the top import statements:
 
 ```ts
 import { containerName } from "./config";
@@ -34,7 +36,7 @@ const mycontainer = new storage.BlobContainer("mycontainer", {
 });
 ```
 
-> :white_check_mark: After this change, your files should [look like this](./code/05/).
+> :white_check_mark: After this change, your `index.ts` should [look like this](./code/05/index.ts).
 
 ## Step 3 &mdash; Deploying the Changes
 
