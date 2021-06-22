@@ -119,6 +119,7 @@ Note that the account is currently empty.
 Add these lines to the `index.ts` file after the storage account:
 
 ```ts
+// Create an Azure blob container
 const container = new storage.BlobContainer("mycontainer", {
     resourceGroupName: resourceGroup.name,
     accountName: storageAccount.name,
@@ -143,7 +144,7 @@ pulumi up
 This will give you a preview and selecting `yes` will apply the changes:
 
 ```
-View Live: https://app.pulumi.com/shaht/iac-workshop/dev/updates/4
+View Live: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
 
      Type                                   Name              Status      
      pulumi:pulumi:Stack                    iac-workshop-dev              
