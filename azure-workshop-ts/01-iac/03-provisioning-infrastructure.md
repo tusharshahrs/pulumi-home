@@ -7,7 +7,6 @@ Now that you have a project configured to use Azure, you'll create some basic in
 Add the following to your `index.ts` file. Programs can export variables which will be shown in the CLI and recorded for each deployment:
 
 ```ts
-import * as pulumi from "@pulumi/pulumi";
 import * as resources from "@pulumi/azure-native/resources";
 
 // Create an Azure Resource Group
