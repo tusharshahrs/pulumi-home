@@ -17,7 +17,7 @@ The package will be added to `node_modules/`, `package.json`, and `package-lock.
 The Azure region to deploy to is pre-set to WestUS - but you can modify the region you would like to deploy to:
 
 ```bash
-pulumi config set azure:location eastus2
+pulumi config set azure-native:location eastus2
 ```
 
 [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/) allows us to pass in [configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values) from the command line.
