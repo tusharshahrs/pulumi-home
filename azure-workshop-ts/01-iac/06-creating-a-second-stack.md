@@ -16,7 +16,7 @@ Next, configure its required variable:
 pulumi config set container htmlprod
 ```
 
-Next, configure the region.  We can use the same region or even a **different region*
+Next, configure the region.  We can use the same region or even a **different region**
 ```bash
 pulumi config set azure-native:location eastus
 ```
@@ -51,7 +51,7 @@ This is created in a different Azure region.
 ```
 Previewing update (prod)
 
-View Live: https://app.pulumi.com/shaht/iac-workshop/prod/previews/3013316a-4628-486b-9ce0-189d6b64b8e1
+View Live: https://app.pulumi.com/myuser/iac-workshop/prod/previews/3013316a-4628-486b-9ce0-189d6b64b8e1
 
      Type                                     Name               Plan       
  +   pulumi:pulumi:Stack                      iac-workshop-prod  create     
@@ -65,7 +65,7 @@ Resources:
 Do you want to perform this update? yes
 Updating (prod)
 
-View Live: https://app.pulumi.com/shaht/iac-workshop/prod/updates/1
+View Live: https://app.pulumi.com/myuser/iac-workshop/prod/updates/1
 
      Type                                     Name               Status      
  +   pulumi:pulumi:Stack                      iac-workshop-prod  created     
