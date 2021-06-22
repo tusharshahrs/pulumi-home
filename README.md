@@ -18,6 +18,7 @@ Example   | Description |
 Example   | Description |
 --------- | ----------- |
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure serverless http trigger function workshop code
+[azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name
 
 ## Workshops
 Example   | Description |
