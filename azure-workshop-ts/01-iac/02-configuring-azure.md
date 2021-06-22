@@ -12,14 +12,26 @@ npm install @pulumi/azure-native
 
 The package will be added to `node_modules/`, `package.json`, and `package-lock.json`.
 
-## Step 2 &mdash; Use the Azure Native Package
+## Step 2 &mdash; Configure an Azure Region
 
-Now that the Azure Native package is installed, add the following lines to `index.ts` to import two modules from it. We will use one module to define a resource group and another one to define a storage account.
+The Azure region to deploy to is pre-set to WestUS - but you can modify the region you would like to deploy to:
 
-```ts
-import * as resources from "@pulumi/azure-native/resources";
-import * as storage from "@pulumi/azure-native/storage";
+```bash
+pulumi config set azure:location eastus2
 ```
+
+[pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/) allows us to pass in [configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values) from the command line.
+Feel free to choose any Azure region that supports the services used in these labs ([see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for current list of available regions).  A list of some of the regions:
+
+```
+centralus,eastasia,southeastasia,eastus,eastus2,westus,westus2,northcentralus,southcentralus,
+westcentralus,northeurope,westeurope,japaneast,japanwest,brazilsouth,australiasoutheast,australiaeast,
+westindia,southindia,centralindia,canadacentral,canadaeast,uksouth,ukwest,koreacentral,koreasouth,
+francecentral,southafricanorth,uaenorth,australiacentral,switzerlandnorth,germanywestcentral,
+norwayeast,jioindiawest,australiacentral2
+```
+
+The command updates and persists the value to the local `Pulumi.dev.yaml` file. You can view or edit this file at any time to effect the configuration of the current stack.
 
 ## Step 3 &mdash; Login to Azure
 
