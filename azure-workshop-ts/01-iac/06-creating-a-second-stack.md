@@ -16,6 +16,11 @@ Next, configure its required variable:
 pulumi config set container htmlprod
 ```
 
+Next, configure the region.  We can use the same region or even a **different region*
+```bash
+pulumi config set azure-native:location eastus
+```
+
 If you are ever curious to see the list of stacks for your current project, run this command:
 
 ```bash
