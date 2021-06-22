@@ -116,18 +116,22 @@ Note that the account is currently empty.
 
 ## Step 4 &mdash; Add a Container to Your Storage Account
 
-Add these lines to the `index.ts` file:
+Add these lines to the `index.ts` file after the storage account:
 
 ```ts
-...
 const container = new storage.BlobContainer("mycontainer", {
     resourceGroupName: resourceGroup.name,
     accountName: storageAccount.name,
     containerName: "files",
 });
-...
 ```
 
+Add these lines ot the `index.ts` file after the export of the storage account
+
+```ts
+// Export the Blob Container
+export const blobcontaine = container.name;
+```
 > :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/index.ts).
 
 Deploy the changes:
@@ -139,27 +143,35 @@ pulumi up
 This will give you a preview and selecting `yes` will apply the changes:
 
 ```
-Updating (dev):
+View Live: https://app.pulumi.com/shaht/iac-workshop/dev/updates/4
 
-     Type                                           Name              Status
-     pulumi:pulumi:Stack                            iac-workshop-dev
- +   └─ azure-nextgen:storage/latest:BlobContainer  mycontainer       created
+     Type                                   Name              Status      
+     pulumi:pulumi:Stack                    iac-workshop-dev              
+ +   └─ azure-native:storage:BlobContainer  mycontainer       created     
+ 
+Outputs:
+  + blobcontainer : "files"
+    resourcegroup : "myresourcegroup01e531dc"
+    storageaccount: "storageaccounta4315b55"
 
 Resources:
     + 1 created
     3 unchanged
 
-Duration: 9s
-
-Permalink: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
+Duration: 5s
+```
 
 Finally, relist the contents of your account:
 
 ```bash
-az storage container list --account-name $(pulumi stack output accountName) -o table
+az storage container list --account-name $(pulumi stack output storageaccount) -o table
+```
+
+Output will be
+```
 Name    Lease Status    Last Modified
 ------  --------------  -------------------------
-files   unlocked        2020-02-10T12:51:16+00:00
+files   unlocked        2021-06-22T17:49:13+00:00
 ```
 
 Notice that your `files` container has been added.
