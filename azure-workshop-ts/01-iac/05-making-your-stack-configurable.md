@@ -49,13 +49,20 @@ pulumi up
 This results in an error like the following:
 
 ```
-...
-ConfigMissingException: Missing Required configuration variable 'iac-workshop:container'
-    	please set a value using the command `pulumi config set iac-workshop:container <value>`
-...
+Previewing update (dev)
+
+View Live: https://app.pulumi.com/myuser/iac-workshop/dev/previews/f44c8f88-e84b-451b-b4a9-f5b5ae3179c6
+
+     Type                 Name              Plan     Info
+     pulumi:pulumi:Stack  iac-workshop-dev           1 error
+ 
+Diagnostics:
+  pulumi:pulumi:Stack (iac-workshop-dev):
+    error: Missing required configuration variable 'iac-workshop:container'
+        please set a value using the command `pulumi config set iac-workshop:container <value>`
 ```
 
-Configure the `iac-workshop:container` variable:
+We need to pass in a name for the `iac-workshop:container` variable:
 
 ```bash
 pulumi config set container html
@@ -66,25 +73,33 @@ To make things interesting, I set the name to `html` which is different from the
 Run `pulumi up` again. This detects that the container has changed and will perform a simple update:
 
 ```
-Updating (dev):
+Previewing update (dev)
 
-     Type                                           Name              Status      Info
-     pulumi:pulumi:Stack                            iac-workshop-dev
-  +- └─ azure-nextgen:storage/latest:BlobContainer  mycontainer       replaced    [diff: ~containerName]
+View Live: https://app.pulumi.com/myuser/iac-workshop/dev/previews/6c32df8e-1aa6-4102-b4ab-88b0e9af53cf
 
+     Type                                   Name              Plan        Info
+     pulumi:pulumi:Stack                    iac-workshop-dev              
+ +-  └─ azure-native:storage:BlobContainer  mycontainer       replace     [diff: ~containerName]
+ 
 Outputs:
-    AccountName: "myuniquename"
+  ~ blobcontainer : "files" => output<string>
 
 Resources:
-    +-1 replaced
+    +-1 to replace
     3 unchanged
-
-Duration: 10s
-
-Permalink: https://app.pulumi.com/myuser/iac-workshop/dev/updates/5
 ```
 
-And you will see the contents added above.
+And you will see the contents added above when you run
+```bash
+az storage container list --account-name $(pulumi stack output storageaccount)
+```
+
+The output will be
+```
+Name    Lease Status    Last Modified
+------  --------------  -------------------------
+html    unlocked        2021-06-22T18:10:12+00:00
+```
 
 ## Next Steps
 
