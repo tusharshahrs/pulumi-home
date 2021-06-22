@@ -25,8 +25,11 @@ import * as storage from "@pulumi/azure-native/storage";
 
 Simply login to the Azure CLI and Pulumi will automatically use your credentials:
 
-```
+```bash
 az login
+```
+
+```
 ...
 You have logged in. Now let us find all the subscriptions to which you have access...
 ...
@@ -34,14 +37,14 @@ You have logged in. Now let us find all the subscriptions to which you have acce
 
 The Azure CLI, and thus Pulumi, will use the Default Subscription by default, however it is possible to override the subscription, by simply setting your subscription ID to the id output from `az account list`’s output:
 
-```
-$ az account list
+```bash
+az account list
 ```
 
 Pick out the `<id>` from the list and run:
 
 ```
-$ az account set --subscription=<id>
+az account set --subscription=<id>
 ```
 
 ## Next Steps
