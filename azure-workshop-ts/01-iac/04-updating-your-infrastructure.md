@@ -133,7 +133,7 @@ Add these lines ot the `index.ts` file after the export of the storage account
 // Export the Blob Container
 export const blobcontaine = container.name;
 ```
-> :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/index.ts).
+> :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/step4/index.ts).
 
 Deploy the changes:
 
