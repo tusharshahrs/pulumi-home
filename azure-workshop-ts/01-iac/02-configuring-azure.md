@@ -7,7 +7,7 @@ Now that you have a basic project, let's configure Azure support for it.
 Run the following command to install the Azure Native package:
 
 ```bash
-npm install @pulumi/azure-native/
+npm install @pulumi/azure-native
 ```
 
 The package will be added to `node_modules/`, `package.json`, and `package-lock.json`.
