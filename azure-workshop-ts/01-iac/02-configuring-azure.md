@@ -17,7 +17,6 @@ The package will be added to `node_modules/`, `package.json`, and `package-lock.
 Now that the Azure Native package is installed, add the following lines to `index.ts` to import two modules from it. We will use one module to define a resource group and another one to define a storage account.
 
 ```ts
-...
 import * as resources from "@pulumi/azure-native/resources";
 import * as storage from "@pulumi/azure-native/storage";
 ```
