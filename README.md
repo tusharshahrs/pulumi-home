@@ -19,6 +19,7 @@ Example   | Description |
 --------- | ----------- |
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure serverless http trigger function workshop code
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name
+[azure-ts-iac-workshop-lab1](azure-ts-iac-workshop-lab1) | azure workshop lab 1, creates resourceg group, storage account, and blob container.
 
 ## Workshops
 Example   | Description |

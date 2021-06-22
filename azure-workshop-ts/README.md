@@ -1,6 +1,6 @@
-# Azure Native Workshop with Pulumi
+# Azure Native Workshop in Typescript
 
-This hands-on workshop will walk you through various tasks of managing Azure infrastructure with the focus on setting up python and managed Azure services. All the resources are provisioned with [Pulumi](https://www.pulumi.com/) in the infrastructure-as-code fashion. You will be using Pulumi's [Azure Native](https://www.pulumi.com/docs/intro/cloud-providers/azure/) provider
+This hands-on workshop will walk you through various tasks of managing Azure infrastructure with the focus on setting up python and managed Azure services. All the resources are provisioned with [Pulumi](https://www.pulumi.com/) in the infrastructure-as-code fashion. You will be using Pulumi's [Azure Native](https://www.pulumi.com/docs/intro/cloud-providers/azure/) provider.
 
 ## What are Native Providers
 Native Providers for [Azure](https://www.pulumi.com/blog/pulumi-3-0/#native-providers-for-azure-and-google-cloud).
