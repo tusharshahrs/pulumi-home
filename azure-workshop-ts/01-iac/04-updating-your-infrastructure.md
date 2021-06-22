@@ -13,7 +13,6 @@ import * as storage from "@pulumi/azure-native/storage";
 And then add these lines to `index.ts` right after creating the resource group:
 
 ```ts
-...
 // Create an Azure resource (Storage Account)
 const storageAccount = new storage.StorageAccount("storageaccount", {
     resourceGroupName: resourceGroup.name,
@@ -24,7 +23,7 @@ const storageAccount = new storage.StorageAccount("storageaccount", {
 });
 ```
 
-Azure requires each storage account to have a globally unique names across all tenants.
+> :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/step1/index.ts).
 
 Deploy the changes:
 
@@ -63,6 +62,9 @@ Programs can export variables which are shown in the CLI and recorded for each d
 // Export the Storage Account
 export const storageaccount = storageAccount.name;
 ```
+
+> :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/step2/index.ts).
+
 
 Now deploy the changes:
 
