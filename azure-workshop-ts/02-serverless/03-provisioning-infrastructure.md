@@ -147,19 +147,20 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/myuser/azure-function-workshop/dev/updates/45
+View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/3
 
-     pulumi:pulumi:Stack                 azure-py-functions-dev              
- +   └─ azure-native:web:AppServicePlan  consumption-plan        created     
+     Type                                Name                                   Status      
+     pulumi:pulumi:Stack                 azure-serverlessfunction-workshop-dev              
+ +   └─ azure-native:web:AppServicePlan  consumption-plan                       created     
  
 Outputs:
-  + consumptionplan: "consumption-planbb670fa1"
-    resourcegroup  : "resourcegroup_functions_py925e474c"
-    storageaccount : "storageaccounte925e820"
+  + consumptionplan: "consumption-plan3faf9113"
+    resourcegroup  : "resourcegroup_functionsfa4409ed"
+    storageaccount : "storageaccount42a93abe"
 
 Resources:
     + 1 created
     3 unchanged
 
-Duration: 8s
+Duration: 9s
 ```    
