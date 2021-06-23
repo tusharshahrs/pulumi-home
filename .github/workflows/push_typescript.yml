@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ '14.x']
-        typescript-example: ['aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts','aws-ts-sshkey', 'azure-ts-serveless-http-trigger', 'azure-ts-resourcegroup-fixname', 'azure-ts-iac-workshop-lab1']
+        typescript-example: ['aws-ts-vpc-crosswalk','aws-ts-sshkey', 'azure-ts-serveless-http-trigger', 'azure-ts-resourcegroup-fixname', 'azure-ts-iac-workshop-lab1']
     steps:
       - uses: actions/checkout@v2
         with:
