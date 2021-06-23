@@ -14,6 +14,14 @@ ACM certificate expiration days.
     ```bash
     npm install
     ```
+
+1. Install the dependencies inside the policy pack
+    ```bash
+    cd acmcertificateexpiration
+    npm install
+    cd ..
+    ```
+
 1.  Configure the location to deploy the resources to.  The default region is us-east-1.  We are deploying to us-east-2(Ohio)
 
     ```bash
