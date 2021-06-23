@@ -225,3 +225,75 @@ Duration: 4s
 ```
 
 Notice that no resources are created.  This is expected as we were adding outputs. The primaryStorageKey is marked as **secret**.  To view it via the cli, run:  [pulumi stack output](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/) ```--show-secrets```
+
+## Step 5 &mdash; Create a Function App
+
+And then add these lines to `index.ts` right after creating the storageconnectionstring `export`
+```ts
+// Create the Function App
+const app = new web.WebApp("functionapp", {
+    resourceGroupName: resourceGroup.name,
+    location: resourceGroup.location,
+    serverFarmId: plan.id,
+    kind: "functionapp",
+    siteConfig: {
+        appSettings: [
+            { name: "AzureWebJobsStorage", value: storageConnectionString },            
+            { name: "FUNCTIONS_EXTENSION_VERSION", value: "~3" },            
+            { name: "FUNCTIONS_WORKER_RUNTIME", value: "node" },
+            { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~14" },
+            { name: "WEBSITE_RUN_FROM_PACKAGE", value: "https://github.com/tusharshahrs/demo/raw/main/content/lab/pulumi/azure-native/typescript/app.zip" },
+        ]    
+    },
+});
+```
+
+The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file(*(**typescript**) to the Function App. The app will download the specified file, extract the code from it, discover the functions, and run them. We’ve prepared this zip file for you to get started faster, you can find its code [here](https://github.com/tusharshahrs/demo/tree/main/content/lab/pulumi/azure-native/typescript). The code contains a single HTTP-triggered Azure Function in the zip file.
+
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03-provisioning-infrastructure/step5.ts).
+
+## Step 6 &mdash; Export the Function App endpoint
+
+Finally, declare a stack output called endpoint to export the URL of the Azure Function using the defaultHostName.  Now, if you inspect the type of the app.defaultHostname, you will see that it's `pulumi.Output<string>` not just `string`. That’s because Pulumi runs your program before it creates any infrastructure, and it wouldn’t be able to put an actual string into the variable. You can think of `Output<T>` as similar to `Promise<T>`, although they are not the same thing. A quick aside here, for those not familiar with what <T> is. <T> is a mechanism for denoting that the value is known at some point in the future. It comes from [Generic Programming](https://en.wikipedia.org/wiki/Generic_programming) and is really useful in situations like this, when we (ie, us running our Pulumi programs) are waiting for the value to be returned from our cloud providers API.  You want to export the full endpoint of your Function App.  Add this to the end of your code after the functionapp called `app`
+
+```ts
+export const endpoint = pulumi.interpolate`https://${app.defaultHostName}/api/hello`;
+```
+
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03-provisioning-infrastructure/step6.ts).
+
+## Step 7 &mdash; Provision the Function App
+
+Deploy the program to stand up your Azure Function App:
+
+```bash
+pulumi up
+```
+
+Results
+```
+replaceme
+```
+
+You can now view the stack output via [pulumi stack output](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/):
+
+```bash
+pulumi stack output endpoint
+```
+
+You will get the following:
+
+```
+https://functionappa6fe3701.azurewebsites.net/api/HelloWithPython
+```
+
+You can now open the resulting endpoint in the browser or curl it:
+
+```bash
+curl $(pulumi stack output endpoint)
+```
+And you'll see a the following message:
+
+```
+Hello from Python in Pulumi! You have stood up a serverless function in Azure!
+```
