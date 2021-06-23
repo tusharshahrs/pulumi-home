@@ -1,6 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as resources from "@pulumi/azure-native/resources";
-import * as storage from "@pulumi/azure-native/storage";
 import * as web from "@pulumi/azure-native/web";
 
 // Create an Azure Resource Group
@@ -61,6 +60,3 @@ const app = new web.WebApp("functionapp", {
         ]    
     },
 });
-
-//Export the functionapp endpoint and create the url for it.
-export const endpoint = pulumi.interpolate`https://${app.defaultHostName}/api/hello`;

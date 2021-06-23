@@ -1,6 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as resources from "@pulumi/azure-native/resources";
-import * as storage from "@pulumi/azure-native/storage";
 import * as web from "@pulumi/azure-native/web";
 
 // Create an Azure Resource Group
@@ -44,23 +43,3 @@ export const primaryStorageKey = pulumi.secret(storageAccountKeys.keys[0].value)
 
 // Build a storage connection string out of it:
 const storageConnectionString = pulumi.interpolate`DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${primaryStorageKey}`;
-
-// Create the Function App
-const app = new web.WebApp("functionapp", {
-    resourceGroupName: resourceGroup.name,
-    location: resourceGroup.location,
-    serverFarmId: plan.id,
-    kind: "functionapp",
-    siteConfig: {
-        appSettings: [
-            { name: "AzureWebJobsStorage", value: storageConnectionString },            
-            { name: "FUNCTIONS_EXTENSION_VERSION", value: "~3" },            
-            { name: "FUNCTIONS_WORKER_RUNTIME", value: "node" },
-            { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~14" },
-            { name: "WEBSITE_RUN_FROM_PACKAGE", value: "https://github.com/tusharshahrs/demo/raw/main/content/lab/pulumi/azure-native/typescript/app.zip" },
-        ]    
-    },
-});
-
-//Export the functionapp endpoint and create the url for it.
-export const endpoint = pulumi.interpolate`https://${app.defaultHostName}/api/hello`;
