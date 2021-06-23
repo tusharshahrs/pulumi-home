@@ -197,3 +197,31 @@ const storageConnectionString = pulumi.interpolate`DefaultEndpointsProtocol=http
 
 > :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step4.ts).
 
+Deploy the changes:
+
+```bash
+pulumi up
+```
+This will give you a preview and selecting `yes` will apply the changes:
+
+```
+Updating (dev)
+
+View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/4
+
+     Type                 Name                                   Status     
+     pulumi:pulumi:Stack  azure-serverlessfunction-workshop-dev             
+ 
+Outputs:
+    consumptionplan  : "consumption-plan3faf9113"
+  + primaryStorageKey: "[secret]"
+    resourcegroup    : "resourcegroup_functionsfa4409ed"
+    storageaccount   : "storageaccount42a93abe"
+
+Resources:
+    4 unchanged
+
+Duration: 4s
+```
+
+Notice that no resources are created.  This is expected as we were adding outputs. The primaryStorageKey is marked as **secret**.  To view it via the cli, run:  [pulumi stack output](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/) ```--show-secrets```
