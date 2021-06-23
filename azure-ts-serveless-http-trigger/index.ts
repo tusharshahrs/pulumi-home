@@ -45,6 +45,7 @@ export const primaryStorageKey = pulumi.secret(storageAccountKeys.keys[0].value)
 // Build a storage connection string out of it:
 const storageConnectionString = pulumi.interpolate`DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${primaryStorageKey}`;
 
+// Create the Function App
 const app = new web.WebApp("functionapp", {
     resourceGroupName: resourceGroup.name,
     location: resourceGroup.location,
@@ -61,4 +62,5 @@ const app = new web.WebApp("functionapp", {
     },
 });
 
+//Export the functionapp endpoint and create the url for it.
 export const endpoint = pulumi.interpolate`https://${app.defaultHostName}/api/hello`;
