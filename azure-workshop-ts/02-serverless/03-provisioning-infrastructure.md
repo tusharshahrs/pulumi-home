@@ -70,7 +70,7 @@ Add this line after the resource group export
 export const storageaccount = storageAccount.name;
 ```
 
-> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step2.py).
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step2.ts).
 
 Deploy the changes:
 
