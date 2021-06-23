@@ -29,7 +29,7 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/1
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/1
 
      Type                                     Name                                   Status      
  +   pulumi:pulumi:Stack                      azure-serverlessfunction-workshop-dev  created     
@@ -82,7 +82,7 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/2
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/2
 
      Type                                    Name                                   Status      
      pulumi:pulumi:Stack                     azure-serverlessfunction-workshop-dev              
@@ -147,7 +147,7 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/3
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/3
 
      Type                                Name                                   Status      
      pulumi:pulumi:Stack                 azure-serverlessfunction-workshop-dev              
@@ -207,7 +207,7 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/4
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/4
 
      Type                 Name                                   Status     
      pulumi:pulumi:Stack  azure-serverlessfunction-workshop-dev             
@@ -275,7 +275,7 @@ Results
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/5
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/5
 
      Type                        Name                                   Status      
      pulumi:pulumi:Stack         azure-serverlessfunction-workshop-dev              
@@ -315,3 +315,47 @@ curl $(pulumi stack output endpoint)
 
 And you'll see a the following message:
 **You've successfully deployed a Function App!**
+
+## Step 8 &mdash; Destroy Everything
+
+```bash
+pulumi destroy
+```
+This will give you a preview and selecting `yes` will apply the changes:
+
+```
+Do you want to perform this destroy? yes
+Destroying (dev)
+
+View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/6
+
+     Type                                     Name                                   Status       
+     pulumi:pulumi:Stack                      azure-serverlessfunction-workshop-dev               
+ -   ├─ azure-native:web:WebApp               functionapp                            deleted      
+ -   ├─ azure-native:web:AppServicePlan       consumption-plan                       deleted      
+ -   ├─ azure-native:storage:StorageAccount   storageaccount                         deleted      
+ -   └─ azure-native:resources:ResourceGroup  resourcegroup_functions                deleted
+
+Outputs:
+  - consumptionplan  : "consumption-plan3faf9113"
+  - endpoint         : "https://functionapp3aa367f4.azurewebsites.net/api/hello"
+  - primaryStorageKey: "[secret]"
+  - resourcegroup    : "resourcegroup_functionsfa4409ed"
+  - storageaccount   : "storageaccount42a93abe"
+
+Resources:
+    - 5 deleted
+
+Duration: 58s
+```
+
+Remove the stack
+```bash
+pulumi stack rm
+```
+This will permanently remove the 'dev' stack!
+Please confirm that this is what you'd like to do by typing ("dev"):
+
+You must enter the stack name:  **dev**
+
+Congratulations you are now done with this workshop
