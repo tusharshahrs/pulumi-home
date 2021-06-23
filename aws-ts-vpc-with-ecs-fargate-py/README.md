@@ -24,9 +24,7 @@ We are going to use [Pulumi Service backend](https://www.pulumi.com/docs/intro/c
 
 ## Running the Example
 
-Clone the [examples repo](https://github.com/pulumi/examples/tree/master/aws-ts-vpc-with-ecs-fargate-py) and `cd` into it.
-
-1. `cd vpc-crosswalk-ts` directory for usage information.
-2. `cd ecs-fargate-python` directory for usage information.
+1. [aws-ts-vpc-crosswalk](../aws-ts-vpc-crosswalk)
+2. [aws-py-ecs-fargate](../aws-py-ecs-fargate)
 
 The ecs fargate example is identical to original one [aws-py-fargate](https://github.com/pulumi/examples/tree/master/aws-py-fargate)
