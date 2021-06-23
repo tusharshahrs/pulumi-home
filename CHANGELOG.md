@@ -4,6 +4,7 @@
 - Added azure-workshop-ts
 - renamed and moved aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts to aws-ts-vpc-crosswalk
 - renamed and moved aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python/ to aws-py-ecs-fargate
+- added aws-ts-acm-awsguard
 
 ## (2021-06-22)
 - Added azure-ts-resourcegroup-fixname
