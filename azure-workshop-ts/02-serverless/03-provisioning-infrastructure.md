@@ -164,3 +164,36 @@ Resources:
 
 Duration: 9s
 ```    
+
+## Step 4 &mdash; Retrieve Storage Account Keys and Build Connection String
+
+We need to pass a Storage Account connection string to the settings of our future Function App. As this information is sensitive, Azure doesn't return it by default in the outputs of the Storage Account resource.
+
+We need to make a separate invocation to the listStorageAccountKeys function to retrieve storage account keys. This invocation can only be run after the storage account is created. Therefore, we must place it inside an [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) call that depends on a storage account.  We will also be using [all](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#all) since we need to use an `apply` over many resources.
+
+Add this line to the `index.ts` right after creating the export of the consumption plan
+
+```ts
+// List of storage account keys 
+const storageAccountKeys = pulumi.all([resourceGroup.name, storageAccount.name]).apply(([resourceGroupName, accountName]) =>
+    storage.listStorageAccountKeys({ resourceGroupName, accountName }));
+```
+
+Extract the primary storage key of the storage account.
+```ts
+// Export the primary key of the Storage Account
+export const primaryStorageKey = pulumi.secret(storageAccountKeys.keys[0].value);
+```
+
+The connection keys are sensitive data so we want to protect them as secrets.
+Pulumi allows you to [programmatically create secrets](https://www.pulumi.com/docs/intro/concepts/secrets/#programmatically-creating-secrets).
+
+
+We need to build the storage connection by calling [interpolate](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#outputs-and-strings).
+```ts
+// Build a storage connection string out of it
+const storageConnectionString = pulumi.interpolate`DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${primaryStorageKey}`;
+```
+
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step4.ts).
+

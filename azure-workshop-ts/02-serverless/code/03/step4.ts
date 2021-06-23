@@ -33,3 +33,13 @@ export const storageaccount = storageAccount.name;
 
 // Export the Consumption Plan
 export const consumptionplan = plan.name;
+
+// List of storage account keys 
+const storageAccountKeys = pulumi.all([resourceGroup.name, storageAccount.name]).apply(([resourceGroupName, accountName]) =>
+    storage.listStorageAccountKeys({ resourceGroupName, accountName }));
+
+// Export the primary key of the Storage Account
+export const primaryStorageKey = pulumi.secret(storageAccountKeys.keys[0].value);
+
+// Build a storage connection string out of it:
+const storageConnectionString = pulumi.interpolate`DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${primaryStorageKey}`;
