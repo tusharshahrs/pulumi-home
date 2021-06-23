@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+## (2021-06-22)
+- Added azure-ts-resourcegroup-fixname
+- Added azure-ts-iac-workshop-lab1
+
 ## (2021-06-21)
 
 - Added azure-ts-serveless-http-trigger
