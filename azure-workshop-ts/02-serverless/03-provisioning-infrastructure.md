@@ -273,7 +273,26 @@ pulumi up
 
 Results
 ```
-replaceme
+Updating (dev)
+
+View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/5
+
+     Type                        Name                                   Status      
+     pulumi:pulumi:Stack         azure-serverlessfunction-workshop-dev              
+ +   └─ azure-native:web:WebApp  functionapp                            created     
+ 
+Outputs:
+    consumptionplan  : "consumption-plan3faf9113"
+  + endpoint         : "https://functionapp3aa367f4.azurewebsites.net/api/hello"
+    primaryStorageKey: "[secret]"
+    resourcegroup    : "resourcegroup_functionsfa4409ed"
+    storageaccount   : "storageaccount42a93abe"
+
+Resources:
+    + 1 created
+    4 unchanged
+
+Duration: 47s
 ```
 
 You can now view the stack output via [pulumi stack output](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/):
@@ -282,10 +301,10 @@ You can now view the stack output via [pulumi stack output](https://www.pulumi.c
 pulumi stack output endpoint
 ```
 
-You will get the following:
+You will get something similar to the following:
 
 ```
-https://functionappa6fe3701.azurewebsites.net/api/HelloWithPython
+https://functionapp3aa367f4.azurewebsites.net/api/hello
 ```
 
 You can now open the resulting endpoint in the browser or curl it:
@@ -293,8 +312,6 @@ You can now open the resulting endpoint in the browser or curl it:
 ```bash
 curl $(pulumi stack output endpoint)
 ```
-And you'll see a the following message:
 
-```
-Hello from Python in Pulumi! You have stood up a serverless function in Azure!
-```
+And you'll see a the following message:
+**You've successfully deployed a Function App!**
