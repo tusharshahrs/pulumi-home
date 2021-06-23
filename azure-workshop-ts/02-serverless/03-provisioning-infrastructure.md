@@ -98,3 +98,68 @@ Resources:
 
 Duration: 23s
 ```
+
+## Step 3 &mdash; Define a Consumption Plan
+There are several options to deploy Azure Functions. The serverless pay-per-execution hosting plan is called _Consumption Plan_.
+
+There’s no resource named Consumption Plan, however. The resource name is inherited from Azure App Service: Consumption is one kind of an [App Service Plan](https://www.pulumi.com/docs/reference/pkg/azure-native/web/appserviceplan/). It’s the SKU property of the resource that defines the type of hosting plan.
+
+Here is a snippet that defines a Consumption Plan:
+
+Add this line to the `index.ts` right after the `import storage` at the top
+
+```ts
+import * as web from "@pulumi/azure-native/web";
+```
+
+Add this line to the `index.ts` right after creating the storage resources
+```ts
+// Create a consumption plan
+const plan = new web.AppServicePlan("consumption-plan", {
+    resourceGroupName: resourceGroup.name,
+    location: resourceGroup.location,
+    kind: "functionapp",
+    sku: {
+        name: "Y1",
+        tier: "Dynamic",
+    },
+});
+```
+
+And then add these lines to `index.ts` right after the storage account export:
+
+```ts
+// Export the Consumption Plan
+export const consumptionplan = plan.name;
+```
+
+Note the specific way that the property `sku` is configured. If you ever want to deploy to another type of a service plan, you would need to change these values accordingly.
+
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step3.ts).
+
+Deploy the changes:
+
+```bash
+pulumi up
+```
+This will give you a preview and selecting `yes` will apply the changes:
+
+```
+Updating (dev)
+
+View Live: https://app.pulumi.com/myuser/azure-function-workshop/dev/updates/45
+
+     pulumi:pulumi:Stack                 azure-py-functions-dev              
+ +   └─ azure-native:web:AppServicePlan  consumption-plan        created     
+ 
+Outputs:
+  + consumptionplan: "consumption-planbb670fa1"
+    resourcegroup  : "resourcegroup_functions_py925e474c"
+    storageaccount : "storageaccounte925e820"
+
+Resources:
+    + 1 created
+    3 unchanged
+
+Duration: 8s
+```    
