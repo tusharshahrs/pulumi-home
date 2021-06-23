@@ -1,0 +1,100 @@
+# Provisioning Infrastructure
+
+Now that you have a project configured to use Azure, you'll create some basic infrastructure in it. We will start with a Resource Group.
+
+## Step 1 &mdash; Declare a New Resource Group and Export it
+
+Add the following to your `index.ts` file. Programs can export variables which will be shown in the CLI and recorded for each deployment:
+
+```ts
+import * as resources from "@pulumi/azure-native/resources";
+
+// Create an Azure Resource Group
+const resourceGroup = new resources.ResourceGroup("resourcegroup_functions");
+
+// Export the Azure Resource Group
+export const resourcegroup = resourceGroup.name;
+```
+
+> :white_check_mark: After this change, your `index.ts` should [look like this](./code/03/step1.ts).
+
+Deploy the changes:
+
+```bash
+pulumi up
+```
+
+This will give you a preview and selecting `yes` will apply the changes:
+
+```
+Updating (dev)
+
+View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/1
+
+     Type                                     Name                                   Status      
+ +   pulumi:pulumi:Stack                      azure-serverlessfunction-workshop-dev  created     
+ +   └─ azure-native:resources:ResourceGroup  resourcegroup_functions                created     
+ 
+Outputs:
+    resourcegroup: "resourcegroup_functionsfa4409ed"
+
+Resources:
+    + 2 created
+
+Duration: 6s
+```
+## Step 2 &mdash; Add a Storage Account
+
+Add this line to the `index.ts` right after the `import resources` at the top
+
+```ts
+import * as storage from "@pulumi/azure-native/storage";
+```
+
+And then add these lines to `index.ts` right after creating the resource group:
+
+```ts
+// Create an Azure resource (Storage Account)
+const storageAccount = new storage.StorageAccount("storageaccount", {
+    resourceGroupName: resourceGroup.name,
+    sku: {
+        name: storage.SkuName.Standard_LRS,
+    },
+    kind: storage.Kind.StorageV2,
+});
+```
+
+Add this line after the resource group export
+```ts
+// Export the Storage Account
+export const storageaccount = storageAccount.name;
+```
+
+> :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step2.py).
+
+Deploy the changes:
+
+```bash
+pulumi up
+```
+This will give you a preview and selecting `yes` will apply the changes:
+
+```
+Updating (dev)
+
+View Live: https://app.pulumi.com/myuser/azure-function-workshop/dev/updates/4
+
+     Type                                    Name                    Status      
+     pulumi:pulumi:Stack                     azure-py-functions-dev              
+ +   └─ azure-native:storage:StorageAccount  storageaccount          created     
+ 
+Outputs:
+    resourcegroup : "resourcegroup_functions_py925e474c"
+  + storageaccount: "storageaccounte925e820"
+
+Resources:
+    + 1 created
+    2 unchanged
+
+Duration: 24s
+```
