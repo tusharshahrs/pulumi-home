@@ -82,19 +82,19 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev)
 
-View Live: https://app.pulumi.com/myuser/azure-function-workshop/dev/updates/4
+View Live: https://app.pulumi.com/shaht/azure-serverlessfunction-workshop/dev/updates/2
 
-     Type                                    Name                    Status      
-     pulumi:pulumi:Stack                     azure-py-functions-dev              
- +   └─ azure-native:storage:StorageAccount  storageaccount          created     
+     Type                                    Name                                   Status      
+     pulumi:pulumi:Stack                     azure-serverlessfunction-workshop-dev              
+ +   └─ azure-native:storage:StorageAccount  storageaccount                         created     
  
 Outputs:
-    resourcegroup : "resourcegroup_functions_py925e474c"
-  + storageaccount: "storageaccounte925e820"
+    resourcegroup : "resourcegroup_functionsfa4409ed"
+  + storageaccount: "storageaccount42a93abe"
 
 Resources:
     + 1 created
     2 unchanged
 
-Duration: 24s
+Duration: 23s
 ```
