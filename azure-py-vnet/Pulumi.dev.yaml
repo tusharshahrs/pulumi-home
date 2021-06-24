@@ -1,0 +1,6 @@
+config:
+  azure-native:location: eastus2
+  azure-py-vnet:mynames: peering-to-databricks
+  azure-py-vnet:subnet_1_cidr: 10.0.0.0/23
+  azure-py-vnet:subnet_2_cidr: 10.0.2.0/23
+  azure-py-vnet:virtual_network_cidr: 10.0.0.0/22
