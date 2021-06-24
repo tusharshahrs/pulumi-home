@@ -358,4 +358,4 @@ Please confirm that this is what you'd like to do by typing ("dev"):
 
 You must enter the stack name:  **dev**
 
-Congratulations you are now done with this workshop
+Congratulations! :tada: You have completed the second lab.
