@@ -1,6 +1,9 @@
 ## CHANGELOG
 
-## (2021-06-22)
+## (2021-06-24)
+- Added azure-py-vnet
+
+## (2021-06-23)
 - Added azure-workshop-ts
 - renamed and moved aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts to aws-ts-vpc-crosswalk
 - renamed and moved aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python/ to aws-py-ecs-fargate
