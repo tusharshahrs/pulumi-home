@@ -1,5 +1,5 @@
-# An Azure Databricks workspace with vnet peering in python.  
-  An Azure Databricks workspace
+# An Azure Databricks workspace in python.  
+  An Azure Databricks workspace in python.
   
 * Built using [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
     * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
@@ -104,7 +104,7 @@
     databricks_workspace_url           adb-4827658342681700.0.azuredatabricks.net
     resourcegroup_name                 databricks-resource_groupe00496f8
    ```
-   
+
 1. Clean up and destroy stack
    ```bash
    pulumi destroy -y

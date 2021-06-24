@@ -26,6 +26,8 @@ Example   | Description |
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure workshop lab 2, azure serverless http trigger function workshop code. Code works independently, doesn't require workshop
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name
 [azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets.
+[azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
+[azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat
 
 ## Workshops
 Example   | Description |
@@ -42,14 +44,8 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
  1. Pull WorkFlow Files for Python with comments by github actions
     - [pull_request_python.yml](.github/workflows/pull_request_python.yml)
 
- 1. Push WorkFlow File for Python with comments by github actions
-    - [push_python.yml](.github/workflows/push_typescript.yml)
-
  1. Pull WorkFlow Files for Typescript with comments by github actions
     - [pull_request_ts.yml](.github/workflows/pull_request_typescript.yml)
-
- 1. Push WorkFlow File for Typscript with comments by github actions
-    - [push_typescript.yml](.github/workflows/push_typescript.yml)
 
  1. SuperLinter setup
     - [super-linter](https://github.com/github/super-linter) setup
