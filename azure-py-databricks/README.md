@@ -1,17 +1,14 @@
 # An Azure Databricks workspace with vnet peering in python.  
-  An Azure Databricks workspace with vnet peering in python.
-  The vnet peering will peer to an already created virtual network. Everything built in python.
+  An Azure Databricks workspace
   
 * Built using [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
     * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
-    * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/)
-    * [virtual network peering](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/vnetpeering/) 
+    * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/) 
 
 ## Prerequisites
 
 * [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
 * [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) (if your Azure CLI is configured, no further changes are required)
-* An azure virtual network that is **different** from the one that will be created in this(automatically a new vnet is created for databricks) stack MUST already exist.
 
 ## Deployment
 
@@ -41,8 +38,74 @@
    
    ```bash
    pulumi config set azure-native:location eastus2
-   pulumi config set mynames demo
-   pulumi config set virtual_network_cidr 10.0.0.0/23
-   pulumi config set subnet_1_cidr 10.0.0.0/22
-   pulumi config set subnet_2_cidr 10.0.2.0/23
+   ```
+1. Run `pulumi up` to preview and deploy changes.
+  
+    ```bash
+    pulumi up
+    ```
+    Results:
+    ```
+    Previewing update (dev)
+
+    View Live: https://app.pulumi.com/shaht/azure-py-databricks/dev/previews/81f53e84-a81b-4946-97a6-321e9c4b14d2
+
+        Type                                     Name                       Plan       
+    +   pulumi:pulumi:Stack                      azure-py-databricks-dev    create     
+    +   ├─ azure-native:resources:ResourceGroup  databricks-resource_group  create     
+    +   └─ azure-native:databricks:Workspace     databricks-workspace       create     
+    
+    Resources:
+        + 3 to create
+
+    Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
+    yes
+    > no
+    details
+    ```
+
+1.  You must select `y` to continue deployment
+    Results
+    ```
+    Updating (dev)
+
+    View Live: https://app.pulumi.com/shaht/azure-py-databricks/dev/updates/22
+
+        Type                                     Name                       Status      
+    +   pulumi:pulumi:Stack                      azure-py-databricks-dev    created     
+    +   ├─ azure-native:resources:ResourceGroup  databricks-resource_group  created     
+    +   └─ azure-native:databricks:Workspace     databricks-workspace       created     
+    
+    Outputs:
+        databricks_managed_resource_group: "databricks-managed-rg"
+        databricks_workspace_name        : "databricks-workspace8de1ba45"
+        databricks_workspace_status      : "Succeeded"
+        databricks_workspace_url         : "adb-4827658342681700.0.azuredatabricks.net"
+        resourcegroup_name               : "databricks-resource_groupe00496f8"
+
+    Resources:
+        + 3 created
+
+    Duration: 2m24s
+    ```
+
+1. Check out the outputs via pulumi stack output
+   ```bash
+   pulumi stack output
+   ```
+   
+   Results
+   ```
+   Current stack outputs (5):
+    OUTPUT                             VALUE
+    databricks_managed_resource_group  databricks-managed-rg
+    databricks_workspace_name          databricks-workspace8de1ba45
+    databricks_workspace_status        Succeeded
+    databricks_workspace_url           adb-4827658342681700.0.azuredatabricks.net
+    resourcegroup_name                 databricks-resource_groupe00496f8
+   ```
+   
+1. Clean up and destroy stack
+   ```bash
+   pulumi destroy -y
    ```
