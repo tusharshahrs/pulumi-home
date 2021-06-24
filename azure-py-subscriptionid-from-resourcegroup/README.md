@@ -1,6 +1,6 @@
 # Azure Resource Group returning subscripion id in python
 
-Create an Azure resource group and return the **subscripionId**
+Create an Azure resource group and return the Azure **subscriptionId**
 
 ## Deployment
 
