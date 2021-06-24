@@ -1,4 +1,7 @@
-# Pulumi:  An Azure Databricks workspace with vnet peering.  The vnet peering will peer to an already created virtual network. This is built in Python.
+# An Azure Databricks workspace with vnet peering in python.  
+  An Azure Databricks workspace with vnet peering in python.
+  The vnet peering will peer to an already created virtual network. Everything built in python.
+  
 * Built using [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
     * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
     * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/)
