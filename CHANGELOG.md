@@ -2,6 +2,8 @@
 
 ## (2021-06-24)
 - Added azure-py-vnet
+- Added azure-py-databricks
+- removed the push_ts and push_python github actions
 
 ## (2021-06-23)
 - Added azure-workshop-ts
