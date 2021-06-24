@@ -97,7 +97,7 @@ Duration: 3s
 Now run the `az` CLI to list the containers in this new account:
 
 ```bash
-az storage container list --account-name $(pulumi stack output storageaccount)
+az storage container list --account-name $(pulumi stack output storageaccount) -o table
 ```
 
 The response will be **[]**
@@ -131,7 +131,7 @@ Add these lines ot the `index.ts` file after the export of the storage account
 
 ```ts
 // Export the Blob Container
-export const blobcontaine = container.name;
+export const blobcontainer = container.name;
 ```
 > :white_check_mark: After this change, your `index.ts` should [look like this](./code/04/step4/index.ts).
 

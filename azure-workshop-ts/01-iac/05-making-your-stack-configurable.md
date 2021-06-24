@@ -91,7 +91,7 @@ Resources:
 
 And you will see the contents added above when you run
 ```bash
-az storage container list --account-name $(pulumi stack output storageaccount)
+az storage container list --account-name $(pulumi stack output storageaccount) -o table
 ```
 
 The output will be
