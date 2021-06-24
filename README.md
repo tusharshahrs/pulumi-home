@@ -17,7 +17,7 @@ Example   | Description |
 [aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) 
 [aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3
 [aws-ts-acm-awsguard](aws-ts-acm-awsguard) | tls private key, aws self signed certificate and acm created. Running awsguard
-[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. Prereq for databricks
+
 
 ## Azure
 Example   | Description |
@@ -25,7 +25,7 @@ Example   | Description |
 [azure-ts-iac-workshop-lab1](azure-ts-iac-workshop-lab1) | azure workshop lab 1, creates resourceg group, storage account, and blob container. Code works independently, doesn't require workshop
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure workshop lab 2, azure serverless http trigger function workshop code. Code works independently, doesn't require workshop
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name
-
+[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets.
 
 ## Workshops
 Example   | Description |
