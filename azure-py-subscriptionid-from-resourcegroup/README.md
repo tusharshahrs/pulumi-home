@@ -1,4 +1,4 @@
-# Azure Resource Group returning subscripion id in python
+# Azure Resource Group returning subscription id in python
 
 Create an Azure resource group and return the Azure **subscriptionId**
 
