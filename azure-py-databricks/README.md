@@ -48,7 +48,7 @@
     ```
     Previewing update (dev)
 
-    View Live: https://app.pulumi.com/shaht/azure-py-databricks/dev/previews/81f53e84-a81b-4946-97a6-321e9c4b14d2
+    View Live: https://app.pulumi.com/myuser/azure-py-databricks/dev/previews/81f53e84-a81b-4946-97a6-321e9c4b14d2
 
         Type                                     Name                       Plan       
     +   pulumi:pulumi:Stack                      azure-py-databricks-dev    create     
@@ -69,7 +69,7 @@
     ```
     Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/azure-py-databricks/dev/updates/22
+    View Live: https://app.pulumi.com/myuser/azure-py-databricks/dev/updates/22
 
         Type                                     Name                       Status      
     +   pulumi:pulumi:Stack                      azure-py-databricks-dev    created     
