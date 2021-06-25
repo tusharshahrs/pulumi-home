@@ -8,7 +8,10 @@ schemes:
 paths:
   /test:
     post:
-      responses: {}
+      responses: {
+        "200": {
+          "description": "200 response"}
+      }
       x-amazon-apigateway-integration:
         uri: "{{ api_airtable_invoke_arn }}"
         httpMethod: "POST"
