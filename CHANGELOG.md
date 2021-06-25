@@ -1,4 +1,4 @@
-## CHANGELOG
+# CHANGELOG
 
 ## (2021-06-25)
 - Added aws-py-apigateway-lambda

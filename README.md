@@ -2,7 +2,7 @@
 
 This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, this may graduate to [pulumi examples](https://github.com/pulumi/examples)
 
-## Examples are in different languages 
+## Examples are in different languages
 
 **ts** = `typescript`
 
@@ -14,7 +14,7 @@ Example   | Description |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences
 [aws-ts-sshkey](aws-ts-sshkey)| ssh key
 [aws-ts-vpc-crosswalk](aws-ts-vpc-crosswalk)| vpc built in typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/)
-[aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) 
+[aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences)
 [aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3
 [aws-ts-acm-awsguard](aws-ts-acm-awsguard) | tls private key, aws self signed certificate and acm created. Running awsguard
 [aws-py-apigateway-lambda](aws-py-apigateway-lambda)| api gateway with lambda
@@ -37,8 +37,6 @@ Example   | Description |
 
 ## Pulumi Github Actions Setup (Optional)
 We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). 
-
- 1. Pulumi’s [GitHub Actions](https://docs.github.com/en/actions) help you deploy apps and infrastructure to your cloud of choice, using nothing but code in your favorite language and GitHub. This includes previewing, validating, and collaborating on proposed deployments in the context of Pull Requests, and triggering deployments or promotions between different environments by merging or directly committing changes.
 
  1. Located in [.github/workflows](.github/workflows)
 
