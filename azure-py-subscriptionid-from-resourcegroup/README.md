@@ -4,12 +4,12 @@ Create an Azure resource group and return the Azure **subscriptionId**
 
 ## Deployment
 
-1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/). 
+1. Initialize a new stack called `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
     ```bash
     pulumi stack init dev
     ```
 
-1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step):
+1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
     ```bash
     az login
     ```
@@ -27,7 +27,7 @@ Create an Azure resource group and return the Azure **subscriptionId**
 1. Set the confi values via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
 
    Here are Azure regions [see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions)
-   
+
    ```bash
    pulumi config set azure-native:location eastus2
    ```
@@ -38,7 +38,7 @@ Create an Azure resource group and return the Azure **subscriptionId**
     pulumi up
     ```
     Results
-    ```
+    ```bash
     Previewing update (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-subscriptionid-from-resourcegroup/dev/previews/9fb89f31-af2b-464a-962a-66de142e402d
@@ -49,9 +49,9 @@ Create an Azure resource group and return the Azure **subscriptionId**
     
     Resources:
         + 2 to create
-    ```
+    ```bash
 1. Select **yes** and the resources are created along with outputs
-   ```
+   ```bash
    Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-subscriptionid-from-resourcegroup/dev/updates/8
@@ -75,7 +75,7 @@ Create an Azure resource group and return the Azure **subscriptionId**
    pulumi stack output
    ```
    Results
-   ```
+   ```bash
    Current stack outputs (3):
     OUTPUT               VALUE
     resource_group_id    [secret]
@@ -83,7 +83,7 @@ Create an Azure resource group and return the Azure **subscriptionId**
     subscription_id      [secret]
    ```
 
-1.  The outputs are secrets. To view them run the following
+1. The outputs are secrets. To view them run the following
     ```bash
     pulumi stack output --show-secrets
     ```

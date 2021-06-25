@@ -35,8 +35,8 @@ dev    48 minutes ago  5               https://app.pulumi.com/shaht/iac-workshop
 prod*  n/a             n/a             https://app.pulumi.com/shaht/iac-workshop/prod
 ```
 
-Note that the `*` means the stack we have currently selected.  You can switch stacks via [pulumi stack select](https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/).  Since we have never deployed the stack, 
-you will see **n/a** showup.
+Note that the `*` means the stack we have currently selected.  You can switch stacks via [pulumi stack select](https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/).  Since we have never deployed the stack, you will see **n/a** showup.
+
 ## Step 2 &mdash; Deploy the New Stack
 
 Now deploy all of the changes:
@@ -48,7 +48,7 @@ pulumi up
 This will create an entirely new set of resources from scratch, unrelated to the existing `dev` stack's resources.
 This is created in a different Azure region.
 
-```
+```bash
 Previewing update (prod)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/prod/previews/3013316a-4628-486b-9ce0-189d6b64b8e1
@@ -90,7 +90,7 @@ pulumi stack output
 ```
 
 Output
-```
+```bash
 Current stack is prod:
     Owner: myuser
     Last updated: 26 minutes ago (2021-06-22 15:01:27.679572 -0400 EDT)
@@ -118,7 +118,7 @@ az storage container list --account-name $(pulumi stack output storageaccount) -
 ```
 
 Output
-```
+```bash
 Name      Lease Status    Last Modified
 --------  --------------  -------------------------
 htmlprod  unlocked        2021-06-22T19:01:27+00:00

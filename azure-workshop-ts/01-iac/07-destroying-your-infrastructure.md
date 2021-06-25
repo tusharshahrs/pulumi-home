@@ -12,7 +12,7 @@ pulumi destroy
 
 This will show you a preview, much like the `pulumi up` command does:
 
-```
+```bash
 Previewing destroy (prod)
 
 View Live: https://app.pulumi.com/shaht/iac-workshop/prod/previews/2853f6ba-ad92-44c6-9efc-d8919b6bc7ee
@@ -39,7 +39,7 @@ Do you want to perform this destroy?  [Use arrows to move, enter to select, type
 
 To proceed, select `yes`.
 
-```
+```bash
 Destroying (prod)
 
 View Live: https://app.pulumi.com/shaht/iac-workshop/prod/updates/2
@@ -73,7 +73,7 @@ pulumi stack rm
 
 This is irreversible and so asks to confirm that this is your intent:
 
-```
+```bash
 This will permanently remove the 'prod' stack!
 Please confirm that this is what you'd like to do by typing ("prod"):
 ```
@@ -84,7 +84,7 @@ Type the name of the stack and hit enter. The stack is now gone.
 
 After destroying `prod`, you still have the `dev` stack. To destroy it too, first select it:
 
-```
+```bash
 pulumi stack select dev
 ```
 

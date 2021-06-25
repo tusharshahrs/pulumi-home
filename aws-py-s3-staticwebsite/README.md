@@ -1,5 +1,4 @@
 # Host a Static Website on Amazon S3
-[![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
 
 A static website that uses [S3's website support](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html).
 For a detailed walkthrough of this example, see the tutorial [Static Website on AWS S3](https://www.pulumi.com/docs/tutorials/aws/s3-website/).
@@ -39,7 +38,7 @@ with `***`.
     ```
 
     Result:
-    ```
+    ```bash
     Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/aws-py-s3-staticwebsite/dev/updates/1
@@ -69,7 +68,7 @@ with `***`.
     ```
 
     Result
-    ```
+    ```bash
     Current stack outputs (2):
     OUTPUT       VALUE
     bucket_name  s3-website-bucket-249d39a
@@ -83,7 +82,7 @@ with `***`.
     ```
 
     Result
-    ```
+    ```bash
     2021-06-23 11:11:13      13731 favicon.png
     2021-06-23 11:11:13        271 index.html
     2021-06-23 11:11:14      83564 python.png
@@ -96,7 +95,7 @@ with `***`.
     ```
 
     Result
-    ```
+    ```bash
     s3-website-bucket-249d39a.s3-website.us-east-2.amazonaws.com
     ```
 

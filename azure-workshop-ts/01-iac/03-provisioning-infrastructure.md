@@ -28,7 +28,7 @@ pulumi up
 
 This command evaluates your program, determines the resource updates to make, and shows you an outline of these changes:
 
-```
+```bash
 Previewing update (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/previews/d56eb674-e62c-4045-9e55-35305d4b21cb
@@ -48,7 +48,7 @@ Do you want to perform this update?  [Use arrows to move, enter to select, type 
 
 This is a summary view. Select `details` to view the full set of properties:
 
-```
+```bash
 + pulumi:pulumi:Stack: (create)
     [urn=urn:pulumi:dev::iac-workshop::pulumi:pulumi:Stack::iac-workshop-dev]
     + azure-native:resources:ResourceGroup: (create)
@@ -69,7 +69,7 @@ The stack resource is a synthetic resource that all resources your program creat
 
 Now that we've seen the full set of changes, let's deploy them. Select `yes`:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/updates/1
@@ -99,7 +99,7 @@ pulumi stack output
 
 will display
 
-```
+```bash
 Current stack outputs (1):
     OUTPUT           VALUE
     resourcegroup  myresourcegroup01e531dc

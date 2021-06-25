@@ -1,12 +1,11 @@
 # Deploying AWS ACM with AWSGuard in Typescript
 
 Creating a tls private key, a self signed certificate, and then an ACM certificate.  Also,
-creating a [AWSGuard](https://www.pulumi.com/docs/guides/crossguard/awsguard/) policy for 
+creating a [AWSGuard](https://www.pulumi.com/docs/guides/crossguard/awsguard/) policy for
 ACM certificate expiration days.
 ## Deployment
 
-1.  Create a new stack:
-
+1. Create a new stack
     ```bash
     pulumi stack init dev
     ```
@@ -22,19 +21,19 @@ ACM certificate expiration days.
     cd ..
     ```
 
-1.  Configure the location to deploy the resources to.  The default region is us-east-1.  We are deploying to us-east-2(Ohio)
+1. Configure the location to deploy the resources to. The default region is us-east-1. We are deploying to us-east-2(Ohio)
 
     ```bash
     pulumi config set aws:region us-east-2
     ```
+
 1. Run `pulumi up` to preview and select `yes` to deploy changes:
-   
    ```bash
    pulumi up
    ```
 
    Results
-   ```
+   ```bash
    Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/aws-ts-acm-awsguard/dev/updates/1
@@ -57,9 +56,8 @@ ACM certificate expiration days.
     Duration: 5s
    ```
 
-1. Validate the certification expiration.  This is run from the same place that the Pulumi.yaml
-    resides
-   
+1. Validate the certification expiration.  This is run from the same place that the Pulumi.yaml resides
+
    ```bash
    pulumi preview --policy-pack acmcertificateexpiration
    ```

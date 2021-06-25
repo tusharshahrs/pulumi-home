@@ -1,20 +1,21 @@
-# Pulumi:  A VirtualNetwork with two subnets on Azure-NextGen built in Python.
-* Built using [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-nextgen/) api
-    * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
-    * [virtual network](https://www.pulumi.com/docs/reference/pkg/azure-native/network/virtualnetwork/) 
-    * [subnet](https://www.pulumi.com/docs/reference/pkg/azure-native/network/subnet/)
+# Pulumi:  A VirtualNetwork with two subnets on Azure-NextGen built in Python
+* Built using the following resources
+  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-nextgen/) api
+  * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
+  * [virtual network](https://www.pulumi.com/docs/reference/pkg/azure-native/network/virtualnetwork/)
+  * [subnet](https://www.pulumi.com/docs/reference/pkg/azure-native/network/subnet/)
 
 ## Prerequisites
 
 * [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
-* [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) (if your Azure CLI is configured, no further changes are required)
+* [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) If your Azure CLI is configured, no further changes are required.
 
 ## Deployment
 
-1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/). 
-    ```bash
-    pulumi stack init dev
-    ```
+1. Initialize a new stack called `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
+   ```bash
+   pulumi stack init dev
+   ```
 
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step):
     ```bash
@@ -34,7 +35,7 @@
 1. Set the confi values via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
 
    Here are Azure regions [see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions)
-   
+
    ```bash
    pulumi config set azure-native:location eastus2
    pulumi config set mynames demo
@@ -48,7 +49,7 @@
     pulumi up
     ```
     Results
-    ```
+    ```bash
     Previewing update (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-vnet/dev/previews/e31a02c1-c98e-4147-a0df-ebdd14e7f473
@@ -69,7 +70,7 @@
     details
     ```
 1. Select **yes** and the resources are created along with outputs
-    ```
+    ```bash
     Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-vnet/dev/updates/9
@@ -106,7 +107,7 @@
    ```
    Results
 
-    ```
+    ```bash
     Current stack outputs (7):
         OUTPUT                   VALUE
         resourcegroup_name       peering-to-databricks-resource_group07399224
@@ -125,7 +126,7 @@
    ```
 
    Results
-   ```
+   ```bash
     Current stack is dev:
         Owner: myuser
         Last updated: 3 minutes ago (2021-06-24 08:45:03.946094 -0400 EDT)

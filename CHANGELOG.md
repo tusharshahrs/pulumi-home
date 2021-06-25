@@ -1,4 +1,7 @@
-## CHANGELOG
+# CHANGELOG
+
+## (2021-06-25)
+- Added aws-py-apigateway-lambda
 
 ## (2021-06-24)
 - Added azure-py-vnet

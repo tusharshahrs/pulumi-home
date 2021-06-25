@@ -35,8 +35,8 @@ You will also use the command-line interface (CLI) tool to log in to an Azure su
 
 After you complete the installation, open a command prompt and type `az`. You should see the welcome message:
 
-```
-$ az
+```bash
+az
      /\
     /  \    _____   _ _  ___ _
    / /\ \  |_  / | | | \'__/ _\
@@ -52,15 +52,14 @@ Welcome to the cool new Azure CLI!
 You will use Pulumi to depoy infrastructure changes using code. [Install Pulumi here](https://www.pulumi.com/docs/get-started/install/). After installing the CLI, verify that it is working:
 
 ```bash
-$ pulumi version
+pulumi version
 v3.5.1
 ```
 
 The Pulumi CLI will ask you to login to your Pulumi account as needed. If you prefer to signup now, [go to the signup page](http://app.pulumi.com/signup). Multiple identity provider options are available &mdash; email, GitHub, GitLab, or Atlassian &mdash; and each of them will work equally well for these labs.
 
 Setup your AccessToken
- - Navigate to **Profile Settings** by selecting your avatar, then **Settings**. The Profile tab is displayed by default.
-   ![Profile Image](https://www.pulumi.com/images/docs/reference/service/user-profile-page.png)
- - Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
- - On your cli: pulumi login
-   * Enter your *AccessToken* from the previous step.
+- Navigate to **Profile Settings** by selecting your avatar, then **Settings**. The Profile tab is displayed by default. ![Profile Image](https://www.pulumi.com/images/docs/reference/service/user-profile-page.png)
+- Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
+- On your cli: pulumi login
+  - Enter your *AccessToken* from the previous step.
