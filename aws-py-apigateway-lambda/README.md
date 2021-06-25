@@ -39,7 +39,7 @@ with `***`.
     ```
     Previewing update (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-py-apigateway-lambda/dev/previews/3d8befe8-4911-452b-8ca0-789d4a0a8192
+    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/previews/3d8befe8-4911-452b-8ca0-789d4a0a8192
 
         Type                          Name                          Plan       
     +   pulumi:pulumi:Stack           aws-py-apigateway-lambda-dev  create..   
@@ -68,7 +68,7 @@ with `***`.
     ```
     Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-py-apigateway-lambda/dev/updates/1
+    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/updates/1
 
         Type                          Name                          Status       
     +   pulumi:pulumi:Stack           aws-py-apigateway-lambda-dev  creating     
@@ -148,7 +148,7 @@ with `***`.
 
     Result
     ```
-    View Live: https://app.pulumi.com/shaht/aws-py-apigateway-lambda/dev/updates/2
+    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/updates/2
 
         Type                          Name                          Status       
         pulumi:pulumi:Stack           aws-py-apigateway-lambda-dev               
@@ -170,9 +170,9 @@ with `***`.
     - api_airtable_name                   : "demo-api-airtable-57e9bb1"
     - api_gateway_deployment_id           : "28k4di"
     - api_gateway_deployment_invoke_url   : "https://x9x67i4m00.execute-api.us-east-2.amazonaws.com/"
-    - api_gateway_restapi_excution_arn    : "arn:aws:execute-api:us-east-2:052848974346:x9x67i4m00"
+    - api_gateway_restapi_excution_arn    : "arn:aws:execute-api:us-east-2:1234556789:x9x67i4m00"
     - api_gateway_restapi_id              : "x9x67i4m00"
-    - api_gateway_stage_excution_arn      : "arn:aws:execute-api:us-east-2:052848974346:x9x67i4m00/dev"
+    - api_gateway_stage_excution_arn      : "arn:aws:execute-api:us-east-2:1234556789:x9x67i4m00/dev"
     - api_gateway_stage_id                : "ags-x9x67i4m00-dev"
     - api_lambda_permission_name          : "demo-api-lambda-permission-41fffc4"
     - api_lambda_role_arn                 : "arn:aws:iam::052848974346:role/demo-lambdaRole-f97a747"
