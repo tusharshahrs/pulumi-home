@@ -48,7 +48,7 @@ pulumi up
 
 This results in an error like the following:
 
-```
+```bash
 Previewing update (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/previews/f44c8f88-e84b-451b-b4a9-f5b5ae3179c6
@@ -72,7 +72,7 @@ To make things interesting, I set the name to `html` which is different from the
 
 Run `pulumi up` again. This detects that the container has changed and will perform a simple update:
 
-```
+```bash
 Previewing update (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/previews/6c32df8e-1aa6-4102-b4ab-88b0e9af53cf
@@ -95,7 +95,7 @@ az storage container list --account-name $(pulumi stack output storageaccount) -
 ```
 
 The output will be
-```
+```bash
 Name    Lease Status    Last Modified
 ------  --------------  -------------------------
 html    unlocked        2021-06-22T18:10:12+00:00

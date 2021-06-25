@@ -23,7 +23,7 @@ pulumi config set azure-native:location eastus2
 [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/) allows us to pass in [configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values) from the command line.
 Feel free to choose any Azure region that supports the services used in these labs ([see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for current list of available regions).  A list of some of the regions:
 
-```
+```bash
 centralus,eastasia,southeastasia,eastus,eastus2,westus,westus2,northcentralus,southcentralus,
 westcentralus,northeurope,westeurope,japaneast,japanwest,brazilsouth,australiasoutheast,australiaeast,
 westindia,southindia,centralindia,canadacentral,canadaeast,uksouth,ukwest,koreacentral,koreasouth,
@@ -41,7 +41,7 @@ Simply login to the Azure CLI and Pulumi will automatically use your credentials
 az login
 ```
 
-```
+```bash
 ...
 You have logged in. Now let us find all the subscriptions to which you have access...
 ...
@@ -55,7 +55,7 @@ az account list
 
 Pick out the `<id>` from the list and run:
 
-```
+```bash
 az account set --subscription=<id>
 ```
 

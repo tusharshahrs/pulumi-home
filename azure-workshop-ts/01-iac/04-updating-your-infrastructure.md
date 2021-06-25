@@ -33,7 +33,7 @@ pulumi up
 
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/updates/2
@@ -74,7 +74,7 @@ pulumi up
 
 Notice a new `Outputs` section is included in the output containing the storage account's name:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/updates/3
@@ -101,7 +101,7 @@ az storage container list --account-name $(pulumi stack output storageaccount) -
 ```
 
 The response will be **[]**
-```
+```bash
 There are no credentials provided in your command and environment, we will query for account key for your storage account.
 It is recommended to provide --connection-string, --account-key or --sas-token in your command as credentials.
 
@@ -143,7 +143,7 @@ pulumi up
 
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 View Live: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
 
      Type                                   Name              Status      
@@ -169,7 +169,7 @@ az storage container list --account-name $(pulumi stack output storageaccount) -
 ```
 
 Output will be
-```
+```bash
 Name    Lease Status    Last Modified
 ------  --------------  -------------------------
 files   unlocked        2021-06-22T17:49:13+00:00

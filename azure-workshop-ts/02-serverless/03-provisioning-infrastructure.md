@@ -26,7 +26,7 @@ pulumi up
 
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/1
@@ -79,7 +79,7 @@ pulumi up
 ```
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/2
@@ -144,7 +144,7 @@ pulumi up
 ```
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/3
@@ -163,7 +163,7 @@ Resources:
     3 unchanged
 
 Duration: 9s
-```    
+```
 
 ## Step 4 &mdash; Retrieve Storage Account Keys and Build Connection String
 
@@ -204,7 +204,7 @@ pulumi up
 ```
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/4
@@ -248,13 +248,16 @@ const app = new web.WebApp("functionapp", {
 });
 ```
 
-The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file(*(**typescript**) to the Function App. The app will download the specified file, extract the code from it, discover the functions, and run them. We’ve prepared this zip file for you to get started faster, you can find its code [here](https://github.com/tusharshahrs/demo/tree/main/content/lab/pulumi/azure-native/typescript). The code contains a single HTTP-triggered Azure Function in the zip file.
+The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file(*(**typescript**) to the Function App. The app will download the specified file, extract the code from it, discover the functions, and run them. 
+We’ve prepared this zip file for you to get started faster, you can find its code [here](https://github.com/tusharshahrs/demo/tree/main/content/lab/pulumi/azure-native/typescript). The code contains a single HTTP-triggered Azure Function in the zip file.
 
 > :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step5.ts).
 
 ## Step 6 &mdash; Export the Function App endpoint
 
-Finally, declare a stack output called endpoint to export the URL of the Azure Function using the defaultHostName.  Now, if you inspect the type of the app.defaultHostname, you will see that it's `pulumi.Output<string>` not just `string`. That’s because Pulumi runs your program before it creates any infrastructure, and it wouldn’t be able to put an actual string into the variable. You can think of `Output<T>` as similar to `Promise<T>`, although they are not the same thing. A quick aside here, for those not familiar with what <T> is. <T> is a mechanism for denoting that the value is known at some point in the future. It comes from [Generic Programming](https://en.wikipedia.org/wiki/Generic_programming) and is really useful in situations like this, when we (ie, us running our Pulumi programs) are waiting for the value to be returned from our cloud providers API.  You want to export the full endpoint of your Function App.  Add this to the end of your code after the functionapp called `app`
+Finally, declare a stack output called endpoint to export the URL of the Azure Function using the defaultHostName.  Now, if you inspect the type of the app.defaultHostname, you will see that it's `pulumi.Output<string>` not just `string`. That’s because Pulumi runs your program before it creates any infrastructure, and it wouldn’t be able to put an actual string into the variable. You can think of `Output<T>` as similar to `Promise<T>`, although they are not the same thing. A quick aside here, for those not familiar with what <T> is. <T> is a mechanism for denoting that the value is known at some point in the future. 
+It comes from [Generic Programming](https://en.wikipedia.org/wiki/Generic_programming) and is really useful in situations like this, when we (ie, us running our Pulumi programs) are waiting for the value to be returned from our cloud providers API.  
+You want to export the full endpoint of your Function App.  Add this to the end of your code after the functionapp called `app`
 
 ```ts
 //Export the functionapp endpoint and create the url for it.
@@ -272,7 +275,7 @@ pulumi up
 ```
 
 Results
-```
+```bash
 Updating (dev)
 
 View Live: https://app.pulumi.com/myuser/azure-serverlessfunction-workshop/dev/updates/5
@@ -303,7 +306,7 @@ pulumi stack output endpoint
 
 You will get something similar to the following:
 
-```
+```bash
 https://functionapp3aa367f4.azurewebsites.net/api/hello
 ```
 
@@ -323,7 +326,7 @@ pulumi destroy
 ```
 This will give you a preview and selecting `yes` will apply the changes:
 
-```
+```bash
 Do you want to perform this destroy? yes
 Destroying (dev)
 

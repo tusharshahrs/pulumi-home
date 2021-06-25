@@ -1,9 +1,10 @@
-# An Azure Databricks workspace in python.  
+# An Azure Databricks workspace in python
   An Azure Databricks workspace in python.
   
-* Built using [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
-    * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
-    * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/) 
+* Built using the following resources
+  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
+  * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
+  * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/) 
 
 ## Prerequisites
 
@@ -11,8 +12,7 @@
 * [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) (if your Azure CLI is configured, no further changes are required)
 
 ## Deployment
-
-1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/). 
+1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
     ```bash
     pulumi stack init dev
     ```
@@ -44,8 +44,8 @@
     ```bash
     pulumi up
     ```
-    Results:
-    ```
+    Results
+    ```bash
     Previewing update (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-databricks/dev/previews/81f53e84-a81b-4946-97a6-321e9c4b14d2
@@ -66,7 +66,7 @@
 
 1.  You must select `y` to continue deployment
     Results
-    ```
+    ```bash
     Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-databricks/dev/updates/22
@@ -93,9 +93,8 @@
    ```bash
    pulumi stack output
    ```
-   
    Results
-   ```
+   ```bash
    Current stack outputs (5):
     OUTPUT                             VALUE
     databricks_managed_resource_group  databricks-managed-rg

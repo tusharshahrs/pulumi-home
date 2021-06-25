@@ -23,7 +23,7 @@ pulumi new typescript -y
 
 This will print output similar to the following with a bit more information and status as it goes:
 
-```
+```bash
 Created project 'azure-serverlessfunction-workshop'
 Created stack 'dev'
 Installing dependencies...
@@ -55,6 +55,6 @@ import * as pulumi from "@pulumi/pulumi";
 
 Feel free to explore the other files, although we won't be editing any of them by hand.
 
-# Next Steps
+## Next Steps
 
 * [Configuring Azure](./02-configuring-azure.md)
