@@ -54,4 +54,3 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
     - VALIDATE_PYTHON_FLAKE8 turned OFF
     - VALIDATE_PYTHON_ISORT turned OFF
     - VALIDATE_TYPESCRIPT_STANDARD turned OFF
-    - VALIDATE_ALL_CODEBASE turned OFF   - Will parse the entire repository and find all files to validate across all types. NOTE: When set to false, only new or edited files will be parsed for validation.
