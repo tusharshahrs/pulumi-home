@@ -5,7 +5,7 @@ creating a [AWSGuard](https://www.pulumi.com/docs/guides/crossguard/awsguard/) p
 ACM certificate expiration days.
 ## Deployment
 
-1.  Create a new stack:
+1.  Create a new stack
     ```bash
     pulumi stack init dev
     ```
@@ -21,7 +21,7 @@ ACM certificate expiration days.
     cd ..
     ```
 
-1.  Configure the location to deploy the resources to.  The default region is us-east-1. We are deploying to us-east-2(Ohio)
+1.  Configure the location to deploy the resources to. The default region is us-east-1. We are deploying to us-east-2(Ohio)
 
     ```bash
     pulumi config set aws:region us-east-2
@@ -57,7 +57,7 @@ ACM certificate expiration days.
    ```
 
 1. Validate the certification expiration.  This is run from the same place that the Pulumi.yaml resides
-   
+
    ```bash
    pulumi preview --policy-pack acmcertificateexpiration
    ```

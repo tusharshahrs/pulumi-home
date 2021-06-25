@@ -4,7 +4,7 @@
 * Built using the following resources
   * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
   * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
-  * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/) 
+  * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/)
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@
 1. Set the confi values via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
 
    Here are Azure regions [see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions)
-   
+
    ```bash
    pulumi config set azure-native:location eastus2
    ```
@@ -64,7 +64,7 @@
     details
     ```
 
-1.  You must select `y` to continue deployment
+1. You must select `y` to continue deployment
     Results
     ```bash
     Updating (dev)

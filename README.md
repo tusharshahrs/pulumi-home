@@ -36,7 +36,7 @@ Example   | Description |
 [azure-workshop-ts](azure-workshop-ts)| azure serverless http trigger function workshop in typescript
 
 ## Pulumi Github Actions Setup (Optional)
-We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions). 
+We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions).
 
  1. Located in [.github/workflows](.github/workflows)
 

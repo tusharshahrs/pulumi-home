@@ -36,7 +36,7 @@ with `***`.
     ```
 
     Result:
-    ```
+    ```bash
     Previewing update (dev)
 
     View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/previews/3d8befe8-4911-452b-8ca0-789d4a0a8192
@@ -65,7 +65,7 @@ with `***`.
 
 1. Select **yes** and the resources will be created
     Results
-    ```
+    ```bash
     Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/updates/1
@@ -116,7 +116,7 @@ with `***`.
     ```
 
     Result
-    ```
+    ```bash
     Current stack outputs (19):
     OUTPUT                                VALUE
     api_airtable.invoke_arn               arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:052848974346:function:demo-api-airtable-57e9bb1/invocations
@@ -141,13 +141,12 @@ with `***`.
     ```
 
 1.  To clean up resources, run **pulumi destroy**
-
     ```bash
     pulumi destroy -y
     ```
 
-    Result
-    ```
+    Results
+    ```bash
     View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda/dev/updates/2
 
         Type                          Name                          Status       
@@ -189,5 +188,3 @@ with `***`.
 
     Duration: 6s
     ```
-
-1.

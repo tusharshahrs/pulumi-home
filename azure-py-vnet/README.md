@@ -1,4 +1,4 @@
-# Pulumi:  A VirtualNetwork with two subnets on Azure-NextGen built in Python.
+# Pulumi:  A VirtualNetwork with two subnets on Azure-NextGen built in Python
 * Built using the following resources
   * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-nextgen/) api
   * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
@@ -8,14 +8,14 @@
 ## Prerequisites
 
 * [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
-* [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) (if your Azure CLI is configured, no further changes are required)
+* [Configure Pulumi to Use Azure](https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/) If your Azure CLI is configured, no further changes are required.
 
 ## Deployment
 
 1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/). 
-    ```bash
-    pulumi stack init dev
-    ```
+   ```bash
+   pulumi stack init dev
+   ```
 
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step):
     ```bash
