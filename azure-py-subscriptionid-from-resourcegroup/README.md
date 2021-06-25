@@ -4,12 +4,12 @@ Create an Azure resource group and return the Azure **subscriptionId**
 
 ## Deployment
 
-1. Initialize a new stack called `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/). 
+1. Initialize a new stack called `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
     ```bash
     pulumi stack init dev
     ```
 
-1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step):
+1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
     ```bash
     az login
     ```
@@ -51,7 +51,7 @@ Create an Azure resource group and return the Azure **subscriptionId**
         + 2 to create
     ```bash
 1. Select **yes** and the resources are created along with outputs
-   ```
+   ```bash
    Updating (dev)
 
     View Live: https://app.pulumi.com/myuser/azure-py-subscriptionid-from-resourcegroup/dev/updates/8

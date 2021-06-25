@@ -140,7 +140,7 @@ with `***`.
     marv_api_key_name                     demo-marv-internal-970b238
     ```
 
-1.  To clean up resources, run **pulumi destroy**
+1. To clean up resources, run **pulumi destroy**
     ```bash
     pulumi destroy -y
     ```
