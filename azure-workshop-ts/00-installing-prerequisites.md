@@ -62,4 +62,4 @@ Setup your AccessToken
 - Navigate to **Profile Settings** by selecting your avatar, then **Settings**. The Profile tab is displayed by default. ![Profile Image](https://www.pulumi.com/images/docs/reference/service/user-profile-page.png)
 - Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
 - On your cli: pulumi login
- * Enter your *AccessToken* from the previous step.
+   - Enter your *AccessToken* from the previous step.

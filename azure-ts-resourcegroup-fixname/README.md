@@ -3,13 +3,13 @@
 Azure resource group creation that does not randomly append suffix
 
 ## Deployment
-1.  Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
+1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
 
     ```bash
     az login
     ```
 
-1.  Create a new stack
+1. Create a new stack
 
     ```bash
     pulumi stack init dev
@@ -18,7 +18,7 @@ Azure resource group creation that does not randomly append suffix
     ```bash
     npm install
     ```
-1.  Configure the location to deploy the resources to. The Azure region to deploy to is pre-set to **WestUS** - but you can modify the region you would like to deploy to.
+1. Configure the location to deploy the resources to. The Azure region to deploy to is pre-set to **WestUS** - but you can modify the region you would like to deploy to.
 
     ```bash
     pulumi config set azure-native:location eastus2

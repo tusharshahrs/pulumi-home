@@ -169,7 +169,7 @@ Duration: 9s
 
 We need to pass a Storage Account connection string to the settings of our future Function App. As this information is sensitive, Azure doesn't return it by default in the outputs of the Storage Account resource.
 
-We need to make a separate invocation to the listStorageAccountKeys function to retrieve storage account keys. This invocation can only be run after the storage account is created. Therefore, we must place it inside an [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) call that depends on a storage account. 
+We need to make a separate invocation to the listStorageAccountKeys function to retrieve storage account keys. This invocation can only be run after the storage account is created. Therefore, we must place it inside an [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) call that depends on a storage account.
 We will also be using [all](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#all) since we need to use an `apply` over many resources.
 
 Add this line to the `index.ts` right after creating the export of the consumption plan
@@ -256,7 +256,7 @@ We’ve prepared this zip file for you to get started faster, you can find its c
 
 ## Step 6 &mdash; Export the Function App endpoint
 
-Finally, declare a stack output called endpoint to export the URL of the Azure Function using the defaultHostName. Now, if you inspect the type of the app.defaultHostname, you will see that it's `pulumi.Output<string>` not just `string`. That’s because Pulumi runs your program before it creates any infrastructure, and it wouldn’t be able to put an actual string into the variable. 
+Finally, declare a stack output called endpoint to export the URL of the Azure Function using the defaultHostName. Now, if you inspect the type of the app.defaultHostname, you will see that it's `pulumi.Output<string>` not just `string`. That’s because Pulumi runs your program before it creates any infrastructure, and it wouldn’t be able to put an actual string into the variable.
 You can think of `Output<T>` as similar to `Promise<T>`, although they are not the same thing. A quick aside here, for those not familiar with what <T> is. <T> is a mechanism for denoting that the value is known at some point in the future.
 It comes from [Generic Programming](https://en.wikipedia.org/wiki/Generic_programming) and is really useful in situations like this, when we (ie, us running our Pulumi programs) are waiting for the value to be returned from our cloud providers API.  
 You want to export the full endpoint of your Function App. Add this to the end of your code after the functionapp called `app`
