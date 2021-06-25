@@ -46,7 +46,7 @@ This is in typescript
 
     The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file to the Function App.
     The app will download the specified file, extract the code from it, discover the functions, and run them.
-    We’ve prepared this zip file for you to get started faster, you can find its 
+    We’ve prepared this zip file for you to get started faster, you can find its
     code [here](https://github.com/tusharshahrs/demo/tree/main/content/lab/pulumi/azure-native/typescript). The code contains a single HTTP-triggered Azure Function in the zip file.
 
 1. Run `pulumi up` to preview and select `yes` to deploy changes:

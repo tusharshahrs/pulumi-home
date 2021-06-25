@@ -1,6 +1,6 @@
 
 # Azure Workshop Typescript  - Lab 1
-Azure Infrastructure as Code Workshop Lab 1 code in Typescript. This example creates a 
+Azure Infrastructure as Code Workshop Lab 1 code in Typescript. This example creates a
 resource group, storage account, and blobcontainer calling [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) resources.
 
 ## Note
