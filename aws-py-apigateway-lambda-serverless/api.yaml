@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  version: "1"
+  title: marv
+security: [{}]
+paths:
+ /test1:
+   post:
+    responses: {
+        "200": {
+          description: "200 ok response"}
+    }
+    x-amazon-apigateway-integration:
+      httpMethod: "POST"
+      passthroughBehavior: "when_no_match"
+      type: "AWS_PROXY"
+      uri: "{{ api_airtable_invoke_arn }}"
