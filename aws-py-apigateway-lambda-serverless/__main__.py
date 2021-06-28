@@ -45,18 +45,6 @@ def swagger_route_handler(arn):
         },
     })
 
-# Create a single Swagger spec route handler for a Lambda function.
-def swagger_route_handler2(arn):
-    return ({
-        "x-amazon-apigateway-any-method": {
-            "x-amazon-apigateway-integration": {
-                "uri": f'arn:aws:apigateway:{aws.config.region}:lambda:path/2015-03-31/functions/{arn}/invocations',
-                "passthroughBehavior": "when_no_match",
-                "httpMethod": "POST",
-                "type": "aws_proxy",
-            },
-        },
-    })
 # Create a openapi spec 1st part
 first_part_1 = """
 openapi: 3.0.0
