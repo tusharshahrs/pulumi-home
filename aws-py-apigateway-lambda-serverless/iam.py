@@ -7,7 +7,7 @@ lambda_role = iam.Role('demo-lambda-role',
             {
                 "Action": "sts:AssumeRole",
                 "Principal": {
-                    "Service": "lambda.amazonaws.com"
+                    "Service":"lambda.amazonaws.com"  
                 },
                 "Effect": "Allow",
                 "Sid": ""
