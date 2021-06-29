@@ -59,6 +59,8 @@ paths:
         "200": {
           description: "200 ok response"}
     }
+    x-amazon-apigateway-api-key-source: AUTHORIZER
+    x-amazon-apigateway-auth: NONE
     x-amazon-apigateway-integration:
       httpMethod: "POST"
       passthroughBehavior: "when_no_match"
