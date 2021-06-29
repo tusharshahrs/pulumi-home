@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## (2021-06-29)
+- Added aws-py-apigateway-lambda-serverless
+- removed broken code aws-py-apigateway-lambda
+
 ## (2021-06-25)
 - Added aws-py-apigateway-lambda
 

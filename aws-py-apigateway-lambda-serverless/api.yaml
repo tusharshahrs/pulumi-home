@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  version: "1"
+  title: marv
+security: [{}]
+paths:
+ /test1:
+   post:
+    responses: {
+        "200": {
+          description: "200 ok response"}
+    }
+    x-amazon-apigateway-api-key-source: HEADER
+    x-amazon-apigateway-auth: NONE
+    x-amazon-apigateway-integration:
+      httpMethod: "POST"
+      passthroughBehavior: "when_no_match"
+      type: "AWS_PROXY"
+      uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:1234567:function:demo-lamba-hello-765432/invocations"
