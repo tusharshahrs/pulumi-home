@@ -16,4 +16,4 @@ paths:
       httpMethod: "POST"
       passthroughBehavior: "when_no_match"
       type: "AWS_PROXY"
-      uri: """
+      uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:1234567:function:demo-lamba-hello-765432/invocations"

@@ -116,7 +116,7 @@ with `***`.
     apigateway-rest-endpoint                        https://0mv9g2w9lc.execute-api.us-east-2.amazonaws.com/dev
     apigateway-rest-endpoint_openapi_custom_path_1  https://jyv5mkmtee.execute-api.us-east-2.amazonaws.com/dev/test1
     ```
-1.  Validate via curl
+1. Validate via curl
     ```bash
     curl -X POST $(pulumi stack output apigateway-rest-endpoint_openapi_custom_path_1)
     ```
@@ -126,12 +126,12 @@ with `***`.
 1. Validate via Postman
 
    - Screen shot of [apigateway invoke url](https://share.getcloudapp.com/04u2Wqyg)
-   -  Generated code for **Postman**
+   - Generated code for **Postman**
         ```bash
         curl --location --request POST 'https://jyv5mkmtee.execute-api.us-east-2.amazonaws.com/dev/test1'
         ```
 
-1.  To clean up resources, run **pulumi destroy**
+1. To clean up resources, run **pulumi destroy**
 
     ```bash
     pulumi destroy -y
