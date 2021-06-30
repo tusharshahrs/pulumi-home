@@ -75,6 +75,7 @@ open_api_uri_1 = lambda_func.invoke_arn
 # Create the uri.  Combining the openapi spec and the lambda function
 final_openapi_spec_1 = Output.concat(f'{first_part_1}', '"', open_api_uri_1, '"')
 
+# First part of openapi spec
 header_part= """
 openapi: 3.0.0
 info:
@@ -84,6 +85,7 @@ security: [{}]
 paths:
 """
 
+# Creating path1
 path1 = """
  /test1:
    post:
@@ -99,6 +101,7 @@ path1 = """
       type: "AWS_PROXY"
       uri: """
 
+# Creating path2
 path2 = """
  /pets2:
    post:
@@ -114,6 +117,7 @@ path2 = """
       type: "AWS_PROXY"
       uri: """
 
+# Creating path 3
 path3 = """
  /pets3:
    post:
@@ -129,13 +133,19 @@ path3 = """
       type: "AWS_PROXY"
       uri: """
 
+# creating the 1st uri by combining the path1 with the lambda url
 path1_combine = Output.concat(f'{path1}', '"', open_api_uri_1, '"')
+# creating the 2nd uri by combining the path1 with the lambda url
 path2_combine = Output.concat(f'{path2}', '"', open_api_uri_1, '"')
+# creating the 3rd uri by combining the path1 with the lambda url
 path3_combine = Output.concat(f'{path3}', '"', open_api_uri_1, '"')
 
-# Note, that we start with only 1 path.  Then we can keep adding paths
+# The following  code block is how we will add paths.  Only 1 combined_open_spec can be uncommented out at anytime
+# Note, that we start with only 1 path.
 combined_open_spec = Output.concat(header_part, path1_combine)
+# Note, the line below adds 1 additional path, so now we have 2 paths
 #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
+# Note, the line below adds 1 additional path, so now we have 3 paths
 #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
 
 # Create the API Gateway Rest API, using a swagger spec.
