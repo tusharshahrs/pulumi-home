@@ -126,7 +126,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
         ```
-1. Add a new route in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
+1. Add a [new route])(https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L147) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
 
     BEFORE
     ```bash
@@ -141,7 +141,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
     ```
-   Also uncomment the following line at the bottom of the `__main__.py`
+   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L234) of the `__main__.py`
    ```bash
    pulumi.export("apigateway-rest-endpoint_openapi_custom_path_2", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_2))
    ```
@@ -214,7 +214,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     Results
     **Hello World from Pulumi in python via AWS Lambda!!!**
 
-1. Add a new route in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine & path2_combine** and adding the one with **path3_combine**
+1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L149) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine & path2_combine** and adding the one with **path3_combine**
 
     BEFORE
     ```bash
@@ -229,7 +229,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
     ```
-   Also uncomment the following line at the bottom of the `__main__.py`
+   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L235) of the `__main__.py`
    ```bash
    pulumi.export("apigateway-rest-endpoint_openapi_custom_path_3", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_3))
    ```
