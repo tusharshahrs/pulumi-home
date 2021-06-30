@@ -7,8 +7,11 @@ import json
 from pulumi import Output, ResourceOptions
 
 custom_stage_name = 'dev'
-custom_url_path = "/test1"
 
+# We will add one path at a time
+custom_url_path_1 = "/test1"
+custom_url_path_2 = "/pets2"
+custom_url_path_3 = "/pets3"
 ##################
 ## Lambda Function
 ##################
@@ -72,8 +75,81 @@ open_api_uri_1 = lambda_func.invoke_arn
 # Create the uri.  Combining the openapi spec and the lambda function
 final_openapi_spec_1 = Output.concat(f'{first_part_1}', '"', open_api_uri_1, '"')
 
+# First part of openapi spec
+header_part= """
+openapi: 3.0.0
+info:
+  version: "1"
+  title: marv
+security: [{}]
+paths:
+"""
+
+# Creating path1
+path1 = """
+ /test1:
+   post:
+    responses: {
+        "200": {
+          description: "200 ok response"}
+    }
+    x-amazon-apigateway-api-key-source: HEADER
+    x-amazon-apigateway-auth: NONE
+    x-amazon-apigateway-integration:
+      httpMethod: "POST"
+      passthroughBehavior: "when_no_match"
+      type: "AWS_PROXY"
+      uri: """
+
+# Creating path2
+path2 = """
+ /pets2:
+   post:
+    responses: {
+        "200": {
+          description: "200 ok response"}
+    }
+    x-amazon-apigateway-api-key-source: HEADER
+    x-amazon-apigateway-auth: NONE
+    x-amazon-apigateway-integration:
+      httpMethod: "POST"
+      passthroughBehavior: "when_no_match"
+      type: "AWS_PROXY"
+      uri: """
+
+# Creating path 3
+path3 = """
+ /pets3:
+   post:
+    responses: {
+        "200": {
+          description: "200 ok response"}
+    }
+    x-amazon-apigateway-api-key-source: HEADER
+    x-amazon-apigateway-auth: NONE
+    x-amazon-apigateway-integration:
+      httpMethod: "POST"
+      passthroughBehavior: "when_no_match"
+      type: "AWS_PROXY"
+      uri: """
+
+# creating the 1st uri by combining the path1 with the lambda url
+path1_combine = Output.concat(f'{path1}', '"', open_api_uri_1, '"')
+# creating the 2nd uri by combining the path1 with the lambda url
+path2_combine = Output.concat(f'{path2}', '"', open_api_uri_1, '"')
+# creating the 3rd uri by combining the path1 with the lambda url
+path3_combine = Output.concat(f'{path3}', '"', open_api_uri_1, '"')
+
+# The following  code block is how we will add paths.  Only 1 combined_open_spec can be uncommented out at anytime
+# Note, that we start with only 1 path.
+combined_open_spec = Output.concat(header_part, path1_combine)
+# Note, the line below adds 1 additional path, so now we have 2 paths
+#combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
+# Note, the line below adds 1 additional path, so now we have 3 paths
+#combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
+
 # Create the API Gateway Rest API, using a swagger spec.
-rest_api = aws.apigateway.RestApi("api",
+rest_api_swagger = aws.apigateway.RestApi("swagger-apigateway-restapi",
     body=lambda_func.arn.apply(lambda arn: json.dumps({
         "swagger": "2.0",
         "info": {"title": "api", "version": "1.0"},
@@ -84,70 +160,80 @@ rest_api = aws.apigateway.RestApi("api",
 )
 
 # Create the API Gateway Rest API, using the openapi spec.
-api_gateway_restapi = aws.apigateway.RestApi('demo-api-gateway-restapi',
+api_gateway_restapi_openapi = aws.apigateway.RestApi('demo-openapi-api-gateway-restapi',
     description="This is the hello python apigateway with lambda integration",
     tags= {
             "env": "dev",
             "team": "support",
     },
     api_key_source='HEADER',
-    body=final_openapi_spec_1)
+    #body=final_openapi_spec_1
+    body=combined_open_spec
+    )
 
 # Create a deployment of the Rest API.
-deployment = aws.apigateway.Deployment("api-gateway-deployment",
-    rest_api=rest_api.id,
+deployment_swagger = aws.apigateway.Deployment("swagger-api-gateway-deployment",
+    rest_api=rest_api_swagger.id,
     # Note: Set to empty to avoid creating an implicit stage, we'll create it
     # explicitly below instead.
-    stage_name="",
-    opts=ResourceOptions(parent=rest_api)
+    #stage_name="",
+    opts=ResourceOptions(parent=rest_api_swagger)
 )
 
 # Create a deployment of the Rest API for openapi.
-deployment2 = aws.apigateway.Deployment("demo-api-gateway-deployment",
-    rest_api=api_gateway_restapi.id,
+deployment_openapi = aws.apigateway.Deployment("demo-openapi-gateway-deployment",
+    rest_api=api_gateway_restapi_openapi.id,
     # Note: Set to empty to avoid creating an implicit stage, we'll create it
     # explicitly below instead.
-    stage_name="",
-    opts=ResourceOptions(parent=api_gateway_restapi)
+    #stage_name="",
+    # We must use triggers to allow us to add paths so that path gets added to Stage.
+    # https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python
+    triggers={"redeployment":combined_open_spec },
+    opts=ResourceOptions(parent=api_gateway_restapi_openapi)
 )
 
 # Create a stage, which is an addressable instance of the Rest API. Set it to point at the latest deployment.
-stage = aws.apigateway.Stage("api-gateway-stage",
-    rest_api=rest_api.id,
-    deployment=deployment.id,
+stage_swagger = aws.apigateway.Stage("swagger-api-gateway-stage",
+    rest_api=rest_api_swagger.id,
+    deployment=deployment_swagger.id,
     stage_name=custom_stage_name,
-    opts=ResourceOptions(parent=rest_api)
+    opts=ResourceOptions(parent=rest_api_swagger)
 )
 
 # Create a stage, which is an addressable instance of the Rest API. Set it to point at the latest deployment. openapi
-stage2 = aws.apigateway.Stage("demo-api-gateway-stage",
-    rest_api=api_gateway_restapi.id,
-    deployment=deployment2.id,
+stage_openapi = aws.apigateway.Stage("demo-openapi-gateway-stage",
+    rest_api=api_gateway_restapi_openapi.id,
+    deployment=deployment_openapi.id,
     stage_name=custom_stage_name,
-    opts=ResourceOptions(parent=api_gateway_restapi)
+    opts=ResourceOptions(parent=api_gateway_restapi_openapi)
 )
 
 # Give permissions from API Gateway to invoke the Lambda
-invoke_permission = aws.lambda_.Permission("api-lambda-permission",
+invoke_permission_swagger = aws.lambda_.Permission("swagger-api-lambda-permission",
     action="lambda:invokeFunction",
     function=lambda_func.name,
     principal="apigateway.amazonaws.com",
-    source_arn=deployment.execution_arn.apply(lambda arn: arn + "*/*"),
-    opts=ResourceOptions(parent=rest_api)
+    source_arn=deployment_swagger.execution_arn.apply(lambda arn: arn + "*/*"),
+    opts=ResourceOptions(parent=rest_api_swagger)
 )
 
 # Give permissions from API Gateway to invoke the Lambda
-invoke_permission2 = aws.lambda_.Permission("demo-api-lambda-permission",
+invoke_permission_openapi = aws.lambda_.Permission("demo-openapi-lambda-permission",
     action="lambda:invokeFunction",
     function=lambda_func.name,
     principal="apigateway.amazonaws.com",
-    source_arn=deployment2.execution_arn.apply(lambda arn: arn + "*/*"),
-    opts=ResourceOptions(parent=api_gateway_restapi)
+    source_arn=deployment_openapi.execution_arn.apply(lambda arn: arn + "*/*"),
+    opts=ResourceOptions(parent=api_gateway_restapi_openapi)
 )
 
 # Export the https endpoint of the running Rest API
-pulumi.export("apigateway-rest-endpoint", deployment.invoke_url.apply(lambda url: url + custom_stage_name))
-pulumi.export("apigateway-rest-endpoint_openapi_custom_path_1", stage2.invoke_url.apply(lambda url: url + custom_url_path))
+pulumi.export("apigateway-rest-endpoint", deployment_swagger.invoke_url.apply(lambda url: url + custom_stage_name))
 
+# As we add more paths, we can uncomment out each line below
+pulumi.export("apigateway-rest-endpoint_openapi_custom_path_1", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_1))
+#pulumi.export("apigateway-rest-endpoint_openapi_custom_path_2", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_2))
+#pulumi.export("apigateway-rest-endpoint_openapi_custom_path_3", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_3))
+
+# Helpful for debugging below
 #pulumi.export("open_api_uri_1", open_api_uri_1)
 #pulumi.export("final_openapi_spec_1", final_openapi_spec_1)
