@@ -115,7 +115,7 @@ with `***`.
     apigateway-rest-endpoint                        https://k4p4gv27x7.execute-api.us-east-2.amazonaws.com/dev
     apigateway-rest-endpoint_openapi_custom_path_1  https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1
     ```
-1.  Validate via curl
+1. Validate via curl
     ```bash
     curl -X POST $(pulumi stack output apigateway-rest-endpoint_openapi_custom_path_1)
     ```
@@ -125,12 +125,12 @@ with `***`.
 1. Validate via Postman
 
    - Screen shot of [apigateway invoke url](https://share.getcloudapp.com/v1uYEvXv)
-   -  Generated code for **Postman**
+   - Generated code for **Postman**
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
         ```
 1. Add a new route in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
-    
+
     BEFORE
     ```bash
     combined_open_spec = Output.concat(header_part, path1_combine)
@@ -139,7 +139,7 @@ with `***`.
     ```
 
     AFTER
-    ```
+    ```bash
     #combined_open_spec = Output.concat(header_part, path1_combine)
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
@@ -210,7 +210,7 @@ with `***`.
     apigateway-rest-endpoint_openapi_custom_path_2  https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/pets2
     ```
 
-1.  Validate via curl the 2nd url
+1. Validate via curl the 2nd url
     ```bash
     curl -X POST $(pulumi stack output apigateway-rest-endpoint_openapi_custom_path_2)
     ```
@@ -218,7 +218,7 @@ with `***`.
     **Hello World from Pulumi in python via AWS Lambda!!!**
 
 1. Add a new route in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine & path2_combine** and adding the one with **path3_combine**
-    
+
     BEFORE
     ```bash
     #combined_open_spec = Output.concat(header_part, path1_combine)
@@ -227,7 +227,7 @@ with `***`.
     ```
 
     AFTER
-    ```
+    ```bash
     #combined_open_spec = Output.concat(header_part, path1_combine)
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
@@ -267,7 +267,8 @@ with `***`.
     details
    ```
 
-1. Select **yes** and the 
+1. Select **yes** and the
+
    Results
    ```bash
    Updating (dev)
@@ -298,7 +299,7 @@ with `***`.
     pulumi stack output
     ```
     Results
-    ```
+    ```bash
     Current stack outputs (4):
     OUTPUT                                          VALUE
     apigateway-rest-endpoint                        https://k4p4gv27x7.execute-api.us-east-2.amazonaws.com/dev
