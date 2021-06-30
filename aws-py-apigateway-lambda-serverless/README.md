@@ -13,9 +13,6 @@ One of them uses swagger and the other one uses openapi.
 
 ## Deploying and running the program
 
-Note: some values in this example will be different from run to run.  These values are indicated
-with `***`.
-
 1. Create a new stack
 
     ```bash
