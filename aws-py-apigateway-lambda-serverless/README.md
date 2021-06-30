@@ -126,7 +126,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
         ```
-1. Add a [new route])(https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L147) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
+1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L147) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
 
     BEFORE
     ```bash
