@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-07-05)
+- Updated aws-ts-acm-awsguard for acm certification policy
+
 ## (2021-06-29)
 - Added aws-py-apigateway-lambda-serverless
 - removed broken code aws-py-apigateway-lambda

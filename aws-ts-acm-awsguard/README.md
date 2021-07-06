@@ -2,7 +2,7 @@
 
 Creating a tls private key, a self signed certificate, and then an ACM certificate.  Also,
 creating a [AWSGuard](https://www.pulumi.com/docs/guides/crossguard/awsguard/) policy for
-ACM certificate expiration days.
+ACM certificate expiration days. Calling [pulumi-policy-aws](https://github.com/pulumi/pulumi-policy-aws)
 ## Deployment
 
 1. Create a new stack
@@ -60,4 +60,18 @@ ACM certificate expiration days.
 
    ```bash
    pulumi preview --policy-pack acmcertificateexpiration
+   ```
+   Results
+   ```bash
+   Previewing update (dev)
+
+    View Live: https://app.pulumi.com/myuser/aws-ts-acm-awsguard/dev/previews/44907235-6062-43e0-8407-00109beff90c
+
+        Type                 Name                     Plan
+        pulumi:pulumi:Stack  aws-ts-acm-awsguard-dev
+
+    Policy Violations:
+        [advisory]  pulumi-awsguard v0.0.2  acm-certificate-expiration (pulumi:pulumi:Stack: aws-ts-acm-awsguard-dev)
+        Checks whether an ACM certificate has expired. Certificates provided by ACM are automatically renewed. ACM does not automatically renew certificates that you import.
+        certificate expires in 0 (max allowed 10 days)
    ```
