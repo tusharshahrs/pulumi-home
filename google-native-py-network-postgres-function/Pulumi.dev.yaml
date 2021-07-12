@@ -1,0 +1,3 @@
+config:
+  google-native-py-network-postgres-function:projectName: pulumi-ce-team
+  google-native:region: us-central1
