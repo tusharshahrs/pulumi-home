@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.8.x']
-        python-example: ['aws-py-s3-staticwebsite','azure-py-vnet','azure-py-subscriptionid-from-resourcegroup','azure-py-vnet','azure-py-databricks','aws-py-apigateway-lambda-serverless']
+        python-example: ['aws-py-s3-staticwebsite','azure-py-vnet','azure-py-subscriptionid-from-resourcegroup','azure-py-vnet','azure-py-databricks','aws-py-apigateway-lambda-serverless','google-native-py-network-postgres-function']
     steps:
       - uses: actions/checkout@v2
         with:
