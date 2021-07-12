@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-07-12)
+- storage bucket works for google-native-py-network-postgres-function
+
 ## (2021-07-05)
 - Updated aws-ts-acm-awsguard for acm certification policy
 
