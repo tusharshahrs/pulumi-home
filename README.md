@@ -30,6 +30,11 @@ Example   | Description |
 [azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat
 
+## Google
+Example   | Description |
+--------- | ----------- |
+[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket only so far
+
 ## Workshops
 Example   | Description |
 --------- | ----------- |
