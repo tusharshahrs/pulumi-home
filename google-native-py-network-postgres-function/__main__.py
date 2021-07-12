@@ -12,7 +12,7 @@ commonTags = {
 }
 
 config = pulumi.Config()
-project_name = config.require('projectName')
+project_name = config.require('project')
 
 myname = "demo"
 
