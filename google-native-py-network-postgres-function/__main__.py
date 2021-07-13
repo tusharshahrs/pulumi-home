@@ -14,12 +14,14 @@ commonTags = {
     "stack": stackName,
 }
 
-config = pulumi.Config()
-project_name = config.require('project')
+config = pulumi.Config("google-native")
+project_name = config.require("project")
+region_name = config.require("region")
 
 myname = "demo"
 
 # Restriction on passing name with project that has google in it: https://cloud.google.com/storage/docs/naming-buckets
+
 # Create a Google Cloud resource (Storage Bucket)
 bucket = Bucket(getResourceName(f"{myname}-bucket"), project=project_name, labels=commonTags)
 """
@@ -36,8 +38,8 @@ Outputs:
 """
 
 # creates vpc
-vpc = network.Vpc(getResourceName(f"{myname}-vpc"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name))
-vpc_emptyresource = network.Vpc(getResourceName(), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name))
+vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name,region = region_name ))
+#vpc_emptyresource = network.Vpc(getResourceName(), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name, region = region_name ))
 
 # Export the bucket name
 pulumi.export('bucket_name', bucket.name)
@@ -51,4 +53,8 @@ pulumi.export('bucket_emptyresourcename_url', bucket_emptyresourcename.self_link
 
 # Export the vpc
 pulumi.export('vpc_name', vpc.network.name)
-pulumi.export('vpc_emptyresource_name', vpc_emptyresource.network.name)
+# Export the subnet names
+pulumi.export('vpc_subnet_1_name', vpc.subnets[0].name)
+pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
+pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
+

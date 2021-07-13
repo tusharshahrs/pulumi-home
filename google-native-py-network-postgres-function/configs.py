@@ -2,10 +2,10 @@ import pulumi
 
 config = pulumi.Config()
 
-# retrieving the project name
+# retrieving the project name for tags
 projectName = pulumi.get_project()
 
-# retrieving the stack name
+# retrieving the stack name for tags
 stackName = pulumi.get_stack()
 
 # retrieving vpc cidr blocks
