@@ -1,8 +1,10 @@
 """A Google Native Cloud Python Pulumi program"""
 
 import pulumi
+from pulumi.resource import ResourceOptions
 from pulumi_google_native.compute.v1 import Network as Network
 from pulumi_google_native.storage.v1 import Bucket as Bucket
+from pulumi_google_native.sqladmin.v1beta4 import Instance, SettingsArgs, database
 from configs import getResourceName, projectName, stackName, subnet_cidr_blocks
 import network
 
@@ -56,3 +58,19 @@ pulumi.export('vpc_subnet_1_name', vpc.subnets[0].name)
 pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
 pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
 
+database_instance = Instance(getResourceName(f"{myname}-database"),
+                             project=project_name,
+                             database_version="POSTGRES_13",
+                             settings=SettingsArgs(activation_policy = "ALWAYS",
+                                                   availability_type = "REGIONAL",
+                                                   data_disk_size_gb = "20",
+                                                   data_disk_type = "PD_SSD",
+                                                   tier="db-f1-micro",
+                                                   backup_configuration= {"enabled": True, "point_in_time_recovery_enabled": True}
+                                                  
+                             )
+                             )
+                             
+pulumi.export('database_version', database_instance.database_version)
+pulumi.export('database_name', database_instance.name)
+pulumi.export('database_uri', database_instance.self_link)
