@@ -2,7 +2,6 @@
 
 import pulumi
 from pulumi_google_native.compute.v1 import Network as Network
-#from pulumi_google_native.storage import v1 as storage
 from pulumi_google_native.storage.v1 import Bucket as Bucket
 from configs import getResourceName, projectName, stackName, subnet_cidr_blocks
 import network

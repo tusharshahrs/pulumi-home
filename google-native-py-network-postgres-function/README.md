@@ -40,5 +40,5 @@ Before trying to deploy this example, please make sure you have performed all of
     ```bash
     pulumi up
     ```
-    
+
     Results
