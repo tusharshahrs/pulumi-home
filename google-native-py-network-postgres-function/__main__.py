@@ -38,7 +38,6 @@ Outputs:
 
 # creates vpc
 vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name,region = region_name ))
-#vpc_emptyresource = network.Vpc(getResourceName(), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name, region = region_name ))
 
 # Export the bucket name
 pulumi.export('bucket_name', bucket.name)
