@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-07-13)
+- storage bucket & vpc work for google-native-py-network-postgres-function
+
 ## (2021-07-12)
 - storage bucket works for google-native-py-network-postgres-function
 
