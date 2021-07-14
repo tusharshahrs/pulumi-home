@@ -25,20 +25,20 @@ myname = "demo"
 
 # Restriction on passing name with project that has google in it: https://cloud.google.com/storage/docs/naming-buckets
 
-# Create a Google Cloud resource (Storage Bucket)
+# Create a google cloud storage bucket
 bucket = Bucket(getResourceName(f"{myname}-bucket"), project=project_name, labels=commonTags)
 
-# creates vpc
+# creates a google vpc
 vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project=project_name, region=region_name ))
 
-# create postgres sql instance
+# create a google postgres sql instance, database, and sqluser
 postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArgs(project=project_name, region=region_name, tags=commonTags ))
 
+### Exports ###
 # Export the bucket name
 pulumi.export('bucket_name', bucket.name)
 # Export the bucket self-link
 pulumi.export('bucket_url', bucket.self_link)
-
 
 ## Network Outputs
 # Export the vpc name
@@ -51,6 +51,7 @@ pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
 pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
 
 # Database Outputs
+## SQL Instance
 # Export the sql instance name
 pulumi.export("sqlinstance_name", postgres.sqlinstance.name)
 # Export the sql instance urli link
@@ -58,9 +59,14 @@ pulumi.export("sqlinstance_uri", postgres.sqlinstance.self_link)
 # Export the sql instance database version
 pulumi.export("sqlinstance_database_engine_version", postgres.sqlinstance.database_version)
 
-
+## SQL Database
 # Export the sqldatabase name
 pulumi.export("sqldatabase_name", postgres.sqldatabase.name)
-
 # Export the sqldatabase uri
 pulumi.export("sqldatabase_uri", postgres.sqldatabase.self_link)
+
+## SQL User
+# Export the sqluser name
+pulumi.export("sqluser_name", postgres.sqluser.name)
+# Export the sqluser password
+pulumi.export("sqluser_password", postgres.sqluser.password)

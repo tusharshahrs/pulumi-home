@@ -1,6 +1,7 @@
 from pulumi import ComponentResource, ResourceOptions
 from pulumi_google_native.sqladmin.v1beta4 import Instance, Database, SettingsArgs
 import pulumi_random as random # Used for password generation https://www.pulumi.com/docs/reference/pkg/random/
+from pulumi_gcp import sql as classic_sql
 
 class DatabaseArgs:
     def __init__(self,
@@ -60,6 +61,27 @@ class Databases(ComponentResource):
                                     opts=ResourceOptions(parent=self.sqlinstance),
                                     )
 
+        mypassword = random.RandomPassword(f'{name}-sqluser-password',
+            length=12,
+            special=False,
+            lower = True,
+            min_lower = 4,
+            min_numeric = 4,
+            min_upper = 4,
+            number = True)
+
+        # Create a user with the configured credentials for the Rails app to use.
+        # TODO: Switch to google native version when User is supported:
+        # https://github.com/pulumi/pulumi-google-native/issues/47
+        self.sqluser = classic_sql.User(f"{name}-sql-user",
+        instance=self.sqlinstance.name,
+        name = "pulumiadmin",
+        password=mypassword.result,
+        project=args.project,
+        opts=ResourceOptions(parent=self.sqlinstance)
+        )
+
         self.register_outputs({"sqlinstance": self.sqlinstance,
                                "sqldatabase": self.sqldatabase,
+                               "sqluser": self.sqluser
                              })
