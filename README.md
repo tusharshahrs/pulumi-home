@@ -33,7 +33,7 @@ Example   | Description |
 ## Google
 Example   | Description |
 --------- | ----------- |
-[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc
+[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres
 
 ## Workshops
 Example   | Description |
