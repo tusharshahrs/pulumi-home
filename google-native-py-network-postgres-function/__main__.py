@@ -1,10 +1,14 @@
 """A Google Native Cloud Python Pulumi program"""
 
 import pulumi
+from pulumi.resource import ResourceOptions
 from pulumi_google_native.compute.v1 import Network as Network
+from pulumi_google_native.sqladmin.v1beta4.database import Database
 from pulumi_google_native.storage.v1 import Bucket as Bucket
+from pulumi_google_native.sqladmin.v1beta4 import Instance, SettingsArgs
 from configs import getResourceName, projectName, stackName, subnet_cidr_blocks
 import network
+import database
 
 # Generate common tags
 # common tags.  need to pass in
@@ -21,38 +25,48 @@ myname = "demo"
 
 # Restriction on passing name with project that has google in it: https://cloud.google.com/storage/docs/naming-buckets
 
-# Create a Google Cloud resource (Storage Bucket)
+# Create a google cloud storage bucket
 bucket = Bucket(getResourceName(f"{myname}-bucket"), project=project_name, labels=commonTags)
-"""
-Outputs:
-  + bucket_name                     : "pulumi-gcp-native-demo-bucket-223cb30"
-  + bucket_url                      : "https://www.googleapis.com/storage/v1/b/pulumi-gcp-native-demo-bucket-223cb30"
-"""
 
-bucket_emptyresourcename = Bucket(getResourceName(), project=project_name, labels=commonTags)
-"""
-Outputs:
-  + bucket_emptyresourcename_name   : "pulumi-gcp-native-86cbd3a"
-  + bucket_emptyresourcename_url    : "https://www.googleapis.com/storage/v1/b/pulumi-gcp-native-86cbd3a"
-"""
+# creates a google vpc
+vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project=project_name, region=region_name ))
 
-# creates vpc
-vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project = project_name,region = region_name ))
+# create a google postgres sql instance, database, and sqluser
+postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArgs(project=project_name, region=region_name, tags=commonTags ))
 
+### Exports ###
 # Export the bucket name
 pulumi.export('bucket_name', bucket.name)
 # Export the bucket self-link
 pulumi.export('bucket_url', bucket.self_link)
 
-# Export the bucket name
-pulumi.export('bucket_emptyresourcename_name', bucket_emptyresourcename.name)
-# Export the bucket self-link
-pulumi.export('bucket_emptyresourcename_url', bucket_emptyresourcename.self_link)
-
-# Export the vpc
+## Network Outputs
+# Export the vpc name
 pulumi.export('vpc_name', vpc.network.name)
+# Export the vpc id
+pulumi.export('vpc_id', vpc.network.id)
 # Export the subnet names
 pulumi.export('vpc_subnet_1_name', vpc.subnets[0].name)
 pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
 pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
 
+# Database Outputs
+## SQL Instance
+# Export the sql instance name
+pulumi.export("sqlinstance_name", postgres.sqlinstance.name)
+# Export the sql instance urli link
+pulumi.export("sqlinstance_uri", postgres.sqlinstance.self_link)
+# Export the sql instance database version
+pulumi.export("sqlinstance_database_engine_version", postgres.sqlinstance.database_version)
+
+## SQL Database
+# Export the sqldatabase name
+pulumi.export("sqldatabase_name", postgres.sqldatabase.name)
+# Export the sqldatabase uri
+pulumi.export("sqldatabase_uri", postgres.sqldatabase.self_link)
+
+## SQL User
+# Export the sqluser name
+pulumi.export("sqluser_name", postgres.sqluser.name)
+# Export the sqluser password
+pulumi.export("sqluser_password", postgres.sqluser.password)
