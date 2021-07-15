@@ -3,4 +3,4 @@ def handler(request):
         'Content-Type': 'text/plain'
     }
 
-    return ('Hello, World for Google Native in Python!', 200, headers)
+    return ('Hello, World!  Welcome to Google Native in Python via Pulumi!', 200, headers)

@@ -59,7 +59,8 @@ class Functions(ComponentResource):
             min_numeric = 2,
             min_upper = 2,
             number = True)
-
+        
+        # There is a function naming issue(name being too long) that shows up in the FunctionIamPolicy.  That is why we must create a name.
         functionName = pulumi.Output.concat("func-",myrandomString.result)
         self.cloudfunctions= Function(f"{name}-function",
                                       project=args.project,
@@ -76,21 +77,22 @@ class Functions(ComponentResource):
                                       labels=args.tags,
                                       opts=ResourceOptions(parent=self)
                                       )
-        #role_format = 
-        #"projects/pulumi-ce-team/roles/cloudfunctions.invoker""
-        """self.invoker = FunctionIamPolicy(f"{name}-function-iampolicy",
+
+        self.invoker = FunctionIamPolicy(f"{name}-function-iampolicy",
                                          project=args.project,
                                          location=args.location,
-                                         function_id=functionName,
+                                         function_id=functionName, # func.name returns the long `projects/foo/locations/bat/functions/reallylongname` name which doesn't suit here, due to some 63 character limit from google
                                          bindings=[
-                                                    {"members":"allUsers"}, 
-                                                    {"role":"roles/cloudfunctions.invoker"},
+                                                    {
+                                                    "members":"allUsers", 
+                                                    "role":"roles/cloudfunctions.invoker"
+                                                    },
                                                   ],
                                          opts=ResourceOptions(parent=self.cloudfunctions)
-                                         )"""
+                                         )
 
         self.register_outputs({"buckets": self.buckets,
                                "bucketsobject": self.bucketsobject,
                                "cloudfunctions": self.cloudfunctions,
-                               #"cloudfunctioniampolicy": self.invoker
+                               "cloudfunctioniampolicy": self.invoker
                               })

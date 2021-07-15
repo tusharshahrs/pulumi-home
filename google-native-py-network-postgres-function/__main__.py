@@ -43,28 +43,23 @@ pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
 # Database Outputs
 ## SQL Instance
 # Export the sql instance name
-pulumi.export("sqlinstance_name", postgres.sqlinstance.name)
+pulumi.export("cloudsql_instance_name", postgres.sqlinstance.name)
 # Export the sql instance database version
-pulumi.export("sqlinstance_database_engine_version", postgres.sqlinstance.database_version)
+pulumi.export("cloudsql_instance_database_engine_version", postgres.sqlinstance.database_version)
 
 ## SQL Database
 # Export the sqldatabase name
-pulumi.export("sqldatabase_name", postgres.sqldatabase.name)
+pulumi.export("cloudsql_database_name", postgres.sqldatabase.name)
 
 ## SQL User
 # Export the sqluser name
-pulumi.export("sqluser_name", postgres.sqluser.name)
+pulumi.export("sql_user_name", postgres.sqluser.name)
 # Export the sqluser password
-pulumi.export("sqluser_password", postgres.sqluser.password)
+pulumi.export("sql_user_password", postgres.sqluser.password)
 """
 
-
 ## Function Exports
-# Export the function bucket name
-#pulumi.export("function_bucket_name", serverlessfunction.buckets.name)
-# Export the function bucket object name
-#pulumi.export("function_bucket_object", serverlessfunction.bucketsobject.name)
 # Export the function name
-pulumi.export("function_name", serverlessfunction.cloudfunctions.name)
+pulumi.export("serverless_name", serverlessfunction.cloudfunctions.name)
 # Export the function url
-pulumi.export("function_url", serverlessfunction.cloudfunctions.https_trigger.url)
+pulumi.export("serverless_url", serverlessfunction.cloudfunctions.https_trigger.url)
