@@ -10,11 +10,11 @@ Before trying to deploy this example, please make sure you have performed all of
 - [Connect Pulumi to your Google Cloud Account](https://www.pulumi.com/docs/intro/cloud-providers/gcp/setup/)
 
 ## Special Issues
- 
-   - Google buckets cannot have the word or variation of *google* in its name due to the following naming [rules](https://cloud.google.com/storage/docs/naming-buckets)
-   - The CloudFunctions [name](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/function/#name_python) has to contain the following words:  *projects*, *locations*, and the word *functions*.
-   - Due to the CloudFunction name issue above, the [FunctionIamPolicy](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/functioniampolicy/) [function_id](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/functioniampolicy/#function_id_python) has a limit on cloudfunction name so we have to pass this in differently.
-   - Google native does not support a native sql user due to [this](https://github.com/pulumi/pulumi-google-native/issues/47) so we use google classic provider
+
+- Google buckets cannot have the word or variation of *google* in its name due to the following naming [rules](https://cloud.google.com/storage/docs/naming-buckets)
+- The CloudFunctions [name](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/function/#name_python) has to contain the following words:  *projects*, *locations*, and the word *functions*.
+- Due to the CloudFunction name issue above, the [FunctionIamPolicy](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/functioniampolicy/) [function_id](https://www.pulumi.com/docs/reference/pkg/google-native/cloudfunctions/v1/functioniampolicy/#function_id_python) has a limit on cloudfunction name so we have to pass this in differently.
+- Google native does not support a native sql user due to [this](https://github.com/pulumi/pulumi-google-native/issues/47) so we use google classic provider
 
 ## Running the Example
 
