@@ -26,9 +26,9 @@ myname = "demo"
 vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project=project_name, region=region_name ))
 
 # create a google postgres sql instance, database, and sqluser
-postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArgs(project=project_name, region=region_name, tags=commonTags ))
+#postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArgs(project=project_name, region=region_name, tags=commonTags ))
 
-cloudfunctionnative = cloudfunction.Functions(getResourceName(f"{myname}"),cloudfunction.FunctionArgs(project=project_name, region=region_name, tags=commonTags))
+serverlessfunction = cloudfunction.Functions(f"{myname}",cloudfunction.FunctionArgs(project=project_name, region=region_name, tags=commonTags))
 ### Exports ###
 
 ## Network Outputs
@@ -39,6 +39,7 @@ pulumi.export('vpc_subnet_1_name', vpc.subnets[0].name)
 pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
 pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
 
+"""
 # Database Outputs
 ## SQL Instance
 # Export the sql instance name
@@ -55,13 +56,15 @@ pulumi.export("sqldatabase_name", postgres.sqldatabase.name)
 pulumi.export("sqluser_name", postgres.sqluser.name)
 # Export the sqluser password
 pulumi.export("sqluser_password", postgres.sqluser.password)
+"""
+
 
 ## Function Exports
 # Export the function bucket name
-pulumi.export("function_bucket_name", cloudfunctionnative.buckets.name)
+#pulumi.export("function_bucket_name", serverlessfunction.buckets.name)
 # Export the function bucket object name
-pulumi.export("function_bucket_object", cloudfunctionnative.bucketsobject.name)
+#pulumi.export("function_bucket_object", serverlessfunction.bucketsobject.name)
 # Export the function name
-pulumi.export("function_name", cloudfunctionnative.cloudfunctions.name)
+pulumi.export("function_name", serverlessfunction.cloudfunctions.name)
 # Export the function url
-pulumi.export("function_url", cloudfunctionnative.cloudfunctions.https_trigger.url)
+pulumi.export("function_url", serverlessfunction.cloudfunctions.https_trigger.url)
