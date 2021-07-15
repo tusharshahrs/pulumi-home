@@ -1,9 +1,6 @@
-from pulumi import ComponentResource, ResourceOptions, Output, asset
+from pulumi import ComponentResource, ResourceOptions
 import pulumi
-from pulumi_gcp.firebase import project
-from pulumi_google_native import cloudfunctions
-from pulumi_google_native.compute.v1 import network
-from pulumi_google_native.storage.v1 import Bucket, BucketObject, bucket
+from pulumi_google_native.storage.v1 import Bucket, BucketObject
 from pulumi_google_native.cloudfunctions.v1 import Function, FunctionIamPolicy
 import pulumi_random as random # Used for function name generation https://www.pulumi.com/docs/reference/pkg/random/
 
