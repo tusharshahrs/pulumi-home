@@ -2,7 +2,6 @@
 
 import pulumi
 from pulumi_google_native.compute.v1 import Network as Network
-from pulumi_google_native.storage.v1 import Bucket as Bucket
 from configs import getResourceName, projectName, stackName, subnet_cidr_blocks
 import network
 import database
@@ -23,9 +22,6 @@ myname = "demo"
 
 # Restriction on passing name with project that has google in it: https://cloud.google.com/storage/docs/naming-buckets
 
-# Create a google cloud storage bucket
-#bucket = Bucket(getResourceName(f"{myname}-bucket"), project=project_name, labels=commonTags)
-
 # creates a google vpc
 vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_blocks=subnet_cidr_blocks, project=project_name, region=region_name ))
 
@@ -34,10 +30,6 @@ postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArg
 
 cloudfunctionnative = cloudfunction.Functions(getResourceName(f"{myname}"),cloudfunction.FunctionArgs(project=project_name, region=region_name, tags=commonTags))
 ### Exports ###
-# Export the bucket name
-#pulumi.export('bucket_name', bucket.name)
-# Export the bucket self-link
-#pulumi.export('bucket_url', bucket.self_link)
 
 ## Network Outputs
 # Export the vpc name
