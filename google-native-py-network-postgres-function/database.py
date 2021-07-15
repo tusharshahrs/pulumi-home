@@ -70,7 +70,7 @@ class Databases(ComponentResource):
             min_upper = 4,
             number = True)
 
-        # Create a user with the configured credentials for the Rails app to use.
+        # Create a user with the configured credentials to use.
         # TODO: Switch to google native version when User is supported:
         # https://github.com/pulumi/pulumi-google-native/issues/47
         self.sqluser = classic_sql.User(f"{name}-sql-user",

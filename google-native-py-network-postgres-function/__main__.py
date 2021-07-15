@@ -28,37 +28,32 @@ vpc = network.Vpc(getResourceName(f"{myname}"), network.VpcArgs(subnet_cidr_bloc
 # create a google postgres sql instance, database, and sqluser
 #postgres = database.Databases(getResourceName(f"{myname}"), database.DatabaseArgs(project=project_name, region=region_name, tags=commonTags ))
 
-serverlessfunction = cloudfunction.Functions(f"{myname}",cloudfunction.FunctionArgs(project=project_name, region=region_name, tags=commonTags))
-### Exports ###
+# create a google cloudfunction
+serverlessfunction = cloudfunction.Functions(getResourceName(f"{myname}"),cloudfunction.FunctionArgs(project=project_name, region=region_name, tags=commonTags))
 
-## Network Outputs
+### Outputs ###
+
+## Network  ##
 # Export the vpc name
 pulumi.export('vpc_name', vpc.network.name)
 # Export the subnet names
 pulumi.export('vpc_subnet_1_name', vpc.subnets[0].name)
 pulumi.export('vpc_subnet_2_name', vpc.subnets[1].name)
 pulumi.export('vpc_subnet_3_name', vpc.subnets[2].name)
-
 """
-# Database Outputs
-## SQL Instance
+## Cloud SQL ##
 # Export the sql instance name
 pulumi.export("cloudsql_instance_name", postgres.sqlinstance.name)
 # Export the sql instance database version
 pulumi.export("cloudsql_instance_database_engine_version", postgres.sqlinstance.database_version)
-
-## SQL Database
 # Export the sqldatabase name
 pulumi.export("cloudsql_database_name", postgres.sqldatabase.name)
-
-## SQL User
 # Export the sqluser name
 pulumi.export("sql_user_name", postgres.sqluser.name)
 # Export the sqluser password
 pulumi.export("sql_user_password", postgres.sqluser.password)
 """
-
-## Function Exports
+## Function ##
 # Export the function name
 pulumi.export("serverless_name", serverlessfunction.cloudfunctions.name)
 # Export the function url
