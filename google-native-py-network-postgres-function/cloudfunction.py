@@ -1,5 +1,6 @@
 from pulumi import ComponentResource, ResourceOptions, Output, asset
 import pulumi
+from pulumi_gcp.firebase import project
 from pulumi_google_native import cloudfunctions
 from pulumi_google_native.compute.v1 import network
 from pulumi_google_native.storage.v1 import Bucket, BucketObject, bucket
@@ -51,21 +52,21 @@ class Functions(ComponentResource):
                                           opts=ResourceOptions(parent=self.buckets)
         )
 
-        myrandomString = random.RandomString("functionname-randomstring",
-            length=8,
+        myrandomString = random.RandomString(f"{name}-function-random",
+            length=6,
             special=False,
             min_lower = 2,
             min_numeric = 2,
             min_upper = 2,
             number = True)
 
-        functionname = pulumi.Output.concat("gcp-native-function",myrandomString.result)
+        functionName = pulumi.Output.concat("func-",myrandomString.result)
         self.cloudfunctions= Function(f"{name}-function",
                                       project=args.project,
                                       location=args.location,
                                       description=args.description,
+                                      name=pulumi.Output.concat("projects/",args.project,"/locations/",args.location,"/functions/",functionName),
                                       https_trigger=args.httpsTrigger,
-                                      name=functionname,
                                       source_archive_url=pulumi.Output.concat("gs://",self.buckets.name,"/",self.bucketsobject.name),
                                       entry_point=args.entrypoint,
                                       timeout=args.timeout,
@@ -75,20 +76,21 @@ class Functions(ComponentResource):
                                       labels=args.tags,
                                       opts=ResourceOptions(parent=self)
                                       )
-        
-        self.invoker = FunctionIamPolicy(f"{name}-function-iampolicy",
+        #role_format = 
+        #"projects/pulumi-ce-team/roles/cloudfunctions.invoker""
+        """self.invoker = FunctionIamPolicy(f"{name}-function-iampolicy",
                                          project=args.project,
                                          location=args.location,
-                                         function_id=self.cloudfunctions.name,
+                                         function_id=functionName,
                                          bindings=[
                                                     {"members":"allUsers"}, 
                                                     {"role":"roles/cloudfunctions.invoker"},
                                                   ],
                                          opts=ResourceOptions(parent=self.cloudfunctions)
-                                         )
+                                         )"""
 
         self.register_outputs({"buckets": self.buckets,
                                "bucketsobject": self.bucketsobject,
                                "cloudfunctions": self.cloudfunctions,
-                               "cloudfunctioniampolicy": self.invoker})
-        
+                               #"cloudfunctioniampolicy": self.invoker
+                              })
