@@ -1,4 +1,5 @@
 import pulumi
+from pulumi_gcp.firebase import project
 
 config = pulumi.Config()
 
