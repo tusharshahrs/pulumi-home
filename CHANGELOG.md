@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## (2021-07-21)
+- added aws-py-dynamodb
+
+## (2021-07-15)
+- storage bucket & vpc & postgres & serverless work for google-native-py-network-postgres-function
+
 ## (2021-07-14)
 - storage bucket & vpc & postgres work for google-native-py-network-postgres-function
 

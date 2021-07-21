@@ -18,6 +18,7 @@ Example   | Description |
 [aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3
 [aws-ts-acm-awsguard](aws-ts-acm-awsguard) | tls private key, aws self signed certificate and acm created. Running awsguard. Calling [pulumi-policy-aws](https://github.com/pulumi/pulumi-policy-aws)
 [aws-py-apigateway-lambda-serverless](aws-py-apigateway-lambda-serverless)| api gateway with lambda. swagger and openapi apigateways.  Using the [triggers](https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python) option. added multiple paths
+[aws-py-dynamodb](aws-py-dynamodb)| dynamodb table
 
 
 ## Azure
