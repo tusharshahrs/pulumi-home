@@ -3,7 +3,6 @@
 import pulumi
 from pulumi import CustomTimeouts, ResourceOptions, get_project, get_stack
 from pulumi_aws import s3, dynamodb
-from pulumi_aws.dynamodb.table import TableArgs
 
 # Creating Tags
 # stackname for tags
@@ -19,8 +18,8 @@ test_table = dynamodb.Table("dev-test-table",
                     name="databaseName",
                     type="S"
                 )],
-                read_capacity=1,
-                write_capacity=1,
+                read_capacity=10,
+                write_capacity=10,
                 hash_key="databaseName",
                 name="dev-test-table",
                 tags=basetags,
@@ -28,8 +27,8 @@ test_table = dynamodb.Table("dev-test-table",
                 stream_view_type="NEW_IMAGE",
                 opts=ResourceOptions(
                     custom_timeouts=CustomTimeouts(
-                        create='5m',
-                        update='5m',
+                        create='10m',
+                        update='10m',
                         delete='10m'
                     )
                 ),
