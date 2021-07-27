@@ -65,8 +65,9 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
    ```bash
    pulumi stack output
    ```
+
    Returns:
-   ```
+   ```bash
     Current stack outputs (7):
         OUTPUT                       VALUE
         loganalytics_workspace_name  loganalytics-workspace74d41999
@@ -79,7 +80,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
    ```
 
 1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
-   
+
    [Azure SQL Auditing sending to Log Analytics](https://share.getcloudapp.com/Kou4gEzl)
 
 1. Destroy the Stack
