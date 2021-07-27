@@ -90,10 +90,10 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
 
    Note:  The `extendedserverblobauditing` resource is not getting deleted correctly.
    Current workaround,
-   - 1. go to azure portal and find the SQL Server.
-   - 1. Delete the SQL Server
-   - 1. go back to the command line and type in `pulumi refresh -y`
-   - 1. Run the destroy command again:  `pulumi destroy -y`
+   - Go to azure portal and find the SQL Server.
+   - Delete the SQL Server
+   - Go back to the command line and type in `pulumi refresh -y`
+   - Run the destroy command again:  `pulumi destroy -y`
 
 1. Remove the stack
    ```bash
