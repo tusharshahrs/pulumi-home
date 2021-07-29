@@ -87,7 +87,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics in GO
 
 1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
 
-   [Azure SQL Auditing sending to Log Analytics] Screen Pending
+   [Azure SQL Auditing sending to Log Analytics](https://share.getcloudapp.com/nOuv6Dkg)
 
 1. Destroy the Stack
    ```bash
