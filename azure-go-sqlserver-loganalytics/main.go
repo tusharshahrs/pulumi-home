@@ -135,27 +135,12 @@ func main() {
 		}
 
 		diagnosticSetting, err := insights.NewDiagnosticSetting(ctx, "diagnosticSetting", &insights.DiagnosticSettingArgs{
+
 			LogAnalyticsDestinationType: pulumi.String("Dedicated"),
 			Logs: insights.LogSettingsArray{
-				&insights.LogSettingsArgs{
-					Category: pulumi.String("SQLSecurityAuditEvents"),
-					Enabled:  pulumi.Bool(true),
-					RetentionPolicy: &insights.RetentionPolicyArgs{
-						Days:    pulumi.Int(0),
-						Enabled: pulumi.Bool(false),
-					},
-				},
-			},
-			Metrics: insights.MetricSettingsArray{
-				&insights.MetricSettingsArgs{
-					Category: pulumi.String("AllMetrics"),
-					Enabled:  pulumi.Bool(true),
-					RetentionPolicy: &insights.RetentionPolicyArgs{
-						Days:    pulumi.Int(0),
-						Enabled: pulumi.Bool(false),
-					},
-				},
-			},
+				&insights.LogSettingsArgs{Category: pulumi.String("SQLSecurityAuditEvents"), Enabled: pulumi.Bool(true), RetentionPolicy: &insights.RetentionPolicyArgs{Days: pulumi.Int(0), Enabled: pulumi.Bool(false)}},
+				&insights.LogSettingsArgs{Category: pulumi.String("DevOpsOperationsAudit"), Enabled: pulumi.Bool(true), RetentionPolicy: &insights.RetentionPolicyArgs{Days: pulumi.Int(0), Enabled: pulumi.Bool(false)}}},
+			Metrics:     insights.MetricSettingsArray{&insights.MetricSettingsArgs{Category: pulumi.String("AllMetrics"), Enabled: pulumi.Bool(true), RetentionPolicy: &insights.RetentionPolicyArgs{Days: pulumi.Int(0), Enabled: pulumi.Bool(false)}}},
 			ResourceUri: database.ID(),
 			WorkspaceId: workspace.ID(),
 		})
