@@ -69,7 +69,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics in GO
    pulumi stack output
    ```
    Returns:
-   ```
+   ```bash
     Current stack outputs (11):
         OUTPUT                             VALUE
         diagnosticSetting                  diagnosticSetting6bd61604
@@ -86,14 +86,14 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics in GO
    ```
 
 1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
-   
+
    [Azure SQL Auditing sending to Log Analytics] Screen Pending
 
 1. Destroy the Stack
    ```bash
    pulumi destoy -y
    ```
-   
+
    Note:  The `extendedserverblobauditing` resource is not getting deleted correctly.
    Current workaround,
     - go to azure portal and find the SQL Server.
