@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-07-29)
+- added azure-go-sqlserver-loganalytics.
+
 ## (2021-07-26)
 - added azure-ts-sqlserver-loganalytics
 
