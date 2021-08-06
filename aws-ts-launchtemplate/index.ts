@@ -36,7 +36,7 @@ const mysecuritygroup_allowTls = new aws.ec2.SecurityGroup(`${myname}-securitygr
     },
 });
 
-export const sshPrivateKey = new tls.PrivateKey(`${myname}-privatekey`, {
+const sshPrivateKey = new tls.PrivateKey(`${myname}-privatekey`, {
     algorithm: "RSA",
     rsaBits: 4096,
 });
@@ -78,10 +78,10 @@ const myrole = new aws.iam.Role(`${myname}-role`, {
 
 
 const instanceprofile = new aws.iam.InstanceProfile(`${myname}-instanceprofile`, {role: myrole.name});
-export const vpc_private_subnet_1 = myvpc.privateSubnetIds.then(theprivatesubnets=> theprivatesubnets[0]);
-//export const vpc_private_subnet_2 = pulumi.output.apply(vpc_private_subnet_1, vpc => vpc_private_subnet_1);
-//export const vpc_private_subnet_1_string = pulumi.interpolate`"${vpc_private_subnet_1}"`
-export const vpc_private_subnet_1_string = pulumi.interpolate`${vpc_private_subnet_1}`
+// Getting the private subnet0
+export const vpc_private_subnet_0 = myvpc.privateSubnetIds.then(theprivatesubnets=> theprivatesubnets[0]);
+// Changing from promise to string so that we can pass it into the launchtemplate function
+export const vpc_private_subnet_0_string = pulumi.interpolate`${vpc_private_subnet_0}`
 
 export function get_airflow_webserver_template(airflow_profile: aws.iam.InstanceProfile, securityGroupIds: pulumi.Output<string>[], subnetIds: pulumi.Output<string>, user_data: string) {
 
@@ -139,7 +139,7 @@ export function get_airflow_webserver_template(airflow_profile: aws.iam.Instance
 }
 
 const myinstance = new aws.ec2.Instance(`${myname}-server`, {
-    launchTemplate: {"name": get_airflow_webserver_template(instanceprofile,[mysecuritygroup_allowTls.id], vpc_private_subnet_1_string,"").name},
+    launchTemplate: {"name": get_airflow_webserver_template(instanceprofile,[mysecuritygroup_allowTls.id], vpc_private_subnet_0_string,"").name},
 
   }, {dependsOn: [myvpc]});
 
