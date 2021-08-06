@@ -148,3 +148,4 @@ export const vpc_private_subnet_ids = myvpc.privateSubnetIds;
 export const vpc_public_subnet_ids = myvpc.publicSubnetIds;
 export const securitygroup_name = mysecuritygroup_allowTls.name;
 export const instanceprofile_name = instanceprofile.name;
+export const launchtemplate_name = myinstance.launchTemplate;
