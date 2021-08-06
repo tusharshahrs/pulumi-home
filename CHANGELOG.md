@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-08-06)
+- added aws-ts-launchtemplate 
+
 ## (2021-07-29)
 - added azure-go-sqlserver-loganalytics.
 
