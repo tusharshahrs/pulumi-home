@@ -4,10 +4,10 @@ from pulumi_gcp.firebase import project
 config = pulumi.Config()
 
 # retrieving the project name for tags
-projectName = pulumi.get_project()
+project_name = pulumi.get_project()
 
 # retrieving the stack name for tags
-stackName = pulumi.get_stack()
+stack_name = pulumi.get_stack()
 
 # retrieving vpc cidr blocks
 subnet_cidr_blocks = config.require_object('subnet_cidr_blocks')

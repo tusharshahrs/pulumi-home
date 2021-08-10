@@ -14,7 +14,7 @@ class DatabaseArgs:
                 backup_configuration_enabled = True,
                 backup_configuration_point_in_time_recovery_enabled = True,
                 charset = "UTF8",
-                project = None,
+                #project = None,
                 region = None,
                 tags = None,
                 ):
@@ -25,7 +25,7 @@ class DatabaseArgs:
         self.data_disk_size_gb = data_disk_size_gb
         self.data_disk_type = data_disk_type
         self.tier = tier
-        self.project = project
+        #self.project = project
         self.region = region
         self.tags = tags
         self.enabled = backup_configuration_enabled
@@ -41,7 +41,7 @@ class Databases(ComponentResource):
         super().__init__('custom:database:Postgres', name, {}, opts)
 
         self.sqlinstance = Instance(f"{name}-sqlinstance",
-                            project=args.project,
+                            #project=args.project,
                             database_version=args.database_version,
                             region=args.region,
                             settings=SettingsArgs(activation_policy = args.activation_policy,
@@ -56,7 +56,7 @@ class Databases(ComponentResource):
 
         self.sqldatabase = Database(f"{name}-sqldatabase",
                                     instance = self.sqlinstance.name,
-                                    project = args.project,
+                                    #project = args.project,
                                     charset =args.charset,
                                     opts=ResourceOptions(parent=self.sqlinstance),
                                     )
@@ -74,11 +74,11 @@ class Databases(ComponentResource):
         # TODO: Switch to google native version when User is supported:
         # https://github.com/pulumi/pulumi-google-native/issues/47
         self.sqluser = classic_sql.User(f"{name}-sql-user",
-        instance=self.sqlinstance.name,
-        name = "pulumiadmin",
-        password=mypassword.result,
-        project=args.project,
-        opts=ResourceOptions(parent=self.sqlinstance)
+            instance=self.sqlinstance.name,
+            name = "pulumiadmin",
+            password=mypassword.result,
+            project = self.sqlinstance.project,
+            opts=ResourceOptions(parent=self.sqlinstance)
         )
 
         self.register_outputs({"sqlinstance": self.sqlinstance,
