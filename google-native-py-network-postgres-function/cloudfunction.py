@@ -2,7 +2,6 @@ from pulumi import ComponentResource, ResourceOptions
 import pulumi
 from pulumi_google_native.storage.v1 import Bucket, BucketObject
 from pulumi_google_native.cloudfunctions.v1 import Function, FunctionIamPolicy
-import pulumi_random as random # Used for function name generation https://www.pulumi.com/docs/reference/pkg/random/
 
 
 class FunctionArgs:
@@ -14,9 +13,9 @@ class FunctionArgs:
                 httpsTrigger = {},
                 ingressSettings= "ALLOW_ALL",
                 description = "Serverless Function in Google Native",
-                project = None,
                 region = None,
                 tags = None,
+                filearchivepath = None,
     ):
         self.runtime = runtime
         self.entrypoint = entrypoint
@@ -25,9 +24,9 @@ class FunctionArgs:
         self.httpsTrigger = httpsTrigger
         self.ingressSettings= ingressSettings
         self.description = description
-        self.project = project
         self.location = region
         self.tags = tags
+        self.filearchivepath = filearchivepath
 
 class Functions(ComponentResource):
     def __init__(self,
@@ -38,32 +37,18 @@ class Functions(ComponentResource):
         super().__init__('custom:cloudfunctions:Function', name, {}, opts)
 
         self.buckets = Bucket(f"{name}-function-bucket",
-                              project=args.project,
                               labels=args.tags,
                               opts=ResourceOptions(parent=self))
         
         self.bucketsobject = BucketObject(f"{name}-function-bucketobject",
                                           bucket = self.buckets.name,
-                                          source=pulumi.AssetArchive({".": pulumi.FileArchive('./pythonfunction')}),
+                                          source=pulumi.AssetArchive({".": pulumi.FileArchive(args.filearchivepath)}),
                                           metadata=args.tags,
                                           opts=ResourceOptions(parent=self.buckets)
         )
 
-        myrandomString = random.RandomString(f"{name}-function-random",
-            length=6,
-            special=False,
-            min_lower = 2,
-            min_numeric = 2,
-            min_upper = 2,
-            number = True)
-        
-        # There is a function naming issue(name being too long) that shows up in the FunctionIamPolicy.  That is why we must create a name.
-        functionName = pulumi.Output.concat("func-",myrandomString.result)
         self.cloudfunctions= Function(f"{name}-function",
-                                      project=args.project,
-                                      location=args.location,
                                       description=args.description,
-                                      name=pulumi.Output.concat("projects/",args.project,"/locations/",args.location,"/functions/",functionName),
                                       https_trigger=args.httpsTrigger,
                                       source_archive_url=pulumi.Output.concat("gs://",self.buckets.name,"/",self.bucketsobject.name),
                                       entry_point=args.entrypoint,
@@ -72,20 +57,18 @@ class Functions(ComponentResource):
                                       runtime=args.runtime,
                                       ingress_settings=args.ingressSettings,
                                       labels=args.tags,
-                                      opts=ResourceOptions(parent=self)
+                                      opts=ResourceOptions(parent=self.bucketsobject, depends_on=[self.buckets])
                                       )
 
-        self.invoker = FunctionIamPolicy(f"{name}-function-iampolicy",
-                                         project=args.project,
-                                         location=args.location,
-                                         function_id=functionName, # func.name returns the long `projects/foo/locations/bat/functions/reallylongname` name which doesn't suit here, due to some 63 character limit from google
+        self.invoker = FunctionIamPolicy(f"{name}-function-iam",
+                                         function_id = self.cloudfunctions.name.apply(lambda functioname: functioname.split("/")[-1]),
                                          bindings=[
                                                     {
                                                     "members":"allUsers", 
                                                     "role":"roles/cloudfunctions.invoker"
                                                     },
                                                   ],
-                                         opts=ResourceOptions(parent=self.cloudfunctions)
+                                         opts=ResourceOptions(parent=self.cloudfunctions, depends_on=[self.cloudfunctions])
                                          )
 
         self.register_outputs({"buckets": self.buckets,
