@@ -85,7 +85,7 @@ Before trying to deploy this example, please make sure you have performed all of
    ```bash
    Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/google-native-py-network-postgres-function/dev/updates/263
+    View Live: https://app.pulumi.com/myuser/google-native-py-network-postgres-function/dev/updates/263
 
         Type                                                              Name                                            Status      
     +   pulumi:pulumi:Stack                                               google-native-py-network-postgres-function-dev  created     
