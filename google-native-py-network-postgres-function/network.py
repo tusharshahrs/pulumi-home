@@ -7,11 +7,9 @@ class VpcArgs:
 
     def __init__(self,
                  subnet_cidr_blocks=None,
-                 project = None,
                  region = None,
                  ):
         self.subnet_cidr_blocks = subnet_cidr_blocks
-        self.project = project
         self.region = region
 
 class Vpc(ComponentResource):
@@ -26,7 +24,6 @@ class Vpc(ComponentResource):
         child_opts = ResourceOptions(parent=self)
 
         self.network = Network(f"{name}-vpc", 
-                               project=args.project, 
                                auto_create_subnetworks = False, 
                                routing_config=NetworkRoutingConfigArgs(routing_mode="REGIONAL"),
                                description="vpc network via pulumi component resources", 
@@ -37,7 +34,6 @@ class Vpc(ComponentResource):
 
         for i, ip_cidr_range_block in enumerate(args.subnet_cidr_blocks):
             subnet = Subnetwork(f"{name}-subnet-{i}",
-                                project=args.project,
                                 region=args.region,
                                 description=f"{name}-subnet-{i} description field",
                                 network=self.network.self_link,
@@ -48,7 +44,6 @@ class Vpc(ComponentResource):
             self.subnets.append(subnet)
         
         self.router = Router(f"{name}-router", 
-                             project=args.project,
                              region=args.region,
                              description=f"{name}-router description field",
                              network=self.network.self_link,
