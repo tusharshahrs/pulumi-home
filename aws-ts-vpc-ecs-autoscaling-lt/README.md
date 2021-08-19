@@ -71,64 +71,77 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
     Do you want to perform this update? yes
     Updating (dev)
 
-    View Live: https://app.pulumi.com/myuser/aws-ts-vpc-ecs-autoscaling-lt/dev/updates/1
+      View Live: https://app.pulumi.com/myuser/aws-ts-vpc-ecs-autoscaling-lt/dev/updates/16
 
-   
+         Type                              Name                               Status       
+      +   pulumi:pulumi:Stack               aws-ts-vpc-ecs-autoscaling-lt-dev  creating.    
+      +   └─ awsx:x:ec2:Vpc                 demo-ecs-lt-vpc                    created      
+      +      ├─ awsx:x:ec2:Subnet           demo-ecs-lt-vpc-private-1          created      
+      +      │  ├─ aws:ec2:RouteTable       demo-ecs-lt-vpc-private-1          creating..   
+      +      │  └─ aws:ec2:Subnet                 demo-ecs-lt-vpc-private-1          created      
+      +      ├─ awsx:x:ec2:Subnet                 demo-ecs-lt-vpc-public-1           created      
+      +      │  ├─ aws:ec2:RouteTable             demo-ecs-lt-vpc-public-1           created      
+      +      │  ├─ aws:ec2:Subnet                 demo-ecs-lt-vpc-public-1           creating.    
+      +      │  └─ aws:ec2:Route                  demo-ecs-lt-vpc-public-1-ig        creating     
+      +      │  └─ aws:ec2:Route                  demo-ecs-lt-vpc-public-1-ig        creating.    
+      +      │  ├─ aws:ec2:Subnet                 demo-ecs-lt-vpc-public-1           creating...  
+      +      │  ├─ aws:ec2:Subnet                 demo-ecs-lt-vpc-public-1           created      
+      +      │  ├─ aws:ec2:RouteTable             demo-ecs-lt-vpc-public-2           created      
+      +      │  └─ aws:ec2:RouteTableAssociation  demo-ecs-lt-vpc-public-1           creating.    
+      +   │  │  ├─ aws:ec2:Route                  demo-ecs-lt-vpc-public-2-ig        created      
+      +   pulumi:pulumi:Stack                     aws-ts-vpc-ecs-autoscaling-lt-dev  creating     
+      +   │  ├─ awsx:x:ec2:Subnet                 demo-ecs-lt-vpc-private-0          created      
+      +   │  │  ├─ aws:ec2:RouteTable                   demo-ecs-lt-vpc-private-0          created      
+      +   │  │  ├─ aws:ec2:Subnet                       demo-ecs-lt-vpc-private-0          created      
+      +   pulumi:pulumi:Stack                                         aws-ts-vpc-ecs-autoscaling-lt-dev      creating..   read aws:autoscaling:Group demo-ecs-lt-autoscalinggroup
+      +   │  │  └─ aws:ec2:RouteTableAssociation                      demo-ecs-lt-vpc-private-0              created      
+      +   │  │  └─ aws:ec2:Route                                      demo-ecs-lt-vpc-private-0-nat-0        creating     
+      +   │  ├─ awsx:x:ec2:InternetGateway                            demo-ecs-lt-vpc                        created     
+      +   │  │  └─ aws:ec2:InternetGateway                            demo-ecs-lt-vpc                        created     
+      +   │  ├─ awsx:x:ec2:Subnet                                     demo-ecs-lt-vpc-public-0               created     
+      +   │  │  ├─ aws:ec2:RouteTable                                 demo-ecs-lt-vpc-public-0               created     
+      +   │  │  ├─ aws:ec2:Subnet                                     demo-ecs-lt-vpc-public-0               created     
+      +   │  │  ├─ aws:ec2:Route                                      demo-ecs-lt-vpc-public-0-ig            created     
+      +   │  │  └─ aws:ec2:RouteTableAssociation                      demo-ecs-lt-vpc-public-0               created     
+      +   │  ├─ awsx:x:ec2:Subnet                                     demo-ecs-lt-vpc-private-2              created     
+      +   │  │  ├─ aws:ec2:Subnet                                     demo-ecs-lt-vpc-private-2              created     
+      +   │  │  ├─ aws:ec2:RouteTable                                 demo-ecs-lt-vpc-private-2              created     
+      +   │  │  ├─ aws:ec2:RouteTableAssociation                      demo-ecs-lt-vpc-private-2              created     
+      +   │  │  └─ aws:ec2:Route                                      demo-ecs-lt-vpc-private-2-nat-2        created     
+      +   │  ├─ awsx:x:ec2:NatGateway                                 demo-ecs-lt-vpc-0                      created     
+      +   │  │  ├─ aws:ec2:Eip                                        demo-ecs-lt-vpc-0                      created     
+      +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                      created     
+      +   │  └─ aws:ec2:Vpc                                           demo-ecs-lt-vpc                        created     
+      +   └─ awsx:x:ecs:Cluster                                       demo-ecs-lt-ecs                        created     
+      +      ├─ aws:ecs:Cluster                                       demo-ecs-lt-ecs                        created     
+      +      ├─ awsx:x:ec2:SecurityGroup                              demo-ecs-lt-ecs                        created     
+      +      │  ├─ awsx:x:ec2:IngressSecurityGroupRule                demo-ecs-lt-ecs-ssh                    created     
+      +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-ssh                    created     
+      +      │  ├─ awsx:x:ec2:IngressSecurityGroupRule                demo-ecs-lt-ecs-containers             created     
+      +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-containers             created     
+      +      │  ├─ awsx:x:ec2:EgressSecurityGroupRule                 demo-ecs-lt-ecs-egress                 created     
+      +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-egress                 created     
+      +      │  └─ aws:ec2:SecurityGroup                              demo-ecs-lt-ecs                        created     
+      +      └─ awsx:x:autoscaling:AutoScalingGroup                   demo-ecs-lt-autoscalinggroup           created     
+      +         ├─ awsx:x:autoscaling:AutoScalingLaunchConfiguration  demo-ecs-lt-autoscalinggroup           created     
+      +         │  ├─ aws:s3:Bucket                                   demo-ecs-lt-autoscalinggroup           created     
+      +         │  ├─ aws:iam:Role                                    demo-ecs-lt-autoscalinggroup           created     
+      +         │  ├─ aws:iam:RolePolicyAttachment                    demo-ecs-lt-autoscalinggroup-5e4162cd  created     
+      +         │  ├─ aws:iam:RolePolicyAttachment                    demo-ecs-lt-autoscalinggroup-efc8f10d  created     
+      +         │  ├─ aws:iam:InstanceProfile                         demo-ecs-lt-autoscalinggroup           created     
+      +         │  └─ aws:ec2:LaunchConfiguration                     demo-ecs-lt-autoscalinggroup           created     
+      +         └─ aws:cloudformation:Stack                           demo-ecs-lt-autoscalinggroup           created     
+      
+      Outputs:
+         autoscaling_group_ame   : "demo-ecs-lt-autoscalinggroup-8f0ad3a-Instances-7TATS4FL0F4Q"
+         cluster_name            : "demo-ecs-lt-ecs-e5e1903"
+         launchConfiguration_name: "demo-ecs-lt-autoscalinggroup-07c3020"
+         vpc_name                : "vpc-04d8f7a52e05f3849"
 
-      Type                              Name                               Status       
-   +   pulumi:pulumi:Stack               aws-ts-vpc-ecs-autoscaling-lt-dev  creating...  
-   +   └─ awsx:x:ec2:Vpc                 demo-ecs-lt-vpc                    created      
-   +      ├─ awsx:x:ec2:NatGateway       demo-ecs-lt-vpc-0                  created      
-   +      │  └─ aws:ec2:Eip              demo-ecs-lt-vpc-0                  created      
-   +   pulumi:pulumi:Stack               aws-ts-vpc-ecs-autoscaling-lt-dev  creating..   
-   +      │  ├─ aws:ec2:RouteTable       demo-ecs-lt-vpc-private-2          created      
-   +      │  └─ aws:ec2:Subnet           demo-ecs-lt-vpc-private-2          created      
-   +      ├─ awsx:x:ec2:Subnet                 demo-ecs-lt-vpc-private-0          created      
-   +      ├─ awsx:x:ec2:Subnet                 demo-ecs-lt-vpc-private-0          created      
-   +      │  ├─ aws:ec2:RouteTable             demo-ecs-lt-vpc-private-0          created      
-   +   pulumi:pulumi:Stack                     aws-ts-vpc-ecs-autoscaling-lt-dev  creating...  
-   +   pulumi:pulumi:Stack                     aws-ts-vpc-ecs-autoscaling-lt-dev  creating     
-   +      ├─ awsx:x:ec2:Subnet                 demo-ecs-lt-vpc-public-1           created      
-   +   │  │  ├─ aws:ec2:RouteTable             demo-ecs-lt-vpc-public-1           created      
-   +   │  │  ├─ aws:ec2:RouteTable             demo-ecs-lt-vpc-public-1           created      
-   +   │  │  ├─ aws:ec2:Subnet                 demo-ecs-lt-vpc-public-1           created      
-   +   │  │  ├─ aws:ec2:Route                  demo-ecs-lt-vpc-public-1-ig        created      
-   +   │  │  └─ aws:ec2:RouteTableAssociation        demo-ecs-lt-vpc-public-1           created      
-   +   │  ├─ awsx:x:ec2:InternetGateway              demo-ecs-lt-vpc                    created      
-   +   │  │  └─ aws:ec2:InternetGateway              demo-ecs-lt-vpc                    created      
-   +   │  ├─ awsx:x:ec2:Subnet                       demo-ecs-lt-vpc-public-0           created      
-   +   │  │  └─ aws:ec2:NatGateway                   demo-ecs-lt-vpc-0                  creating...  
-   +   │  │  ├─ aws:ec2:Subnet                       demo-ecs-lt-vpc-public-0           created      
-   +   │  │  ├─ aws:ec2:Route                        demo-ecs-lt-vpc-public-0-ig        created      
-   +   │  │  └─ aws:ec2:NatGateway                   demo-ecs-lt-vpc-0                  creating     
-   +   │  ├─ awsx:x:ec2:Subnet                                     demo-ecs-lt-vpc-public-2           created      
-   +   │  │  ├─ aws:ec2:RouteTable                                 demo-ecs-lt-vpc-public-2           created      
-   +   │  │  ├─ aws:ec2:Subnet                                     demo-ecs-lt-vpc-public-2           created      
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating..   
-   +   │  │  └─ aws:ec2:RouteTableAssociation                      demo-ecs-lt-vpc-public-2           created      
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating...  
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating     
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating...  
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating...  
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating     
-   +   │  │  └─ aws:ec2:NatGateway                                 demo-ecs-lt-vpc-0                  creating.    
-   +      ├─ awsx:x:ec2:SecurityGroup                              demo-ecs-lt-ecs                    created      
-   +      │  ├─ awsx:x:ec2:IngressSecurityGroupRule                demo-ecs-lt-ecs-containers         created      
-   +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-containers         created      
-   +      │  ├─ awsx:x:ec2:EgressSecurityGroupRule                 demo-ecs-lt-ecs-egress             created      
-   +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-egress             created      
-   +      │  ├─ awsx:x:ec2:IngressSecurityGroupRule                demo-ecs-lt-ecs-ssh                created      
-   +      │  │  └─ aws:ec2:SecurityGroupRule                       demo-ecs-lt-ecs-ssh                created      
-   +      │  └─ aws:ec2:SecurityGroup                              demo-ecs-lt-ecs                    created      
-   +      ├─ aws:ecs:Cluster                                       demo-ecs-lt-ecs                    created      
-   +      └─ awsx:x:autoscaling:AutoScalingGroup                   demo-ecs-lt-autoscaleg             created      
-   +         ├─ awsx:x:autoscaling:AutoScalingLaunchConfiguration  demo-ecs-lt-autoscaleg             created      
-   +         │  ├─ aws:s3:Bucket                                   demo-ecs-lt-autoscaleg             created      
-   +         │  ├─ aws:iam:Role                                    demo-ecs-lt-autoscaleg             created      
-   +         │  ├─ aws:iam:RolePolicyAttachment                    demo-ecs-lt-autoscaleg-5e4162cd    created      
-   +         │  ├─ aws:iam:RolePolicyAttachment                    demo-ecs-lt-autoscaleg-efc8f10d    created      
-   +         │  ├─ aws:iam:InstanceProfile                         demo-ecs-lt-autoscaleg             created      
-   +         │  └─ aws:ec2:LaunchConfiguration                     demo-ecs-lt-autoscaleg             created     
+      Resources:
+         + 57 created
+
+      Duration: 2m20s
     ```
 
 
@@ -138,7 +151,12 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
    ```
    Returns:
    ```bash
-   Current stack outputs (0):
+   Current stack outputs (4):
+    OUTPUT                    VALUE
+    autoscaling_group_ame     demo-ecs-lt-autoscalinggroup-8f0ad3a-Instances-7TATS4FL0F4Q
+    cluster_name              demo-ecs-lt-ecs-e5e1903
+    launchConfiguration_name  demo-ecs-lt-autoscalinggroup-07c3020
+    vpc_name                  vpc-04d8f7a52e05f3849
 
    ```
 

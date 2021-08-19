@@ -1,5 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as awsx from "@pulumi/awsx";
+import { AutoScalingGroup } from "@pulumi/awsx/autoscaling";
 
 // importing local configs
 const config = new pulumi.Config();
@@ -28,7 +29,7 @@ const myvpc = new awsx.ec2.Vpc(`${name_prefix}-vpc`, {
     tags: baseTags,
   });
 
-const cluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, 
+const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, 
     { vpc: myvpc,
     
     },{ dependsOn: myvpc});
@@ -37,17 +38,22 @@ const cluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`,
 const minsize = 3;
 const maxsize = 10;
 
-const autoScalingGroup =cluster.createAutoScalingGroup(`${name_prefix}-autoscaleg`,
+const autoScalingGroup =mycluster.createAutoScalingGroup(`${name_prefix}-autoscalinggroup`,
             {
                 vpc: myvpc,
-                disableRollback: true,
-                subnetIds: myvpc.privateSubnetIds,
-                launchConfigurationArgs: { instanceType: "t3a.small"},
+                subnetIds: myvpc.publicSubnetIds,
+                launchConfigurationArgs: { instanceType: "t3a.small", associatePublicIpAddress: true},
                 templateParameters: {
+                    
                     minSize: minsize,
                     maxSize: maxsize,
                     healthCheckGracePeriod: 100,
-                    //healthCheckType: 'ELB',
+                    healthCheckType: 'ELB',
                 },
-            }, {dependsOn: cluster},
+            }, {dependsOn: mycluster},
         );
+
+export const vpc_name = myvpc.vpc.id;
+export const cluster_name = mycluster.cluster.name;
+export const launchConfiguration_name = autoScalingGroup.launchConfiguration.launchConfiguration.name;
+export const autoscaling_group_ame = autoScalingGroup.group.name;
