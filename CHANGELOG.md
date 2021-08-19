@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-08-19)
+- added azure-ts-keyvault
+
 ## (2021-08-06)
 - added aws-ts-launchtemplate
 
