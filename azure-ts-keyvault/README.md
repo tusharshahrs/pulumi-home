@@ -30,8 +30,8 @@ Azure keyvault created in Typescript.
     ```
 
     The Result will be
-    ```
-    View Live: https://app.pulumi.com/shaht/azure-ts-keyvault/dev/updates/5
+    ```bash
+    View Live: https://app.pulumi.com/myuser/azure-ts-keyvault/dev/updates/5
 
         Type                                                  Name                       Status      
     +   pulumi:pulumi:Stack                                   azure-ts-keyvault-dev      created     
