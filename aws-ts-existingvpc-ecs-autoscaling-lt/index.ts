@@ -62,4 +62,5 @@ export const vpc_name = myvpc.vpc.id;
 export const cluster_name = mycluster.cluster.name;
 export const loadbalancer_id = myloadbalancer.loadBalancer.id;
 export const launchconfiguration_name = autoscalinggroup.launchConfiguration.launchConfiguration.name;
-export const autoscaling_group_ame = autoscalinggroup.group.name;
+export const autoscaling_group_name = autoscalinggroup.group.name;
+export const targetgroup_name = mytargetgroup.loadBalancer.createTargetGroup.name;
