@@ -20,7 +20,7 @@ Example   | Description |
 [aws-py-apigateway-lambda-serverless](aws-py-apigateway-lambda-serverless)| api gateway with lambda. swagger and openapi apigateways.  Using the [triggers](https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python) option. added multiple paths
 [aws-py-dynamodb](aws-py-dynamodb)| dynamodb table
 [aws-ts-launchtemplate](aws-ts-launchtemplate) | ec2 via launchtemplate.  also has vpc, securitygroup, & ssh keypair. Calls **then**
-[aws-ts-vpc-ecs-autoscaling-lt ](aws-ts-vpc-ecs-autoscaling-lt )| vpc, ecs, autoscaling groups, & launchtemplate in typescript. This creates a new vpc
+[aws-ts-vpc-ecs-autoscaling-lt ](aws-ts-vpc-ecs-autoscaling-lt)| vpc, ecs, autoscaling groups, & launchtemplate in typescript. This creates a new vpc
 [aws-ts-existingvpc-ecs-autoscaling-lt](aws-ts-existingvpc-ecs-autoscaling-lt)| existing vpc, ecs, autoscaling groups, & launchtemplate in typescript. Calls **then** creates a new vpc
 
 

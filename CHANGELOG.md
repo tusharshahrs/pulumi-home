@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2021-08-20)
-- added aws-ts-vpc-ecs-autoscaling-lt 
+- added aws-ts-vpc-ecs-autoscaling-lt
 - added aws-ts-existingvpc-ecs-autoscaling-lt
 
 ## (2021-08-19)
