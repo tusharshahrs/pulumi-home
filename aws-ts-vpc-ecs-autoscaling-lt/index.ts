@@ -29,8 +29,6 @@ const myvpc = new awsx.ec2.Vpc(`${name_prefix}-vpc`, {
     tags: baseTags,
   });
 
-const loadBalancer = new awsx.lb.ApplicationLoadBalancer(`${name_prefix}-lb`, );
-
 const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, 
     { vpc: myvpc,
     });
