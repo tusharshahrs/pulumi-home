@@ -67,7 +67,7 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
     ```
 
     The Result will be
-    ```
+    ```bash
     Do you want to perform this update? yes
     Updating (dev)
 
