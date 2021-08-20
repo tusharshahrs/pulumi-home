@@ -29,10 +29,11 @@ const myvpc = new awsx.ec2.Vpc(`${name_prefix}-vpc`, {
     tags: baseTags,
   });
 
+const loadBalancer = new awsx.lb.ApplicationLoadBalancer(`${name_prefix}-lb`, );
+
 const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, 
     { vpc: myvpc,
-    
-    },{ dependsOn: myvpc});
+    });
 
 
 const minsize = 3;
@@ -42,7 +43,7 @@ const autoScalingGroup =mycluster.createAutoScalingGroup(`${name_prefix}-autosca
             {
                 vpc: myvpc,
                 subnetIds: myvpc.publicSubnetIds,
-                launchConfigurationArgs: { instanceType: "t3a.small", associatePublicIpAddress: true},
+                launchConfigurationArgs: { instanceType: "t3a.small"},
                 templateParameters: {
                     
                     minSize: minsize,
@@ -50,7 +51,7 @@ const autoScalingGroup =mycluster.createAutoScalingGroup(`${name_prefix}-autosca
                     healthCheckGracePeriod: 100,
                     healthCheckType: 'ELB',
                 },
-            }, {dependsOn: mycluster},
+            },
         );
 
 export const vpc_name = myvpc.vpc.id;
