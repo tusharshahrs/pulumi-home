@@ -33,6 +33,13 @@ const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`,
     { vpc: myvpc,
     });
 
+const myloadbalancer = new awsx.lb.ApplicationLoadBalancer(`${name_prefix}-alb`, {
+    vpc: myvpc,
+    subnets: myvpc.publicSubnetIds,
+});
+
+const mytargetgroup = myloadbalancer.createTargetGroup(`${name_prefix}-targetgroup`, { port: 80, targetType: "instance" });
+
 
 const minsize = 3;
 const maxsize = 10;
@@ -41,6 +48,7 @@ const autoScalingGroup =mycluster.createAutoScalingGroup(`${name_prefix}-autosca
             {
                 vpc: myvpc,
                 subnetIds: myvpc.publicSubnetIds,
+                targetGroups: [mytargetgroup],
                 launchConfigurationArgs: { instanceType: "t3a.small"},
                 templateParameters: {
                     
@@ -56,3 +64,5 @@ export const vpc_name = myvpc.vpc.id;
 export const cluster_name = mycluster.cluster.name;
 export const launchConfiguration_name = autoScalingGroup.launchConfiguration.launchConfiguration.name;
 export const autoscaling_group_ame = autoScalingGroup.group.name;
+export const loadbalancer_name = myloadbalancer.loadBalancer.name;
+export const loadbalancer_subnets = myloadbalancer.loadBalancer.subnets;
