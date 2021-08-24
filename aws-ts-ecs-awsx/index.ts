@@ -21,20 +21,12 @@ export const myvpc = awsx.ec2.Vpc.fromExistingIds(`${name_prefix}-getvpc`, {
     vpcId:  vpc_id,     
 });
 
-const mylb = new awsx.lb.NetworkLoadBalancer(`${name_prefix}-nlb1`, { external: true, enableCrossZoneLoadBalancing: true, vpc:myvpc , subnets: vpc_public_subnet_ids });
-export const load_balancer_name = mylb.loadBalancer.name;
-export const load_balancer_arn = mylb.loadBalancer.arn;
-
-
-const mytargetgroup = mylb.createTargetGroup(`${name_prefix}-targetgroup`, { port: 80 });
-export const target_group_name = mytargetgroup.targetGroup.name;
-
-const mytargetlistener = mylb.createListener(`${name_prefix}-targetlistener`, { port: 80, targetGroup: mytargetgroup });
-export const target_listener_id = mytargetlistener.listener.id;
-
+// Create an ECS cluster using awsx package
 const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, { vpc: myvpc });
-export const cluster_name = mycluster.cluster.name
+export const cluster_name = mycluster.cluster.name;
+export const cluster_id = mycluster.cluster.id;
 
+// Create a securitygroup
 const mysecuritygroup = new aws.ec2.SecurityGroup(`${name_prefix}-securitygroup`,{
     description: "Enable HTTP Access",
     vpcId: vpc_id,
@@ -61,28 +53,19 @@ const mysecuritygroup = new aws.ec2.SecurityGroup(`${name_prefix}-securitygroup`
     }],
 });
 
+// Exporting security group information
 export const securitygroup_name = mysecuritygroup.name;
 export const securitygroup_id = mysecuritygroup.id;
 
-const mytaskdefinition = new awsx.ecs.FargateTaskDefinition(`${name_prefix}-taskdefinition`, {
-    vpc: myvpc,
-    container: {
-        image: "hello-world",
-        memory: 20,
-        portMappings: [mytargetlistener],
-        //networkListener: {port: 80, loadBalancer: mylb},
-    },
+// creating a load balancer via aws and NOT awsx package - this is to allow us to create targetgroups and listeners in another stack
+const my_loadbalancer = new aws.alb.LoadBalancer(`${name_prefix}-alb`, {
+    enableCrossZoneLoadBalancing: true,
+    securityGroups: [mysecuritygroup.id],
+    enableHttp2: true,
+    dropInvalidHeaderFields: true,
+    subnets: vpc_public_subnet_ids,
 });
 
-export const taskdefinition_id = mytaskdefinition.taskDefinition.id;
-
-const fargateService = new awsx.ecs.FargateService(`${name_prefix}-service`, {
-    cluster: mycluster,
-    desiredCount: 2,
-    taskDefinition: mytaskdefinition,
-    assignPublicIp: true,
-    securityGroups: [mysecuritygroup.id],
-    subnets: vpc_public_subnet_ids,
-    });
-
-const fargateservice_name =  fargateService.service.name;
+// Exporting load balancer information
+export const load_balancer_name = my_loadbalancer.name;
+export const load_balancer_arn = my_loadbalancer.arn;
