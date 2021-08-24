@@ -38,7 +38,7 @@ The ecs cluster and the load balancer are exported via stackreference
    ```
    The config values are empty
 
-1. Populate the config.  The networking stack follows [this](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) 
+1. Populate the config.  The networking stack follows [this](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences)
    means that the format is **<organization>/<project>/<stack>** See *networkingStack* below for example
 
    Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
@@ -182,8 +182,9 @@ The ecs cluster and the load balancer are exported via stackreference
    ```
    We want the following from the above
    **myuser/aws-ts-ecs-awsx/dev**
+   so that we can use it in **aws-ts-get-ecs**
 
-1. Destroy the stack (Only AFTER you have destroyed the stack that depends on this)
+1. Destroy the stack (Only AFTER you have destroyed the stack that depends on this:  **aws-ts-get-ecs**)
    ```bash
    pulumi destroy -y
    ```
