@@ -1,5 +1,5 @@
 
-# AWS Fargate Services with existing vpc and ecs.
+# AWS Fargate Services with existing vpc and ecs
 
 The vpc is read in via [StackReferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) and built via awsx.
 The ecs cluster read in via [StackReferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) and built via awsx.  
@@ -37,7 +37,7 @@ The ecs cluster read in via [StackReferences](https://www.pulumi.com/docs/intro/
    ```
    The config values are empty
 
-1. Populate the config.  The networking stack follows [this](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) 
+1. Populate the config. The networking stack follows [this](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences)
    means that the format is **<organization>/<project>/<stack>** See *networkingStack* below for example
 
    Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
