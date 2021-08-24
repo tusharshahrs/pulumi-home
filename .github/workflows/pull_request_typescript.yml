@@ -9,7 +9,7 @@ jobs:
       matrix:
         node-version: [ '14.x']
         typescript-example: ['aws-ts-vpc-crosswalk','aws-ts-sshkey', 'azure-ts-serveless-http-trigger', 'azure-ts-resourcegroup-fixname', 'azure-ts-iac-workshop-lab1', 
-        'aws-ts-acm-awsguard', 'azure-ts-sqlserver-loganalytics', 'aws-ts-launchtemplate','azure-ts-keyvault']
+        'aws-ts-acm-awsguard', 'azure-ts-sqlserver-loganalytics', 'aws-ts-launchtemplate','azure-ts-keyvault','aws-ts-vpc-ecs-autoscaling-lt','aws-ts-ecs-awsx','aws-ts-get-ecs']
     steps:
       - uses: actions/checkout@v2
         with:

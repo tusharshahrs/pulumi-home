@@ -1,4 +1,12 @@
 # CHANGELOG
+## (2021-08-24)
+- added aws-ts-get-ecs
+- added aws-ts-ecs-awsx
+
+
+## (2021-08-20)
+- added aws-ts-vpc-ecs-autoscaling-lt
+- added aws-ts-existingvpc-ecs-autoscaling-lt
 
 ## (2021-08-19)
 - added azure-ts-keyvault
