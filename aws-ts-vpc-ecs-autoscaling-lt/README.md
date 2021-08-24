@@ -21,7 +21,6 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
       pulumi stack init dev
       ```
 1. Now, install dependencies.
-
    ```bash
    npm install
    ```
