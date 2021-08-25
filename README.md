@@ -23,7 +23,7 @@ Example   | Description |
 [aws-ts-vpc-ecs-autoscaling-lt](aws-ts-vpc-ecs-autoscaling-lt)| vpc, ecs, autoscaling groups, and launchtemplate in typescript. This creates a new vpc
 [aws-ts-existingvpc-ecs-autoscaling-lt](aws-ts-existingvpc-ecs-autoscaling-lt)| existing vpc, ecs, autoscaling groups, and launchtemplate in typescript. Calls **then** creates a new vpc
 [aws-ts-ecs-awsx](aws-ts-ecs-awsx) | uses an existing vpc, creates ecs via awsx, loadbalancer via aws.  no targetgroup or targetlistener created.  next stack is [aws-ts-get-ecs](aws-ts-get-ecs)
-[aws-ts-get-ecs](aws-ts-get-ecs)| uses an existing vpc, calls the existing ecs created via [aws-ts-ecs-awsx](aws-ts-ecs-awsx) 
+[aws-ts-get-ecs](aws-ts-get-ecs)| uses an existing vpc, calls the existing ecs created via [aws-ts-ecs-awsx](aws-ts-ecs-awsx)
 
 
 ## Azure
