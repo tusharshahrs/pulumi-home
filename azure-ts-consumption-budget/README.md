@@ -34,7 +34,7 @@ Create an Azure Consumption Budget and switch the local language for report
     ```bash
     Previewing update (dev)
 
-    View Live: https://app.pulumi.com/shaht/azure-ts-consumption-budget/dev/previews/f0bd923e-d646-446a-ac1e-a15ee333eca6
+    View Live: https://app.pulumi.com/myuser/azure-ts-consumption-budget/dev/previews/f0bd923e-d646-446a-ac1e-a15ee333eca6
 
         Type                                     Name                             Plan       
     +   pulumi:pulumi:Stack                      azure-ts-consumption-budget-dev  create     
@@ -46,7 +46,7 @@ Create an Azure Consumption Budget and switch the local language for report
 
     Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/azure-ts-consumption-budget/dev/updates/31
+    View Live: https://app.pulumi.com/myuser/azure-ts-consumption-budget/dev/updates/31
 
         Type                                     Name                             Status      
     +   pulumi:pulumi:Stack                      azure-ts-consumption-budget-dev  created     
