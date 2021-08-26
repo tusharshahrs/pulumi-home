@@ -1,0 +1,10 @@
+{
+    "name": "azure-ts-consumption-budget",
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.10.0",
+        "@pulumi/azure-native": "^1.22.0"
+    }
+}
