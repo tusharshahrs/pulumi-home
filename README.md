@@ -38,6 +38,9 @@ Example   | Description |
 [azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript
 [azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go.
 [azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
+[azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
+[azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
+
 
 ## Google
 Example   | Description |
