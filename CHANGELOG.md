@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## (2021-08-26)
+- azure-ts-subscriptionid-from-resourcegroup
+- azure-ts-consumption-budget
+
 ## (2021-08-24)
 - added aws-ts-get-ecs
 - added aws-ts-ecs-awsx
