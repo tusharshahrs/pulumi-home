@@ -59,3 +59,7 @@ const budget = new azure_native.consumption.Budget(`${my_name}-budget-`, {
         startDate: "2021-08-01T00:00:00Z",
     },
 });
+
+export const myresourcegroup_name = myresourcegroup.name;
+export const budget_name = budget.name;
+export const budget_amount = budget.amount;
