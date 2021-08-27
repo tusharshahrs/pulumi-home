@@ -1,4 +1,4 @@
-name: Pulumi_Pull_Request_Typescript
+name: Pulumi_Pull_Request_Python_AWS
 on:
   - pull_request
 jobs:
@@ -7,33 +7,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ '14.x']
-        typescript-example: ['aws-ts-vpc-crosswalk','aws-ts-sshkey', 'azure-ts-serveless-http-trigger', 'azure-ts-resourcegroup-fixname', 'azure-ts-iac-workshop-lab1', 
-        'aws-ts-acm-awsguard', 'azure-ts-sqlserver-loganalytics', 'aws-ts-launchtemplate','azure-ts-keyvault','aws-ts-vpc-ecs-autoscaling-lt','azure-ts-subscriptionid-from-resourcegroup','azure-ts-consumption-budget']
+        python-version: [ '3.8.x']
+        python-example: ['aws-py-s3-staticwebsite','aws-py-apigateway-lambda-serverless','aws-py-dynamodb']
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-python@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          python-version: ${{ matrix.python-version }}
+      - name: Install Pulumi CLI
+        uses: pulumi/setup-pulumi@v2
+      - run: pip install -r requirements.txt
+        working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Install Pulumi CLI
-        uses: pulumi/setup-pulumi@v2
-      - run: npm install
-        working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          work-dir: ${{ matrix.typescript-example}}
+          work-dir: ${{matrix.python-example }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
