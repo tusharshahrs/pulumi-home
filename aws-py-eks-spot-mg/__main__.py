@@ -1,13 +1,16 @@
 """An AWS Python Pulumi program"""
-
 import pulumi
 import pulumi_aws as aws
 import pulumi_eks as eks
 from pulumi import export, ResourceOptions, Config, StackReference, get_stack, get_project
 import iam
+#import vpc
 
 role0 = iam.create_role("demo-py-role0")
-mytags ={"project_name":get_project, "stack_name":get_stack}
+mytags ={"project_name":get_project(), "stack_name":get_stack()}
+
+#my_vpc_id = vpc.vpc.id
+#export("my_vpcname", my_vpc_id)
 
 # Create an EKS cluster.
 mycluster = eks.Cluster("demo-py-eks",
@@ -17,18 +20,20 @@ mycluster = eks.Cluster("demo-py-eks",
             node_root_volume_size = 10,
             instance_roles=[role0],
             encrypt_root_block_device = True,
-            tags = mytags,
             desired_capacity=2,
             min_size=2,
             max_size=6,
             enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"],
+            tags = mytags,
+            #vpc_id =vpc.vpc.id,
+            #public_subnet_ids = vpc.public_subnet_ids,
+            #private_subnet_ids = vpc.private_subnet_ids,
             )
 
 managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
    cluster=mycluster.core, # TODO[pulumi/pulumi-eks#483]: Pass cluster directly.
    capacity_type = "SPOT",
-   instance_types=["t3a.medium"],
-
+   instance_types=["t3a.medium"],   
    scaling_config=aws.eks.NodeGroupScalingConfigArgs(
       desired_size=3,
       min_size=2,
