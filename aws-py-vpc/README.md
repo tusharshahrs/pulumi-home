@@ -29,7 +29,7 @@ AWS eks with spot managed nodes in python
    ```
 
 1. Populate the config.  Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
-   
+
    Setting subnets via [pulumi config set-all](https://www.pulumi.com/docs/reference/cli/pulumi_config_set-all/)
 
       ```bash
