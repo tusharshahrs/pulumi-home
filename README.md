@@ -24,6 +24,8 @@ Example   | Description |
 [aws-ts-existingvpc-ecs-autoscaling-lt](aws-ts-existingvpc-ecs-autoscaling-lt)| existing vpc, ecs, autoscaling groups, and launchtemplate in typescript. Calls **then** creates a new vpc
 [aws-ts-ecs-awsx](aws-ts-ecs-awsx) | uses an existing vpc, creates ecs via awsx, loadbalancer via aws.  no targetgroup or targetlistener created.  next stack is [aws-ts-get-ecs](aws-ts-get-ecs)
 [aws-ts-get-ecs](aws-ts-get-ecs)| uses an existing vpc, calls the existing ecs created via [aws-ts-ecs-awsx](aws-ts-ecs-awsx)
+[aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package
+[aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managed node instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts
 
 
 ## Azure

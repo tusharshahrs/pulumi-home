@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## (2021-08-30)
+- aws-py-vpc
+- aws-py-eks-spot-mg
+
+aws-py-vpc
 ## (2021-08-26)
 - azure-ts-subscriptionid-from-resourcegroup
 - azure-ts-consumption-budget
