@@ -1,7 +1,7 @@
 
-# AWS EKS SPOT Managed Nodes
+# AWS VPC in python
 
-AWS eks with spot managed nodes in python
+AWS VPC, igw, nat gateway, public and private subnets
 
 ## Deployment
 
