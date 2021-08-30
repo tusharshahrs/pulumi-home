@@ -2,9 +2,9 @@
 import pulumi
 import pulumi_aws as aws
 import pulumi_eks as eks
-from pulumi import export, ResourceOptions, Config, StackReference, get_stack, get_project
+from pulumi import export, Output, ResourceOptions, Config, StackReference, get_stack, get_project
 import iam
-#import vpc
+import vpc
 
 role0 = iam.create_role("demo-py-role0")
 mytags ={"project_name":get_project(), "stack_name":get_stack()}
@@ -25,9 +25,9 @@ mycluster = eks.Cluster("demo-py-eks",
             max_size=6,
             enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"],
             tags = mytags,
-            #vpc_id =vpc.vpc.id,
-            #public_subnet_ids = vpc.public_subnet_ids,
-            #private_subnet_ids = vpc.private_subnet_ids,
+            vpc_id =vpc.vpc.id,
+            public_subnet_ids = vpc.public_subnet_ids,
+            private_subnet_ids = vpc.private_subnet_ids,
             )
 
 managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
@@ -47,3 +47,4 @@ export("cluster_name", mycluster.core.cluster.name)
 export("managed_nodegroup_name", managed_nodegroup_spot_0.node_group.node_group_name)
 export("managed_nodegroup_capacity_type", managed_nodegroup_spot_0.node_group.capacity_type)
 export("managed_nodegroup_version", managed_nodegroup_spot_0.node_group.version)
+export("kubeconfig", Output.secret(mycluster.kubeconfig))
