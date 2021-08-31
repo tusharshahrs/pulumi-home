@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2021-08-31)
-- aws-ts-eks-spot-mg 
+- aws-ts-eks-spot-mg
 
 ## (2021-08-30)
 - aws-py-vpc
