@@ -9,7 +9,7 @@ jobs:
       matrix:
         node-version: [ '14.x']
         typescript-example: ['azure-ts-serveless-http-trigger', 'azure-ts-resourcegroup-fixname', 'azure-ts-iac-workshop-lab1', 
-        'azure-ts-sqlserver-loganalytics','azure-ts-keyvault','azure-ts-subscriptionid-from-resourcegroup','azure-ts-consumption-budget']
+        'azure-ts-sqlserver-loganalytics','azure-ts-keyvault','azure-ts-subscriptionid-from-resourcegroup','azure-ts-consumption-budget', 'azure-ts-datalakegen2']
     steps:
       - uses: actions/checkout@v2
         with:

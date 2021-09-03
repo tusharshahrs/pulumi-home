@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## (2021-09-03)
+- aws-ts-lakeformation
+- azure-ts-datalakegen2
+
 ## (2021-08-31)
 - aws-ts-eks-spot-mg
 
