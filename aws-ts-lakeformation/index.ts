@@ -68,7 +68,7 @@ const lakeformations = new aws.lakeformation.Resource("demo-lakeformation", {arn
 
 const lakeformation_permissions = new aws.lakeformation.Permissions("demo-lakepermissions", {
     permissions: ["ALL", "ALTER", "DELETE", "INSERT", "DESCRIBE","DROP", "SELECT"],
-    //permissionsWithGrantOptions: ["ALL", "ALTER", "DELETE", "INSERT", "DESCRIBE","DROP","SELECT"],
+    permissionsWithGrantOptions: ["ALL", "ALTER", "DELETE", "INSERT", "DESCRIBE","DROP","SELECT"],
     principal: lakeformation_roles[0].arn,
     table: {
         name: awsGlueCatalogTable.name,
