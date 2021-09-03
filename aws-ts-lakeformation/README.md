@@ -1,8 +1,7 @@
 
 # AWS Lake Formation Permissions with S3, Glue, Iam User, IAM Roles
 
-AWS Lake Formation Permissions with S3, Glue, Iam User, IAM Roles.  This is a workaround formation
-[pulumi-aws issue # 1531](https://github.com/pulumi/pulumi-aws/issues/1531)
+AWS Lake Formation Permissions with S3, Glue, Iam User, IAM Roles.
 
 ## Deployment
 
@@ -10,9 +9,7 @@ AWS Lake Formation Permissions with S3, Glue, Iam User, IAM Roles.  This is a wo
       ```bash
       pulumi stack init vpc-fargate-dev
       ```
-1. Install dependencies.  Note that the package.json has to at/above 4.19.0.  
-    Otherwise, you will get the error below.
-
+1. Install dependencies.  Note that the  *"@pulumi/aws"* in `package.json` has to at/above 4.19.0. Otherwise, you will get the error below.
      ```bash
      error: aws:lakeformation/permissions:Permissions resource 'demo-lakepermissions' has a problem: ExactlyOne: "table_with_columns": only one of `catalog_resource,data_location,database,table,table_with_columns` can be specified, but `catalog_resource,database` were specified.. Examine values at 'Permissions.TableWithColumns'.
      ```
