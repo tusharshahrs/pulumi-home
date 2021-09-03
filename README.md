@@ -27,6 +27,7 @@ Example   | Description |
 [aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package
 [aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts
 [aws-ts-eks-spot-mg](aws-ts-eks-spot-mg) | eks cluster with spot managednode instance with vpc via [awsx](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/awsx/ec2/#custom-vpcs)
+[aws-ts-lakeformation](aws-ts-lakeformation) | aws lakeformation permissions
 
 
 ## Azure
@@ -43,6 +44,7 @@ Example   | Description |
 [azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
 [azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
 [azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
+[azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
 
 
 ## Google
