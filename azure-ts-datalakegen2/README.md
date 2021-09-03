@@ -1,10 +1,9 @@
 # Azure Datalakegen2
 
-Azure resource group & storage account created in azure-native.  Datalakegen2filesystem and Datalake2path created using classic.  We can only 
+Azure resource group & storage account created in azure-native.  Datalakegen2filesystem and Datalake2path created using classic. We can only
 have the *datalakegen2path* resource have the aces at creation, we are not able to add a user to it afterwards.  We get the following 403 error message
 ```bash
-        * updating urn:pulumi:dev::azure-ts-datalakegen2::azure:storage/dataLakeGen2Path:DataLakeGen2Path::demo-datalakegen2path: 1 error occurred:
-        * setting access control for Path "enreched" in File System "demo-dlakegen2fse6c92ed" in Storage Account "demosa42762e87": datalakestore.Client#SetAccessControl: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationPermissionMismatch" Message="This request is not authorized to perform this operation using this permission.\nRequestId:68e3a870-d01f-005b-56fb-a022ad000000\nTime:2021-09-03T19:38:49.9638407Z"
+    ...1 error occurred: * setting access control for Path "enreched" in File System "demo-dlakegen2fse6c92ed" in Storage Account "demosa42762e87": datalakestore.Client#SetAccessControl: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationPermissionMismatch" Message="This request is not authorized to perform this operation using this permission."
 ```
 This seems to be releated to this [upstream](https://github.com/hashicorp/terraform-provider-azurerm/issues/6659).
 
