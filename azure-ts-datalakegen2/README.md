@@ -1,11 +1,14 @@
 # Azure Datalakegen2
 
-Azure resource group & storage account created in azure-native.  Datalakegen2filesystem and Datalake2path created using classic. 
+Azure resource group & storage account created in azure-native.  Datalakegen2filesystem and Datalake2path created using classic.
 
-## Notice 
+## Notice
 We can only have the *datalakegen2path* resource have the aces at creation, we are not able to add a user to it afterwards.  We get the following 403 error message
 ```bash
-    1 error occurred: * setting access control for Path "enreched" in File System "demo-dlake.." in Storage Account "demosa..": datalakestore.Client#SetAccessControl: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationPermissionMismatch" Message="This request is not authorized to perform this operation using this permission."
+    1 error occurred: * setting access control for Path "enreched" in File System "demo-dlake.." in Storage Account "demosa..": datalakestore.Client#SetAccessControl: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. 
+```
+```bash
+    Status=403 Code="AuthorizationPermissionMismatch" Message="This request is not authorized to perform this operation using this permission."
 ```
 This seems to be releated to this [upstream](https://github.com/hashicorp/terraform-provider-azurerm/issues/6659).
 
@@ -25,7 +28,9 @@ This seems to be releated to this [upstream](https://github.com/hashicorp/terraf
     ```bash
     npm install
     ```
-1. Configure the location to deploy the resources to. The Azure region to deploy to is pre-set to **WestUS** - but you can modify the region you would like to deploy to.  The *objectid_azure_ad_user_1/2*  Specifies the Object ID of the Azure Active Directory User or Group that the entry relates to. Only valid for user or group entries. They are passed in as secrets because we did not want them hard coded in our code.
+1. Configure the location to deploy the resources to. The Azure region to deploy to is pre-set to **WestUS** - but you can modify the region you would like to deploy to.  
+
+    The *objectid_azure_ad_user_1/2*  Specifies the Object ID of the Azure Active Directory User or Group that the entry relates to. Only valid for user or group entries. They are passed in as secrets because we did not want them hard coded in our code.
 
     ```bash
     pulumi config set azure-native:location eastus2
