@@ -45,13 +45,24 @@ const sqlServer = new sql.Server("sqlserver", {
 });
 
 // create an Azure sql server database
-const database = new sql.Database("sqldatabase", {
+// Enable log analytics for the sql server (master DB)
+// Get the master DB
+// Need to sleep a bit for the master DB to be created on the sql server before trying to use it.  This will enable log ana
+const database = sqlServer.id.apply(async (id) => {
+    await new Promise(f => setTimeout(f, 20000))
+    const masterDbId = `${id}/databases/master`
+    return(sql.Database.get("masterDb", masterDbId))
+});
+
+/*const database = new sql.Database("sqldatabase", {
     resourceGroupName: resourceGroup.name,
     serverName: sqlServer.name,
     sku: {
         name: "S0",
     },
-},{parent: sqlServer, dependsOn: sqlServer});
+    
+}, {parent: sqlServer, dependsOn: [sqlServer]});
+*/
 
 // Create Azure log analytics workspace // https://www.pulumi.com/docs/reference/pkg/azure-native/operationalinsights/workspace/
 const workspace = new operationalinsights.Workspace("loganalytics-workspace", {
@@ -94,7 +105,7 @@ const diagnosticSetting = new insights.DiagnosticSetting("diagnosticsetting", {
     resourceUri: database.id,
     workspaceId: workspace.id,
 },
-{parent: database, dependsOn: database});
+{parent: sqlServer, dependsOn: sqlServer});
 
 
 // Enable extended database blob auditing policy
@@ -111,7 +122,7 @@ const extendeddatabaseblobauditing = new sql.ExtendedDatabaseBlobAuditingPolicy(
     resourceGroupName: resourceGroup.name,
     serverName: sqlServer.name,
     state: "Enabled",
-},{parent: database, dependsOn: database});
+},{parent: sqlServer, dependsOn: sqlServer});
 
 // Enable extended database blob auditing policy
 const extendedserverblobauditing = new sql.ExtendedServerBlobAuditingPolicy("extendedserverblobauditingpolicy", {
@@ -126,7 +137,8 @@ const extendedserverblobauditing = new sql.ExtendedServerBlobAuditingPolicy("ext
     resourceGroupName: resourceGroup.name,
     serverName: sqlServer.name,
     state: "Enabled",
-},{parent: sqlServer});
+},
+{dependsOn: sqlServer});
 
 export const resourcegroup_name = resourceGroup.name;
 export const storageaccount_name = storageAccount.name;

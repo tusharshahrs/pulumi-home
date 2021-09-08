@@ -4,8 +4,8 @@
         "@types/node": "^14.0.0"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.6.0",
-        "@pulumi/azure-native": "^1.18.0",
+        "@pulumi/pulumi": "^3.11.0",
+        "@pulumi/azure-native": "^1.25.0",
         "@pulumi/random":"^4.2.0"
     }
 }
