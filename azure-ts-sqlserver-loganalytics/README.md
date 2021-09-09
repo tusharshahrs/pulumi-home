@@ -35,31 +35,27 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
     ```bash
     Updating (dev)
 
-    View Live: https://app.pulumi.com/myuser/azure-ts-sqlserver-loganalytics/dev/updates/150
+    View Live: https://app.pulumi.com/shaht/azure-ts-sqlserver-loganalytics/dev/updates/226
 
-        Type                                                          Name                                 Status      
-    +   pulumi:pulumi:Stack                                           azure-ts-sqlserver-loganalytics-dev  created     
-    +   ├─ random:index:RandomPassword                                sqlseverpassword                     created     
-    +   ├─ azure-native:resources:ResourceGroup                       loganalytics-rg                      created     
-    +   ├─ azure-native:operationalinsights:Workspace                 loganalytics-workspace               created     
-    +   ├─ azure-native:sql:Server                                    sqlserver                            created     
-    +   │  ├─ azure-native:sql:Database                               sqldatabase                          created     
-    +   │  │  ├─ azure-native:sql:ExtendedDatabaseBlobAuditingPolicy  extendeddatabaseblobauditingpolicy   created     
-    +   │  │  └─ azure-native:insights:DiagnosticSetting              diagnosticsetting                    created     
-    +   │  └─ azure-native:sql:ExtendedServerBlobAuditingPolicy       extendedserverblobauditingpolicy     created     
-    +   └─ azure-native:storage:StorageAccount                        loganalyticssa                       created     
+        Type                                                Name                                 Status      
+    +   pulumi:pulumi:Stack                                 azure-ts-sqlserver-loganalytics-dev  created     
+    +   ├─ azure-native:resources:ResourceGroup             loganalytics-rg                      created     
+    +   │  ├─ azure-native:operationalinsights:Workspace    loganalytics-workspace               created     
+    +   │  ├─ azure-native:sql:Server                       sqlserver                            created     
+    +   │  │  ├─ azure-native:sql:ServerBlobAuditingPolicy  serverblobauditingpolicy             created     
+    +   │  │  ├─ azure-native:sql:Database                  sqldatabase                          created     
+    +   │  │  └─ azure-native:insights:DiagnosticSetting    diagnosticsetting                    created     
+    +   │  └─ azure-native:storage:StorageAccount           loganalyticssa                       created     
+    +   └─ random:index:RandomPassword                      sqlseverpassword                     created     
     
     Outputs:
-        loganalytics_workspace_name      : "loganalytics-workspace74d41999"
-        resourcegroup_name               : "loganalytics-rg6689aea7"
-        sql_password                     : "[secret]"
-        sql_user                         : "pulumiadmin"
-        sqlserver_database_name          : "sqldatabase"
-        sqlserver_name                   : "sqlserverf43911a4"
-        storageaccount_name              : "loganalyticssa607b50fe"
-
-    Resources:
-        + 10 created
+        loganalytics_workspace_name: "loganalytics-workspace4931f9e9"
+        resourcegroup_name         : "loganalytics-rg99d2cc8a"
+        sql_password               : "[secret]"
+        sql_user                   : "pulumiadmin"
+        sqlserver_database_name    : "sqldatabase"
+        sqlserver_name             : "sqlserverff648141"
+        storageaccount_name        : "loganalyticssa65496eb1"
     ```
 1. Check the Outputs
    ```bash
@@ -69,14 +65,14 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
    Returns:
    ```bash
     Current stack outputs (7):
-        OUTPUT                       VALUE
-        loganalytics_workspace_name  loganalytics-workspace74d41999
-        resourcegroup_name           loganalytics-rg6689aea7
-        sql_password                 [secret]
-        sql_user                     pulumiadmin
-        sqlserver_database_name      sqldatabase
-        sqlserver_name               sqlserverf43911a4
-        storageaccount_name          loganalyticssa607b50fe
+    OUTPUT                       VALUE
+    loganalytics_workspace_name  loganalytics-workspace4931f9e9
+    resourcegroup_name           loganalytics-rg99d2cc8a
+    sql_password                 [secret]
+    sql_user                     pulumiadmin
+    sqlserver_database_name      sqldatabase
+    sqlserver_name               sqlserverff648141
+    storageaccount_name          loganalyticssa65496eb1
    ```
 
 1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
@@ -85,15 +81,14 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
 
 1. Destroy the Stack
    ```bash
-   pulumi destoy -y
+   pulumi destroy -y
    ```
 
-   Note:  The `extendedserverblobauditing` resource is not getting deleted correctly.
+   Note:  The `serverblobauditingpolicy` resource is not getting deleted correctly.
    Current workaround,
-   - Go to azure portal and find the SQL Server.
+   - Go to azure portal and find the **SQL Server**.
    - Delete the SQL Server
-   - Go back to the command line and type in `pulumi refresh -y`
-   - Run the destroy command again:  `pulumi destroy -y`
+   - Go back to the command line and type in `pulumi destroy -y -r`.  The `-r` will refresh the state file before deleting the resources.
 
 1. Remove the stack
    ```bash
