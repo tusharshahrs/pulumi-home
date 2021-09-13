@@ -28,7 +28,7 @@ myinsights = Insights('insights',
         opts=ResourceOptions(parent=resource_group)       
         )
 
-pulumi.export("workspace_id", myworkspace.id)
+pulumi.export("workspace_id", Output.secret(myworkspace.id))
 pulumi.export("workspace_name", myworkspace.name)
 pulumi.export("insight_name", myinsights.name)
 
