@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.8.x']
-        python-example: ['aws-py-eks-spot-mg','aws-py-s3-staticwebsite','aws-py-apigateway-lambda-serverless','aws-py-dynamodb', 'aws-py-vpc']
+        python-example: ['aws-py-eks-spot-mg','aws-py-s3-staticwebsite','aws-py-apigateway-lambda-serverless','aws-py-dynamodb', 'aws-py-vpc','aws-py-eks-spot-nodegroups']
     steps:
       - uses: actions/checkout@v2
         with:

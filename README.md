@@ -28,6 +28,7 @@ Example   | Description |
 [aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts
 [aws-ts-eks-spot-mg](aws-ts-eks-spot-mg) | eks cluster with spot managednode instance with vpc via [awsx](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/awsx/ec2/#custom-vpcs)
 [aws-ts-lakeformation](aws-ts-lakeformation) | aws lakeformation permissions
+[aws-py-eks-spot-nodegroups](aws-py-eks-spot-nodegroups)| aws eks cluster with no managednode group and fixed and spot node groups
 
 
 ## Azure

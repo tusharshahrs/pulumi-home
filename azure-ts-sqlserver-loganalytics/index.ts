@@ -16,7 +16,7 @@ const storageAccount = new storage.StorageAccount("loganalyticssa", {
         name: storage.SkuName.Standard_LRS,
     },
     kind: storage.Kind.StorageV2,
-});
+}, {parent: resourceGroup });
 
 // The primary key of the Storage Account
 const storageAccountKeys = pulumi.all([resourceGroup.name, storageAccount.name]).apply(([resourceGroupName, accountName]) =>
@@ -42,7 +42,18 @@ const sqlServer = new sql.Server("sqlserver", {
     administratorLogin: username,
     administratorLoginPassword: sqlpassword.result,
     version: "12.0",
-});
+}, {parent: resourceGroup });
+
+
+// Enable log analytics for the sql server (master DB)
+// Get the master DB
+// Need to sleep a bit for the master DB to be created on the sql server before trying to use it.
+// This doesn’t create the DB - it gets the auto-created master DB so that loganalytics can be enabled.
+const masterDb = sqlServer.id.apply(async (id) => {
+    await new Promise(f => setTimeout(f, 20000))
+    const masterDbId = `${id}/databases/master`
+    return(sql.Database.get("masterDb", masterDbId))
+})
 
 // create an Azure sql server database
 const database = new sql.Database("sqldatabase", {
@@ -51,7 +62,9 @@ const database = new sql.Database("sqldatabase", {
     sku: {
         name: "S0",
     },
-},{parent: sqlServer, dependsOn: sqlServer});
+    
+}, {parent: sqlServer, dependsOn: sqlServer});
+
 
 // Create Azure log analytics workspace // https://www.pulumi.com/docs/reference/pkg/azure-native/operationalinsights/workspace/
 const workspace = new operationalinsights.Workspace("loganalytics-workspace", {
@@ -60,7 +73,8 @@ const workspace = new operationalinsights.Workspace("loganalytics-workspace", {
     sku: {
         name: "PerGB2018",
     },
-});
+}, {parent: resourceGroup });
+
 
 // create diagnostic settings
 const diagnosticSetting = new insights.DiagnosticSetting("diagnosticsetting", {
@@ -91,30 +105,12 @@ const diagnosticSetting = new insights.DiagnosticSetting("diagnosticsetting", {
             enabled: false,
         },
     }],
-    resourceUri: database.id,
+    resourceUri: masterDb.id,
     workspaceId: workspace.id,
 },
-{parent: database, dependsOn: database});
+{parent: sqlServer, dependsOn: masterDb});
 
-
-// Enable extended database blob auditing policy
-const extendeddatabaseblobauditing = new sql.ExtendedDatabaseBlobAuditingPolicy("extendeddatabaseblobauditingpolicy", {
-    auditActionsAndGroups: [
-        "DATABASE_LOGOUT_GROUP",
-        "DATABASE_ROLE_MEMBER_CHANGE_GROUP",
-        "DATABASE_CHANGE_GROUP",
-    ],
-    databaseName: database.name,
-    isAzureMonitorTargetEnabled: true,
-    isStorageSecondaryKeyInUse: false,
-    retentionDays: 0,
-    resourceGroupName: resourceGroup.name,
-    serverName: sqlServer.name,
-    state: "Enabled",
-},{parent: database, dependsOn: database});
-
-// Enable extended database blob auditing policy
-const extendedserverblobauditing = new sql.ExtendedServerBlobAuditingPolicy("extendedserverblobauditingpolicy", {
+const serverblobauditing = new sql.ServerBlobAuditingPolicy("serverblobauditingpolicy", {
     auditActionsAndGroups: [
         "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP",
         "FAILED_DATABASE_AUTHENTICATION_GROUP",
@@ -126,7 +122,8 @@ const extendedserverblobauditing = new sql.ExtendedServerBlobAuditingPolicy("ext
     resourceGroupName: resourceGroup.name,
     serverName: sqlServer.name,
     state: "Enabled",
-},{parent: sqlServer});
+},
+{parent: sqlServer, dependsOn: sqlServer});
 
 export const resourcegroup_name = resourceGroup.name;
 export const storageaccount_name = storageAccount.name;

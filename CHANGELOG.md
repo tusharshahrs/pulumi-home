@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-09-13)
+- aws-py-eks-spot-nodegroups
+
 ## (2021-09-03)
 - aws-ts-lakeformation
 - azure-ts-datalakegen2
@@ -9,7 +12,6 @@
 
 ## (2021-08-30)
 - aws-py-vpc
-- aws-py-eks-spot-mg
 
 aws-py-vpc
 ## (2021-08-26)
