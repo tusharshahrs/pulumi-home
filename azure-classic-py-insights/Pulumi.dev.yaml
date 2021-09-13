@@ -1,0 +1,3 @@
+config:
+  azure-native:location: eastus2
+  azure:location: eastus2
