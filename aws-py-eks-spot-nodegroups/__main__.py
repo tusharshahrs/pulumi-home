@@ -85,7 +85,7 @@ fixed_node_group = eks.NodeGroup('demo-my-ng-fixed',
                                  max_size=3,
                                  labels={'ondemand': 'true'},
                                  instance_profile=instance_profile_1,
-                                 #opts=pulumi.ResourceOptions(parent=mycluster)
+                                 #opts=ResourceOptions(parent=mycluster)
                                  )
 
 spot_node_group = eks.NodeGroup('demo-my-ng-spot',
@@ -105,3 +105,12 @@ spot_node_group = eks.NodeGroup('demo-my-ng-spot',
                                 instance_profile=instance_profile_2,
                                 #opts=pulumi.ResourceOptions(parent=mycluster)
                                 )
+
+export("cluster_name", mycluster.core.cluster.name)
+export("iam_role1", role1.name)
+export("iam_role2", role2.name)
+export("instance_profile1", instance_profile_1.name)
+export("instance_profile2", instance_profile_2.name)
+export("fixed_node_group_name", fixed_node_group.cfn_stack.name)
+export("spot_node_group_name", spot_node_group.cfn_stack.name)
+export("kubeconfig", Output.secret(mycluster.kubeconfig))
