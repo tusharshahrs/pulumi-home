@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-09-14)
+- azure-classic-py-insights
+
 ## (2021-09-13)
 - aws-py-eks-spot-nodegroups
 

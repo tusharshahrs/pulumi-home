@@ -46,6 +46,7 @@ Example   | Description |
 [azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
 [azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
 [azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
+[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights
 
 
 ## Google
