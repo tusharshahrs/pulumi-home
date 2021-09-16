@@ -1,0 +1,3 @@
+name: azure-go-subscriptionid-from-resourcegroup
+runtime: go
+description: A minimal Azure Native Go Pulumi program
