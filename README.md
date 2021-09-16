@@ -8,6 +8,8 @@ This repo is essentially a staging ground for pulumi examples. As I learn more a
 
 **py** = `python`
 
+**go** = `go`
+
 ## AWS
 Example   | Description |
 --------- | ----------- |
@@ -34,19 +36,20 @@ Example   | Description |
 ## Azure
 Example   | Description |
 --------- | ----------- |
+[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights
+[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets.
+[azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat
+[azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
+[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript
+[azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
+[azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
+[azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
 [azure-ts-iac-workshop-lab1](azure-ts-iac-workshop-lab1) | azure workshop lab 1, creates resourceg group, storage account, and blob container. Code works independently, doesn't require workshop
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure workshop lab 2, azure serverless http trigger function workshop code. Code works independently, doesn't require workshop
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name
-[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets.
-[azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
-[azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat
-[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript
-[azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go.
-[azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
 [azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
-[azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
-[azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
-[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights
+[azure-go-subscriptionid-from-resourcegroup](azure-go-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
+[azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go.
 
 
 ## Google

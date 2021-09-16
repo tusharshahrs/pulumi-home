@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-09-16)
+- azure-go-subscriptionid-from-resourcegroup
+
 ## (2021-09-14)
 - azure-classic-py-insights
 
