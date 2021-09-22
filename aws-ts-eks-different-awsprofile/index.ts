@@ -44,3 +44,4 @@ export const cluster_name = mycluster.eksCluster.name
 export const cluster_id = mycluster.eksCluster.id;
 export const cluster_version = mycluster.eksCluster.version;
 export const cluster_status = mycluster.eksCluster.status;
+export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
