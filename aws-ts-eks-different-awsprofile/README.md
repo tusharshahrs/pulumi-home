@@ -5,8 +5,6 @@ AWS vpc setup with awsx and the aws profile is different than default.  The eks 
 
 ## Deployment
 
-## Deployment
-
 1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
 
    ```bash
