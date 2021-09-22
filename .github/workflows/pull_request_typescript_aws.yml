@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ '14.x']
-        typescript-example: ['aws-ts-vpc-crosswalk','aws-ts-sshkey', 'aws-ts-acm-awsguard','aws-ts-launchtemplate','aws-ts-vpc-ecs-autoscaling-lt','aws-ts-eks-spot-mg','aws-ts-lakeformation']
+        typescript-example: ['aws-ts-eks-different-awsprofile','aws-ts-vpc-crosswalk','aws-ts-sshkey', 'aws-ts-acm-awsguard','aws-ts-launchtemplate','aws-ts-vpc-ecs-autoscaling-lt','aws-ts-eks-spot-mg','aws-ts-lakeformation']
     steps:
       - uses: actions/checkout@v2
         with:
