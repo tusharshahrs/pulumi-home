@@ -1,4 +1,3 @@
-
 # AWS EKS with Different Aws Profile Passed in
 
 AWS vpc setup with awsx and the aws profile is different than default.  The eks cluster calls providerCredentialOpts to refer to this profile.
@@ -62,26 +61,10 @@ AWS vpc setup with awsx and the aws profile is different than default.  The eks 
    +      │  ├─ aws:iam:Role                  demo-eks-eksRole-role                created      
    +      ├─ eks:index:ServiceRole            demo-eks-eksRole                     created      
    +      │  ├─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-4b490823            created      
-   +      │  ├─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-4b490823            created      
-   +      │  ├─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-4b490823            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-90eb1c99            created      
    +      │  └─ aws:iam:RolePolicyAttachment   demo-eks-eksRole-90eb1c99            created      
-   +      │  └─ aws:iam:RolePolicyAttachment   demo-eks-eksRole-90eb1c99            created      
-   +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
-   +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
-   +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
-   +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
    +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
    +      ├─ eks:index:ServiceRole             demo-eks-instanceRole                  created      
    +   │  │  └─ aws:ec2:RouteTableAssociation  dev-vpc-public-1                       created      
-   +      │  ├─ aws:iam:Role                   demo-eks-instanceRole-role             created      
-   +      │  ├─ aws:iam:Role                   demo-eks-instanceRole-role             created      
    +      │  ├─ aws:iam:Role                   demo-eks-instanceRole-role             created      
    +   └─ eks:index:Cluster                    demo-eks                               creating...  
       Type                                    Name                                   Status       Info
@@ -157,8 +140,8 @@ AWS vpc setup with awsx and the aws profile is different than default.  The eks 
    pulumi stack output --show-secrets
    ```
 
-   The **kubeconfig** will show the AWS_PROFILE being set: 
-   **"env":[{"name":"AWS_PROFILE","value":"my-teams-2"}]** 
+   The **kubeconfig** will show the AWS_PROFILE being set:
+   **"env":[{"name":"AWS_PROFILE","value":"my-teams-2"}]**
 
 1. Clean up
    ```bash
