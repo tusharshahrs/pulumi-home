@@ -4,36 +4,24 @@ import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 
 const name = "demo";
-
-const awsProvider = new aws.Provider(`${name}-provider`, {
-    profile: aws.config.profile,
-    region: aws.config.region,
-})
-
-const myvpc = new awsx.ec2.Vpc(`${name}-vpc`, {
-  cidrBlock: "10.1.0.0/25",
-  numberOfAvailabilityZones: 3,
-  numberOfNatGateways: 1,
-  enableDnsHostnames: true,
-  enableDnsSupport: true,
-  tags: { Name: `${name}-vpc` },
-},{provider: awsProvider });
+const chainName = pulumi.getStack()
+const myvpc = new awsx.ec2.Vpc(chainName + "-vpc", {tags: { Name: `${chainName}-vpc` }});
+const desiredClusterCapacity = 4
 
 const mycluster = new eks.Cluster(`${name}-eks`, {
     vpcId: myvpc.id,
-    publicSubnetIds: myvpc.publicSubnetIds,
-    privateSubnetIds: myvpc.privateSubnetIds,
+    subnetIds: myvpc.publicSubnetIds,
     instanceType: "t3a.small",
     version: "1.21",
     nodeRootVolumeSize: 10,
+    minSize: 3,
+    desiredCapacity: desiredClusterCapacity,
+    maxSize: 6,
     encryptRootBockDevice: true,
-    enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"],
     providerCredentialOpts: {
         profileName: aws.config.profile
     }
-}, {dependsOn: myvpc});
-
-
+})
 
 export const vpc_id = myvpc.id;
 export const vpc_publicSubnetIds = myvpc.publicSubnetIds;
