@@ -141,7 +141,7 @@ AWS vpc setup with awsx and the aws profile is different than default.  The eks 
    ```
 
    The **kubeconfig** will show the AWS_PROFILE being set:
-   **"env":[{"name":"AWS_PROFILE","value":"my-teams-2"}]** 
+   **"env":[{"name":"AWS_PROFILE","value":"my-teams-2"}]**
 
 1. Clean up
    ```bash
