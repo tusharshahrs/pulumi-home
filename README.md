@@ -32,6 +32,7 @@ Example   | Description |
 [aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package
 [aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts
 [aws-py-eks-spot-nodegroups](aws-py-eks-spot-nodegroups)| aws eks cluster with no managednode group and fixed and spot node groups
+[aws-py-beanstalk](aws-py-beanstalk )| aws beanstalk application
 
 
 ## Azure
