@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2021-09-23)
-- aws-py-beanstalk 
+- aws-py-beanstalk
 
 ## (2021-09-22)
 - aws-ts-eks-different-awsprofile
