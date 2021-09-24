@@ -2,7 +2,7 @@
 
 This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, this may graduate to [pulumi examples](https://github.com/pulumi/examples)
 
-## Examples are in different languages
+## Examples are in different languages & different clouds
 
 **ts** = `typescript`
 
@@ -69,10 +69,16 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
  1. Located in [.github/workflows](.github/workflows)
 
  1. Pull WorkFlow Files for Python with comments by github actions
-    - [pull_request_python.yml](.github/workflows/pull_request_python.yml)
+    - aws [pull_request_python_aws.yml](.github/workflows/pull_request_python_aws.yml)
+    - azure [pull_request_python_azure.yml](.github/workflows/pull_request_python_azure.yml)
+    - gcp [pull_request_python_gcp.yml](.github/workflows/pull_request_python_gcp.yml)
 
  1. Pull WorkFlow Files for Typescript with comments by github actions
-    - [pull_request_ts.yml](.github/workflows/pull_request_typescript.yml)
+    - aws [pull_request_typescript_aws.yml](.github/workflows/pull_request_typescript_aws.yml)
+    - azure [pull_request_typescript_azure.yml](.github/workflows/pull_request_typescript_azure.yml)
+
+ 1. Pull WorkFlow Files for Go with comments by github actions
+   - aws, azure, and gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
 
  1. SuperLinter setup
     - [super-linter](https://github.com/github/super-linter) setup
