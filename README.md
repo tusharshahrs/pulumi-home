@@ -1,8 +1,13 @@
 # Pulumi Examples - Infrastructure as Code
-[[azure-native typescript](https://img.shields.io/badge/azure--native-typescript-blue)]
-[[aws typescript](https://img.shields.io/badge/aws-typescript-orange)]
-[[azure-native python](https://img.shields.io/badge/azure--native-python-green)]
-[[aws typescript](https://img.shields.io/badge/aws-python-orange)]
+[![azure-native typescript](https://img.shields.io/badge/azure--native-typescript-blue)]
+
+[![aws typescript](https://img.shields.io/badge/aws-typescript-orange)]
+
+[![azure-native python](https://img.shields.io/badge/azure--native-python-green)]
+
+[![aws typescript](https://img.shields.io/badge/aws-python-orange)]
+
+[![google-native python](https://img.shields.io/badge/google--native-python-red)
 
 This repo is essentially a staging ground for pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
