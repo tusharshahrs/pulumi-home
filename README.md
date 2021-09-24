@@ -1,9 +1,9 @@
 # Pulumi Examples - Infrastructure as Code
-[![azure-native typescript](https://img.shields.io/badge/azure--native-typescript-blue)]  [![azure-native python](https://img.shields.io/badge/azure--native-python-green)]  [![azure-native go](https://img.shields.io/badge/azure--native-go-red)] 
+[![azure-native python](https://img.shields.io/badge/azure--native-python-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)      [![azure-native typescript](https://img.shields.io/badge/azure--native-typescript-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)    [![azure-native go](https://img.shields.io/badge/azure--native-go-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) 
 
-[![aws typescript](https://img.shields.io/badge/aws-typescript-blue)]  [![aws python](https://img.shields.io/badge/aws-python-green)]
+[![aws python](https://img.shields.io/badge/aws-python-green)](https://www.pulumi.com/docs/reference/pkg/aws/)             [![aws typescript](https://img.shields.io/badge/aws-typescript-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)  
 
-[![google-native python](https://img.shields.io/badge/google--native-python-green)
+[![google-native python](https://img.shields.io/badge/google--native-python-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
 This repo is essentially a staging ground for pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
