@@ -1,4 +1,8 @@
-# Examples
+# Pulumi Examples - Infrastructure as Code
+[![auzre-native typescript](https://img.shields.io/badge/azure--native-typescript-blue)
+https://img.shields.io/badge/aws-typescript-orange
+https://img.shields.io/badge/azure--native-python-green
+https://img.shields.io/badge/aws-python-orange
 
 This repo is essentially a staging ground for pulumi examples. As I learn more about using Pulumi in all the different languages, this may graduate to [pulumi examples](https://github.com/pulumi/examples)
 
