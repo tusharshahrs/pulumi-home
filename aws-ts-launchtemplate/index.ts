@@ -3,15 +3,29 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as tls from "@pulumi/tls";
 import { output } from "@pulumi/pulumi";
+import { Tag } from "./tags";
 
 const myname = "demo"
+const mytags: Tag = {
+    Name: 'zscaler',
+    t_active: 'TRUE',
+    t_app: 'Zscaler',
+    t_billing_center: 'Production-Technology',
+    t_autoScale: 'TRUE',
+    t_contact: 'securityops@something.com',
+    t_deployment: 'green',
+    t_env: 'lab',
+    t_owner: 'Engineering',
+    t_project: 'Remote Access',
+    t_team: 'Security',
+    t_repository: 'https://github.com'
+};
 
 // Allocate a new VPC with the CIDR range from config file:
 const myvpc = new awsx.ec2.Vpc(`${myname}-vpc`, {
     cidrBlock: "10.0.0.0/25",
     numberOfAvailabilityZones: 3,
     numberOfNatGateways: 1,
-    tags: {"Name":`${myname}-vpc`}  
   });
 
 const mysecuritygroup_allowTls = new aws.ec2.SecurityGroup(`${myname}-securitygroup-allowtls`, {
@@ -128,11 +142,12 @@ export function get_airflow_webserver_template(airflow_profile: aws.iam.Instance
                 }
             }
         ],
-        tags: {
+        /* tags: {
             "user:Project": pulumi.getProject(),
             "user:Stack": pulumi.getStack(),
             "user:Creator": "demo"
-        },
+        }, */
+        tags: {...mytags},
         tagsAll: {},
         userData: user_data
     })
