@@ -12,9 +12,9 @@ This repo is essentially a staging ground for pulumi examples for aws, azure, an
 **ts** = `typescript`,  **py** = `python`,  **go** = `go`
 
 ## AWS
-Example   | Description |
---------- | ----------- |
-[aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences
+Example   | Description | Cloud-Language | 
+--------- | ----------- | -------------- |
+[aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-sshkey](aws-ts-sshkey)| ssh key
 [aws-ts-vpc-crosswalk](aws-ts-vpc-crosswalk)| vpc built in typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/)
 [aws-ts-acm-awsguard](aws-ts-acm-awsguard) | tls private key, aws self signed certificate and acm created. Running awsguard. Calling [pulumi-policy-aws](https://github.com/pulumi/pulumi-policy-aws)
