@@ -37,9 +37,9 @@ Example   | Description | Cloud-Language |
 
 
 ## Azure
-Example   | Description |
---------- | ----------- |
-[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights
+Example   | Description | Cloud-Language |
+--------- | ----------- | -------------- |
+[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets.
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat
 [azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId
@@ -55,13 +55,13 @@ Example   | Description |
 [azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go.
 
 ## Google
-Example   | Description |
---------- | ----------- |
+Example   | Description | Cloud-Language |
+--------- | ----------- | -------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres
 
 ## Workshops
-Example   | Description |
---------- | ----------- |
+Example   | Description | Cloud-Language |
+--------- | ----------- | -------------- |
 [azure-workshop-ts](azure-workshop-ts)| azure serverless http trigger function workshop in typescript
 
 ## Pulumi Github Actions Setup (Optional)
