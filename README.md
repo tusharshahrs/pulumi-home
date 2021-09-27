@@ -1,5 +1,5 @@
 # Pulumi Examples - Infrastructure as Code
-[![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)      [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)    [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) 
+[![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)      [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)    [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/)
 
 [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)             [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)  
 
@@ -12,7 +12,7 @@ This repo is contains pulumi examples for aws, azure, and gcp. The examples are 
 **ts** = `typescript`,  **py** = `python`,  **go** = `go`
 
 ## AWS
-Example   | Description | Cloud-Language | 
+Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-sshkey](aws-ts-sshkey)| ssh key | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
@@ -79,7 +79,7 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
     - azure [pull_request_typescript_azure.yml](.github/workflows/pull_request_typescript_azure.yml)
 
  1. Pull WorkFlow Files for Go with comments by github actions
-   - aws, azure, and gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
+   - aws azure and gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
 
  1. SuperLinter setup
     - [super-linter](https://github.com/github/super-linter) setup
