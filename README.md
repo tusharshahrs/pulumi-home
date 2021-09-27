@@ -3,7 +3,7 @@
 
 [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)             [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)  
 
-[![google-native PYTHON](https://img.shields.io/badge/GOOGLE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
+[![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
 This repo is essentially a staging ground for pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
@@ -57,7 +57,7 @@ Example   | Description | Cloud-Language |
 ## Google
 Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
-[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres
+[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## Workshops
 Example   | Description | Cloud-Language |
