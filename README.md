@@ -5,11 +5,30 @@
 
 [![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
-This repo is contains pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
+This repo contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
 ## Examples are in different languages & different clouds
 
 **ts** = `typescript`,  **py** = `python`,  **go** = `go`
+
+## Prequsite - How to Get Started with Pulumi - skip if you have already done this
+
+CLOUD     |   STEPS |
+--------- | ----------- |
+AWS | 1. Getting Started with [AWS](https://www.pulumi.com/docs/get-started/aws/begin/)
+AWS | 2. Configure your [AWS account](https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account)
+AZURE | 1. Getting Started with [AZURE](https://www.pulumi.com/docs/get-started/azure/begin/)
+AZURE | 2. Configure your [Azure account](https://www.pulumi.com/docs/get-started/azure/begin/#configure-pulumi-to-access-your-microsoft-azure-account)
+GOOGLE | 1.Getting Started with [GOOGLE](https://www.pulumi.com/docs/get-started/gcp/begin/)
+GOOGLE | 2.Configure your [Google account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account)
+
+Setup your **ACCESS TOKEN**  - Only need to do this once, no need to do it for each cloud.
+1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile). 
+1. Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. 
+1. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
+1. On your cli: pulumi login
+  - Enter your *AccessToken*.
+
 
 ## AWS
 Example   | Description | Cloud-Language |
