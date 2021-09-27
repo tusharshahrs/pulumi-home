@@ -13,7 +13,7 @@ This repo contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, an
 
 
 ## Prequsite - How to Get Started with Pulumi - skip if you have already done this
-[![PREQUISITE](https://img.shields.io/badge/PREREQUISITE-SETUP-red](https://www.pulumi.com/docs/get-started/)
+[![PREREQ](https://img.shields.io/badge/PREREQUISITE-SETUP-red)](https://www.pulumi.com/docs/get-started/)
 
 CLOUD     |   STEPS | COMMENTS |
 --------- | ----------- | --------|
@@ -23,6 +23,9 @@ AZURE | 1. Getting Started with [AZURE](https://www.pulumi.com/docs/get-started/
 AZURE | 2. Configure your [Azure account](https://www.pulumi.com/docs/get-started/azure/begin/#configure-pulumi-to-access-your-microsoft-azure-account) | Start with 1 cloud only.  Then when you need to, configure the next cloud. |
 GOOGLE | 1.Getting Started with [GOOGLE](https://www.pulumi.com/docs/get-started/gcp/begin/) | Start with 1 cloud only.  Then when you need to, configure the next cloud. |
 GOOGLE | 2.Configure your [Google account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account) | Start with 1 cloud only.  Then when you need to, configure the next cloud. |
+
+
+[![PULUMI AccessToken](https://img.shields.io/badge/PULUMI-ACCESS--TOKEN-purple)](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens)
 
 Setup your **ACCESS TOKEN**  - Only need to do this once, no need to do it for each cloud.
 1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile).
