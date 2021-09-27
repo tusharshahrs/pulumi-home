@@ -43,7 +43,7 @@ Example   | Description | Cloud-Language |
 [azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
 [azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
-[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript
+[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript |[![AZURE-NATIVE typescript](https://img.shields.io/badge/AZURE--NATIVE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
 [azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
 [azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
 [azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
