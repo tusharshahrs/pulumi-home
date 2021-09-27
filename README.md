@@ -39,8 +39,8 @@ Example   | Description | Cloud-Language |
 ## Azure
 Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
-[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
-[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
+[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
 [azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId |[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
 [azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript |[![AZURE-NATIVE typescript](https://img.shields.io/badge/AZURE--NATIVE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)|
