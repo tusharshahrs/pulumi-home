@@ -31,8 +31,7 @@ How to setup your **ACCESS TOKEN**  - Only need to do this once, no need to do i
 1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile).
 1. Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side.
 1. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
-1. On your cli: pulumi login
-  - Enter your *AccessToken*.
+1. On your cli: pulumi login *(Enter your *AccessToken*)*
 
 
 ## AWS
