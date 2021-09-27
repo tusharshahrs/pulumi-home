@@ -26,8 +26,8 @@ Example   | Description | Cloud-Language |
 [aws-ts-eks-spot-mg](aws-ts-eks-spot-mg) | eks cluster with spot managednode instance with vpc via [awsx](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/awsx/ec2/#custom-vpcs)
 [aws-ts-lakeformation](aws-ts-lakeformation) | aws lakeformation permissions
 [aws-ts-eks-different-awsprofile](aws-ts-eks-different-awsprofile) | aws eks cluster with awsx vpc with different aws config profile, not using default
-[aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences)
-[aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3
+[aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3 | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-py-apigateway-lambda-serverless](aws-py-apigateway-lambda-serverless)| api gateway with lambda. swagger and openapi apigateways.  Using the [triggers](https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python) option. added multiple paths
 [aws-py-dynamodb](aws-py-dynamodb)| dynamodb table
 [aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package
