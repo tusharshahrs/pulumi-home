@@ -78,12 +78,12 @@ Example   | Description | Cloud-Language      |
 [azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go. | [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
 ## Google
-Example   | Description | Cloud-Language      |
+Example   | Description | Cloud & Language|
 --------- | ----------- | ------------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## Workshops
-Example   | Description | Cloud-Language     |
+Example   | Description | Cloud & Language   |
 --------- | ----------- | ------------------ |
 [azure-workshop-ts](azure-workshop-ts)| azure serverless http trigger function workshop in typescript |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
