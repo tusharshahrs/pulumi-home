@@ -5,7 +5,7 @@
 
 [![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
-This repo is essentially a staging ground for pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
+This repo is contains pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
 ## Examples are in different languages & different clouds
 
