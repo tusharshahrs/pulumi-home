@@ -35,8 +35,8 @@ How to setup your **ACCESS TOKEN**  - Only need to do this once, no need to do i
 
 
 ## AWS
-Example   | Description | Cloud-Language |
---------- | ----------- | -------------- |
+Example   | Description | Cloud-Language      |
+--------- | ----------- | ------------------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-sshkey](aws-ts-sshkey)| ssh key | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-vpc-crosswalk](aws-ts-vpc-crosswalk)| vpc built in typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
@@ -60,8 +60,8 @@ Example   | Description | Cloud-Language |
 
 
 ## Azure
-Example   | Description | Cloud-Language |
---------- | ----------- | -------------- |
+Example   | Description | Cloud-Language      |
+--------- | ----------- | ------------------- |
 [azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
@@ -73,18 +73,18 @@ Example   | Description | Cloud-Language |
 [azure-ts-iac-workshop-lab1](azure-ts-iac-workshop-lab1) | azure workshop lab 1, creates resourceg group, storage account, and blob container. Code works independently, doesn't require workshop | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure workshop lab 2, azure serverless http trigger function workshop code. Code works independently, doesn't require workshop | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue?style=for-the-badge&logo=appveyor)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-go-subscriptionid-from-resourcegroup](azure-go-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId | [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go. | [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
 ## Google
-Example   | Description | Cloud-Language |
---------- | ----------- | -------------- |
+Example   | Description | Cloud-Language      |
+--------- | ----------- | ------------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## Workshops
-Example   | Description | Cloud-Language |
---------- | ----------- | -------------- |
+Example   | Description | Cloud-Language     |
+--------- | ----------- | ------------------ |
 [azure-workshop-ts](azure-workshop-ts)| azure serverless http trigger function workshop in typescript |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
 
