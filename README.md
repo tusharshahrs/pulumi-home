@@ -27,7 +27,7 @@ GOOGLE | 2.Configure your [Google account](https://www.pulumi.com/docs/get-start
 
 [![PULUMI AccessToken](https://img.shields.io/badge/PULUMI-ACCESS--TOKEN-purple)](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens)
 
-Setup your **ACCESS TOKEN**  - Only need to do this once, no need to do it for each cloud.
+How to setup your **ACCESS TOKEN**  - Only need to do this once, no need to do it for each cloud.
 1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile).
 1. Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side.
 1. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
@@ -88,6 +88,8 @@ Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
 [azure-workshop-ts](azure-workshop-ts)| azure serverless http trigger function workshop in typescript |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
+
+[![PULUMI GITHUB ACTIONS](https://img.shields.io/badge/GITHUB-ACTIONS-lightgrey)](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/)
 ## Pulumi Github Actions Setup (Optional)
 We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions).
 
