@@ -36,7 +36,7 @@ How to setup your **ACCESS TOKEN**  - Only need to do this once, no need to do i
 
 ## AWS
 Example| Description | Cloud & Language   |
-------| --------- | ------------------ |
+------| ------ | ---------------- |
 [aws-ts-vpc-with-ecs-fargate-py](aws-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-sshkey](aws-ts-sshkey)| ssh key | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-ts-vpc-crosswalk](aws-ts-vpc-crosswalk)| vpc built in typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
@@ -61,7 +61,7 @@ Example| Description | Cloud & Language   |
 
 ## Azure
 Example| Description | Cloud & Language   |
-------| --------- | ---------------- |
+------| ------ | ---------------- |
 [azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
