@@ -28,12 +28,12 @@ Example   | Description | Cloud-Language |
 [aws-ts-eks-different-awsprofile](aws-ts-eks-different-awsprofile) | aws eks cluster with awsx vpc with different aws config profile, not using default
 [aws-py-ecs-fargate](aws-py-ecs-fargate)| Deploys your own ECS Fargate cluster with tags and uses the vpc via [stackreferences](https://www.pulumi.com/docs/intro/concepts/stack/#stackreferences) | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-py-s3-staticwebsite](aws-py-s3-staticwebsite) | Deploy you own static website in s3 | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
-[aws-py-apigateway-lambda-serverless](aws-py-apigateway-lambda-serverless)| api gateway with lambda. swagger and openapi apigateways.  Using the [triggers](https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python) option. added multiple paths
-[aws-py-dynamodb](aws-py-dynamodb)| dynamodb table
-[aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package
-[aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts
-[aws-py-eks-spot-nodegroups](aws-py-eks-spot-nodegroups)| aws eks cluster with no managednode group and fixed and spot node groups
-[aws-py-beanstalk](aws-py-beanstalk )| aws beanstalk application
+[aws-py-apigateway-lambda-serverless](aws-py-apigateway-lambda-serverless)| api gateway with lambda. swagger and openapi apigateways.  Using the [triggers](https://www.pulumi.com/docs/reference/pkg/aws/apigateway/deployment/#triggers_python) option. added multiple paths | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-dynamodb](aws-py-dynamodb)| dynamodb table | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-vpc](aws-py-vpc) | creates aws vpc, subnet, igw, nat-gateway(1-3), & route tables all in python. no awsx package | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-eks-spot-mg](aws-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-eks-spot-nodegroups](aws-py-eks-spot-nodegroups)| aws eks cluster with no managednode group and fixed and spot node groups | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-py-beanstalk](aws-py-beanstalk )| aws beanstalk application | [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 
 
 ## Azure
