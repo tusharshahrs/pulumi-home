@@ -116,4 +116,4 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
     - VALIDATE_TYPESCRIPT_STANDARD turned OFF
 
 ## License
-[MIT](https://tldrlegal.com/license/mit-license)
+[![license](https://img.shields.io/badge/license-MIT-green)]((https://tldrlegal.com/license/mit-license))
