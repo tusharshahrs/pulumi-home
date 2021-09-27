@@ -1,9 +1,9 @@
 # Pulumi Examples - Infrastructure as Code
-[![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)      [![AZURE-NATIVE typescript](https://img.shields.io/badge/AZURE--NATIVE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)    [![AZURE-NATIVE GO](https://img.shields.io/badge/AZURE--NATIVE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) 
+[![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)      [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)    [![AZURE-NATIVE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) 
 
 [![AWS PYTHON](https://img.shields.io/badge/AWS-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)             [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)  
 
-[![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
+[![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
 This repo is essentially a staging ground for pulumi examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
@@ -39,11 +39,11 @@ Example   | Description | Cloud-Language |
 ## Azure
 Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
-[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId | [![AZURE-NATIVE PYTHON](https://img.shields.io/badge/AZURE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript |  [![AZURE-NATIVE typescript](https://img.shields.io/badge/AZURE--NATIVE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/)  |
+[azure-classic-py-insights](azure-classic-py-insights) | azure classic resource group, workspace & insights.  azure native resource group & workspace mixed with azure classic insights | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-py-vnet](azure-py-vnet)| azure virtual network with 2 subnets. | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-py-databricks](azure-py-databricks)| azure databricks.  Also retrieving subscription id and using Output.concat | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-py-subscriptionid-from-resourcegroup](azure-py-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-ts-sqlserver-loganalytics](azure-ts-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in typescript | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-ts-keyvault](azure-ts-keyvault) | create and destroy azure keyvault in typescript
 [azure-ts-consumption-budget](azure-ts-consumption-budget) | azure consumption budget and switching languages from German to English
 [azure-ts-datalakegen2](azure-ts-datalakegen2) | azure native resource group, storage account, azure classic datalakegen2 path and datalakegen2 filesystem
@@ -57,7 +57,7 @@ Example   | Description | Cloud-Language |
 ## Google
 Example   | Description | Cloud-Language |
 --------- | ----------- | -------------- |
-[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE--NATIVE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
+[google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## Workshops
 Example   | Description | Cloud-Language |
