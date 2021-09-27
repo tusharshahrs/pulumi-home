@@ -73,7 +73,7 @@ Example   | Description | Cloud-Language |
 [azure-ts-iac-workshop-lab1](azure-ts-iac-workshop-lab1) | azure workshop lab 1, creates resourceg group, storage account, and blob container. Code works independently, doesn't require workshop | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-ts-serveless-http-trigger](azure-ts-serveless-http-trigger)| azure workshop lab 2, azure serverless http trigger function workshop code. Code works independently, doesn't require workshop | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-ts-resourcegroup-fixname](azure-ts-resourcegroup-fixname) | azure resource group fixed name | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
-[azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId | [![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
+[azure-ts-subscriptionid-from-resourcegroup](azure-ts-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId |[![AZURE typescript](https://img.shields.io/badge/AZURE-TYPESCRIPT-blue?style=for-the-badge&logo=appveyor)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-go-subscriptionid-from-resourcegroup](azure-go-subscriptionid-from-resourcegroup) | azure resource group creating and retrieving subscriptionId | [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 [azure-go-sqlserver-loganalytics](azure-go-sqlserver-loganalytics/) | sql server database with sql auditing at the database level sent to log analytics in go. | [![AZURE GO](https://img.shields.io/badge/AZURE-GO-red)](https://www.pulumi.com/docs/reference/pkg/azure-native/) |
 
@@ -114,3 +114,6 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
     - VALIDATE_PYTHON_FLAKE8 turned OFF
     - VALIDATE_PYTHON_ISORT turned OFF
     - VALIDATE_TYPESCRIPT_STANDARD turned OFF
+
+## License
+[MIT](https://tldrlegal.com/license/mit-license)
