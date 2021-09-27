@@ -79,7 +79,7 @@ We have setup [Pulumi Github Actions](https://www.pulumi.com/docs/guides/continu
     - azure [pull_request_typescript_azure.yml](.github/workflows/pull_request_typescript_azure.yml)
 
  1. Pull WorkFlow Files for Go with comments by github actions
-   - aws azure and gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
+    - aws, azure, & gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
 
  1. SuperLinter setup
     - [super-linter](https://github.com/github/super-linter) setup
