@@ -11,8 +11,8 @@ This repo contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, an
 
 **ts** = `typescript`,  **py** = `python`,  **go** = `go`
 
+[![PREQUISITE](https://img.shields.io/badge/PREREQUISITE-SETUP-red)
 ## Prequsite - How to Get Started with Pulumi - skip if you have already done this
-[![PREQUISITE]https://img.shields.io/badge/PREREQUISITE-SETUP-red
 
 CLOUD     |   STEPS | COMMENTS |
 --------- | ----------- | --------|
