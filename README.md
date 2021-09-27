@@ -12,6 +12,7 @@ This repo contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, an
 **ts** = `typescript`,  **py** = `python`,  **go** = `go`
 
 ## Prequsite - How to Get Started with Pulumi - skip if you have already done this
+[![PREQUISITE]https://img.shields.io/badge/PREREQUISITE-SETUP-red
 
 CLOUD     |   STEPS | COMMENTS |
 --------- | ----------- | --------|
@@ -23,8 +24,8 @@ GOOGLE | 1.Getting Started with [GOOGLE](https://www.pulumi.com/docs/get-started
 GOOGLE | 2.Configure your [Google account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account) | Start with 1 cloud only.  Then when you need to, configure the next cloud. |
 
 Setup your **ACCESS TOKEN**  - Only need to do this once, no need to do it for each cloud.
-1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile). 
-1. Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. 
+1. Navigate to **Profile Settings** by selecting your avatar, then [Settings](https://www.pulumi.com/docs/intro/console/accounts/#editing-your-profile).
+1. Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side.
 1. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
 1. On your cli: pulumi login
   - Enter your *AccessToken*.
