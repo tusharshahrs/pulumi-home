@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## (2021-09-27)
+- added azure-ts-jenkins
+
+## (2021-09-27)
 - added language and cloud images, updated the github actions links
 
 ## (2021-09-23)
