@@ -67,7 +67,7 @@ Deploying an Azure Function Apps that loads a jenkins docker image
    ```
 
 1. Load the URL in a browser. Wait about 60 seconds for jenkins to warm up the 1st time. Wait about another 60-90 seconds for the jenkins app to create the login page
-   
+
    ```Unlock Jenkins To ensure Jenkins is securely set up by the administrator, a password has been written to the log (not sure where to find it?) and this file on the server:```
 
 1. Destroy the Stack
