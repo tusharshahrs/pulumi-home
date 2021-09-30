@@ -1,4 +1,4 @@
-name: aws-py-dynamodb
+name: aws-classic-py-dynamodb
 runtime:
   name: python
   options:
