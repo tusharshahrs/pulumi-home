@@ -1,4 +1,4 @@
-name: aws-py-apigateway-lambda-serverless
+name: aws-classic-py-apigateway-lambda-serverless
 runtime:
   name: python
   options:
