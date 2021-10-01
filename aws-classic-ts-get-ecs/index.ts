@@ -45,7 +45,7 @@ const mytargetlistener = new aws.alb.Listener(`${name_prefix}-targetlistener`, {
     }],
 });
 
-export const target_listener_arn = mytargetlistener.arn;
+export const target_listener_arn = pulumi.secret(mytargetlistener.arn);
 
 const mytaskdefinition = new awsx.ecs.FargateTaskDefinition(`${name_prefix}-taskdefinition`, {
     vpc: myvpc,

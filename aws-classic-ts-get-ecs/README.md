@@ -110,7 +110,7 @@ The ecs cluster read in via [StackReferences](https://www.pulumi.com/docs/intro/
     +   └─ aws:alb:Listener                           demo2-targetlistener                     created     
     
     Outputs:
-        target_listener_arn: "arn:aws:elasticloadbalancing:us-east-2:1234556:listener/app/demo-alb-fc410af/dfb6a78ca7fdf37b/fee58677326abf0b"
+        target_listener_arn: "secret"
         targetgroup_name   : "demo2-targetgroup-e037b0d"
         taskdefinition_id  : "demo2-taskdefinition-aece9bcd"
         taskdefinition_role: "demo2-taskdefinition-task-ded835d"
@@ -131,12 +131,17 @@ The ecs cluster read in via [StackReferences](https://www.pulumi.com/docs/intro/
    ```bash
    Current stack outputs (6):
     OUTPUT               VALUE
-    target_listener_arn  arn:aws:elasticloadbalancing:us-east-2:1234556:listener/app/demo-alb-fc410af/dfb6a78ca7fdf37b/fee58677326abf0b
+    target_listener_arn  ["secret"]
     targetgroup_name     demo2-targetgroup-e037b0d
     taskdefinition_id    demo2-taskdefinition-aece9bcd
     taskdefinition_role  demo2-taskdefinition-task-ded835d
     vpc_id               vpc-025f676ca8032ff3a
     vpc_name             shaht-dev
+   ```
+
+   If you need to see the value in kubeconfig, you will have to do the following
+   ```bash
+   pulumi stack output --show-secrets
    ```
 
 1. Destroy the stack
