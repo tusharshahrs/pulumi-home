@@ -1,4 +1,4 @@
-name: aws-py-eks-spot-nodegroups
+name: aws-classic-py-eks-spot-nodegroups
 runtime:
   name: python
   options:

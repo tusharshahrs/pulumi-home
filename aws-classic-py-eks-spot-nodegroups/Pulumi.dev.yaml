@@ -1,12 +1,12 @@
 config:
-  aws-py-eks-spot-nodegroups:number_of_nat_gateways: "1"
-  aws-py-eks-spot-nodegroups:private_subnet_cidr:
+  aws-classic-py-eks-spot-nodegroups:number_of_nat_gateways: "1"
+  aws-classic-py-eks-spot-nodegroups:private_subnet_cidr:
   - 10.0.1.0/26
   - 10.0.1.64/26
   - 10.0.1.128/25
-  aws-py-eks-spot-nodegroups:public_subnet_cidr:
+  aws-classic-py-eks-spot-nodegroups:public_subnet_cidr:
   - 10.0.0.0/25
   - 10.0.0.128/26
   - 10.0.0.192/26
-  aws-py-eks-spot-nodegroups:vpc_cidr_block: 10.0.0.0/23
+  aws-classic-py-eks-spot-nodegroups:vpc_cidr_block: 10.0.0.0/23
   aws:region: us-east-2
