@@ -97,52 +97,11 @@ The ecs cluster and the load balancer are exported via stackreference
     +   └─ aws:alb:LoadBalancer                       demo-alb             created     
     
     Outputs:
-        cluster_id        : "arn:aws:ecs:us-east-2:123456768:cluster/demo-ecs-cac746f"
+        cluster_id        : "secret"
         cluster_name      : "demo-ecs-cac746f"
-        load_balancer_arn : "arn:aws:elasticloadbalancing:us-east-2:123456768:loadbalancer/app/demo-alb-fc410af/dfb6a78ca7fdf37b"
+        load_balancer_arn : "secret"
         load_balancer_name: "demo-alb-fc410af"
-        myvpc             : {
-            id : "vpc-025f676ca8032ff3a"
-            urn: "urn:pulumi:dev::aws-ts-ecs-awsx::awsx:x:ec2:Vpc::demo-getvpc"
-            vpc: {
-                arn                         : "arn:aws:ec2:us-east-2:123456768:vpc/vpc-025f676ca8032ff3a"
-                assignGeneratedIpv6CidrBlock: false
-                cidrBlock                   : "10.0.0.0/25"
-                defaultNetworkAclId         : "acl-04c1f5af97935e4aa"
-                defaultRouteTableId         : "rtb-021214aa982cc2f32"
-                defaultSecurityGroupId      : "sg-0a77d4ef91618540b"
-                dhcpOptionsId               : "dopt-5cffe534"
-                enableDnsHostnames          : true
-                enableDnsSupport            : true
-                id                          : "vpc-025f676ca8032ff3a"
-                instanceTenancy             : "default"
-                mainRouteTableId            : "rtb-021214aa982cc2f32"
-                ownerId                     : "052848974346"
-                tags                        : {
-                    Name                   : "myuser-dev"
-                    availability_zones_used: "3"
-                    cidr_block             : "10.0.0.0/25"
-                    cost_center            : "1234"
-                    crosswalk              : "yes"
-                    demo                   : "true"
-                    number_of_nat_gateways : "1"
-                    pulumi:Project         : "crosswalk-vpc"
-                    pulumi:Stack           : "myvpc"
-                }
-                tagsAll                     : {
-                    Name                   : "myuser-dev"
-                    availability_zones_used: "3"
-                    cidr_block             : "10.0.0.0/25"
-                    cost_center            : "1234"
-                    crosswalk              : "yes"
-                    demo                   : "true"
-                    number_of_nat_gateways : "1"
-                    pulumi:Project         : "crosswalk-vpc"
-                    pulumi:Stack           : "myvpc"
-                }
-                urn                         : "urn:pulumi:dev::aws-ts-ecs-awsx::aws:ec2/vpc:Vpc::demo-getvpc"
-            }
-        }
+        myvpc             : "secret" 
         securitygroup_id  : "sg-019dc06000745551a"
         securitygroup_name: "demo-securitygroup-348b57b"
 
@@ -160,13 +119,23 @@ The ecs cluster and the load balancer are exported via stackreference
    ```bash
    Current stack outputs (7):
     OUTPUT              VALUE
-    cluster_id          arn:aws:ecs:us-east-2:123456768:cluster/demo-ecs-cac746f
-    cluster_name        demo-ecs-cac746f
-    load_balancer_arn   arn:aws:elasticloadbalancing:us-east-2:123456768:loadbalancer/app/demo-alb-fc410af/dfb6a78ca7fdf37b
-    load_balancer_name  demo-alb-fc410af
-    myvpc               {"id":"vpc-025f676ca8032ff3a","urn":"urn:pulumi:dev::aws-ts-ecs-awsx::awsx:x:ec2:Vpc::demo-getvpc","vpc":{"arn":"arn:aws:ec2:us-east-2:123456768:vpc/vpc-025f676ca8032ff3a","assignGeneratedIpv6CidrBlock":false,"cidrBlock":"10.0.0.0/25","defaultNetworkAclId":"acl-04c1f5af97935e4aa","defaultRouteTableId":"rtb-021214aa982cc2f32","defaultSecurityGroupId":"sg-0a77d4ef91618540b","dhcpOptionsId":"dopt-5cffe534","enableDnsHostnames":true,"enableDnsSupport":true,"id":"vpc-025f676ca8032ff3a","instanceTenancy":"default","ipv6AssociationId":"","ipv6CidrBlock":"","mainRouteTableId":"rtb-021214aa982cc2f32","ownerId":"052848974346","tags":{"Name":"myuser-dev","availability_zones_used":"3","cidr_block":"10.0.0.0/25","cost_center":"1234","crosswalk":"yes","demo":"true","number_of_nat_gateways":"1","pulumi:Project":"crosswalk-vpc","pulumi:Stack":"myvpc"},"tagsAll":{"Name":"myuser-dev","availability_zones_used":"3","cidr_block":"10.0.0.0/25","cost_center":"1234","crosswalk":"yes","demo":"true","number_of_nat_gateways":"1","pulumi:Project":"crosswalk-vpc","pulumi:Stack":"myvpc"},"urn":"urn:pulumi:dev::aws-ts-ecs-awsx::aws:ec2/vpc:Vpc::demo-getvpc"}}
-    securitygroup_id    sg-019dc06000745551a
-    securitygroup_name  demo-securitygroup-348b57b
+    cluster_id          [secret]
+    cluster_name        demo-ecs-a8c72a4
+    load_balancer_arn   [secret]
+    load_balancer_name  demo-alb-347c1d1
+    securitygroup_id    sg-03627b0949fbd9b8a
+    securitygroup_name  demo-securitygroup-b5256cf
+    vpc_existing        [secret]
+   ```
+
+1. View the outputs.
+   ```bash
+   pulumi stack output
+   ```
+
+   If you need to see the values that are secrets, do the following
+   ```bash
+   pulumi stack output --show-secrets
    ```
 
 1. The value to use in a StackReference can be retrieved from the last line.

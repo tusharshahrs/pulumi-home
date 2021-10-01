@@ -17,14 +17,15 @@ const vpc_private_subnet_ids = networkingStack.getOutput("pulumi_vpc_public_subn
 const name_prefix = "demo";
 
 // Retrieving existing vpc, need it as a VPC resource
-export const myvpc = awsx.ec2.Vpc.fromExistingIds(`${name_prefix}-getvpc`, {
+const myvpc = awsx.ec2.Vpc.fromExistingIds(`${name_prefix}-getvpc`, {
     vpcId:  vpc_id,     
 });
 
+export const vpc_existing = pulumi.secret(myvpc);
 // Create an ECS cluster using awsx package
 const mycluster = new awsx.ecs.Cluster(`${name_prefix}-ecs`, { vpc: myvpc });
 export const cluster_name = mycluster.cluster.name;
-export const cluster_id = mycluster.cluster.id;
+export const cluster_id = pulumi.secret(mycluster.cluster.id);
 
 // Create a securitygroup
 const mysecuritygroup = new aws.ec2.SecurityGroup(`${name_prefix}-securitygroup`,{
@@ -68,4 +69,4 @@ const my_loadbalancer = new aws.alb.LoadBalancer(`${name_prefix}-alb`, {
 
 // Exporting load balancer information
 export const load_balancer_name = my_loadbalancer.name;
-export const load_balancer_arn = my_loadbalancer.arn;
+export const load_balancer_arn = pulumi.secret(my_loadbalancer.arn);
