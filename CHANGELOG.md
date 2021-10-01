@@ -24,6 +24,7 @@
 - renamed aws-py-eks-spot-nodegroups to aws-classic-py-eks-spot-nodegroups
 - renamed aws-py-s3-staticwebsite to aws-classic-py-s3-staticwebsite
 - renamed aws-py-vpc to aws-classic-py-vpc
+- updated the badge for aws-python to aws-classic-python & aws-typescript to aws-classic-typescript
 
 ## (2021-09-28)
 - added azure-ts-jenkins
