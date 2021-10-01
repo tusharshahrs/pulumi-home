@@ -1,0 +1,3 @@
+config:
+  aws-classic-ts-existingvpc-ecs-autoscaling-lt:vpc_already_created_name: vpc-087d97cda3d994d5d
+  aws:region: us-east-2

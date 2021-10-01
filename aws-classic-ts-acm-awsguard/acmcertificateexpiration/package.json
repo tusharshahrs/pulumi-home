@@ -1,0 +1,10 @@
+{
+    "name": "awsguard-typescript",
+    "version": "0.0.2",
+    "dependencies": {
+        "@pulumi/awsguard": "^0.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    }
+}

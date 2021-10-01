@@ -1,3 +1,0 @@
-name: azure-ts-datalakegen2
-runtime: nodejs
-description: A minimal Azure Native TypeScript Pulumi program

@@ -1,0 +1,11 @@
+{
+    "name": "aws-classic-ts-vpc-crosswalk",
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^4.22.0",
+        "@pulumi/awsx": "^0.30.0",
+        "@pulumi/pulumi": "^3.13.2"
+    }
+}

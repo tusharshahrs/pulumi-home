@@ -1,0 +1,4 @@
+config:
+  aws-classic-ts-get-ecs:ecsStack: shaht/aws-classic-ts-ecs-awsx/dev
+  aws-classic-ts-get-ecs:networkingStack: shaht/aws-classic-ts-vpc-crosswalk/myvpc
+  aws:region: us-east-2

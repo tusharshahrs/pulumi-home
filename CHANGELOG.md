@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## (2021-10-01)
+- renamed aws-ts-acm-awsguard to aws-classic-ts-acm-awsguard
+- renamed aws-ts-ecs-awsx to aws-classic-ts-ecs-awsx
+- renamed aws-ts-eks-different-awsprofile to aws-classic-ts-eks-different-awsprofile
+- renamed aws-ts-eks-spot-mg to aws-classic-ts-eks-spot-mg
+- renamed aws-ts-existingvpc-ecs-autoscaling-lt to aws-classic-ts-existingvpc-ecs-autoscaling-lt
+- renamed aws-ts-get-ecs to aws-classic-ts-get-ecs
+- renamed aws-ts-lakeformation to aws-classic-ts-lakeformation
+- renamed aws-ts-launchtemplate to aws-classic-ts-launchtemplate
+- renamed aws-ts-sshkey to aws-classic-ts-sshkey
+- renamed aws-ts-vpc-crosswalk to aws-classic-ts-vpc-crosswalk
+- renamed aws-ts-vpc-ecs-autoscaling-lt to aws-classic-ts-vpc-ecs-autoscaling-lt
+- renamed aws-ts-vpc-with-ecs-fargate-py to aws-classic-ts-vpc-with-ecs-fargate-py
+- renamed azure-ts-datalakegen2 to azure-classic-ts-datalakegen2
+
+## (2021-09-30)
+- renamed aws-py-apigateway-lambda-serverless to aws-classic-py-apigateway-lambda-serverless
+- renamed aws-py-beanstalk to aws-classic-py-beanstalk
+- renamed aws-py-dynamodb to aws-classic-py-dynamodb
+- renamed aws-py-ecs-fargate to aws-classic-py-ecs-fargate
+- renamed aws-py-eks-spot-mg to aws-classic-py-eks-spot-mg
+- renamed aws-py-eks-spot-nodegroups to aws-classic-py-eks-spot-nodegroups
+- renamed aws-py-s3-staticwebsite to aws-classic-py-s3-staticwebsite
+- renamed aws-py-vpc to aws-classic-py-vpc
+- updated the badge for aws-python to aws-classic-python & aws-typescript to aws-classic-typescript
+
+## (2021-09-28)
+- added azure-ts-jenkins
+
 ## (2021-09-27)
 - added language and cloud images, updated the github actions links
 

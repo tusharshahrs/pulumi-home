@@ -1,0 +1,6 @@
+name: azure-py-aks
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal Azure Native Python Pulumi program

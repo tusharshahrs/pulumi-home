@@ -1,3 +1,0 @@
-name: aws-ts-vpc-ecs-autoscaling-lt
-runtime: nodejs
-description: A minimal AWS TypeScript Pulumi program

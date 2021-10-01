@@ -1,3 +1,0 @@
-name: aws-ts-ecs-awsx
-runtime: nodejs
-description: A minimal AWS TypeScript Pulumi program

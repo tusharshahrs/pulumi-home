@@ -1,0 +1,3 @@
+config:
+  aws-classic-py-ecs-fargate-with-crosswalk-vpc:mystackpath: shaht/aws-classic-ts-vpc-crosswalk/myvpc
+  aws:region: us-east-2

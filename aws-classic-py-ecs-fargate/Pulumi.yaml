@@ -1,0 +1,6 @@
+name: aws-classic-py-ecs-fargate-with-crosswalk-vpc
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: ECS Fargate with crosswalk vpc

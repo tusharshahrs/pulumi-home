@@ -1,0 +1,6 @@
+config:
+  azure-classic-ts-datalakegen2:objectid_azure_ad_user_1:
+    secure: AAABALsCrPlqRx9sno3j5gh5LIx378lVSmuqEcAYifQWt55DZkeWKXxtKJi1Y11tIN5t+MBhw62mVcfuCb6Edgi0iLI=
+  azure-classic-ts-datalakegen2:objectid_azure_ad_user_2:
+    secure: AAABAO+8R4KTRUSCrBnSxkQ3hPsJMUE8fp4BrqJnOiZN4bjmdiYDifyZVlKLlUUGPHNOdI2wamJD3bQAnlRdERGsdg4=
+  azure-native:location: eastus2

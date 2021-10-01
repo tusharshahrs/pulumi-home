@@ -1,0 +1,6 @@
+name: aws-classic-py-vpc
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal AWS Python Pulumi program

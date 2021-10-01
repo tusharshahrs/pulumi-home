@@ -1,0 +1,10 @@
+{
+    "name": "aws-classic-ts-lakeformation",
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.13.2",
+        "@pulumi/aws": "^4.22.0"
+    }
+}
