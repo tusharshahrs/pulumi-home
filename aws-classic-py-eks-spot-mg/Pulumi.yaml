@@ -1,4 +1,4 @@
-name: aws-py-eks-spot-mg
+name: aws-classic-py-eks-spot-mg
 runtime:
   name: python
   options:
