@@ -1,3 +1,3 @@
-name: aws-ts-get-ecs
+name: aws-classic-ts-get-ecs
 runtime: nodejs
 description: A minimal AWS TypeScript Pulumi program

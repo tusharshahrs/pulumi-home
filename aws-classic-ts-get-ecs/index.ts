@@ -2,7 +2,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import { Config, getStack, StackReference } from "@pulumi/pulumi";
-import { Cluster } from "@pulumi/aws/cloudhsmv2";
 
 // importing local configs
 const config = new Config();
@@ -14,7 +13,7 @@ export const vpc_name = networkingStack.getOutput("pulumi_vpc_name");
 const vpc_public_subnet_ids = networkingStack.getOutput("pulumi_vpc_public_subnet_ids");
 const vpc_private_subnet_ids = networkingStack.getOutput("pulumi_vpc_public_subnet_ids");
 
-const name_prefix = "demo2";
+const name_prefix = "demo-ecs-vpc";
 
 const myecsStack = new StackReference(config.require("ecsStack"));
 const mycluster_name = myecsStack.getOutput("cluster_name");
