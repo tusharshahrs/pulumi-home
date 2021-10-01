@@ -3,7 +3,7 @@
 Azure resource group & storage account created in azure-native.  Datalakegen2filesystem and Datalake2path created using classic.
 
 ## Notice
-We can only have the *datalakegen2path* resource have the aces at creation, we are not able to add a user to it afterwards.  We get the following 403 error message
+We can only have the *datalakegen2path* resource have the [aces](https://www.pulumi.com/docs/reference/pkg/azure/storage/datalakegen2path/#state_aces_nodejs) at creation, we are not able to add a user to it afterwards.  We get the following 403 error message
 ```bash
     1 error occurred: * setting access control for Path "enreched" in File System "demo-dlake.." in Storage Account "demosa..": datalakestore.Client#SetAccessControl: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. 
 ```

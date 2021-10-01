@@ -1,5 +1,5 @@
 {
-    "name": "azure-ts-datalakegen2",
+    "name": "azure-classic-ts-datalakegen2",
     "devDependencies": {
         "@types/node": "^14.0.0"
     },
