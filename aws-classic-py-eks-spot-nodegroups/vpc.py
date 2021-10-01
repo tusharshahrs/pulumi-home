@@ -17,7 +17,7 @@ if (number_of_nat_gateways_requested <1) or (number_of_nat_gateways_requested>3)
 else: # Allocated the nat gateways to what the user requested.
     nat_gateways_allocated = number_of_nat_gateways_requested
 
-myname = "demoeks"
+myname = "demo-eks"
 
 # create a vpc
 vpc = ec2.Vpc(
