@@ -1,3 +1,3 @@
-name: aws-ts-existingvpc-ecs-autoscaling-lt
+name: aws-classic-ts-existingvpc-ecs-autoscaling-lt
 runtime: nodejs
 description: A minimal AWS TypeScript Pulumi program
