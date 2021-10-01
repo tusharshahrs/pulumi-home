@@ -148,7 +148,7 @@ export function get_airflow_webserver_template(airflow_profile: aws.iam.Instance
             "user:Creator": "demo"
         }, */
         tags: {...mytags},
-        tagsAll: {},
+        //tagsAll: {},
         userData: user_data
     })
 }

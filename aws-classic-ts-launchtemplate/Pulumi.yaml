@@ -1,3 +1,3 @@
-name: aws-ts-launchtemplate
+name: aws-classic-ts-launchtemplate
 runtime: nodejs
 description: A minimal AWS TypeScript Pulumi program

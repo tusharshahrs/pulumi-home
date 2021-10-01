@@ -1,12 +1,12 @@
 {
-    "name": "aws-ts-launchtemplate",
+    "name": "aws-classic-ts-launchtemplate",
     "devDependencies": {
         "@types/node": "^14.0.0"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.0.0",
-        "@pulumi/aws": "^4.0.0",
-        "@pulumi/awsx": "^0.30.0",
+        "@pulumi/pulumi": "^3.12.0",
+        "@pulumi/aws": "^4.22.0",
+        "@pulumi/awsx": "^0.32.0",
         "@pulumi/tls": "^4.0.0"
     }
 }
