@@ -17,12 +17,12 @@ const certRequest = new tls.CertRequest(`${name}-key-certrequest`, {
     subjects: [{ commonName: `${name}cert`,organization: "pulumi"}],
 });
 
-export const sshkey_id = sshPublicKey.id;
+export const sshkey_id = pulumi.secret(sshPublicKey.id);
 export const sshkey_algorithm = sshPublicKey.algorithm;
 
 export const sshkey_publickeyfingerprintmd5 = sshPublicKey.publicKeyFingerprintMd5;
-export const sshkey_publickeyopenssh = sshPublicKey.publicKeyOpenssh;
-export const certrequest_id = certRequest.id;
+export const sshkey_publickeyopenssh = pulumi.secret(sshPublicKey.publicKeyOpenssh);
+export const certrequest_id = pulumi.secret(certRequest.id);
 export const certrequest_keyalgorithm = certRequest.keyAlgorithm;
 export const certrequest_subjects = certRequest.subjects;
 
