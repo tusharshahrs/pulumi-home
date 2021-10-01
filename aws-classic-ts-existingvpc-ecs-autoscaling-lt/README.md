@@ -108,7 +108,7 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
         autoscaling_group_ame   : "demo-autoscalinggroup-58854fd-Instances-60JX0QK6WT1O"
         cluster_name            : "demo-ecs-c46d384"
         launchconfiguration_name: "demo-autoscalinggroup-709e635"
-        loadbalancer_id         : "arn:aws:elasticloadbalancing:us-east-2:052848974346:loadbalancer/app/demo-alb-a245489/721f7af8f9d00fb2"
+        loadbalancer_id         : "secret"
         mysubnetids             : [
             [0]: "subnet-04dafe2a672d35475"
             [1]: "subnet-097b26debcfb5adab"
@@ -143,7 +143,7 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
         autoscaling_group_ame     demo-autoscalinggroup-58854fd-Instances-60JX0QK6WT1O
         cluster_name              demo-ecs-c46d384
         launchconfiguration_name  demo-autoscalinggroup-709e635
-        loadbalancer_id           arn:aws:elasticloadbalancing:us-east-2:052848974346:loadbalancer/app/demo-alb-a245489/721f7af8f9d00fb2
+        loadbalancer_id           "secret"
         mysubnetids               ["subnet-04dafe2a672d35475","subnet-097b26debcfb5adab","subnet-0f288794bbbd30f13","subnet-00040c00c2eb4341e","subnet-0736ac28f2d26b06c","subnet-0e9548977bd17436d"]
         subnet0                   subnet-04dafe2a672d35475
         subnet1                   subnet-097b26debcfb5adab
@@ -152,6 +152,11 @@ A VPC, ECS, and Autoscaling Groups via LaunchTemplates are created using the aws
         subnet4                   subnet-0736ac28f2d26b06c
         subnet5                   subnet-0e9548977bd17436d
         vpc_name                  vpc-08429d98b81d414f1
+   ```
+
+   If you need to see the value that is a *secret*, you will have to do the following
+   ```bash
+   pulumi stack output --show-secrets
    ```
 
 1. Destroy the Stack
