@@ -1,4 +1,4 @@
-name: aws-py-vpc
+name: aws-classic-py-vpc
 runtime:
   name: python
   options:

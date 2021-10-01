@@ -1,4 +1,4 @@
-name: aws-py-s3-staticwebsite
+name: aws-classic-py-s3-staticwebsite
 runtime:
   name: python
   options:
