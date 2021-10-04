@@ -178,7 +178,7 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no tai
    kubectl version
    ```
 
-1. Check for taints
+1. Check for taints via [how to extract the list of nodes that are tainted](https://discuss.kubernetes.io/t/how-to-extract-the-list-of-nodes-which-are-tainted/8335/13)
    ```bash
    kubectl get node -o custom-columns=NAME:.metadata.name,TAINT:.spec.taints[*].effect
    ```
