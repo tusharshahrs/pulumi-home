@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-10-04)
+- added aws-classic-ts-eks-nodetaint
+
 ## (2021-10-01)
 - renamed aws-ts-acm-awsguard to aws-classic-ts-acm-awsguard
 - renamed aws-ts-ecs-awsx to aws-classic-ts-ecs-awsx
