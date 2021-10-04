@@ -14,6 +14,7 @@
 - renamed aws-ts-vpc-ecs-autoscaling-lt to aws-classic-ts-vpc-ecs-autoscaling-lt
 - renamed aws-ts-vpc-with-ecs-fargate-py to aws-classic-ts-vpc-with-ecs-fargate-py
 - renamed azure-ts-datalakegen2 to azure-classic-ts-datalakegen2
+- updated the badge for aws-python to aws-classic-python & aws-typescript to aws-classic-typescript
 
 ## (2021-09-30)
 - renamed aws-py-apigateway-lambda-serverless to aws-classic-py-apigateway-lambda-serverless
@@ -24,7 +25,6 @@
 - renamed aws-py-eks-spot-nodegroups to aws-classic-py-eks-spot-nodegroups
 - renamed aws-py-s3-staticwebsite to aws-classic-py-s3-staticwebsite
 - renamed aws-py-vpc to aws-classic-py-vpc
-- updated the badge for aws-python to aws-classic-python & aws-typescript to aws-classic-typescript
 
 ## (2021-09-28)
 - added azure-ts-jenkins
