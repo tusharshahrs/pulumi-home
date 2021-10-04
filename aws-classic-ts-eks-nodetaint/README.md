@@ -164,13 +164,14 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no tai
    pulumi stack output --show-secrets
    ```
 
-1. Validating that the **taints** were applied.
- - log in via aws console, check out the eks cluster, select the node and scroll down to `Taints`.  You will something like the following
+1. Validating that the **taints** were applied via the aws console.
+   - log in via aws console, check out the eks cluster, select the node and scroll down to `Taints`.  You will something like the following
 
    <img src="images/nodegroup_with_taint_on.png" alt = Add NodeGroup with Taints>
 
 
-1. Create the kubeconfig
+1. Validating that the **taints** were applied via the cli.
+   Create the kubeconfig
    ```bash
    pulumi stack output kubeconfig --show-secrets >kubeconfig
    export KUBECONFIG=`PWD`/kubeconfig
@@ -182,7 +183,7 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no tai
    kubectl get node -o custom-columns=NAME:.metadata.name,TAINT:.spec.taints[*].effect
    ```
 
-   Expected Results: 3 to say *NoSchedule* and 3 to say *<none>*
+   Expected Results: 3 to say *NoSchedule* and 3 to say **`<none>`**
    ```bash
       NAME                                         TAINT
    ip-10-0-102-20.us-east-2.compute.internal    <none>
