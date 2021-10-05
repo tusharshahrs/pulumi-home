@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ '14.x']
-        typescript-example: ['aws-classic-ts-eks-nodetaint','aws-classic-ts-vpc-crosswalk','aws-classic-ts-sshkey', 'aws-classic-ts-acm-awsguard','aws-classic-ts-launchtemplate','aws-classic-ts-vpc-ecs-autoscaling-lt','aws-classic-ts-eks-spot-mg','aws-classic-ts-lakeformation','aws-classic-ts-eks-different-awsprofile']
+        typescript-example: ['aws-classic-ts-eks-nodetaint','aws-classic-ts-vpc-crosswalk','aws-classic-ts-sshkey', 'aws-classic-ts-acm-awsguard','aws-classic-ts-launchtemplate','aws-classic-ts-vpc-ecs-autoscaling-lt','aws-classic-ts-eks-spot-mg','aws-classic-ts-lakeformation','aws-classic-ts-eks-different-awsprofile','aws-classic-ts-ebs-volume-snapshot']
     steps:
       - uses: actions/checkout@v2
         with:
