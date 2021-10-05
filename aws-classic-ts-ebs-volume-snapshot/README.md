@@ -21,7 +21,7 @@ AWS ebs volume created with multiple snapshots taken with a for loop
     ```
 
 1. Run **pulumi up** to preview and deploy changes via selecting **y**
-   This will take some time, since you can see 
+
     ```bash
     pulumi up
     Previewing update (dev)
