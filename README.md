@@ -59,7 +59,8 @@ Example| Description | Cloud & Language   |
 [aws-classic-py-eks-spot-mg](aws-classic-py-eks-spot-mg) | eks cluster with spot managednode instance.  Creates own vpc based on [aws-py-vpc](aws-py-vpc) that is in vpc.ts | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-eks-spot-nodegroups](aws-classic-py-eks-spot-nodegroups)| aws eks cluster with no managednode group and fixed and spot node groups | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-beanstalk](aws-classic-py-beanstalk )| aws beanstalk application | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
-
+[aws-classic-py-get-ami](aws-classic-py-get-ami) | aws get ami | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-py-get-regions](aws-classic-py-get-regions/)| aws get regions | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 
 ## Azure
 Example| Description | Cloud & Language   |
