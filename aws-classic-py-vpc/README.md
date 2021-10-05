@@ -156,7 +156,7 @@ AWS VPC, igw, nat gateway, public and private subnets
 
 1. View the outputs
    ```bash
-   pulumi up -y
+   pulumi stack output
    ```
 
    Results
