@@ -74,7 +74,7 @@ AWS get region from pulumi config
 
     Duration: 2s
    ```
-   
+
 1. View the outputs
    ```bash
    pulumi stack output

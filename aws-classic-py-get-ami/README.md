@@ -55,7 +55,7 @@ AWS get ami function in python
 
    Duration: 4s
    ```
-   
+
 1. View the outputs
    ```bash
    pulumi stack output
