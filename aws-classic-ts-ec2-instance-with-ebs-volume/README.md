@@ -21,7 +21,7 @@ AWS ec2 instance with two ebs volumes. vpc creatd with awsx.  Call **then** on g
     ```
 
 1. Run **pulumi up** to preview and deploy changes via selecting **y**
-   This will take some time, since you can see 
+
     ```bash
     pulumi up
     Previewing update (dev)
