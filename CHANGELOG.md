@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-10-06)
+- aws-classic-ts-eks-node-alltaints
+
 ## (2021-10-05)
 - aws-classic-py-get-regions
 - aws-classic-py-get-ami

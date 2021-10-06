@@ -1,0 +1,3 @@
+name: aws-classic-ts-eks-node-alltaints
+runtime: nodejs
+description: A minimal AWS TypeScript Pulumi program
