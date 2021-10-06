@@ -3,6 +3,7 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 import * as iam from "./iam";
+import * as k8s from "@pulumi/kubernetes";
 
 // Create 3 IAM Roles and matching InstanceProfiles to use with the nodegroups.
 const my_name = `demo`;
@@ -15,7 +16,7 @@ const myvpc = new awsx.ec2.Vpc(`${my_name}-vpc`, {
     tags: { "Name": `${my_name}-vpc` },
 });
 
-const mycluster = new eks.Cluster(`${my_name}-eks`, {
+const mycluster = new eks.Cluster(`${my_name}-eks-tainted`, {
     skipDefaultNodeGroup: true,
     vpcId: myvpc.id,
     publicSubnetIds: myvpc.publicSubnetIds,
@@ -29,7 +30,7 @@ const mycluster = new eks.Cluster(`${my_name}-eks`, {
 }, {dependsOn: myvpc}
 );
 
-const node_group_fixed = new eks.NodeGroup(`${my_name}-nodegroup-fixed`, {
+const node_group_fixed = new eks.NodeGroup(`${my_name}-nodegroup-fixed-taint`, {
     cluster: mycluster,
     instanceType: "t3a.medium",
     encryptRootBlockDevice: true,
@@ -50,7 +51,7 @@ const node_group_fixed = new eks.NodeGroup(`${my_name}-nodegroup-fixed`, {
     },{dependsOn: [myvpc]})
 
 
-const node_group_spot = new eks.NodeGroup(`${my_name}-nodegroup-spot`, {
+const node_group_spot = new eks.NodeGroup(`${my_name}-nodegroup-spot-taint`, {
     cluster: mycluster,
     instanceType: "t3a.xlarge",
     encryptRootBlockDevice: true,
