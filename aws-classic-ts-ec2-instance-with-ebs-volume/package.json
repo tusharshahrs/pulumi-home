@@ -1,0 +1,12 @@
+{
+    "name": "aws-classic-ts-ec2-instance-with-ebs-volume",
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.13.2",
+        "@pulumi/aws": "^4.22.0",
+        "@pulumi/awsx": "^0.32.0",
+        "@pulumi/tls": "^4.0.0"
+    }
+}
