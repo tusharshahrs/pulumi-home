@@ -103,8 +103,12 @@ pulumi 3.0 & node 14.
     ```
     We will need this: `myuser/aws-sshkey-ts/dev`
 
-
 1. Destroy the stack
     ```bash
     pulumi stack destroy -y
     ```
+
+1. Remove the stack.  This will remove the *Pulumi.dev.yaml* file
+   ```bash
+   pulumi stack rm
+   ```

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## (2021-10-05)
+- aws-classic-py-get-regions
+- aws-classic-py-get-ami
+- aws-classic-ts-ebs-volume-snapshot
+- aws-classic-ts-ec2-instance-with-ebs-volume
+
 ## (2021-10-04)
 - added aws-classic-ts-eks-nodetaint
 
