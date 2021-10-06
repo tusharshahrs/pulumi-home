@@ -171,7 +171,7 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup and a spot 
    export KUBECONFIG=`PWD`/kubeconfig
    kubectl version
    ```
-      
+
 1. Check for taints via [how to extract the list of nodes that are tainted](https://discuss.kubernetes.io/t/how-to-extract-the-list-of-nodes-which-are-tainted/8335/13)
    ```bash
    kubectl get node -o custom-columns=NAME:.metadata.name,TAINT:.spec.taints[*].effect
@@ -191,7 +191,7 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup and a spot 
 1. coredns is not running due to the following issue: [EKS Add-on support (coredns, etc)](https://github.com/pulumi/pulumi-eks/issues/587) issue.  This is what the aws console will show.
    - log in via aws console, check out the eks cluster, select *Workloads* view the *Status* for `coredns`.  This will show that 0 are ready.
       <img src="nodegroup_all_taints_coredns_not_running.png" alt = Add coredns not running with taints on all nodegroups>
-   s
+
 
 1. Work around
    ```bash
