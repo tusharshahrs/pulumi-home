@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-10-14)
+- azure-ts-sqlserver-servervulnerabilityassessment
+
 ## (2021-10-06)
 - aws-classic-ts-eks-node-alltaints
 
