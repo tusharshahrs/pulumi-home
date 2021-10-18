@@ -1,16 +1,19 @@
 # CHANGELOG
 
+## (2021-10-18)
+- added azure-go-sqlserver-servervulnerabilityassessment
+
 ## (2021-10-14)
-- azure-ts-sqlserver-servervulnerabilityassessment
+- added azure-ts-sqlserver-servervulnerabilityassessment
 
 ## (2021-10-06)
-- aws-classic-ts-eks-node-alltaints
+- added aws-classic-ts-eks-node-alltaints
 
 ## (2021-10-05)
-- aws-classic-py-get-regions
-- aws-classic-py-get-ami
-- aws-classic-ts-ebs-volume-snapshot
-- aws-classic-ts-ec2-instance-with-ebs-volume
+- added aws-classic-py-get-regions
+- added aws-classic-py-get-ami
+- added aws-classic-ts-ebs-volume-snapshot
+- added aws-classic-ts-ec2-instance-with-ebs-volume
 
 ## (2021-10-04)
 - added aws-classic-ts-eks-nodetaint
