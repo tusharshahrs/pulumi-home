@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-10-18)
+- azure-go-sqlserver-servervulnerabilityassessment
+
 ## (2021-10-14)
 - azure-ts-sqlserver-servervulnerabilityassessment
 
