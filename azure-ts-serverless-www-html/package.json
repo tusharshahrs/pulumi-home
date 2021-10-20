@@ -1,0 +1,10 @@
+{
+    "name": "azure-ts-serverless-www-html",
+    "devDependencies": {
+        "@types/node": "^14"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.15.0",
+        "@pulumi/azure-native": "^1.40.0"
+    }
+}
