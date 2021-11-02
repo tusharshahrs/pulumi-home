@@ -21,26 +21,26 @@ const storageAccountKeys = pulumi.all([resourceGroup.name, storageAccount.name])
     storage.listStorageAccountKeys({ resourceGroupName, accountName }));
 const primaryStorageKey = storageAccountKeys.keys[0].value;
 
-const storageaccountstaticwebsite = new storage.StorageAccountStaticWebsite(`${name}-StorageAccountStaticWebsite`, {
+// StaticWebsite index.html and 404.html
+const staticWebsite = new storage.StorageAccountStaticWebsite(`${name}-staticwebsite`, {
     accountName: storageAccount.name,
     resourceGroupName: resourceGroup.name,
-    //error404Document: "./www/404.html",
-    //error404Document: "./www/404.html",
-    error404Document: "404.html",
     indexDocument: "index.html",
-}, {parent: storageAccount})
-/*
-// Creates BlobContainer.  This is a requirement for the storage blob.
-const blobContainer = new storage.BlobContainer(`${name}-blobContainer`, {
-    accountName: storageAccount.name,
-    resourceGroupName: resourceGroup.name,
-    publicAccess: "Blob",
-});
-*/
+    error404Document: "404.html",
+}, {parent: storageAccount});
+
+// Upload the files.  The index.html and the 404.html file are in the www folder.
+["index.html", "404.html"].map(filename =>
+    new storage.Blob(filename, {
+        resourceGroupName: resourceGroup.name,
+        accountName: storageAccount.name,
+        containerName: staticWebsite.containerName,
+        source: new pulumi.asset.FileAsset(`./www/${filename}`),
+        type: "Block", // The endpoint url works only if this line is in here.
+        contentType: "text/html",
+    }),
+);
 
 export const resource_group_name = resourceGroup.name;
 export const storage_account_name = storageAccount.name;
-export const primarystoragekey = pulumi.secret(primaryStorageKey);
-export const storageaccountstaticwebsite_container_name = storageaccountstaticwebsite.containerName;
-export const storageaccountstaticwebsite_container_indexDocument = storageaccountstaticwebsite.indexDocument;
-export const primaryEndpoints = storageAccount.primaryEndpoints.web;
+export const staticEndpoint = storageAccount.primaryEndpoints.web;
