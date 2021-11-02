@@ -1,0 +1,10 @@
+{
+    "name": "azure-ts-serverless-http-trigger",
+    "devDependencies": {
+        "@types/node": "^14.0.0"
+    },
+    "dependencies": {
+        "@pulumi/azure-native": "^1.43.0",
+        "@pulumi/pulumi": "^3.16.0"
+    }
+}
