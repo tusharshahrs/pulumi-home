@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## (2021-11-02)
+- added azure-ts-serverless-www-html
+- renamed azure-ts-serveless-www-html to azure-ts-serverless-www-html. Added the `r` at the end of `serve` to get `server`
+
 ## (2021-10-18)
 - added azure-go-sqlserver-servervulnerabilityassessment
 

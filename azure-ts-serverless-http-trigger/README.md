@@ -109,3 +109,12 @@ This is in typescript
    curl $(pulumi stack output endpoint)
    ```
    **You've successfully deployed a Function App!**
+
+1. Clean up - Destroy the Stack
+   ```bash
+   pulumi destoy -y
+   ```
+1. Remove the stack
+   ```bash
+   pulumi stack rm dev
+   ```
