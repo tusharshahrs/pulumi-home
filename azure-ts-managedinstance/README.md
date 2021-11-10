@@ -25,38 +25,40 @@ Deploys Azure resource group, storage account, vnet, 2 delegated subnets, and ra
     ```bash
     pulumi config set azure-native:location eastus2
     ```
-1. Create that stack via `pulumi up`.  We will have to run this back to back until I figure out how to fix the error.
+1. Create that stack via `pulumi up`.
     ```bash
     pulumi up -y
     ```
 
-    The Result will be
+    Results
 
     ```bash
-    View Live: https://app.pulumi.com/shaht/azure-ts-sqlserver-servervulnerabilityassessment/dev/updates/40
+    Updating (dev)
 
-        Type                                               Name                                                  Status                  Info
-    +   pulumi:pulumi:Stack                                azure-ts-sqlserver-servervulnerabilityassessment-dev  **creating failed**     1 error
-    +   ├─ azure-native:resources:ResourceGroup            vulnerability-rg                                      created                 
-    +   │  ├─ azure-native:storage:StorageAccount          vulnerabilitysa                                       created                 
-    +   │  └─ azure-native:sql:Server                      vulnerability-sqlserver                               created                 
-    +   │     └─ azure-native:sql:Database                 sqldatabase                                           created                 
-    +   ├─ random:index:RandomPassword                     vulnerability-sqlseverpassword                        created                 
-    +   ├─ azure-native:storage:BlobContainer              vulnerability-blobcontainer                           created                 
+    View Live: https://app.pulumi.com/shaht/azure-ts-managedinstance/dev/updates/25
+
+        Type                                     Name                          Status      
+    +   pulumi:pulumi:Stack                      azure-ts-managedinstance-dev  created     
+    +   ├─ azure-native:resources:ResourceGroup  demo-rg                       created     
+    +   ├─ random:index:RandomPassword           demo-sqlseverpassword         created     
+    +   ├─ azure-native:storage:StorageAccount   demosa                        created     
+    +   ├─ azure-native:network:VirtualNetwork   demo-vnet                     created     
+    +   ├─ azure-native:network:Subnet           demo-subnet2                  created     
+    +   └─ azure-native:network:Subnet           demo-subnet1                  created     
     
     Outputs:
-        blob_container_name : "vulnerability-blobcontainer"
-        resourcegroup_name  : "vulnerability-rg014ac399"
-        sql_password        : "[secret]"
-        sql_user            : "pulumiadmin"
-        sqlserver_name      : "vulnerability-sqlserver7e99c28e"
-        storageaccount_name : "vulnerabilitysa10570ab5"
-        storagecontainerpath: "https://vulnerabilitysa10570ab5.blob.core.windows.net/vulnerability-blobcontainer"
+        managedinstance_password: "[secret]"
+        resource_group_name     : "demo-rga7d67441"
+        storage_account_name    : "demosaf0029a8c"
+        subnet1_name            : "demo-subnet1"
+        subnet2_name            : "demo-subnet2"
+        username                : "pulumiadmin"
+        virtualnetwork_name     : "demo-vnetb71f9063"
 
     Resources:
         + 7 created
 
-    Duration: 2m47s
+    Duration: 28s
 
 1. Check the Outputs
    ```bash
@@ -68,12 +70,12 @@ Deploys Azure resource group, storage account, vnet, 2 delegated subnets, and ra
     Current stack outputs (7):
     OUTPUT                    VALUE
     managedinstance_password  [secret]
-    resource_group_name       demo-rgfee5a5c5
-    storage_account_name      demosaedd641fd
+    resource_group_name       demo-rga7d67441
+    storage_account_name      demosaf0029a8c
     subnet1_name              demo-subnet1
     subnet2_name              demo-subnet2
     username                  pulumiadmin
-    virtualnetwork_name       demo-vnetb1e0063d
+    virtualnetwork_name       demo-vnetb71f9063
    ```
 
 1. Go to the [Azure portal])(portal.azure.com) and create the managedinstance into the resource group and vnet/subnet that we just created.  Wait a couple
@@ -112,7 +114,7 @@ of hours till it is up.
     Duration: 31s
    ```
 
-1.  You will get the following instructions.
+1.  You will get the following instructions
    ```bash
        Please copy the following code into your Pulumi application. Not doing so
     will cause Pulumi to report that an update will happen on the next update command.
@@ -162,14 +164,14 @@ of hours till it is up.
 1. The managedinstance has [protect](https://www.pulumi.com/docs/intro/concepts/resources/#protect) turned on.  If you want to destroy this resource, you
 will need to change `protect: true` to `protect: false` and then run `pulumi up`.  Once that is done, then you can do `pulumi destroy`.
 
-1.  To delete resource "urn:pulumi:dev::azure-ts-managedinstance::azure-native:sql:ManagedInstance::demoinstance"
+1. To delete resource "urn:pulumi:dev::azure-ts-managedinstance::azure-native:sql:ManagedInstance::demoinstance"
     as it is currently marked for protection. To unprotect the resource, either remove the `protect` flag from the resource in your Pulumiprogram and run `pulumi up` or use the command:
     `pulumi state unprotect urn:pulumi:dev::azure-ts-managedinstance::azure-native:sql:ManagedInstance::demoinstance`
 
    ```bash
    pulumi state unprotect urn:pulumi:dev::azure-ts-managedinstance::azure-native:sql:ManagedInstance::demoinstance
    ```
-   
+
    ```bash
    :ManagedInstance::demoinstance
     warning: This command will edit your stack's state directly. Confirm? Yes
@@ -184,8 +186,37 @@ will need to change `protect: true` to `protect: false` and then run `pulumi up`
    ```bash
    pulumi destroy -y
    ```
-   Note, deleting the `managedinstance` takes a while, like 30+ minutes.
-   
+   Note, deleting the `managedinstance` takes a while, like 60+ minutes.
+
+   Results
+   ```bash
+   View Live: https://app.pulumi.com/shaht/azure-ts-managedinstance/dev/updates/24
+
+        Type                                     Name                          Status      
+    -   pulumi:pulumi:Stack                      azure-ts-managedinstance-dev  deleted     
+    -   ├─ azure-native:sql:ManagedInstance      demoinstance                  deleted     
+    -   ├─ azure-native:network:Subnet           demo-subnet1                  deleted     
+    -   ├─ azure-native:network:Subnet           demo-subnet2                  deleted     
+    -   ├─ azure-native:network:VirtualNetwork   demo-vnet                     deleted     
+    -   ├─ azure-native:storage:StorageAccount   demosa                        deleted     
+    -   ├─ azure-native:resources:ResourceGroup  demo-rg                       deleted     
+    -   └─ random:index:RandomPassword           demo-sqlseverpassword         deleted     
+    
+    Outputs:
+    - managedinstance_password: "[secret]"
+    - resource_group_name     : "demo-rgfee5a5c5"
+    - storage_account_name    : "demosaedd641fd"
+    - subnet1_name            : "demo-subnet1"
+    - subnet2_name            : "demo-subnet2"
+    - username                : "tushar"
+    - virtualnetwork_name     : "demo-vnetb1e0063d"
+
+    Resources:
+        - 8 deleted
+
+    Duration: 1h5m55s
+    ```
+
 1. Remove the stack
    ```bash
    pulumi stack rm dev
