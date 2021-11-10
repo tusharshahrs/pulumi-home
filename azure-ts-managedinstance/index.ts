@@ -37,7 +37,7 @@ const sqlpassword = new random.RandomPassword(`${name}-sqlseverpassword`, {
     });
 
 // create a managedinstance user
-export const username = "tushar";
+export const username = "pulumiadmin";
 
 // create vnet
 const virtualnetwork = new network.VirtualNetwork(`${name}-vnet`,{
@@ -69,6 +69,8 @@ const subnet2 = new network.Subnet(`${name}-subnet2`,{
         }],
 });
 
+// Strongly Advising NOT to create this resource via code because it takes hours to create in the azure portal.  The resource will most likely
+// timeout on creation even if you use the customtimeout unless you know how long it takes by already creating the managedinstance in the azure portal.
 /*
 const managedInstance = new sql.ManagedInstance(`${name}-managedinstance`, {
     resourceGroupName: resourceGroup.name,
@@ -89,9 +91,10 @@ const managedInstance = new sql.ManagedInstance(`${name}-managedinstance`, {
 }, {customTimeouts: { create: "240m"}});
 */
 
-// Code from Importing the Resource
+// Code from Importing the Resource.  This will be generated on the cli and you have to bring it inside the index.ts file.
 // Note, that I swapped out some of the hard coded stuff with variable from above to make it easier.
 // Also, you have to update the following with your subsription_id:  REPLACE_WITH_YOUR_SUBSCRIPTION_ID
+/*
 const demoinstance = new sql.ManagedInstance("demoinstance", {
     administratorLogin: username,
     collation: "SQL_Latin1_General_CP1_CI_AS",
@@ -100,7 +103,7 @@ const demoinstance = new sql.ManagedInstance("demoinstance", {
     },
     licenseType: "LicenseIncluded",
     location: "eastus2",
-    maintenanceConfigurationId: "/subscriptions/32b9cb2e-69be-4040-80a6-02cd6b2cc5ec/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+    maintenanceConfigurationId: "/subscriptions/REPLACE_WITH_YOUR_SUBSCRIPTION_ID/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
     managedInstanceName: "tusharshah",
     minimalTlsVersion: "1.2",
     proxyOverride: "Proxy",
@@ -121,6 +124,7 @@ const demoinstance = new sql.ManagedInstance("demoinstance", {
 }, {
     protect: false,
 });
+*/
 
 export const resource_group_name = resourceGroup.name;
 export const storage_account_name = storageAccount.name;
