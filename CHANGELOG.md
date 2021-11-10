@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-11-10)
+- added azure-ts-managedinstance
+
 ## (2021-11-02)
 - added azure-ts-serverless-www-html
 - renamed azure-ts-serveless-www-html to azure-ts-serverless-www-html. Added the `r` at the end of `serve` to get `server`
