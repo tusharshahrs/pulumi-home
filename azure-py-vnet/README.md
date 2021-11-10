@@ -39,8 +39,8 @@
    ```bash
    pulumi config set azure-native:location eastus2
    pulumi config set mynames demo
-   pulumi config set virtual_network_cidr 10.0.0.0/23
-   pulumi config set subnet_1_cidr 10.0.0.0/22
+   pulumi config set virtual_network_cidr 10.0.0.0/22
+   pulumi config set subnet_1_cidr 10.0.0.0/23
    pulumi config set subnet_2_cidr 10.0.2.0/23
    ```
 1. Run `pulumi up` to preview and deploy changes: You must select `y` to continue
