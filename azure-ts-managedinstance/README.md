@@ -180,11 +180,12 @@ will need to change `protect: true` to `protect: false` and then run `pulumi up`
    ```bash
    pulumi up -y
    ```
-  
+
    ```bash
    pulumi destroy -y
    ```
-
+   Note, deleting the `managedinstance` takes a while, like 30+ minutes.
+   
 1. Remove the stack
    ```bash
    pulumi stack rm dev
