@@ -114,7 +114,7 @@ of hours till it is up.
     Duration: 31s
    ```
 
-1.  You will get the following instructions
+1. You will get the following instructions
    ```bash
        Please copy the following code into your Pulumi application. Not doing so
     will cause Pulumi to report that an update will happen on the next update command.
