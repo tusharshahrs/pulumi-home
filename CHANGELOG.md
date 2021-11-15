@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-11-15)
+- added azure-ts-datafactory
+
 ## (2021-11-10)
 - added azure-ts-managedinstance
 
