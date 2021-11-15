@@ -1,4 +1,4 @@
-# Azure Resource Group returning subscription id in typescript
+# Azure Resource Group returning subscription ID in typescript
 Create an Azure resource group and return the Azure subscriptionId
 
 ## Deployment
@@ -76,7 +76,7 @@ Create an Azure resource group and return the Azure subscriptionId
     pulumi stack output --show-secrets
     ```
 
-    The **subscription id** will show up.
+    The **Subscription ID** will show up.
 
 1. Clean up - Destroy the Stack
    ```bash
