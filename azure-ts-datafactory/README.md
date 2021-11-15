@@ -78,7 +78,7 @@ Deploying Azure Resource Group, Storage Account, DataFactory with Identity
     storage_group_name   demosa7d75f042
    ```
 
-1. Perform a refresh.  There should be *NO* changes. 
+1. Perform a refresh. There should be *NO* changes.
    ```bash
    pulumi up --refresh --diff
    ```

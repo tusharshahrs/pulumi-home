@@ -6,7 +6,7 @@
 
 [![GOOGLE-NATIVE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)
 
-This repo contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, and gcp. The examples are in typescript, python, and go.
+This repository contains [Pulumi](https://www.pulumi.com/) examples for aws, azure, and gcp. The examples are in typescript, python, and go.
 
 ## Examples are in different languages & different clouds
 
@@ -38,13 +38,13 @@ How to setup your **ACCESS TOKEN**  - Only need to do this once, no need to do i
 ## AWS
 Example| Description | Cloud & Language   |
 ------| ------ | ---------------- |
-[aws-classic-ts-vpc-with-ecs-fargate-py](aws-classic-ts-vpc-with-ecs-fargate-py)| vpc built in typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-ts-vpc-with-ecs-fargate-py](aws-classic-ts-vpc-with-ecs-fargate-py)| vpc built-in Typescript - independent from ecs, ecs uses vpc via stackreferences | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-sshkey](aws-classic-ts-sshkey)| ssh key | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
-[aws-classic-ts-vpc-crosswalk](aws-classic-ts-vpc-crosswalk)| vpc built in typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-ts-vpc-crosswalk](aws-classic-ts-vpc-crosswalk)| vpc built-in Typescript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-acm-awsguard](aws-classic-ts-acm-awsguard) | tls private key, aws self signed certificate and acm created. Running awsguard. Calling [pulumi-policy-aws](https://github.com/pulumi/pulumi-policy-aws) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-launchtemplate](aws-classic-ts-launchtemplate) | ec2 via launchtemplate.  also has vpc, securitygroup, & ssh keypair. Addd tags.ts for tags. Calls **then** | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-vpc-ecs-autoscaling-lt](aws-classic-ts-vpc-ecs-autoscaling-lt)| vpc, ecs, autoscaling groups, and launchtemplate in typescript. This creates a new vpc | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
-[aws-ts-existingvpc-ecs-autoscaling-lt](aws-classic-ts-existingvpc-ecs-autoscaling-lt)| existing vpc, ecs, autoscaling groups, and launchtemplate in typescript. Calls **then** creates a new vpc | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-ts-existingvpc-ecs-autoscaling-lt](aws-classic-ts-existingvpc-ecs-autoscaling-lt)| existing vpc, ecs, autoscaling groups, and launchtemplate in Typescript. Calls **then** creates a new vpc | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-ecs-awsx](aws-classic-ts-ecs-awsx) | uses an existing vpc, creates ecs via awsx, loadbalancer via aws.  no targetgroup or targetlistener created.  next stack is [aws-classic-ts-get-ecs](aws-ts-get-ecs) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-get-ecs](aws-classic-ts-get-ecs)| uses an existing vpc, calls the existing ecs created via [aws-ts-ecs-awsx](aws-ts-ecs-awsx) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-ts-eks-spot-mg](aws-classic-ts-eks-spot-mg) | eks cluster with spot managednode instance with vpc via [awsx](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/awsx/ec2/#custom-vpcs) | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
