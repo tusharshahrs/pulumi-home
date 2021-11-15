@@ -1,7 +1,7 @@
 
 # AWS EKS Cluster with no Managednode Group, Fixed and Spot Nodegroup both with taints
 
-AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup and a spot nodegroup with taints in typescript
+AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup and a spot nodegroup with taints in TypeScript
 
 ## Deployment
 

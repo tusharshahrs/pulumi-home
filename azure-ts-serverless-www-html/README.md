@@ -1,6 +1,6 @@
-# Azure Native Deploying Static website in TypeScript using StorageAccountStaticWebsite
+# Azure Native Deploying Static Site in TypeScript using StorageAccountStaticWebsite
 
-Deploy an Azure Native static website in TypeScript deployed using with [StorageAccountStaticWebsite](https://www.pulumi.com/registry/packages/azure-native/api-docs/storage/storageaccountstaticwebsite/).
+Deploy an Azure Native static site in TypeScript deployed using with [StorageAccountStaticWebsite](https://www.pulumi.com/registry/packages/azure-native/api-docs/storage/storageaccountstaticwebsite/).
 
 ## Deployment
 

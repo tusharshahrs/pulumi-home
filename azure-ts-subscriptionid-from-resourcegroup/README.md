@@ -1,4 +1,4 @@
-# Azure Resource Group returning subscription ID in typescript
+# Azure Resource Group returning subscription ID in TypeScript
 Create an Azure resource group and return the Azure subscriptionId
 
 ## Deployment

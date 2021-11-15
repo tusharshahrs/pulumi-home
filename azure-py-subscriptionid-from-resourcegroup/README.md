@@ -1,4 +1,4 @@
-# Azure Resource Group returning subscription id in python
+# Azure Resource Group returning Subscription ID in python
 
 Create an Azure resource group and return the Azure **subscriptionId**
 
@@ -88,4 +88,4 @@ Create an Azure resource group and return the Azure **subscriptionId**
     pulumi stack output --show-secrets
     ```
 
-    The subscription id will show up.
+    The Subscription ID will show up.

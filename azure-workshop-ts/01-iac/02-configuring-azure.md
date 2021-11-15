@@ -47,7 +47,7 @@ You have logged in. Now let us find all the subscriptions to which you have acce
 ...
 ```
 
-The Azure CLI, and thus Pulumi, will use the Default Subscription by default, however it is possible to override the subscription, by simply setting your subscription ID to the id output from `az account list`’s output:
+The Azure CLI, and thus Pulumi, will use the Default Subscription by default, however it is possible to override the subscription, by simply setting your subscription ID to the ID output from `az account list`’s output:
 
 ```bash
 az account list

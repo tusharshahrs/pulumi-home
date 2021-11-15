@@ -2,7 +2,7 @@
   An Azure Databricks workspace in python.
   
 * Built using the following resources
-  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) api
+  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-native/) API
   * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
   * [databricks workspace](https://www.pulumi.com/docs/reference/pkg/azure-native/databricks/workspace/)
 

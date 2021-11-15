@@ -1,11 +1,11 @@
 
 # AWS SSHKEY and ACM CERT creation
 
-AWS sshkey and acm cert creation in typescript
+AWS sshkey and acm cert creation in TypeScript
 
 # Requirements
 
-pulumi 3.0 & node 14.
+pulumi 3.0 & node.js 14.
 
 ## Running the App
 
@@ -15,7 +15,7 @@ pulumi 3.0 & node 14.
     pulumi stack init dev
     ```
 
-1. Restore NPM dependencies
+1. Restore npm dependencies
 
     ```bash
     npm install
@@ -96,7 +96,7 @@ pulumi 3.0 & node 14.
    pulumi stack output --show-secrets
    ```
 
-1. Run **pulumi stack** since we need the part appended to the pulumi console url.
+1. Run **pulumi stack** since we need the part appended to the pulumi console URL.
     ```bash
     pulumi stack
     More information at: https://app.pulumi.com/myuser/aws-sshkey-ts/dev
