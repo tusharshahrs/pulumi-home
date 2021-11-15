@@ -121,7 +121,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
 
 1. Validate via Postman
 
-   - Screen shot of [apigateway invoke url](https://share.getcloudapp.com/v1uYEvXv)
+   - Screenshot of [apigateway invoke URL](https://share.getcloudapp.com/v1uYEvXv)
    - Generated code for **Postman**
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
@@ -207,7 +207,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     apigateway-rest-endpoint_openapi_custom_path_2  https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/pets2
     ```
 
-1. Validate via curl the 2nd url
+1. Validate via curl the 2nd URL
     ```bash
     curl -X POST $(pulumi stack output apigateway-rest-endpoint_openapi_custom_path_2)
     ```
@@ -304,7 +304,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     apigateway-rest-endpoint_openapi_custom_path_2  https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/pets2
     apigateway-rest-endpoint_openapi_custom_path_3  https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/pets3
     ```
-1. Validate via curl the 3rd url
+1. Validate via curl the 3rd URL
     ```bash
     curl -X POST $(pulumi stack output apigateway-rest-endpoint_openapi_custom_path_3)
     ```

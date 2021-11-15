@@ -1,4 +1,4 @@
-# Deploying AWS ACM with AWSGuard in Typescript
+# Deploying AWS ACM with AWSGuard in TypeScript
 
 Creating a tls private key, a self signed certificate, and then an ACM certificate.  Also,
 creating a [AWSGuard](https://www.pulumi.com/docs/guides/crossguard/awsguard/) policy for

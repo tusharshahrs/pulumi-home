@@ -10,7 +10,7 @@ AWS ebs volume created with multiple snapshots taken with a for loop
     pulumi stack init dev
     ```
 
-1. Restore NPM dependencies
+1. Restore npm dependencies
 
     ```bash
     npm install
