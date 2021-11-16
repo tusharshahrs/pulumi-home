@@ -1,4 +1,4 @@
-# Azure Datafactory with Identity in typescript
+# Azure Datafactory with Identity in TypeScript
 
 Deploying Azure Resource Group, Storage Account, DataFactory with Identity
 
