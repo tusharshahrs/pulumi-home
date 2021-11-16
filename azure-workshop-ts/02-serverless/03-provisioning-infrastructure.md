@@ -249,7 +249,7 @@ const app = new web.WebApp("functionapp", {
 });
 ```
 
-The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file(*(**typescript**) to the Function App. The app will download the specified file, extract the code from it, discover the functions, and run them.
+The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file(*(**TypeScript**) to the Function App. The app will download the specified file, extract the code from it, discover the functions, and run them.
 We’ve prepared this zip file for you to get started faster, you can find its code [here](https://github.com/tusharshahrs/demo/tree/main/content/lab/pulumi/azure-native/typescript). The code contains a single HTTP-triggered Azure Function in the zip file.
 
 > :white_check_mark: After these changes, your `index.ts` should [look like this](./code/03/step5.ts).

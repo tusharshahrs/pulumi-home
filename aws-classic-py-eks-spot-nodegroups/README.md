@@ -1,6 +1,6 @@
-# AWS EKS Cluster with Fixed and Spot Node Groups with no managed nodes
+# AWS EKS Cluster with Fixed and Spot NodeGroups with no ManagedNodes
 
-AWS eks cluster with no managednode groups and a mix of spot/on-demand node groups in python
+AWS eks cluster with no managednode groups and a mix of spot/on-demand nodegroups in python
 A vpc is created as part of the eks cluster.
 
 ## Deployment

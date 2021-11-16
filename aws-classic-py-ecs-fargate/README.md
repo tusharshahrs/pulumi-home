@@ -1,4 +1,4 @@
-# NGINX on AWS ECS Fargate using Python with a vpc built in Typescript
+# NGINX on AWS ECS Fargate using Python with a vpc built-in TypeScript
 [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
 
 ## What Is This?
@@ -10,7 +10,7 @@ This example demonstrates the ability to deploy resources in Pulumi using one la
 [`ecs-fargate-python`](./ecs-fargate-python) deploys an AWS ECS Cluster using Python that references the VPC from `vpc-crosswalk-ts`
 
 It provisions a full [Amazon Elastic Container Service (ECS) "Fargate"](https://aws.amazon.com/ecs) cluster and
-related infrastructure, running a load-balanced NGINX web server accessible over the Internet on port 80.
+related infrastructure, running a load-balanced NGINX web server accessible over the internet on port 80.
 This example is inspired by [Docker's Getting Started Tutorial](https://docs.docker.com/get-started/).
 
 ## Why would you do this?  
@@ -109,7 +109,7 @@ Task                    Enabled
 
    select `y` to continue
 
-1. Open the `View Live` link to view the deployment details in the Pulumi Console.  Note, you will have a url that shows up that will look similar to the url below.  The `team-qa` value will be replaced with your own org, for example if your org name is: `team-prod`:
+1. Open the `View Live` link to view the deployment details in the Pulumi Console.  Note, you will have a URL that shows up that will look similar to the one below.  The `team-qa` value will be replaced with your own org, for example if your org name is: `team-prod`:
 
    console view that matches above code as an example:
 

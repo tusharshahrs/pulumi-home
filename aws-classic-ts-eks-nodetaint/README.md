@@ -1,7 +1,7 @@
 
 # AWS EKS with a Fixed Nodgroup with no Taints and a Spot Nodegroup with Taints
 
-AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no taints, and a spot nodegroup with taints in typescript
+AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no taints, and a spot nodegroup with taints in TypeScript
 
 ## Deployment
 
@@ -165,7 +165,7 @@ AWS eks stood up in a vpc with no managednodgroup, a fixed nodegroup with no tai
    ```
 
 1. Validating that the **taints** were applied via the aws console.
-   - log in via aws console, check out the eks cluster, select the node and scroll down to `Taints`.  You will something like the following
+   - log in via aws console, check out the eks cluster, select the nodegroup and scroll down to `Taints`.  You will something like the following
 
    <img src="images/nodegroup_with_taint_on.png" alt = Add NodeGroup with Taints>
 

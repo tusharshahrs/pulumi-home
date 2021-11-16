@@ -1,7 +1,7 @@
 
-# Azure Key Vault in Typescript
+# Azure Key Vault in TypeScript
 
-Azure keyvault created in Typescript.
+Azure keyvault created in TypeScript.
 
 ## Deployment
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)

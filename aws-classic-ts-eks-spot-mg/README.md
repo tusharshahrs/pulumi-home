@@ -1,7 +1,7 @@
 
 # AWS EKS SPOT Managed Nodes
 
-AWS eks with spot managed nodes in typescript
+AWS eks with spot managed nodes in TypeScript
 
 ## Deployment
 

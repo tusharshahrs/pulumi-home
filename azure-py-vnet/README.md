@@ -1,6 +1,6 @@
-# Pulumi:  A VirtualNetwork with two subnets on Azure-NextGen built in Python
+# Pulumi:  A VirtualNetwork with two subnets on Azure Native built-in Python
 * Built using the following resources
-  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-nextgen/) api
+  * [azure-native](https://www.pulumi.com/docs/reference/pkg/azure-nextgen/) API
   * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
   * [virtual network](https://www.pulumi.com/docs/reference/pkg/azure-native/network/virtualnetwork/)
   * [subnet](https://www.pulumi.com/docs/reference/pkg/azure-native/network/subnet/)

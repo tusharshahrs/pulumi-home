@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-11-15)
+- added azure-ts-datafactory
+
 ## (2021-11-10)
 - added azure-ts-managedinstance
 
@@ -55,7 +58,7 @@
 - added azure-ts-jenkins
 
 ## (2021-09-27)
-- added language and cloud images, updated the github actions links
+- added language and cloud images, updated the GitHub actions links
 
 ## (2021-09-23)
 - aws-py-beanstalk
@@ -135,7 +138,7 @@ aws-py-vpc
 ## (2021-06-24)
 - Added azure-py-vnet
 - Added azure-py-databricks
-- removed the push_ts and push_python github actions
+- removed the push_ts and push_python GitHub actions
 
 ## (2021-06-23)
 - Added azure-workshop-ts
@@ -150,10 +153,10 @@ aws-py-vpc
 ## (2021-06-21)
 
 - Added azure-ts-serveless-http-trigger
-- Fixed [pulumi github actions v3](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/) for azure for service principal.
+- Fixed [pulumi GitHub actions v3](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/) for azure for service principal.
 
 ## (2021-06-09)
-- added [pulumi github actions v3](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/) for aws.
+- added [pulumi GitHub actions v3](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/) for aws.
 - Added aws-ts-vpc-with-ecs-fargate-py/ecs-fargate-python
 - Added aws-ts-vpc-with-ecs-fargate-py/vpc-crosswalk-ts
 - Added aws-ts-sshkey

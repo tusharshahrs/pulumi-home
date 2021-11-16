@@ -2,7 +2,7 @@
 # Deploying Serverless Applications with Azure Functions
 
 In this lab, you will deploy a Azure Function Apps with HTTP-triggered serverless functions.
-This is in typescript
+This is in TypeScript
 
 
 
@@ -42,7 +42,7 @@ This is in typescript
 
     The command updates and persists the value to the local `Pulumi.dev.yaml` file. You can view or edit this file at any time to effect the configuration of the current stack.
 
-1. Azure Typescript Function Zip file
+1. Azure TypeScript Function Zip file
 
     The applications settings configure the app to run on Node.js v14 runtime and deploy the specified zip file to the Function App.
     The app will download the specified file, extract the code from it, discover the functions, and run them.

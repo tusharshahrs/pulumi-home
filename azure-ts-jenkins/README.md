@@ -1,4 +1,4 @@
-# Azure Function Deploying a Serverless Jenkins in typescript
+# Azure Function Deploying a Serverless Jenkins in TypeScript
 
 Deploying an Azure Function Apps that loads a jenkins docker image
 

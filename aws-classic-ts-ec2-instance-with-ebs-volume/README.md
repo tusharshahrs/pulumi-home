@@ -1,6 +1,6 @@
 # AWS EC2 Instance with Two EBS Volumes
 
-AWS ec2 instance with two ebs volumes. vpc creatd with awsx.  Call **then** on getAmi and on the subnet id to use.  Also call [interpolate](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#outputs-and-strings), which allows us to *concatenate string outputs with other strings directly*.
+AWS ec2 instance with two ebs volumes. vpc creatd with awsx.  Call **then** on getAmi and on the Subnet ID to use.  Also call [interpolate](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#outputs-and-strings), which allows us to *concatenate string outputs with other strings directly*.
 
 ## Deployment
 
@@ -10,7 +10,7 @@ AWS ec2 instance with two ebs volumes. vpc creatd with awsx.  Call **then** on g
     pulumi stack init dev
     ```
 
-1. Restore NPM dependencies
+1. Restore npm dependencies
 
     ```bash
     npm install

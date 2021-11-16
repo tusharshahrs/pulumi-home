@@ -35,17 +35,17 @@ Your new project is ready to go! ✨
 To perform an initial deployment, run 'pulumi up'
 ```
 
-This command has created all the files we need, initialized a new stack named `dev` (an instance of our project), and installed the needed package dependencies from NPM.
+This command has created all the files we need, initialized a new stack named `dev` (an instance of our project), and installed the needed package dependencies from npm.
 
 ## Step 3 &mdash; Inspect Your New Project
 
 Our project is comprised of multiple files:
 
 * **`index.ts`**: your program's main entrypoint file
-* **`package.json`** and **`package-lock.json`**: your project's NPM dependency information
+* **`package.json`** and **`package-lock.json`**: your project's npm dependency information
 * **`Pulumi.yaml`**: your project's metadata, containing its name and language
 * **`tsconfig.json`**: your project's TypeScript settings
-* **`node_modules/`**: a directory containing your project's installed NPM dependencies
+* **`node_modules/`**: a directory containing your project's installed npm dependencies
 
 Run `cat index.ts` to see the contents of your project's empty program:
 

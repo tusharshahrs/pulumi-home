@@ -1,9 +1,9 @@
-# Pulumi:  A VPC on AWS built in Typescript
+# Pulumi:  A VPC on AWS built-in TypeScript
 [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
 
 ## What Is This?
 
-This example uses [Pulumi CrossWalk for AWS](https://www.pulumi.com/docs/guides/crosswalk/aws/#pulumi-crosswalk-for-aws) for deploying your own vpc using crosswalk [VPC](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/).  The VPC is built in `typescript`
+This example uses [Pulumi CrossWalk for AWS](https://www.pulumi.com/docs/guides/crosswalk/aws/#pulumi-crosswalk-for-aws) for deploying your own vpc using crosswalk [VPC](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/).  The VPC is built-in `TypeScript`
 
 ## Why would you do this?  
 An example showing that you can easily integrate infrastructure from another Pulumi application written in a different language than the one you are used to.
@@ -127,7 +127,7 @@ An example showing that you can easily integrate infrastructure from another Pul
    details
    ```
 
-   You need to select `yes` to continue.  The url will look similar to the url below and you will need to replace the `shaht` with your own org, `team-qa`:
+   You need to select `yes` to continue.  The URL will look similar to the one below and you will need to replace the `shaht` with your own org, `team-qa`:
       `https://app.pulumi.com/`myuser`/crosswalk-vpc/vpc-fargate-dev/`
 
 1. The stack outputs will be used as [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies) for ECS fargate (resides in ecs-fargate-python folder)

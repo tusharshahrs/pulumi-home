@@ -98,7 +98,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics in GO
    Current workaround,
     - go to azure portal and find the SQL Server.
     - Delete the SQL Server
-    - go back to the command line and type in `pulumi refresh -y`
+    - go back to the command-line and type in `pulumi refresh -y`
     - Run the destroy command again:  `pulumi destroy -y`
 
 1. Remove the stack
