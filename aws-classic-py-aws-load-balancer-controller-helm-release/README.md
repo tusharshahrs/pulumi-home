@@ -49,55 +49,63 @@ AWS eks with spot managed nodes in python.  Helm [Release](https://www.pulumi.co
    ```bash
    Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-py-eks-spot-mg/dev/updates/24
+   View Live: https://app.pulumi.com/shaht/aws-classic-py-aws-load-balancer-controller-helm-release/dev/updates/12
 
-        Type                           Name                                Status       
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running.     
-    +   │  ├─ aws:ec2:InternetGateway           demoeks-igw                               created      
-    +   │  ├─ aws:ec2:SecurityGroup             demoeks-security-group                    created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running...   
-    +   │  ├─ aws:ec2:Subnet                    demoeks-private-subnet-us-east-2b         created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-public-rt-association-us-east-2b  created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running.     
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-public-rt-association-us-east-2a  created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running..    
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running...   
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-    +   │  ├─ aws:ec2:RouteTable                demoeks-public-route-table                created      
-    +   │  ├─ aws:ec2:RouteTable                demoeks-private-rt-us-east-2a             creating..   
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-private-rt-association-us-east-2a  creating     
-    +   │  ├─ aws:ec2:RouteTable                demoeks-private-rt-us-east-2b              created      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-private-rt-association-us-east-2b  creating     
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                     running..    
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                     running      
-    +   ├─ aws:ec2:Eip                          demoeks-eip-nat-gateway-us-east-2a             created      
-    +   │  └─ aws:ec2:NatGateway                demoeks-natgw-us-east-2a                       created      
-    +   └─ eks:index:Cluster                    demo-py-eks                                    creating.    
-    +      ├─ eks:index:ServiceRole             demo-py-eks-eksRole                            created      
-    +   └─ eks:index:Cluster                    demo-py-eks                                    creating.    
-    +      │  ├─ aws:iam:RolePolicyAttachment   demo-py-eks-eksRole-90eb1c99                   created      
-    +      │  └─ aws:iam:RolePolicyAttachment   demo-py-eks-eksRole-4b490823                   created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                         running...   
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterInternetEgressRule       created      
-    +   │  ├─ aws:eks:Cluster                   demo-py-eks-eksCluster                         created      Cluster is ready
-    +   │  ├─ aws:eks:Cluster                   demo-py-eks-eksCluster                         created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeIngressRule                 created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksExtApiServerClusterIngressRule  created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeInternetEgressRule          created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterIngressRule              created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeClusterIngressRule          created     
-    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-provider                           created     
-    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-eks-k8s                            created     
-    +   │  ├─ kubernetes:core/v1:ConfigMap      demo-py-eks-nodeAccess                         created     
-    +   │  └─ eks:index:VpcCni                  demo-py-eks-vpc-cni                            created     
-    +   └─ eks:index:ManagedNodeGroup           demo-py-managed-nodegroup-spot-ng0             created     
-    +      └─ aws:eks:NodeGroup                 demo-py-managed-nodegroup-spot-ng0             created     
+        Type                                    Name                                                          Status       
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating..   
+    +   ├─ aws:ec2:Vpc                          demo-eks-vpc                                                  created      
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating...  
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating.    
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating..   
+    +   │  ├─ aws:ec2:Subnet                    demo-eks-private-subnet-us-east-2b                            created      
+    +   │  ├─ aws:ec2:Subnet                    demo-eks-public-subnet-us-east-2b                             created      
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating...  
+    +   │  ├─ aws:ec2:Subnet                    demo-eks-public-subnet-us-east-2a                             created      
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating     
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating.    
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating..   
+    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-eks-public-rt-association-us-east-2c                     created      
+    +   │  ├─ aws:ec2:RouteTable                demo-eks-public-route-table                                   created      
+    +   │  ├─ aws:ec2:RouteTable                demo-eks-private-rt-us-east-2a                                created      
+    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-eks-private-rt-association-us-east-2a                    creating..   
+    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-eks-private-rt-association-us-east-2a                    creating...  
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating     
+        Type                                    Name                                                          Status       Info
+    +   │     └─ aws:ec2:RouteTableAssociation  demo-eks-private-rt-association-us-east-2c                    created      
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating...  
+    +   │  └─ aws:ec2:NatGateway                demo-eks-natgw-us-east-2a                                     created      
+    +   ├─ aws:iam:Role                         demo-py-role0                                                 created      
+    +   ├─ aws:iam:RolePolicyAttachment         demo-py-role0-policy-0                                        created      
+    +   ├─ aws:iam:RolePolicyAttachment         demo-py-role0-policy-1                                        created      
+    +   ├─ aws:iam:RolePolicyAttachment         demo-py-role0-policy-2                                        created      
+    +   └─ eks:index:Cluster                    demo-py-eks                                                   created      
+    +   │  ├─ eks:index:ServiceRole             demo-py-eks-eksRole                                           created      
+    +   │  │  ├─ aws:iam:Role                   demo-py-eks-eksRole-role                                      created      
+    +   pulumi:pulumi:Stack                     aws-classic-py-aws-load-balancer-controller-helm-release-dev  creating.    Warning: apiextensions.k8s.io/v1beta1 Custo
+    +   │  │  └─ aws:iam:RolePolicyAttachment   demo-py-eks-eksRole-4b490823                                  created      
+    +   │  ├─ aws:ec2:SecurityGroup             demo-py-eks-eksClusterSecurityGroup                           created     
+    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterInternetEgressRule                      created     
+    +   │  ├─ aws:eks:Cluster                   demo-py-eks-eksCluster                                        created     
+    +   │  ├─ aws:ec2:SecurityGroup             demo-py-eks-nodeSecurityGroup                                 created     
+    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-provider                                          created     
+    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-eks-k8s                                           created     
+    +   │  ├─ kubernetes:core/v1:ConfigMap      demo-py-eks-nodeAccess                                        created     
+    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterIngressRule                             created     
+    +   │  ├─ eks:index:VpcCni                  demo-py-eks-vpc-cni                                           created     
+    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksExtApiServerClusterIngressRule                 created     
+    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeInternetEgressRule                         created     
+    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeClusterIngressRule                         created     
+    +   │  └─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeIngressRule                                created     
+    +   ├─ kubernetes:core/v1:Namespace         awslbcontroller-ns                                            created     
+    +   │  └─ kubernetes:helm.sh/v3:Release     aws-load-balancer-controller                                  created     
+    +   └─ eks:index:ManagedNodeGroup           demo-py-managed-nodegroup-spot-ng0                            created     
+    +      └─ aws:eks:NodeGroup                 demo-py-managed-nodegroup-spot-ng0                            created     
     
     Diagnostics:
-    pulumi:pulumi:Stack (aws-py-eks-spot-mg-dev):
+    pulumi:pulumi:Stack (aws-classic-py-aws-load-balancer-controller-helm-release-dev):
         Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
+    
+        2021/11/18 16:18:10 [DEBUG] Chart dependencies are up to date.
     
         zone: us-east-2a
         public cidr: 10.0.0.0/25
@@ -110,18 +118,19 @@ AWS eks with spot managed nodes in python.  Helm [Release](https://www.pulumi.co
         private cidr: 10.0.1.128/25
     
     Outputs:
-    + cluster_name                   : "demo-py-eks-eksCluster-0c4735a"
-    + managed_nodegroup_capacity_type: "SPOT"
-    + managed_nodegroup_name         : "demo-py-managed-nodegroup-spot-ng0-01748de"
-    + managed_nodegroup_version      : "1.21"
-    + kubeconfig                     : [secret]
-
+        chart_app_version              : "v2.3.0"
+        chart_name                     : "aws-load-balancer-controller"
+        chart_namespace                : "awslbcontroller-ns-awcfx59i"
+        cluster_name                   : "demo-py-eks-eksCluster-860b579"
+        kubeconfig                     : "[secret]"
+        managed_nodegroup_capacity_type: "SPOT"
+        managed_nodegroup_name         : "demo-py-managed-nodegroup-spot-ng0-53db9dc"
+        managed_nodegroup_version      : "1.21"
 
     Resources:
-        + 41 created
-        5 unchanged
+        + 48 created
 
-    Duration: 13m38s
+    Duration: 16m4s
    ```
 
 1. View the outputs.
@@ -131,12 +140,15 @@ AWS eks with spot managed nodes in python.  Helm [Release](https://www.pulumi.co
 
    Results
    ```bash
-   Current stack outputs (4):
+   Current stack outputs (8):
     OUTPUT                           VALUE
-    cluster_name                     demo-py-eks-eksCluster-0c4735a
+    chart_app_version                v2.3.0
+    chart_name                       aws-load-balancer-controller
+    chart_namespace                  awslbcontroller-ns-awcfx59i
+    cluster_name                     demo-py-eks-eksCluster-860b579
     kubeconfig                       [secret]
     managed_nodegroup_capacity_type  SPOT
-    managed_nodegroup_name           demo-py-managed-nodegroup-spot-ng0-01748de
+    managed_nodegroup_name           demo-py-managed-nodegroup-spot-ng0-53db9dc
     managed_nodegroup_version        1.21
    ```
 
