@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-11-18)
+- added aws-classic-py-aws-load-balancer-controller-helm-release
+
 ## (2021-11-16)
 - added azure-classic-ts-datafactory
 
