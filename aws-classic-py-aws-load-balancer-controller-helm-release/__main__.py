@@ -67,7 +67,7 @@ release_args = ReleaseArgs(
     # available.
     skip_await=False)   
     
-release = Release("aws-load-balancer-controller", args=release_args, opts=ResourceOptions(provider=mycluster.provider))
+release = Release("aws-load-balancer-controller", args=release_args, opts=ResourceOptions(parent=namespace, provider=mycluster.provider))
 status = release.status
 
 
