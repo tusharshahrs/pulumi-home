@@ -59,7 +59,7 @@ release_args = ReleaseArgs(
     ),
     version="1.3.2",
     namespace=namespace.metadata["name"],
-   values={
+    values={
         "clusterName": mycluster.core,
         },
     # By default Release resource will wait till all created resources
