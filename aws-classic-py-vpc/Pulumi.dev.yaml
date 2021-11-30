@@ -9,4 +9,4 @@ config:
   - 10.0.0.128/26
   - 10.0.0.192/26
   aws-classic-py-vpc:vpc_cidr_block: 10.0.0.0/23
-  aws:region: us-east-2
+  aws:region: eu-west-1

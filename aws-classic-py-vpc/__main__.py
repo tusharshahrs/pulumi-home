@@ -139,6 +139,7 @@ for zone, public_subnet_cidr, private_subnet_cidr in zip(zones, public_subnets_c
 # Mainly to save cost since nat gateways are so expensive.
     if (current_number_of_nat_gateways < nat_gateways_allocated):  
     # Elastic IP for nat gateway
+        current_number_of_nat_gateways+=1
         eip = ec2.Eip(
             f"{myname}-eip-nat-gateway-{zone}", 
             tags={
@@ -154,8 +155,6 @@ for zone, public_subnet_cidr, private_subnet_cidr in zip(zones, public_subnets_c
             tags={"name": f"{myname}-natgw-{zone}"},
             opts=ResourceOptions(parent=eip)
             )
-
-    current_number_of_nat_gateways+=1
 
     # Private Subnets
     private_subnet = ec2.Subnet(
