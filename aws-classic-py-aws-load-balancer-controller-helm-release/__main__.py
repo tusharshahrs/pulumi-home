@@ -1,21 +1,17 @@
 """An AWS Python Pulumi program"""
-import pulumi
 import pulumi_aws as aws
-from pulumi_aws import provider
 import pulumi_eks as eks
-from pulumi import export, Output, ResourceOptions, Config, StackReference, get_stack, get_project
-from pulumi_eks import cluster
+from pulumi import export, Output, ResourceOptions, get_stack, get_project
 import iam
 import vpc
-from pulumi_kubernetes.core.v1 import Namespace, Service
+from pulumi_kubernetes.core.v1 import Namespace
 from pulumi_kubernetes.helm.v3 import Release, ReleaseArgs, RepositoryOptsArgs
 
-
+# create an iam role for eks
 role0 = iam.create_role("demo-py-role0")
-mytags ={"project_name":get_project(), "stack_name":get_stack()}
 
-#my_vpc_id = vpc.vpc.id
-#export("my_vpcname", my_vpc_id)
+# generic tags across cluster
+mytags ={"project_name":get_project(), "stack_name":get_stack()}
 
 # Create an EKS cluster.
 mycluster = eks.Cluster("demo-py-eks",
@@ -35,6 +31,7 @@ mycluster = eks.Cluster("demo-py-eks",
             private_subnet_ids = vpc.private_subnet_ids,
             )
 
+# spot managed node group to save cost
 managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
    cluster=mycluster.core, # TODO[pulumi/pulumi-eks#483]: Pass cluster directly.
    capacity_type = "SPOT",
@@ -48,6 +45,7 @@ managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-
    opts=ResourceOptions(depends_on=[mycluster])
    )
 
+# Creatinga namespace
 namespace = Namespace("awslbcontroller-ns",
                       opts=ResourceOptions(depends_on=[mycluster], provider=mycluster.provider))
 
@@ -66,18 +64,16 @@ release_args = ReleaseArgs(
     # are available. Set this to true to skip waiting on resources being
     # available.
     skip_await=False)   
-    
+
 release = Release("aws-load-balancer-controller", args=release_args, opts=ResourceOptions(parent=namespace, provider=mycluster.provider))
 status = release.status
 
-
+export("vpcname", vpc.vpc.id)
 export("cluster_name", mycluster.core.cluster.name)
 export("managed_nodegroup_name", managed_nodegroup_spot_0.node_group.node_group_name)
 export("managed_nodegroup_capacity_type", managed_nodegroup_spot_0.node_group.capacity_type)
 export("managed_nodegroup_version", managed_nodegroup_spot_0.node_group.version)
 export("kubeconfig", Output.secret(mycluster.kubeconfig))
-export("chart_namespace", namespace.id)
-#export("overall_status", status)
-export("chart_name",status["chart"])
-export("chart_app_version",status["app_version"])
-
+export("k8s_namespace", namespace.id)
+export("k8s_chart",status["chart"])
+export("k8s_chart_app_version",status["app_version"])
