@@ -1,0 +1,12 @@
+config:
+  aws-classic-py-aws-load-balancer-controller-helm-release:number_of_nat_gateways: "1"
+  aws-classic-py-aws-load-balancer-controller-helm-release:private_subnet_cidr:
+  - 10.0.1.0/26
+  - 10.0.1.64/26
+  - 10.0.1.128/25
+  aws-classic-py-aws-load-balancer-controller-helm-release:public_subnet_cidr:
+  - 10.0.0.0/25
+  - 10.0.0.128/26
+  - 10.0.0.192/26
+  aws-classic-py-aws-load-balancer-controller-helm-release:vpc_cidr_block: 10.0.0.0/23
+  aws:region: us-east-2
