@@ -1,0 +1,17 @@
+{
+    "name": "aws-classic-ts-eks-awsx-spot",
+    "devDependencies": {
+        "@types/node": "^16.11.4"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^4.32.0",
+        "@pulumi/awsx": "^0.32.0",
+        "@pulumi/eks": "^0.36.0",
+        "@pulumi/github": "^4.8.1",
+        "@pulumi/kubernetes": "^3.12.1",
+        "@pulumi/pulumi": "^3.19.0",
+        "@pulumi/random": "^4.3.1",
+        "@types/netmask": "^1.0.30",
+        "netmask": "^2.0.2"
+    }
+}

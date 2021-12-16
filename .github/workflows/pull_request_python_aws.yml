@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.8.x']
-        python-example: ['aws-classic-py-aws-load-balancer-controller-helm-release','aws-classic-py-beanstalk','aws-classic-py-eks-spot-mg','aws-classic-py-s3-staticwebsite','aws-classic-py-apigateway-lambda-serverless','aws-classic-py-dynamodb', 'aws-classic-py-vpc','aws-classic-py-eks-spot-nodegroups','aws-classic-py-get-ami','aws-classic-py-get-regions']
+        python-example: ['aws-classic-ts-eks-awsx-spot','aws-classic-py-aws-load-balancer-controller-helm-release','aws-classic-py-beanstalk','aws-classic-py-eks-spot-mg','aws-classic-py-s3-staticwebsite','aws-classic-py-apigateway-lambda-serverless','aws-classic-py-dynamodb', 'aws-classic-py-vpc','aws-classic-py-eks-spot-nodegroups','aws-classic-py-get-ami','aws-classic-py-get-regions']
     steps:
       - uses: actions/checkout@v2
         with:

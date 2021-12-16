@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2021-12-16)
+- added aws-classic-ts-eks-awsx-spot
+
 ## (2021-11-18)
 - added aws-classic-py-aws-load-balancer-controller-helm-release
 
