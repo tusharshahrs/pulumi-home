@@ -75,7 +75,7 @@ Deploys Azure SQL Server with [FirewallRule](https://www.pulumi.com/registry/pac
     storageaccount_name  sqlsrvfirewallsa91408512
    ```
 
-1. Check the azure portal to validate that the Azure SQL -> Firewalls and virtual networks -> Allow Azure services and resources to access this server is toggled to `Yes`.
+1. Check the azure portal to validate that the Azure SQL -> Firewalls and virtual networks -> Allow Azure services and resources to access this server is toggled to `Yes`
 
 1. Destroy the Stack
    ```bash
