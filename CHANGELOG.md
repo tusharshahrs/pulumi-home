@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2022-01-20)
-- added azure-ts-sqlserver 
+- added azure-ts-sqlserver
 
 ## (2021-12-16)
 - added aws-classic-ts-eks-awsx-spot
