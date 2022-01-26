@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-01-26)
+- added azure-ts-synapse-workspace
+
 ## (2022-01-20)
 - added azure-ts-sqlserver
 
