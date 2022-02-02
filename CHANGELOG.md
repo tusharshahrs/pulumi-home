@@ -1,4 +1,6 @@
 # CHANGELOG
+## (2022-02-02)
+- aws-classic-ts-vpc-quickstart
 
 ## (2022-01-26)
 - added azure-ts-synapse-workspace
