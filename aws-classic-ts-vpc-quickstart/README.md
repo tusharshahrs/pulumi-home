@@ -33,12 +33,10 @@ This example uses [AWS Quickstart VPC](https://www.pulumi.com/registry/packages/
    ```
  1. Populate the config.
 
-   Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
+   Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html). *Note* If you pick something besides *us-east-2*, you need to edit the *index.ts* file and update the 3 availability zones
    ```bash
    pulumi config set aws:region us-east-2 # any valid aws region endpoint
    ```
-
-    *Note* If you pick something besides *us-east-2*, you need to edit the *index.ts* file and update the 3 availability zones
 
 1. View the current config settings
    ```bash
