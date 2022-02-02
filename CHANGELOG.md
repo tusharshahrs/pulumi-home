@@ -1,4 +1,5 @@
 # CHANGELOG
+
 ## (2022-02-02)
 - aws-classic-ts-vpc-quickstart
 
