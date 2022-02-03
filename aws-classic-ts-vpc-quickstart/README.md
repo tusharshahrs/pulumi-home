@@ -56,7 +56,7 @@ This example uses [AWS Quickstart VPC](https://www.pulumi.com/registry/packages/
 1. Expected output
 
    ```bash
-   View Live: https://app.pulumi.com/shaht/aws-classic-ts-vpc-quickstart/dev/updates/12
+   View Live: https://app.pulumi.com/myuser/aws-classic-ts-vpc-quickstart/dev/updates/12
 
         Type                             Name                               Status       
     +   pulumi:pulumi:Stack              aws-classic-ts-vpc-quickstart-dev  creating...  
