@@ -67,7 +67,7 @@ Example| Description | Cloud & Language   |
 [aws-classic-py-beanstalk](aws-classic-py-beanstalk )| aws beanstalk application | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-get-ami](aws-classic-py-get-ami) | aws get ami | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-get-regions](aws-classic-py-get-regions/)| aws get regions | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
-[aws-classic-py-vpc-quickstart ](aws-classic-py-vpc-quickstart)| aws vpc with [aws quickstart vpc](https://www.pulumi.com/registry/packages/aws-quickstart-vpc/api-docs/) | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-py-vpc-quickstart](aws-classic-py-vpc-quickstart)| aws vpc with [aws quickstart vpc](https://www.pulumi.com/registry/packages/aws-quickstart-vpc/api-docs/) | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 
 ## Azure
 Example| Description | Cloud & Language   |
