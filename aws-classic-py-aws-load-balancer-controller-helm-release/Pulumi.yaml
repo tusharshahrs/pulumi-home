@@ -1,6 +1,0 @@
-name: aws-classic-py-aws-load-balancer-controller-helm-release
-runtime:
-  name: python
-  options:
-    virtualenv: venv
-description: A minimal AWS Python Pulumi program
