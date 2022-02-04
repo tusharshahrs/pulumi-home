@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8.x']
+        python-version: ['3.8.x','3.9.x']
         python-example: ['aws-classic-py-vpc-quickstart', 'aws-classic-py-beanstalk', 'aws-classic-py-eks-spot-mg', 'aws-classic-py-s3-staticwebsite', 
         'aws-classic-py-apigateway-lambda-serverless', 'aws-classic-py-dynamodb', 'aws-classic-py-vpc', 'aws-classic-py-eks-spot-nodegroups', 'aws-classic-py-get-ami', 
         'aws-classic-py-get-regions','aws-classic-py-aws-load-balancer-controller-helm-release']
@@ -20,7 +20,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Pulumi CLI
         uses: pulumi/setup-pulumi@v2
-      - run: pip install -r requirements.txt
+      - run: |
+        source env/bin/activate
+        pip install -r requirements.txt
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
