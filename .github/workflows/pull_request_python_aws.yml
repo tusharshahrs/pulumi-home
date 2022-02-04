@@ -22,8 +22,6 @@ jobs:
         uses: pulumi/setup-pulumi@v2
       - run: python3 -m venv venv
         working-directory: ${{ matrix.python-example }}
-      - run: source env/bin/activate
-        working-directory: ${{ matrix.python-example }}
       - run: pip install -r requirements.txt
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
