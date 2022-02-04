@@ -55,7 +55,7 @@ release_args = ReleaseArgs(
     repository_opts=RepositoryOptsArgs(
         repo="https://aws.github.io/eks-charts"
     ),
-    version="1.3.2",
+    version="1.3.3",
     namespace=namespace.metadata["name"],
     values={
         "clusterName": mycluster.core,
