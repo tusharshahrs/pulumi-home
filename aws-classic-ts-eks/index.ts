@@ -15,3 +15,4 @@ const awslb_namespace = new Namespace("awslb-controller-ns",{}, {provider: myclu
 
 export const cluster_name = mycluster.eksCluster.name;
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
+export const awslb_namespace_name = awslb_namespace.id;
