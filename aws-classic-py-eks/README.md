@@ -43,76 +43,53 @@ AWS eks cluster with Namespace
    ```bash
    Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-py-eks-spot-mg/dev/updates/24
+   View Live: https://app.pulumi.com/shaht/aws-classic-py-eks/dev/updates/23
 
-        Type                           Name                                Status       
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running.     
-    +   │  ├─ aws:ec2:InternetGateway           demoeks-igw                               created      
-    +   │  ├─ aws:ec2:SecurityGroup             demoeks-security-group                    created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running...   
-    +   │  ├─ aws:ec2:Subnet                    demoeks-private-subnet-us-east-2b         created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-public-rt-association-us-east-2b  created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running.     
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-public-rt-association-us-east-2a  created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running..    
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running...   
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                    running      
-    +   │  ├─ aws:ec2:RouteTable                demoeks-public-route-table                created      
-    +   │  ├─ aws:ec2:RouteTable                demoeks-private-rt-us-east-2a             creating..   
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-private-rt-association-us-east-2a  creating     
-    +   │  ├─ aws:ec2:RouteTable                demoeks-private-rt-us-east-2b              created      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demoeks-private-rt-association-us-east-2b  creating     
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                     running..    
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                     running      
-    +   ├─ aws:ec2:Eip                          demoeks-eip-nat-gateway-us-east-2a             created      
-    +   │  └─ aws:ec2:NatGateway                demoeks-natgw-us-east-2a                       created      
-    +   └─ eks:index:Cluster                    demo-py-eks                                    creating.    
-    +      ├─ eks:index:ServiceRole             demo-py-eks-eksRole                            created      
-    +   └─ eks:index:Cluster                    demo-py-eks                                    creating.    
-    +      │  ├─ aws:iam:RolePolicyAttachment   demo-py-eks-eksRole-90eb1c99                   created      
-    +      │  └─ aws:iam:RolePolicyAttachment   demo-py-eks-eksRole-4b490823                   created      
-        pulumi:pulumi:Stack                     aws-py-eks-spot-mg-dev                         running...   
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterInternetEgressRule       created      
-    +   │  ├─ aws:eks:Cluster                   demo-py-eks-eksCluster                         created      Cluster is ready
-    +   │  ├─ aws:eks:Cluster                   demo-py-eks-eksCluster                         created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeIngressRule                 created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksExtApiServerClusterIngressRule  created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeInternetEgressRule          created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksClusterIngressRule              created     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-py-eks-eksNodeClusterIngressRule          created     
-    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-provider                           created     
-    +   │  ├─ pulumi:providers:kubernetes       demo-py-eks-eks-k8s                            created     
-    +   │  ├─ kubernetes:core/v1:ConfigMap      demo-py-eks-nodeAccess                         created     
-    +   │  └─ eks:index:VpcCni                  demo-py-eks-vpc-cni                            created     
-    +   └─ eks:index:ManagedNodeGroup           demo-py-managed-nodegroup-spot-ng0             created     
-    +      └─ aws:eks:NodeGroup                 demo-py-managed-nodegroup-spot-ng0             created     
+     Type                                   Name                                   Status       
+    +   pulumi:pulumi:Stack                    aws-classic-py-eks-dev                 creating..   
+        Type                                   Name                                   Status       Info
+    +      ├─ eks:index:ServiceRole            demo-eks-eksRole                       created      
+    +   └─ eks:index:Cluster                   demo-eks                               creating...  
+    +   └─ eks:index:Cluster                   demo-eks                               creating.    
+    +      │  └─ aws:iam:RolePolicyAttachment  demo-eks-eksRole-4b490823                   created      
+    +      ├─ eks:index:ServiceRole            demo-eks-instanceRole                       created      
+    +      │  ├─ aws:iam:Role                  demo-eks-instanceRole-role                  created      
+    +      │  ├─ aws:iam:RolePolicyAttachment  demo-eks-instanceRole-3eb088f2              created      
+    +   └─ eks:index:Cluster                   demo-eks                                    creating..   
+    +   └─ eks:index:Cluster                   demo-eks                                    creating     
+    +   └─ eks:index:Cluster                   demo-eks                                    created      
+    +   │  ├─ aws:ec2:SecurityGroup            demo-eks-eksClusterSecurityGroup            created      
+    +   pulumi:pulumi:Stack                    aws-classic-py-eks-dev                      creating...  Warning: apiextensions.k8s.io/v1beta1 Custom
+    +   │  ├─ aws:eks:Cluster                  demo-eks-eksCluster                         created     
+    +   │  ├─ aws:iam:InstanceProfile          demo-eks-instanceProfile                    created     
+    +   │  ├─ aws:ec2:SecurityGroup            demo-eks-nodeSecurityGroup                  created     
+    +   │  ├─ eks:index:VpcCni                 demo-eks-vpc-cni                            created     
+    +   │  ├─ pulumi:providers:kubernetes      demo-eks-eks-k8s                            created     
+    +   │  ├─ kubernetes:core/v1:ConfigMap     demo-eks-nodeAccess                         created     
+    +   │  ├─ aws:ec2:SecurityGroupRule        demo-eks-eksNodeIngressRule                 created     
+    +   │  ├─ aws:ec2:SecurityGroupRule        demo-eks-eksExtApiServerClusterIngressRule  created     
+    +   │  ├─ aws:ec2:SecurityGroupRule        demo-eks-eksClusterIngressRule              created     
+    +   │  ├─ aws:ec2:SecurityGroupRule        demo-eks-eksNodeClusterIngressRule          created     
+    +   │  ├─ aws:ec2:SecurityGroupRule        demo-eks-eksNodeInternetEgressRule          created     
+    +   │  ├─ aws:ec2:LaunchConfiguration      demo-eks-nodeLaunchConfiguration            created     
+    +   │  ├─ aws:cloudformation:Stack         demo-eks-nodes                              created     
+    +   │  └─ pulumi:providers:kubernetes      demo-eks-provider                           created     
+    +   ├─ pulumi:providers:kubernetes         mycluster_provider                          created     
+    +   └─ kubernetes:core/v1:Namespace        awslb-controller-ns                         created     
     
     Diagnostics:
-    pulumi:pulumi:Stack (aws-py-eks-spot-mg-dev):
+    pulumi:pulumi:Stack (aws-classic-py-eks-dev):
         Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
     
-        zone: us-east-2a
-        public cidr: 10.0.0.0/25
-        private cidr: 10.0.1.0/26
-        zone: us-east-2b
-        public cidr: 10.0.0.128/26
-        private cidr: 10.0.1.64/26
-        zone: us-east-2c
-        public cidr: 10.0.0.192/26
-        private cidr: 10.0.1.128/25
-    
     Outputs:
-    + cluster_name                   : "demo-py-eks-eksCluster-0c4735a"
-    + kubeconfig                     : [secret]
-
+        aws-lb-namespace: "awslb-controller-ns-et3tmegq"
+        cluster_name    : "demo-eks-eksCluster-e4ac504"
+        kubeconfig      : "[secret]"
 
     Resources:
-        + 41 created
-        5 unchanged
+        + 30 created
 
-    Duration: 13m38s
+    Duration: 10m59s
    ```
 
 1. View the outputs.
@@ -122,10 +99,11 @@ AWS eks cluster with Namespace
 
    Results
    ```bash
-   Current stack outputs (2):
-    OUTPUT                           VALUE
-    cluster_name                     demo-py-eks-eksCluster-0c4735a
-    kubeconfig                       [secret]
+   Current stack outputs (3):
+    OUTPUT            VALUE
+    aws-lb-namespace  awslb-controller-ns-et3tmegq
+    cluster_name      demo-eks-eksCluster-e4ac504
+    kubeconfig        [secret]
 
    ```
 
