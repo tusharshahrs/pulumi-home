@@ -1,6 +1,6 @@
 # AWS EKS with Namespace and Cert-Manager Helm Release
 
-AWS eks with namespace and cert-manager in helm release in Typescript
+AWS eks with namespace and cert-manager in helm release in TypeScript
 
 ## Deployment
 

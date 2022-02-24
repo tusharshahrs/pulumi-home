@@ -1,6 +1,6 @@
 # AWS EKS with Namespace
 
-AWS eks with namespace in Typescript
+AWS eks with namespace in TypeScript
 
 ## Deployment
 
