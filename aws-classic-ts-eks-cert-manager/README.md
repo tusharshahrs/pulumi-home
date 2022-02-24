@@ -141,8 +141,7 @@ AWS eks with namespace and cert-manager in helm release in TypeScript
     ```
 
 1. Describe the error pod that shows `2 Too many pods`
-   ```
-   bash
+   ```bash
    kubectl -n certmanager-ns-toogcs4j describe pods democert-certmanager-z4h6fap0-cert-manager-7547568ccd-7qmmv
    ```
   
