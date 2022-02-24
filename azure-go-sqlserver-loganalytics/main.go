@@ -115,7 +115,7 @@ func main() {
 			ResourceGroupName:           resourceGroup.Name,
 			RetentionDays:               pulumi.Int(0),
 			ServerName:                  sqlServer.Name,
-			//State:                       "Enabled",
+			//State:                       pulumi.String("Enabled"),
 		})
 		if err != nil {
 			return err
@@ -128,7 +128,7 @@ func main() {
 			RetentionDays:               pulumi.Int(0),
 			ResourceGroupName:           resourceGroup.Name,
 			ServerName:                  sqlServer.Name,
-			//State:                       "Enabled",
+			//State:                       pulumi.String("Enabled"),
 		})
 		if err != nil {
 			return err
