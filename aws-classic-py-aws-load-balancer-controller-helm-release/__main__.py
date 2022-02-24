@@ -4,8 +4,10 @@ import pulumi_eks as eks
 from pulumi import export, Output, ResourceOptions, get_stack, get_project
 import iam
 import vpc
+import pulumi_kubernetes as k8s
 from pulumi_kubernetes.core.v1 import Namespace
 from pulumi_kubernetes.helm.v3 import Release, ReleaseArgs, RepositoryOptsArgs
+from pulumi_kubernetes import Provider
 
 # create an iam role for eks
 role0 = iam.create_role("demo-py-role0")
@@ -35,7 +37,7 @@ mycluster = eks.Cluster("demo-py-eks",
 managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
    cluster=mycluster.core, # TODO[pulumi/pulumi-eks#483]: Pass cluster directly.
    capacity_type = "SPOT",
-   instance_types=["t3a.medium"],
+   instance_types=["t3a.small"],
    scaling_config=aws.eks.NodeGroupScalingConfigArgs(
       desired_size=3,
       min_size=2,
@@ -45,9 +47,9 @@ managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-
    opts=ResourceOptions(depends_on=[mycluster])
    )
 
+k8s_provider = Provider("mycluster_provider",kubeconfig=mycluster.kubeconfig)
 # Creatinga namespace
-namespace = Namespace("awslbcontroller-ns",
-                      opts=ResourceOptions(depends_on=[mycluster], provider=mycluster.provider))
+awslbcontroller_namespace = Namespace("awslb-controller-ns",opts=ResourceOptions(provider=k8s_provider))
 
 # Helm Release: https://www.pulumi.com/registry/packages/kubernetes/api-docs/helm/v3/release/
 release_args = ReleaseArgs(
@@ -56,24 +58,25 @@ release_args = ReleaseArgs(
         repo="https://aws.github.io/eks-charts"
     ),
     version="1.3.3",
-    namespace=namespace.metadata["name"],
+#    namespace=awslbcontroller_namespace.metadata["name"],
     values={
         "clusterName": mycluster.core,
         },
-    # By default Release resource will wait till all created resources
-    # are available. Set this to true to skip waiting on resources being
-    # available.
+#    # By default Release resource will wait till all created resources
+#    # are available. Set this to true to skip waiting on resources being
+#    # available.
     skip_await=False)   
-
-release = Release("aws-load-balancer-controller", args=release_args, opts=ResourceOptions(parent=namespace, provider=mycluster.provider))
+#
+release = Release("aws-load-balancer-controller", args=release_args, opts=ResourceOptions(provider=k8s_provider))
 status = release.status
+
 
 export("vpcname", vpc.vpc.id)
 export("cluster_name", mycluster.core.cluster.name)
 export("managed_nodegroup_name", managed_nodegroup_spot_0.node_group.node_group_name)
 export("managed_nodegroup_capacity_type", managed_nodegroup_spot_0.node_group.capacity_type)
 export("managed_nodegroup_version", managed_nodegroup_spot_0.node_group.version)
-export("kubeconfig", Output.secret(mycluster.kubeconfig))
-export("k8s_namespace", namespace.id)
-export("k8s_chart",status["chart"])
-export("k8s_chart_app_version",status["app_version"])
+#export("kubeconfig", Output.secret(mycluster.kubeconfig))
+#export("k8s_namespace", mynamespace.id)
+#export("k8s_chart",status["chart"])
+#export("k8s_chart_app_version",status["app_version"])

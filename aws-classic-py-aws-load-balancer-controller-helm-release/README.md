@@ -40,6 +40,12 @@ AWS eks with spot managed nodes in python.  Helm [Release](https://www.pulumi.co
    pulumi config set-all --path --plaintext private_subnet_cidr[0]="10.0.1.0/26" --plaintext private_subnet_cidr[1]="10.0.1.64/26" --plaintext private_subnet_cidr[2]="10.0.1.128/25"
    ```
 
+1. The main problem is that the ResourceOptions' provider arg doesn't yet accept `Output[ProviderResource]`, which is tracked by [pulumi/pulumi#7012](https://github.com/pulumi/pulumi/issues/7012).
+
+In the meantime, this can be worked around by creating a new instance of the pulumi_kubernetes.Provider using the Cluster's kubeconfig output:
+
+
+
 1. Launch
 
    ```bash
