@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## (2022-02-24)
+- added aws-classic-py-eks, aws-classic-ts-eks, aws-classic-ts-eks-cert-manager
+- removed azure-go-sqlserver-loganalytics due to "STATE" issue
+
 ## (2022-02-03)
 - added aws-classic-py-vpc-quickstart
 
