@@ -109,7 +109,7 @@ AWS eks with namespace and cert-manager in helm release in Typescript
    pulumi stack output --show-secrets
    ```
 
-1. Uncomment the entire coding block that start with `const certManager = new k8s.helm.v3.Release`
+1. Uncomment the entire [coding block](https://github.com/tusharshahrs/pulumi-home/blob/helm/aws-classic-ts-eks-cert-manager/index.ts#L21-L45) in the `index.ts` that start with `const certManager = new k8s.helm.v3.Release`
 
 1. Run 
     ```bash
@@ -140,7 +140,7 @@ AWS eks with namespace and cert-manager in helm release in Typescript
     democert-certmanager-z4h6fap0-cert-manager-webhook-67447b86bxcc   1/1     Running   0          41m
     ```
 
-1. Describe the error pod
+1. Describe the error pod that shows **2 Too many pods**
    ```
    bash
    kubectl -n certmanager-ns-toogcs4j describe pods democert-certmanager-z4h6fap0-cert-manager-7547568ccd-7qmmv
