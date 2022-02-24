@@ -18,7 +18,7 @@ const k8sProvider = new k8s.Provider(`${name}-k8sprovider`, {
 
 const certmanager_namespace = new Namespace("certmanager-ns",{}, {provider: k8sProvider});
 
-const certManager = new k8s.helm.v3.Release(
+/*const certManager = new k8s.helm.v3.Release(
 	`${name}-certmanager`,
 	{
 		chart: 'cert-manager',
@@ -43,7 +43,7 @@ const certManager = new k8s.helm.v3.Release(
 		provider: k8sProvider,
 	}
 );
-
+*/
 export const cluster_name = mycluster.eksCluster.name;
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 export const k8sProvider_name = k8sProvider.id;
