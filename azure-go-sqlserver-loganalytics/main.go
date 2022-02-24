@@ -22,9 +22,9 @@ func main() {
 		storageAccount, err := storage.NewStorageAccount(ctx, "loganalyticssa", &storage.StorageAccountArgs{
 			ResourceGroupName: resourceGroup.Name,
 			Sku: &storage.SkuArgs{
-				Name: storage.SkuName_Standard_LRS,
+				Name: pulumi.String("Standard_LRS"),
 			},
-			Kind: storage.KindStorageV2,
+			Kind: pulumi.String("Storage"),
 		})
 		if err != nil {
 			return err
@@ -115,7 +115,7 @@ func main() {
 			ResourceGroupName:           resourceGroup.Name,
 			RetentionDays:               pulumi.Int(0),
 			ServerName:                  sqlServer.Name,
-			State:                       "Enabled",
+			//State:                       "Enabled",
 		})
 		if err != nil {
 			return err
@@ -128,7 +128,7 @@ func main() {
 			RetentionDays:               pulumi.Int(0),
 			ResourceGroupName:           resourceGroup.Name,
 			ServerName:                  sqlServer.Name,
-			State:                       "Enabled",
+			//State:                       "Enabled",
 		})
 		if err != nil {
 			return err
