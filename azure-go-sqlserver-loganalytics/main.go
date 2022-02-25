@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/insights"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/operationalinsights"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/resources"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/sql"
@@ -104,7 +103,7 @@ func main() {
 		}
 
 		// Enable extended database blob auditing policy
-		extendedserverblobauditing, err := sql.NewExtendedServerBlobAuditingPolicy(ctx, "extendedServerBlobAuditingPolicy", &sql.ExtendedServerBlobAuditingPolicyArgs{
+		/*extendedserverblobauditing, err := sql.NewExtendedServerBlobAuditingPolicy(ctx, "extendedServerBlobAuditingPolicy", &sql.ExtendedServerBlobAuditingPolicyArgs{
 			AuditActionsAndGroups: pulumi.StringArray{
 				pulumi.String("SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP"),
 				pulumi.String("FAILED_DATABASE_AUTHENTICATION_GROUP"),
@@ -115,13 +114,14 @@ func main() {
 			ResourceGroupName:           resourceGroup.Name,
 			RetentionDays:               pulumi.Int(0),
 			ServerName:                  sqlServer.Name,
-			//State:                       pulumi.String("Enabled"),
+			State:                       "Enabled",
 		})
 		if err != nil {
 			return err
 		}
+		*/
 
-		extendeddatabaseblobauditing, err := sql.NewExtendedDatabaseBlobAuditingPolicy(ctx, "extendedDatabaseBlobAuditingPolicy", &sql.ExtendedDatabaseBlobAuditingPolicyArgs{
+		/*extendeddatabaseblobauditing, err := sql.NewExtendedDatabaseBlobAuditingPolicy(ctx, "extendedDatabaseBlobAuditingPolicy", &sql.ExtendedDatabaseBlobAuditingPolicyArgs{
 			DatabaseName:                database.Name,
 			IsAzureMonitorTargetEnabled: pulumi.Bool(true),
 			IsStorageSecondaryKeyInUse:  pulumi.Bool(false),
@@ -133,8 +133,9 @@ func main() {
 		if err != nil {
 			return err
 		}
+		*/
 
-		diagnosticSetting, err := insights.NewDiagnosticSetting(ctx, "diagnosticSetting", &insights.DiagnosticSettingArgs{
+		/*diagnosticSetting, err := insights.NewDiagnosticSetting(ctx, "diagnosticSetting", &insights.DiagnosticSettingArgs{
 
 			LogAnalyticsDestinationType: pulumi.String("Dedicated"),
 			Logs: insights.LogSettingsArray{
@@ -144,6 +145,7 @@ func main() {
 			ResourceUri: database.ID(),
 			WorkspaceId: workspace.ID(),
 		})
+		*/
 		if err != nil {
 			return err
 		}
@@ -157,9 +159,9 @@ func main() {
 		ctx.Export("sqlserver_name", sqlServer.Name)
 		ctx.Export("sqlserver_database_name", database.Name)
 		ctx.Export("loganalytic_sworkspace_name", workspace.Name)
-		ctx.Export("extendedserverblobauditing_name", extendedserverblobauditing.Name)
-		ctx.Export("extendeddatabaseblobauditing_name", extendeddatabaseblobauditing.Name)
-		ctx.Export("diagnosticSetting", diagnosticSetting.Name)
+		//ctx.Export("extendedserverblobauditing_name", extendedserverblobauditing.Name)
+		//ctx.Export("extendeddatabaseblobauditing_name", extendeddatabaseblobauditing.Name)
+		//ctx.Export("diagnosticSetting", diagnosticSetting.Name)
 		return nil
 	})
 
