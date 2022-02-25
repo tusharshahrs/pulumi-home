@@ -1,7 +1,7 @@
 # Deploying Azure SQL Server and Database with Auditing using Log Analytics in GO
 
 Deploys Azure SQL Server and Database with Auditing using Log Analytics in GO
-
+Busted due to [typo](https://github.com/pulumi/pulumi-azure-native/pull/1490)
 
 ## Deployment
 
