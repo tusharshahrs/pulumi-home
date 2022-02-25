@@ -1,6 +1,6 @@
 # AWS EKS with Namespace
 
-AWS eks cluster with Namespace
+AWS eks cluster with Namespace. Must use provider due to the following: [eks namespace with provider in python not working](https://github.com/pulumi/pulumi-eks/issues/662)
 
 ## Deployment
 
