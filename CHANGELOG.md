@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-03-01)
+- fixed and added back in aws-classic-py-aws-load-balancer-controller-helm-release
+
 ## (2022-02-24)
 - added aws-classic-py-eks, aws-classic-ts-eks, aws-classic-ts-eks-cert-manager
 - busted azure-go-sqlserver-loganalytics due to "STATE" issue due to [typo](https://github.com/pulumi/pulumi-azure-native/pull/1490)
