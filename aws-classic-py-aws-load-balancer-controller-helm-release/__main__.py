@@ -37,7 +37,7 @@ mycluster = eks.Cluster("demo-py-eks",
 managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
    cluster=mycluster.core, # TODO[pulumi/pulumi-eks#483]: Pass cluster directly.
    capacity_type = "SPOT",
-   instance_types=["t3a.small"],
+   instance_types=["t3a.medium"],
    scaling_config=aws.eks.NodeGroupScalingConfigArgs(
       desired_size=3,
       min_size=2,
@@ -57,7 +57,7 @@ release_args = ReleaseArgs(
     repository_opts=RepositoryOptsArgs(
         repo="https://aws.github.io/eks-charts"
     ),
-    version="1.3.3",
+    version="1.4.0",
 #    namespace=awslbcontroller_namespace.metadata["name"],
     values={
         "clusterName": mycluster.core,
@@ -76,7 +76,7 @@ export("cluster_name", mycluster.core.cluster.name)
 export("managed_nodegroup_name", managed_nodegroup_spot_0.node_group.node_group_name)
 export("managed_nodegroup_capacity_type", managed_nodegroup_spot_0.node_group.capacity_type)
 export("managed_nodegroup_version", managed_nodegroup_spot_0.node_group.version)
-#export("kubeconfig", Output.secret(mycluster.kubeconfig))
-#export("k8s_namespace", mynamespace.id)
-#export("k8s_chart",status["chart"])
-#export("k8s_chart_app_version",status["app_version"])
+export("kubeconfig", Output.secret(mycluster.kubeconfig))
+export("k8s_namespace", awslbcontroller_namespace.id)
+export("k8s_chart",status["chart"])
+export("k8s_chart_app_version",status["app_version"])
