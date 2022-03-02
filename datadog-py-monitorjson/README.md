@@ -27,9 +27,7 @@
    KEY                     VALUE
    ```
 
-1. Populate the config.  Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
-
-   Setting subnets via [pulumi config set-all](https://www.pulumi.com/docs/reference/cli/pulumi_config_set-all/)
+1. Populate the config.
 
    ```bash
    pulumi config set datadog:apiKey --secret XXXXXXXXXXXXXX 
@@ -39,7 +37,7 @@
 1. Changes to `__main__.py` to make it work. 
     - Updated boolean values to `True` & `False`.
     - Updated `priority` to a number, randomly selecting`1`. 
-    - Commented out `restricted_roles` due to following error:  `400 Bad Request: {"errors": ["Missing Roles set(['U', 'L', 'N'])"]}` on 2nd `pulumi up`
+    - Removed`restricted_roles` due to following error:  `400 Bad Request: {"errors": ["Missing Roles set(['U', 'L', 'N'])"]}` on running `pulumi up` any time after the inital one.
 
 1. Launch
 
