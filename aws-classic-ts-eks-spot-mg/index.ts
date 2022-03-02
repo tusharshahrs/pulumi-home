@@ -39,7 +39,8 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(`${my_name}-manangednod
         "k8s.cluster-autoscaler/shaht-dev":"owned",
         "k8s.cluster-autoscaler/enabled":"True",
         "team":"rabbitdig",
-        "enviroment":"development"
+        //"enviroment":"development"
+        "environment":"development"
     },
     
     scalingConfig: {
