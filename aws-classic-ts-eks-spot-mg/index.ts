@@ -20,7 +20,7 @@ const mycluster = new eks.Cluster(`${my_name}-eks`, {
     vpcId: myvpc.id,
     publicSubnetIds: myvpc.publicSubnetIds,
     privateSubnetIds: myvpc.privateSubnetIds,
-    instanceType: "t3a.medium",
+    instanceType: "t3a.small",
     version: "1.21",
     nodeRootVolumeSize: 10,
     instanceRole: roles[0],
@@ -34,6 +34,14 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(`${my_name}-manangednod
     capacityType: "SPOT",
     instanceTypes: ["t3a.medium"],
     nodeRole: roles[0],
+    labels: {"managed":"true", "spot":"true"},
+    tags: {
+        "k8s.cluster-autoscaler/shaht-dev":"owned",
+        "k8s.cluster-autoscaler/enabled":"True",
+        "team":"rabbitdig",
+        "enviroment":"development"
+    },
+    
     scalingConfig: {
                     desiredSize: 2, 
                     minSize: 1, 
