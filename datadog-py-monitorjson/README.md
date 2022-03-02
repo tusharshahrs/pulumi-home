@@ -35,6 +35,7 @@
    ```
 
 1. Changes to `__main__.py` to make it work.
+    - Added `import json` to top of file.
     - Updated boolean values to `True` & `False`.
     - Updated `priority` to a number, randomly selecting`1`.
     - Removed`restricted_roles` due to following error:  `400 Bad Request: {"errors": ["Missing Roles set(['U', 'L', 'N'])"]}` on running `pulumi up` any time after the inital one.
@@ -49,17 +50,21 @@
    ```bash
    Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/datadog-py-monitorjson/dev/updates/9
+   View Live: https://app.pulumi.com/shaht/datadog-py-monitorjson/dev/updates/14
 
-        Type                          Name                        Status      
-    +   pulumi:pulumi:Stack           datadog-py-monitorjson-dev  created     
-    +   └─ datadog:index:MonitorJson  monitorJson                 created     
-    
-    Outputs:
-        monitor_json_name: "65178665"
+      Type                          Name                        Status      
+   +   pulumi:pulumi:Stack           datadog-py-monitorjson-dev  created     
+   +   ├─ datadog:index:MonitorJson  monitorJson                 created     
+   +   └─ datadog:index:MonitorJson  NoTrafficMVRCN              created     
+   
+   Outputs:
+      monitor_json_name : "65191223"
+      no_traffic_cn_name: "65191224"
 
-    Resources:
-        + 2 created
+   Resources:
+      + 3 created
+
+   Duration: 3s
 
    ```
 
@@ -70,9 +75,10 @@
 
    Results
    ```bash
-    Current stack outputs (1):
-    OUTPUT             VALUE
-    monitor_json_name  6517866
+    Current stack outputs (2):
+    OUTPUT              VALUE
+    monitor_json_name   65191223
+    no_traffic_cn_name  6519122
    ```
 
 1. Clean up
