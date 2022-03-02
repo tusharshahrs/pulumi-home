@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8.x','3.9.x']
-        python-example: ['aws-classic-py-vpc-quickstart', 'aws-classic-py-beanstalk', 'aws-classic-py-eks-spot-mg', 'aws-classic-py-s3-staticwebsite', 
-        'aws-classic-py-apigateway-lambda-serverless', 'aws-classic-py-dynamodb', 'aws-classic-py-vpc', 'aws-classic-py-eks-spot-nodegroups', 'aws-classic-py-get-ami', 
-        'aws-classic-py-get-regions','aws-classic-py-aws-load-balancer-controller-helm-release']
+        python-version: ['3.8.x', '3.9.x']
+        python-example: ['aws-classic-py-vpc-quickstart', 'aws-classic-py-beanstalk', 'aws-classic-py-eks-spot-mg', 'aws-classic-py-s3-staticwebsite',
+                         'aws-classic-py-apigateway-lambda-serverless', 'aws-classic-py-dynamodb', 'aws-classic-py-vpc', 'aws-classic-py-eks-spot-nodegroups',
+                         'aws-classic-py-get-ami', 'aws-classic-py-get-regions','aws-classic-py-aws-load-balancer-controller-helm-release']
     steps:
       - uses: actions/checkout@v2
         with:
