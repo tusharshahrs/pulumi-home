@@ -34,9 +34,9 @@
    pulumi config set datadog:appKey --secret YYYYYYYYYYYYYY
    ```
 
-1. Changes to `__main__.py` to make it work. 
+1. Changes to `__main__.py` to make it work.
     - Updated boolean values to `True` & `False`.
-    - Updated `priority` to a number, randomly selecting`1`. 
+    - Updated `priority` to a number, randomly selecting`1`.
     - Removed`restricted_roles` due to following error:  `400 Bad Request: {"errors": ["Missing Roles set(['U', 'L', 'N'])"]}` on running `pulumi up` any time after the inital one.
 
 1. Launch
