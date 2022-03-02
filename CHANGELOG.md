@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-03-02)
+- added datadog-py-monitorjson
+
 ## (2022-03-01)
 - fixed and added back in aws-classic-py-aws-load-balancer-controller-helm-release
 

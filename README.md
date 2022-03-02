@@ -103,6 +103,11 @@ Example   | Description | Cloud & Language   |
 --------- | -------- | -------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
+## DataDog
+Example   | Description | Cloud & Language   |
+--------- | -------- | -------------- |
+[datadog-py-monitorjson](datadog-py-monitorjson)| datadog monitorjson | [![DATADOG PYTHON](https://img.shields.io/badge/DATADOG-Python-blueviolet)](https://www.pulumi.com/registry/packages/datadog/api-docs/) |
+
 ## Workshops
 Example   | Description | Cloud & Language   |
 --------- | ----------- | ------------------ |
