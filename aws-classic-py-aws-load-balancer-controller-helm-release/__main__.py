@@ -9,16 +9,17 @@ from pulumi_kubernetes.core.v1 import Namespace
 from pulumi_kubernetes.helm.v3 import Release, ReleaseArgs, RepositoryOptsArgs
 from pulumi_kubernetes import Provider
 
+name = "demo"
 # create an iam role for eks
-role0 = iam.create_role("demo-py-role0")
+role0 = iam.create_role(f'{name}-eks-role0')
 
 # generic tags across cluster
 mytags ={"project_name":get_project(), "stack_name":get_stack()}
 
 # Create an EKS cluster.
-mycluster = eks.Cluster("demo-py-eks",
+mycluster = eks.Cluster(f'{name}-eks',
             skip_default_node_group = True,
-            instance_type = "t3a.medium",
+            instance_type = "t3a.small",
             version = "1.21",
             node_root_volume_size = 10,
             instance_roles=[role0],
@@ -34,7 +35,7 @@ mycluster = eks.Cluster("demo-py-eks",
             )
 
 # spot managed node group to save cost
-managed_nodegroup_spot_0 = eks.ManagedNodeGroup("demo-py-managed-nodegroup-spot-ng0",
+managed_nodegroup_spot_0 = eks.ManagedNodeGroup(f'{name}-managed-nodegroup-spot-ng0',
    cluster=mycluster.core, # TODO[pulumi/pulumi-eks#483]: Pass cluster directly.
    capacity_type = "SPOT",
    instance_types=["t3a.medium"],
@@ -58,9 +59,13 @@ release_args = ReleaseArgs(
         repo="https://aws.github.io/eks-charts"
     ),
     version="1.4.0",
-#    namespace=awslbcontroller_namespace.metadata["name"],
+    namespace=awslbcontroller_namespace.metadata["name"],
     values={
         "clusterName": mycluster.core,
+        "createIngressClassResource": "true",
+        "ingressClassParams": {
+            "name": "alb-ingress-class-params"
+        },
         },
 #    # By default Release resource will wait till all created resources
 #    # are available. Set this to true to skip waiting on resources being
