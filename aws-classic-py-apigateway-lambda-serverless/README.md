@@ -47,10 +47,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     ```bash
     Previewing update (dev)
 
-    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/previews/ba90036a-d9a8-4610-9fd1-632cec7743b9
+    View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/previews/ba90036a-d9a8-4610-9fd1-632cec7743b9
 
     Type                             Name                                     Plan       
-    +   pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev  create     
+    +   pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev  create     
     +   ├─ aws:iam:Role                  demo-lambda-role                         create     
     +   ├─ aws:iam:RolePolicy            demo-lambda-rolepolicy                   create     
     +   ├─ aws:lambda:Function           demo-lambda-hello                        create     
@@ -77,10 +77,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     ```bash
     Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-py-apigateway-lambda-serverless/dev/updates/30
+    View Live: https://app.pulumi.com/shaht/aws-classic-py-apigateway-lambda-serverless/dev/updates/30
 
         Type                             Name                                     Status       
-    +   pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev  created     
+    +   pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev  created     
     +   ├─ aws:iam:Role                  demo-lambda-role                         created     
     +   ├─ aws:iam:RolePolicy            demo-lambda-rolepolicy                   created     
     +   ├─ aws:lambda:Function           demo-lambda-hello                        created     
@@ -126,7 +126,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
         ```
-1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L147) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
+1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-classic-py-apigateway-lambda-serverless/__main__.py#L143-L147) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine** and adding the one with **path2_combine**
 
     BEFORE
     ```bash
@@ -141,7 +141,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
     ```
-   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L234) of the `__main__.py`
+   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-classic-py-apigateway-lambda-serverless/__main__.py#L234) of the `__main__.py`
    ```bash
    pulumi.export("apigateway-rest-endpoint_openapi_custom_path_2", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_2))
    ```
@@ -155,10 +155,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
    ```bash
    Previewing update (dev)
 
-    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/previews/0a8e79c2-de1b-4235-a176-06ac5cec9aed
+    View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/previews/0a8e79c2-de1b-4235-a176-06ac5cec9aed
 
         Type                             Name                                     Plan        Info
-        pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev              
+        pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev              
     ~   └─ aws:apigateway:RestApi        demo-openapi-api-gateway-restapi         update      [diff: ~body]
     +-     ├─ aws:apigateway:Deployment  demo-openapi-gateway-deployment          replace     [diff: ~triggers]
     ~      ├─ aws:apigateway:Stage       demo-openapi-gateway-stage               update      [diff: ~deployment]
@@ -178,10 +178,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
 
    Results
    ```bash
-   View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/updates/32
+   View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/updates/32
 
         Type                             Name                                     Status       Info
-        pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev               
+        pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev               
     ~   └─ aws:apigateway:RestApi        demo-openapi-api-gateway-restapi         updated      [diff: ~body]
     +-     ├─ aws:apigateway:Deployment  demo-openapi-gateway-deployment          replaced     [diff: ~triggers]
     ~      └─ aws:apigateway:Stage       demo-openapi-gateway-stage               updated      [diff: ~deployment]
@@ -214,7 +214,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     Results
     **Hello World from Pulumi in python via AWS Lambda!!!**
 
-1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L143-L149) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine & path2_combine** and adding the one with **path3_combine**
+1. Add a [new route](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-classic-py-apigateway-lambda-serverless/__main__.py#L143-L149) in the `__main__.py` doing the following, commenting out the **combined_open_spec** that only has **path1_combine & path2_combine** and adding the one with **path3_combine**
 
     BEFORE
     ```bash
@@ -229,7 +229,7 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     #combined_open_spec = Output.concat(header_part, path1_combine, path2_combine)
     combined_open_spec = Output.concat(header_part, path1_combine, path2_combine, path3_combine)
     ```
-   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-py-apigateway-lambda-serverless/__main__.py#L235) of the `__main__.py`
+   Also uncomment the following line at the [bottom](https://github.com/tusharshahrs/pulumi-home/blob/main/aws-classic-py-apigateway-lambda-serverless/__main__.py#L235) of the `__main__.py`
    ```bash
    pulumi.export("apigateway-rest-endpoint_openapi_custom_path_3", stage_openapi.invoke_url.apply(lambda url: url + custom_url_path_3))
    ```
@@ -241,10 +241,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
    Results
    ```bash
    Previewing update (dev)
-    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/previews/9f39651f-71a1-4708-8024-4233b0087f25
+    View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/previews/9f39651f-71a1-4708-8024-4233b0087f25
 
         Type                             Name                                     Plan        Info
-        pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev              
+        pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev              
     ~   └─ aws:apigateway:RestApi        demo-openapi-api-gateway-restapi         update      [diff: ~body]
     +-     ├─ aws:apigateway:Deployment  demo-openapi-gateway-deployment          replace     [diff: ~triggers]
     ~      ├─ aws:apigateway:Stage       demo-openapi-gateway-stage               update      [diff: ~deployment]
@@ -270,10 +270,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
    ```bash
    Updating (dev)
 
-    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/updates/34
+    View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/updates/34
 
         Type                             Name                                     Status       Info
-        pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev               
+        pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev               
     ~   └─ aws:apigateway:RestApi        demo-openapi-api-gateway-restapi         updated      [diff: ~body]
     +-     ├─ aws:apigateway:Deployment  demo-openapi-gateway-deployment          replaced     [diff: ~triggers]
     ~      └─ aws:apigateway:Stage       demo-openapi-gateway-stage               updated      [diff: ~deployment]
@@ -321,10 +321,10 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
     ```bash
     Destroying (dev)
 
-    View Live: https://app.pulumi.com/myuser/aws-py-apigateway-lambda-serverless/dev/updates/68
+    View Live: https://app.pulumi.com/myuser/aws-classic-py-apigateway-lambda-serverless/dev/updates/68
 
         Type                             Name                                     Status       
-        pulumi:pulumi:Stack              aws-py-apigateway-lambda-serverless-dev               
+        pulumi:pulumi:Stack              aws-classic-py-apigateway-lambda-serverless-dev               
     -   ├─ aws:apigateway:RestApi        api                                      deleted     
     -   │  ├─ aws:lambda:Permission      api-lambda-permission                    deleted     
     -   │  ├─ aws:apigateway:Stage       api-gateway-stage                        deleted     
