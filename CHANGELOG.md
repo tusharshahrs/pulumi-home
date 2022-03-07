@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2022-03-03)
-- added azure-go-resourcegroup 
+- added azure-go-resourcegroup
 
 ## (2022-03-02)
 - added datadog-py-monitorjson
