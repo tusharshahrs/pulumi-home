@@ -1,6 +1,6 @@
 # Deploying Azure Managed Instance that takes 3 plus hours in the azure portal
 
-Deploys Azure resourcegroup, sa, vnet with delegated subnets, & random password. The Azure ManagedInstance is created via the [azure portal](portal.azure.com) since it takes [3+ hours](images/sqlmanagedinstance_creation_time.png) to stand up. The managedinstance is [imported](https://www.pulumi.com/registry/packages/azure-native/api-docs/sql/managedinstance/#import).
+Deploys Azure resourcegroup, sa, vnet with delegated subnets, & random password. The Azure ManagedInstance is created via the [azure portal](https://azure.microsoft.com/auth/signin/?loginProvider=Microsoft&redirectUri=%2Fen-us%2Faccount%2F) since it takes [3+ hours](images/sqlmanagedinstance_creation_time.png) to stand up. The managedinstance is [imported](https://www.pulumi.com/registry/packages/azure-native/api-docs/sql/managedinstance/#import).
 
 ## Deployment
 

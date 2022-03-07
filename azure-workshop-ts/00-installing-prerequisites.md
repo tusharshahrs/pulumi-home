@@ -53,13 +53,13 @@ You will use Pulumi to depoy infrastructure changes using code. [Install Pulumi 
 
 ```bash
 pulumi version
-v3.5.1
+v3.25.1
 ```
 
 The Pulumi CLI will ask you to login to your Pulumi account as needed. If you prefer to signup now, [go to the signup page](http://app.pulumi.com/signup). Multiple identity provider options are available &mdash; email, GitHub, GitLab, or Atlassian &mdash; and each of them will work equally well for these labs.
 
 Setup your AccessToken
-- Navigate to **Profile Settings** by selecting your avatar, then **Settings**. The Profile tab is displayed by default. ![Profile Image](https://www.pulumi.com/images/docs/reference/service/user-profile-page.png)
+- Navigate to **Profile Settings** by selecting your avatar, then **Settings**. The Profile tab is displayed by default. ![Profile Image](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#profile)
 - Click on [Access Tokens](https://www.pulumi.com/docs/intro/console/accounts/#access-tokens) on the left side. Create a new *AccessToken*. Copy the AccessToken to your clipboard to use in the next step.
 - On your cli: pulumi login
   - Enter your *AccessToken* from the previous step.
