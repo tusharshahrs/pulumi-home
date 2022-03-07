@@ -1,0 +1,51 @@
+---
+# MegaLinter GitHub Action configuration file
+# More info at https://megalinter.github.io
+name: MegaLinter
+
+on:
+  # Trigger mega-linter at every push. Action will also be visible from Pull Requests to main
+  push: # Comment this line to trigger action only on pull-requests (not recommended if you don't pay for GH Actions)
+  pull_request:
+    branches: [master, main]
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: MegaLinter
+    runs-on: ubuntu-latest
+    steps:
+      # Git Checkout
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      # MegaLinter
+      - name: MegaLinter
+        id: ml
+        # You can override MegaLinter flavor used to have faster performances
+        # More info at https://megalinter.github.io/flavors/
+        uses: megalinter/megalinter@v5
+        env:
+          # All available variables are described in documentation
+          # https://megalinter.github.io/configuration/
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Override with true if you always want to lint all sources
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
+          DISABLE: COPYPASTE # Uncomment to disable copy-paste and spell checks
+          DISABLE_LINTERS: SPELL_CSPELL,SPELL_MISSPELL,PYTHON_BLACK,PYTHON_FLAKE8,PYTHON_ISORT,PYTHON_MYPY,TYPESCRIPT_STANDARD,GO_GOLANGCI_LINT,COPYPASTE_JSCPD
+
+      # Upload MegaLinter artifacts
+      - name: Archive production artifacts
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: MegaLinter reports
+          path: |
+            report
+            mega-linter.log

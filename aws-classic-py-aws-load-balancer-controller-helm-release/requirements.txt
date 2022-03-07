@@ -1,3 +1,4 @@
-pulumi>=3.0.0,<4.0.0
-pulumi-aws>=4.0.0,<5.0.0
-pulumi_eks>=0.36.0,<1.0.0
+pulumi>=3.25.0,<4.0.0
+pulumi-aws>=4.38.0,<5.0.0
+pulumi_eks>=0.37.1,<1.0.0
+pulumi-kubernetes>=3.16.0,<4.0.0

@@ -27,5 +27,7 @@ jobs:
           VALIDATE_PYTHON_ISORT: false
           VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_YAML: false
+          VALIDATE_GO: false
+          VALIDATE_JSCPD: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
