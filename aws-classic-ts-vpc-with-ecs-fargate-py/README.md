@@ -24,7 +24,7 @@ We are going to use [Pulumi Service backend](https://www.pulumi.com/docs/intro/c
 
 ## Running the Example
 
-1. [aws-ts-vpc-crosswalk](../aws-ts-vpc-crosswalk)
-2. [aws-py-ecs-fargate](../aws-py-ecs-fargate)
+1. [aws-classic-ts-vpc-crosswalk](../aws-classic-ts-vpc-crosswalk)
+2. [aws-classic-py-ecs-fargate](../aws-classic-py-ecs-fargate)
 
 The ecs fargate example is identical to original one [aws-py-fargate](https://github.com/pulumi/examples/tree/master/aws-py-fargate)
