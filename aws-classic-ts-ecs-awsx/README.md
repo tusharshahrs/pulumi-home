@@ -10,7 +10,7 @@ The ecs cluster and the load balancer are exported via stackreference
 
 * [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
 * [Configure Pulumi to Use AWS](https://www.pulumi.com/docs/intro/cloud-providers/aws/setup/) (if your AWS CLI is configured, no further changes are required)
-* **Vpc already created**.  You can create it via [aws-ts-vpc-crosswalk](https://github.com/tusharshahrs/pulumi-home/tree/main/aws-ts-vpc-crosswalk) or any other method
+* **Vpc already created**.  You can create it via [aws-classic-ts-vpc-crosswalk](https://github.com/tusharshahrs/pulumi-home/tree/main/aws-classic-ts-vpc-crosswalk) or any other method
 
 ## Where are the settings?
  The settings are in `Pulumi`.stackname`.yaml`

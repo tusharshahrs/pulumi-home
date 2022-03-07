@@ -5,9 +5,7 @@
 
 This example demonstrates the ability to deploy resources in Pulumi using one language (TypeScript) and then reference those resources from another Pulumi application using a different language (Python).
 
-[`vpc-crosswalk-ts`](./vpc-crosswalk-ts) deploys an AWS VPC using TypeScript
-
-[`ecs-fargate-python`](./ecs-fargate-python) deploys an AWS ECS Cluster using Python that references the VPC from `vpc-crosswalk-ts`
+*`aws-classic-py-ecs-fargate`* deploys an AWS ECS Cluster using Python that references the VPC from [`aws-classic-ts-vpc-crosswalk`](../aws-classic-ts-vpc-crosswalk/) that deploys an AWS VPC using TypeScript
 
 It provisions a full [Amazon Elastic Container Service (ECS) "Fargate"](https://aws.amazon.com/ecs) cluster and
 related infrastructure, running a load-balanced NGINX web server accessible over the internet on port 80.

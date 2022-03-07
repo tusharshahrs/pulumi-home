@@ -8,8 +8,8 @@ The ecs cluster read in via [StackReferences](https://www.pulumi.com/docs/intro/
 
 * [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
 * [Configure Pulumi to Use AWS](https://www.pulumi.com/docs/intro/cloud-providers/aws/setup/) (if your AWS CLI is configured, no further changes are required)
-* **Vpc already created** via [aws-ts-vpc-crosswalk](https://github.com/tusharshahrs/pulumi-home/tree/main/aws-ts-vpc-crosswalk) or any other method
-* **ecs already created** via [aws-ts-ecs-awsx](aws-ts-ecs-awsx ) or any other method
+* **Vpc already created** via [aws-classic-ts-vpc-crosswalk](https://github.com/tusharshahrs/pulumi-home/tree/main/aws-classic-ts-vpc-crosswalk) or any other method
+* **ecs already created** via [aws-classic-ts-ecs-awsx](../aws-classic-ts-ecs-awsx/) or any other method
 
 ## Where are the settings?
  The settings are in `Pulumi`.stackname`.yaml`
