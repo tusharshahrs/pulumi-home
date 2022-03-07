@@ -8,7 +8,7 @@ resource group, storage account, and blobcontainer calling [azure-native](https:
   This example also is a part of the following [Azure Native Workshop in TypeScript Lab 1]
   (./azure-workshop-ts#lab-1--modern-infrastructure-as-code)
   
-     
+
 ## Deployment
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
 
