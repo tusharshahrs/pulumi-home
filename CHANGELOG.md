@@ -2,6 +2,7 @@
 
 ## (2022-03-17)
 - added azure-py-rg-storageaccounts
+- addded azure-py-aks-diagnosticsetting
 
 ## (2022-03-03)
 - added azure-go-resourcegroup
