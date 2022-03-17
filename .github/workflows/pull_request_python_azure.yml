@@ -8,12 +8,12 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.9.x']
-        python-example: ['azure-py-aks-diagnosticsetting', 'azure-py-rg-storageaccounts', 'azure-py-vnet', 'azure-py-subscriptionid-from-resourcegroup', 'azure-py-databricks']
+        python-example: ['azure-py-aks-diagnosticsetting', 'azure-py-rg-storageaccounts', 'azure-py-vnet', 'azure-py-subscriptionid-from-resourcegroup', 'azure-py-databricks', 'azure-classic-py-insights']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Pulumi CLI
