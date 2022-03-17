@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version: ['16.x']
-        typescript-example: ['azure-ts-keyvault', 'azure-classic-ts-datafactory']
+        typescript-example: ['azure-classic-ts-datafactory', 'azure-classic-ts-datalakegen2', 'azure-ts-keyvault']
     steps:
       - uses: actions/checkout@v3
         with:
