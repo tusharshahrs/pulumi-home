@@ -1,4 +1,4 @@
-name: Pulumi_Pull_Request_Python_Azure
+name: Pulumi_Pull_Request_Python_Azure_AD
 on:
   - pull_request
 jobs:
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.9.x']
-        python-example: ['azure-py-rg-storageaccounts', 'azure-py-vnet', 'azure-py-subscriptionid-from-resourcegroup', 'azure-py-databricks']
+        python-example: ['azure-py-aks-diagnosticsetting', 'azure-py-databricks', 'azure-classic-py-insights']
     steps:
       - uses: actions/checkout@v3
         with:
