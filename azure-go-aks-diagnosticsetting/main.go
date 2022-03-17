@@ -4,6 +4,7 @@ import (
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/resources"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/storage"
 	"github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread"
+	"github.com/pulumi/pulumi-tls/sdk/v4/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -65,12 +66,21 @@ func main() {
 			return err
 		}
 
+		sshKey, err := tls.NewPrivateKey(ctx, "diag-privatekey", &tls.PrivateKeyArgs{
+			Algorithm:  pulumi.String("ECDSA"),
+			EcdsaCurve: pulumi.String("P384"),
+		})
+		if err != nil {
+			return err
+		}
+
 		// Outputs
 		ctx.Export("resourcegroup_name", resourceGroup.Name)
 		ctx.Export("storageaccount_name", storageAccount.Name)
 		ctx.Export("primarystoragekey", pulumi.ToSecret(primaryStorageKey))
 		ctx.Export("azure_ad_application", adApplication.DisplayName)
 		ctx.Export("azure_ad_serviceprincipal", adServicePrincipal.ApplicationId)
+		ctx.Export("sshKey", sshKey.ID())
 		return nil
 	})
 }
