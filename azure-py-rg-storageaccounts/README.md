@@ -78,7 +78,7 @@ Deploys Azure Resource Group and Storage Account in Python
    If you need to see the values that are secret, you will have to do the following
    ```bash
    pulumi stack output --show-secrets
-   ``` 
+   ```
 
 1. Clean up.
     ```bash

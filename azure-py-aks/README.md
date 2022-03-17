@@ -96,15 +96,15 @@ This example deploys an AKS cluster, creates an Azure Active AD application, cre
 1. You can save this kubeconfig to a file and use `kubectl` via command line:
 
     ```bash
-    $ pulumi stack output kubeconfig --show-secrets > kubeconfig
+    pulumi stack output kubeconfig --show-secrets > kubeconfig
     ```
 
     Once you have this file in hand, you can interact with your new cluster as usual via `kubectl`:
 
     ```bash
-    $ export KUBECONFIG=$PWD/kubeconfig 
-    $ kubectl version
-    $ kubectl get nodes
+    export KUBECONFIG=$PWD/kubeconfig 
+    kubectl version
+    kubectl get nodes
     ```
 
 1. Clean up
