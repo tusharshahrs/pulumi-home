@@ -70,7 +70,7 @@ func main() {
 		ctx.Export("storageaccount_name", storageAccount.Name)
 		ctx.Export("primarystoragekey", pulumi.ToSecret(primaryStorageKey))
 		ctx.Export("azure_ad_application", adApplication.DisplayName)
-		ctx.Export("azure_ad_serviceprincipal", adServicePrincipal.DisplayName)
+		ctx.Export("azure_ad_serviceprincipal", adServicePrincipal.ApplicationId)
 		return nil
 	})
 }
