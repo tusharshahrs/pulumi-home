@@ -40,7 +40,7 @@ This example deploys an AKS cluster, creates an Azure Active AD application, cre
 
     Results
     ```bash
-    View Live: https://app.pulumi.com/shaht/azure-py-aks/dev/updates/51
+    View Live: https://app.pulumi.com/myuser/azure-py-aks/dev/updates/51
 
      Type                                             Name                             Status      Info
     +   pulumi:pulumi:Stack                              azure-py-aks-dev                 created     1 warning
