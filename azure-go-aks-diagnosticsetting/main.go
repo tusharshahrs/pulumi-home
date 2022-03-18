@@ -1,9 +1,13 @@
 package main
 
 import (
+	"encoding/base64"
+
+	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/containerservice"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/resources"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/storage"
 	"github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread"
+	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
 	"github.com/pulumi/pulumi-tls/sdk/v4/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -44,35 +48,95 @@ func main() {
 				return accountKeys.Keys[0].Value, nil
 			})
 
-		current, err := azuread.GetClientConfig(ctx, nil, nil)
-		if err != nil {
-			return err
-		}
-		adApplication, err := azuread.NewApplication(ctx, "diagApplication", &azuread.ApplicationArgs{
+		adApplication, err := azuread.NewApplication(ctx, "diag-Application", &azuread.ApplicationArgs{
 			DisplayName: pulumi.String("diag-azuread-apps"),
-			Owners: pulumi.StringArray{
-				pulumi.String(current.ObjectId),
-			},
 		})
 		if err != nil {
 			return err
 		}
 
-		adServicePrincipal, err := azuread.NewServicePrincipal(ctx, "diagServicePrincipal", &azuread.ServicePrincipalArgs{
-			ApplicationId:             adApplication.ApplicationId,
-			AppRoleAssignmentRequired: pulumi.Bool(false),
+		adServicePrincipal, err := azuread.NewServicePrincipal(ctx, "diag-ServicePrincipal", &azuread.ServicePrincipalArgs{
+			ApplicationId: adApplication.ApplicationId,
+		})
+		if err != nil {
+			return err
+		}
+
+		// Generate a random password.
+		password, err := random.NewRandomPassword(ctx, "diag-password", &random.RandomPasswordArgs{
+			Length:  pulumi.Int(20),
+			Special: pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+
+		// Create the Service Principal Password.
+		adSpPassword, err := azuread.NewServicePrincipalPassword(ctx, "diag-aksSpPassword", &azuread.ServicePrincipalPasswordArgs{
+			ServicePrincipalId: adServicePrincipal.ID(),
+			Value:              password.Result,
+			EndDate:            pulumi.String("2024-01-01T00:00:00Z"),
 		})
 		if err != nil {
 			return err
 		}
 
 		sshKey, err := tls.NewPrivateKey(ctx, "diag-privatekey", &tls.PrivateKeyArgs{
-			Algorithm:  pulumi.String("ECDSA"),
-			EcdsaCurve: pulumi.String("P384"),
+			Algorithm:  pulumi.String("RSA"),
+			EcdsaCurve: pulumi.String("4096"),
 		})
 		if err != nil {
 			return err
 		}
+
+		// Create the Azure Kubernetes Service cluster.
+		cluster, err := containerservice.NewManagedCluster(ctx, "diag-go-aks", &containerservice.ManagedClusterArgs{
+			ResourceGroupName: resourceGroup.Name,
+			AgentPoolProfiles: containerservice.ManagedClusterAgentPoolProfileArray{
+				&containerservice.ManagedClusterAgentPoolProfileArgs{
+					Name:         pulumi.String("agentpool"),
+					Mode:         pulumi.String("System"),
+					OsDiskSizeGB: pulumi.Int(30),
+					Count:        pulumi.Int(3),
+					VmSize:       pulumi.String("Standard_E2_v4"),
+					OsType:       pulumi.String("Linux"),
+				},
+			},
+			LinuxProfile: &containerservice.ContainerServiceLinuxProfileArgs{
+				AdminUsername: pulumi.String("testuser"),
+				Ssh: containerservice.ContainerServiceSshConfigurationArgs{
+					PublicKeys: containerservice.ContainerServiceSshPublicKeyArray{
+						containerservice.ContainerServiceSshPublicKeyArgs{
+							KeyData: sshKey.PublicKeyOpenssh,
+						},
+					},
+				},
+			},
+			DnsPrefix: resourceGroup.Name,
+			ServicePrincipalProfile: &containerservice.ManagedClusterServicePrincipalProfileArgs{
+				ClientId: adApplication.ApplicationId,
+				Secret:   adSpPassword.Value,
+			},
+			KubernetesVersion: pulumi.String("1.22.6"),
+		}, pulumi.DependsOn([]pulumi.Resource{adSpPassword, storageAccount}))
+		if err != nil {
+			return err
+		}
+
+		creds := containerservice.ListManagedClusterUserCredentialsOutput(ctx,
+			containerservice.ListManagedClusterUserCredentialsOutputArgs{
+				ResourceGroupName: resourceGroup.Name,
+				ResourceName:      cluster.Name,
+			})
+
+		kubeconfig := creds.Kubeconfigs().Index(pulumi.Int(0)).Value().
+			ApplyT(func(encoded string) string {
+				kubeconfig, err := base64.StdEncoding.DecodeString(encoded)
+				if err != nil {
+					return ""
+				}
+				return string(kubeconfig)
+			})
 
 		// Outputs
 		ctx.Export("resourcegroup_name", resourceGroup.Name)
@@ -81,6 +145,9 @@ func main() {
 		ctx.Export("azure_ad_application", adApplication.DisplayName)
 		ctx.Export("azure_ad_serviceprincipal", adServicePrincipal.ApplicationId)
 		ctx.Export("sshKey", sshKey.ID())
+		ctx.Export("managedcluster_name", cluster.Name)
+		ctx.Export("kubeconfig", pulumi.ToSecret(kubeconfig))
+
 		return nil
 	})
 }
