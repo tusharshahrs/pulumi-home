@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-03-18)
+- added azure-go-aks-diagnosticsetting
+
 ## (2022-03-17)
 - added azure-py-rg-storageaccounts
 - added azure-py-aks-diagnosticsetting
