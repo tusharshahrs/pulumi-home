@@ -109,7 +109,7 @@ AWS eks with namespace and cert-manager in helm release in TypeScript
    pulumi stack output --show-secrets
    ```
 
-1. Uncomment the entire [coding block](https://github.com/tusharshahrs/pulumi-home/blob/helm/aws-classic-ts-eks-cert-manager/index.ts#L21-L45) in the `index.ts` that start with `const certManager = new k8s.helm.v3.Release`
+1. Uncomment the entire [coding block](https://github.com/tusharshahrs/pulumi-home/blob/master/aws-classic-ts-eks-cert-manager/index.ts#L21-L45) in the `index.ts` that start with `const certManager = new k8s.helm.v3.Release`
 
 1. Run
     ```bash
