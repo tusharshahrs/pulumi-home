@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/containerservice"
+	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/insights"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/resources"
 	"github.com/pulumi/pulumi-azure-native/sdk/go/azure/storage"
 	"github.com/pulumi/pulumi-azuread/sdk/v4/go/azuread"
@@ -123,6 +124,25 @@ func main() {
 			return err
 		}
 
+		diagnosticSetting, err := insights.NewDiagnosticSetting(ctx, "diag-diagnosticSetting", &insights.DiagnosticSettingArgs{
+			Logs: insights.LogSettingsArray{
+				&insights.LogSettingsArgs{
+					Category: pulumi.String("kube-apiserver"),
+					Enabled:  pulumi.Bool(true),
+					RetentionPolicy: &insights.RetentionPolicyArgs{
+						Days:    pulumi.Int(0),
+						Enabled: pulumi.Bool(false),
+					},
+				},
+			},
+			ResourceUri:      cluster.ID(),
+			StorageAccountId: storageAccount.ID(),
+		}, pulumi.DependsOn([]pulumi.Resource{cluster}))
+
+		if err != nil {
+			return err
+		}
+
 		creds := containerservice.ListManagedClusterUserCredentialsOutput(ctx,
 			containerservice.ListManagedClusterUserCredentialsOutputArgs{
 				ResourceGroupName: resourceGroup.Name,
@@ -147,7 +167,7 @@ func main() {
 		ctx.Export("sshKey", sshKey.ID())
 		ctx.Export("managedcluster_name", cluster.Name)
 		ctx.Export("kubeconfig", pulumi.ToSecret(kubeconfig))
-
+		ctx.Export("diagnostic_setting_id", diagnosticSetting.ID())
 		return nil
 	})
 }
