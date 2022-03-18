@@ -167,7 +167,8 @@ func main() {
 		ctx.Export("sshKey", sshKey.ID())
 		ctx.Export("managedcluster_name", cluster.Name)
 		ctx.Export("kubeconfig", pulumi.ToSecret(kubeconfig))
-		ctx.Export("diagnostic_setting_id", diagnosticSetting.ID())
+		ctx.Export("diagnostic_setting_name", diagnosticSetting.Name)
+		ctx.Export("diagnostic_setting_id", pulumi.ToSecret(diagnosticSetting.ID()))
 		return nil
 	})
 }
