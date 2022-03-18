@@ -77,7 +77,7 @@ func main() {
 			ServicePrincipalId: adServicePrincipal.ID(),
 			Value:              password.Result,
 			EndDate:            pulumi.String("2024-01-01T00:00:00Z"),
-		})
+		}, pulumi.DependsOn([]pulumi.Resource{adApplication, adServicePrincipal, storageAccount}))
 		if err != nil {
 			return err
 		}
