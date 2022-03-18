@@ -7,7 +7,7 @@
 - added azure-py-rg-storageaccounts
 - added azure-py-aks-diagnosticsetting
 - added azure-ts-keyvault-appservice
-- added pull_request_typescript_azure_azuread.yml for GitHub actions for azuread in Typescript
+- added pull_request_typescript_azure_azuread.yml for GitHub actions for azuread in TypeScript
 - added pull_request_python_azure_azuread.yml for GitHub actions for azuread in python
 
 ## (2022-03-03)
