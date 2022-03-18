@@ -1,6 +1,6 @@
 
 import pulumi
-from pulumi.resource import ResourceOptions
+from pulumi import ResourceOptions, Output
 from pulumi_azure_native import resources, containerservice, network
 from pulumi_azure_native.network import virtual_network
 import pulumi_azuread as azuread
@@ -9,15 +9,14 @@ import pulumi_tls as tls
 import base64
 
 config = pulumi.Config()
-name="demo"
-
+name="mydemo"
 
 # Create new resource group
 resource_group = resources.ResourceGroup(f'{name}-aks')
 
 # Create an AD service principal
-ad_app = azuread.Application(f'{name}-azureadapp', display_name=f'{name}-azureadapp')
-ad_sp = azuread.ServicePrincipal(f'{name}-adserviceprincipal', application_id=ad_app.application_id)
+ad_app = azuread.Application(f'{name}-azuread-application', display_name=f'{name}-azuread-application')
+ad_sp = azuread.ServicePrincipal(f'{name}-ad-serviceprincipal', application_id=ad_app.application_id)
 
 # Generate random password
 password = random.RandomPassword(f'{name}-password', length=20, special=True)
@@ -26,7 +25,7 @@ password = random.RandomPassword(f'{name}-password', length=20, special=True)
 ad_sp_password = azuread.ServicePrincipalPassword(f'{name}-serviceprincipalpassword',
                                                   service_principal_id=ad_sp.id,
                                                   value=password.result,
-                                                  end_date="2099-01-01T00:00:00Z")
+                                                  end_date="2029-01-01T00:00:00Z")
 
 # Generate an SSH key
 ssh_key = tls.PrivateKey(f'{name}-ssh-key', algorithm="RSA", rsa_bits=4096)
@@ -36,34 +35,37 @@ managed_cluster_name = config.get("managedClusterName")
 if managed_cluster_name is None:
     managed_cluster_name = f'{name}-azure-aks'
 
-# Create network
+# Create network. Skipping due to ip block conflict
+"""
 mynetwork = network.VirtualNetwork(f'{name}-vnet', 
             resource_group_name=resource_group.name,
             location=resource_group.location,
             address_space=network.AddressSpaceArgs(
-                address_prefixes=["10.0.0.0/20"],
+                address_prefixes=["10.0.0.0/25"],
             ),
             #opts=ResourceOptions(ignore_changes=["subnet1", "subnet2"])
 )
 
+# Create subnet1. Skipping due to ip block conflict
 subnet1 = network.Subnet(f'{name}-subnet-1',
             resource_group_name = resource_group.name,
             virtual_network_name = mynetwork.name,
-            address_prefix="10.0.0.0/21",
+            address_prefix="10.0.0.80/28",
             opts=ResourceOptions(parent=mynetwork)
 )
 
+# Create subnet2. Skipping due to ip block conflict
 subnet2 = network.Subnet(f'{name}-subnet-2',
             resource_group_name = resource_group.name,
             virtual_network_name = mynetwork.name,
-            address_prefix= "10.0.8.0/21",
+            address_prefix= "10.0.0.112/28",
             opts=ResourceOptions(parent=mynetwork)
 )
-
+"""
 my_count = 3
-my_max_pods = 30
-my_disk_size_in_gb = 10
-my_kubernetes_version = "1.21"
+my_max_pods = 10
+my_disk_size_in_gb = 30
+my_kubernetes_version = "1.22.6"
 managed_cluster = containerservice.ManagedCluster(
     managed_cluster_name,
     resource_group_name=resource_group.name,
@@ -76,8 +78,9 @@ managed_cluster = containerservice.ManagedCluster(
         "os_disk_size_gb": my_disk_size_in_gb,
         "os_type": "Linux",
         "type": "VirtualMachineScaleSets",
-        "vm_size": "Standard_DS2_v2",
-        "vnet_subnet_id": subnet1.id,
+        "vm_size": "Standard_E2s_v3",
+        #"vm_size": "Standard_DS2_v2",
+        #"vnet_subnet_id": subnet1.id, # Skipping due to ip block conflict
     }],
         linux_profile={
         "admin_username": "testuser",
@@ -102,6 +105,8 @@ managed_cluster = containerservice.ManagedCluster(
         name="Basic",
         tier="Free",
     ),
+    opts=ResourceOptions(depends_on=[ad_sp,ad_sp_password,ssh_key])
+
 )
 
 creds = pulumi.Output.all(resource_group.name, managed_cluster.name).apply(
@@ -116,4 +121,10 @@ kubeconfig = encoded.apply(
     lambda enc: base64.b64decode(enc).decode())
 
 pulumi.export("resource_group_name", resource_group.name)
-pulumi.export("kubeconfig", kubeconfig)
+pulumi.export("ad_app_name", ad_app.id)
+pulumi.export("ad_sp_display_name", ad_sp.display_name)
+#pulumi.export("vnet_name", mynetwork.name)
+#pulumi.export("vnet_subnet1", subnet1.name)
+#pulumi.export("vnet_subnet2", subnet2.name)
+pulumi.export("managed_cluster_name", managed_cluster.name)
+pulumi.export("kubeconfig", Output.secret(kubeconfig))

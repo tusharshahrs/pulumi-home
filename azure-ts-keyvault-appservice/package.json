@@ -1,0 +1,10 @@
+{
+    "name": "azure-ts-keyvault-appservice",
+    "devDependencies": {
+        "@types/node": "^16.0.0"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.26.1",
+        "@pulumi/azure-native": "^1.60.0"
+    }
+}
