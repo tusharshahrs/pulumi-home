@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.9.x']
-        python-example: ['azure-py-aks-diagnosticsetting', 'azure-classic-py-insights']
+        python-example: ['azure-classic-py-insights', 'azure-py-aks-diagnosticsetting']
     steps:
       - uses: actions/checkout@v3
         with:
