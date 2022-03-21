@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-03-21)
+- added azure-py-insights
+
 ## (2022-03-18)
 - added azure-go-aks-diagnosticsetting
 
