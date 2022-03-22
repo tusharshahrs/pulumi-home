@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.9.x']
-        python-example: ['azure-py-rg-storageaccounts', 'azure-py-vnet', 'azure-py-subscriptionid-from-resourcegroup', 'azure-py-databricks', 'azure-py-insights']
+        python-example: ['azure-py-rg-storageaccounts', 'azure-py-vnet', 'azure-py-subscriptionid-from-resourcegroup', 'azure-py-databricks']
     steps:
       - uses: actions/checkout@v3
         with:
@@ -21,10 +21,8 @@ jobs:
           python3 -m venv venv
           echo "python3 source activate"
           source venv/bin/activate
-          echo "python pip install"
+          echo "python pip3 install"
           pip3 install -r requirements.txt
-          echo "logging into azure"
-          az login
         working-directory: ${{ matrix.python-example }}
       - uses: pulumi/actions@v3
         with:
