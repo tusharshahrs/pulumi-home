@@ -12,15 +12,18 @@ jobs:
                          'aws-classic-py-apigateway-lambda-serverless', 'aws-classic-py-dynamodb', 'aws-classic-py-vpc', 'aws-classic-py-eks-spot-nodegroups',
                          'aws-classic-py-get-ami', 'aws-classic-py-get-regions', 'aws-classic-py-aws-load-balancer-controller-helm-release']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
       - run: |
+          echo "python3 venv setup"
           python3 -m venv venv
+          echo "python3 source activate"
           source venv/bin/activate
+          echo "python pip3 install"
           pip3 install -r requirements.txt
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
@@ -39,7 +42,3 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
