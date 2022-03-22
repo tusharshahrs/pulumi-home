@@ -147,5 +147,9 @@ We have setup [Pulumi GitHub Actions](https://www.pulumi.com/docs/guides/continu
     - VALIDATE_PYTHON_ISORT turned OFF
     - VALIDATE_TYPESCRIPT_STANDARD turned OFF
 
+ 1. Removed from githubactions pipeline due to service principal issues even though preview and up work via cli
+    - azure-ts-keyvault, azure-classic-ts-datalakegen2, azure-classic-ts-datafactory
+    - azure-py-insights, azure-classic-py-insights, azure-py-aks-diagnosticsetting
+
 ## License
 [![license](https://img.shields.io/badge/license-MIT-green)](https://tldrlegal.com/license/mit-license)

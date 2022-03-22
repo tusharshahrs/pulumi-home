@@ -1,6 +1,12 @@
 # CHANGELOG
 
 ## (2022-03-21)
+ - updated Github Actions to remove extra clouds, bumped githuactions to v3
+ - removed following from githubactions due service principal issue in pipeline error even though preview and up work via cli
+    - azure-ts-keyvault, azure-classic-ts-datalakegen2, azure-classic-ts-datafactory
+    - azure-py-insights, azure-classic-py-insights, azure-py-aks-diagnosticsetting
+
+## (2022-03-21)
 - added azure-py-insights
 
 ## (2022-03-18)
