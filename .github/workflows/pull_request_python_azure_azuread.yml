@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8.x']
+        python-version: ['3.9.x']
         python-example: ['azure-py-insights', 'azure-classic-py-insights', 'azure-py-aks-diagnosticsetting']
     steps:
       - uses: actions/checkout@v3
