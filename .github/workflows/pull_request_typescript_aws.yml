@@ -7,13 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['14.x']
+        node-version: ['16.x']
         typescript-example: ['aws-classic-ts-vpc-quickstart', 'aws-classic-ts-eks-awsx-spot', 'aws-classic-ts-eks-node-alltaints', 'aws-classic-ts-eks-nodetaint',
                              'aws-classic-ts-vpc-crosswalk', 'aws-classic-ts-sshkey', 'aws-classic-ts-acm-awsguard', 'aws-classic-ts-launchtemplate',
                              'aws-classic-ts-vpc-ecs-autoscaling-lt', 'aws-classic-ts-eks-spot-mg', 'aws-classic-ts-lakeformation', 'aws-classic-ts-eks-different-awsprofile',
                              'aws-classic-ts-ebs-volume-snapshot', 'aws-classic-ts-ec2-instance-with-ebs-volume']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v2
@@ -25,8 +25,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Install Pulumi CLI
-        uses: pulumi/setup-pulumi@v2
       - run: npm install
         working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
@@ -38,8 +36,3 @@ jobs:
           work-dir: ${{ matrix.typescript-example}}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-          ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-          ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-          ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-          ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
