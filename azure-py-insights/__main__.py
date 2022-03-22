@@ -27,8 +27,8 @@ insights = azure_classic.appinsights.Insights(f'{name}-Insights',
     resource_group_name=resource_group.name,
     application_type="web",
     workspace_id=workspace.id,
-    opts=ResourceOptions(parent=resource_group))
+    opts=ResourceOptions(depends_on=[resource_group, workspace], parent=resource_group))
 
 pulumi.export("resource_group_name",resource_group.name)
-pulumi.export("operationalinsights_workspace_name",workspace.name)
-pulumi.export("insights_id", insights.name)
+pulumi.export("workspace_name",workspace.name)
+pulumi.export("insights_classic_name", insights.name)
