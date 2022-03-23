@@ -12,7 +12,7 @@ related infrastructure, running a load-balanced NGINX web server accessible over
 This example is inspired by [Docker's Getting Started Tutorial](https://docs.docker.com/get-started/).
 
 ## Why would you do this?  
-An example showing that you can easily infrastructure written in a different language than the one you are used to.  The vpc outputs from vpc-crosswalk-ts folder are used as inputs via [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies)
+An example showing that you can easily infrastructure written in a different language than the one you are used to.  The vpc outputs from [aws-classic-ts-vpc-crosswalk](../aws-classic-ts-vpc-crosswalk/index.ts#L33-L41) folder are used as inputs via [StackReference](https://www.pulumi.com/docs/intro/concepts/organizing-stacks-projects/#inter-stack-dependencies)
 
 ## Prerequisites
 
