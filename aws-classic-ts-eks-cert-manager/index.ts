@@ -8,7 +8,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     instanceType: "t3a.micro",
     version: "1.19",
     nodeRootVolumeSize: 10,
-    encryptRootBlockDevice: true, 
+    encryptRootBlockDevice: true,
 });
 
 const k8sProvider = new k8s.Provider(`${name}-k8sprovider`, {
@@ -18,11 +18,11 @@ const k8sProvider = new k8s.Provider(`${name}-k8sprovider`, {
 
 const certmanager_namespace = new Namespace("certmanager-ns",{}, {provider: k8sProvider});
 
-/*const certManager = new k8s.helm.v3.Release(
+const certManager = new k8s.helm.v3.Release(
 	`${name}-certmanager`,
 	{
 		chart: 'cert-manager',
-		version: "1.7.1",
+		version: "1.8.0",
 		repositoryOpts: {
 			repo: "https://charts.jetstack.io/"
 		},
@@ -33,17 +33,18 @@ const certmanager_namespace = new Namespace("certmanager-ns",{}, {provider: k8sP
 			},
 			serviceAccount: {
 				create: true
-			}
+			},
+			installCRDs: true
 		},
 		skipAwait: false,
-		skipCrds: true,
+		//skipCrds: true,
         timeout: 300
 	},
 	{
 		provider: k8sProvider,
 	}
 );
-*/
+
 export const cluster_name = mycluster.eksCluster.name;
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 export const k8sProvider_name = k8sProvider.id;
