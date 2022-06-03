@@ -26,7 +26,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-session-name: {{ secrets.AWS_ROLE_SESSION_NAME }}
+          role-session-name: ${{ secrets.AWS_ROLE_SESSION_NAME }}
       - run: npm install
         working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
