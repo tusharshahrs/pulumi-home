@@ -2,7 +2,7 @@
 
 ## (2022-06-06)
 - updated the helm3 release for certmanager for crds for aws-classic-ts-eks-cert-manager
-- updated the github actions for aws for python and typescript to use sso [token](https://github.com/aws-actions/configure-aws-credentials/blob/master/action.yml#L19)
+- updated the GitHub actions for pull_request_python_aws.yml and pull_request_typescript_aws.yml to use sso [token](https://github.com/aws-actions/configure-aws-credentials/blob/master/action.yml#L19)
 ## (2022-03-22)
 - updated GitHub Actions to remove extra clouds, bumped githubactions to v3
 - removed the following from githubactions due service principal issue in pipeline error even though preview and up work via cli
