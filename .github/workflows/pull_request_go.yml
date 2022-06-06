@@ -16,14 +16,14 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - run: go mod download
         working-directory: ${{ matrix.go-example }}
-      - name: Install Pulumi CLI
-        uses: pulumi/setup-pulumi@v2
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #- name: Install Pulumi CLI
+      #  uses: pulumi/setup-pulumi@v2
+      #- name: Configure AWS Credentials
+      #  uses: aws-actions/configure-aws-credentials@v1
+      #  with:
+      #    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #    aws-region: ${{ secrets.AWS_REGION }}
+      #    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - uses: pulumi/actions@v3
         with:
           command: preview
@@ -33,7 +33,7 @@ jobs:
           work-dir: ${{matrix.go-example }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+          #GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
           ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
           ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
           ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
