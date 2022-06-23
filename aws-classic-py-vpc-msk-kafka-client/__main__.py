@@ -3,6 +3,7 @@
 import pulumi
 import pulumi_aws as aws
 import pulumi_awsx as awsx
+import pulumi_kafka as kafka
 from pulumi import export, ResourceOptions, Config
 import json
 
@@ -173,3 +174,10 @@ mskkafkacluster = aws.msk.Cluster(f"{myname}-msk-kafka-cluster",
 export("msk_cluster_arn",mskkafkacluster.arn)
 export("msk_cluster_name",mskkafkacluster.cluster_name)
 export("zookeeperConnectString", mskkafkacluster.zookeeper_connect_string)
+
+healthCheckTopic = kafka.Topic(f"{myname}-healthCheckTopic",
+    partitions = 3,
+    replication_factor= 3
+)
+
+export("healthchecktopic_name",healthCheckTopic.name)
