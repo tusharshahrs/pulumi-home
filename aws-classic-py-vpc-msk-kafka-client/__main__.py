@@ -4,6 +4,7 @@ import pulumi
 import pulumi_aws as aws
 import pulumi_awsx as awsx
 from pulumi import export, ResourceOptions, Config
+import json
 
 # importing local configs
 config = Config()
@@ -74,8 +75,35 @@ export("kms_key_id", mykms.key_id)
 mycloudwatchloggroup = aws.cloudwatch.LogGroup(f"{myname}-kms-cloudwatch-loggroup")
 export("cloudwatch_log_group_name",mycloudwatchloggroup.name)
 
+# s3 bucket
 mybucket = aws.s3.Bucket(f"{myname}-bucket",
     acl="private",
     force_destroy=True)
 
 export("s3_bucket_name",mybucket.id)
+
+# iam role
+firehoserole = aws.iam.Role(f"{myname}-firehoserole",
+    assume_role_policy=json.dumps({
+        "Version": "2012-10-17",
+        "Statement": [{
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Sid": "",
+            "Principal": {
+                "Service": "firehose.amazonaws.com",
+            },
+        }],
+    }),
+)
+
+export("firehoserole_iam_role",firehoserole.name)
+
+# firehose delivery system
+myfirehose = aws.kinesis.FirehoseDeliveryStream(f"{myname}-firehosedeliverysystem",
+    destination="s3",
+    s3_configuration=aws.kinesis.FirehoseDeliveryStreamS3ConfigurationArgs(
+        role_arn=firehoserole.arn,
+        bucket_arn=mybucket.arn 
+    )
+)
