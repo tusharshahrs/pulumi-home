@@ -1,9 +1,7 @@
 
 # AWS VPC in python with awsx package
 
-AWS VPC, igw, nat gateway, public and private subnets in python.
-MSK cluster
-Kafka Topics
+AWS VPC, igw, nat gateway, public and private subnets in python. MSK cluster. Kafka Topics
 
 ## Deployment
 
