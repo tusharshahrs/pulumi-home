@@ -13,7 +13,7 @@ my_number_of_availability_zones = config.get_int("number_of_availability_zones")
 myip = config.get_secret("my_ipaddress");
 
 myname = "demo"
-
+# VPC
 myvpc = awsx.ec2.Vpc(f"{myname}-vpc",
     cidr_block= my_vpc_cidr_block,
     number_of_availability_zones = my_number_of_availability_zones,
@@ -65,3 +65,17 @@ security_group = aws.ec2.SecurityGroup(
 
 export("security_group_name", security_group.name)
 export("security_group_id", security_group.id)
+
+# kms key
+mykms = aws.kms.Key(f"{myname}-kms", description="msk kafka kms key")
+export("kms_key_id", mykms.key_id)
+
+#cloud watch loggroup
+mycloudwatchloggroup = aws.cloudwatch.LogGroup(f"{myname}-kms-cloudwatch-loggroup")
+export("cloudwatch_log_group_name",mycloudwatchloggroup.name)
+
+mybucket = aws.s3.Bucket(f"{myname}-bucket",
+    acl="private",
+    force_destroy=True)
+
+export("s3_bucket_name",mybucket.id)
