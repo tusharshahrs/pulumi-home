@@ -1,0 +1,7 @@
+config:
+  aws-classic-py-vpc-msk-kafka-client:my_ipaddress:
+    secure: AAABAEqIfeOFWJbkpW98ULomze6ulHEBx/7LLABOOLJGe0JxdmTtKng+kzRs8CuW
+  aws-classic-py-vpc-msk-kafka-client:number_of_availability_zones: "3"
+  aws-classic-py-vpc-msk-kafka-client:number_of_nat_gateways: "1"
+  aws-classic-py-vpc-msk-kafka-client:vpc_cidr_block: 10.0.0.0/22
+  aws:region: us-east-2
