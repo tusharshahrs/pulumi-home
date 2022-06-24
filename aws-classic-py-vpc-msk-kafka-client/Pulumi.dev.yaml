@@ -5,5 +5,9 @@ config:
   aws-classic-py-vpc-msk-kafka-client:number_of_nat_gateways: "1"
   aws-classic-py-vpc-msk-kafka-client:vpc_cidr_block: 10.0.0.0/22
   aws:region: us-east-2
-  kafka:bootstrapServers: ["z-1.shahtmskkafkacluster18.amawx9.c6.kafka.us-east-2.amazonaws.com:2181","z-2.shahtmskkafkacluster18.amawx9.c6.kafka.us-east-2.amazonaws.com:2181","z-3.shahtmskkafkacluster18.amawx9.c6.kafka.us-east-2.amazonaws.com:2181"]
+  kafka:bootstrapServers:
+  - b-1.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094
+  - b-2.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094
+  - b-3.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094
   kafka:skipTlsVerify: "false"
+  kafka:tlsEnabled: "true"

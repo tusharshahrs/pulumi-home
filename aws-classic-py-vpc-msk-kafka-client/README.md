@@ -1,7 +1,7 @@
 
-# AWS VPC in python with awsx package
+# AWS VPC in python with awsx package. MSK cluster in python
 
-AWS VPC, igw, nat gateway, public and private subnets in python. MSK cluster. Kafka Topics
+AWS VPC, igw, nat gateway, public and private subnets in python. MSK cluster.
 
 ## Deployment
 
@@ -37,47 +37,51 @@ AWS VPC, igw, nat gateway, public and private subnets in python. MSK cluster. Ka
    pulumi config set number_of_nat_gateways 1 # optional
    ```
 
-1. Launch
+1. Launch.  MSK takes a while to come, it takes a while like eks does.
 
    ```bash
    pulumi up -y
    ```
 
-1. Error that was replicated
+1. Outputs
 
 ```bash
-    Previewing update (dev)
-
-    View Live: https://app.pulumi.com/shaht/aws-classic-py-vpc-msk-kafka-client/dev/previews/418bd3ad-a296-4315-b76e-dcdf88173e4a
-
-        Type                  Name                                     Plan       
-        pulumi:pulumi:Stack   aws-classic-py-vpc-msk-kafka-client-dev             
-    +   └─ kafka:index:Topic  shaht-healthCheckTopic                   create     
-    
-    Outputs:
-    + healthchecktopic_name        : "shaht-healthCheckTopic-1f7b169"
-
-    Resources:
-        + 1 to create
-        41 unchanged
-
-    Do you want to perform this update? yes
-    Updating (dev)
-
-    View Live: https://app.pulumi.com/shaht/aws-classic-py-vpc-msk-kafka-client/dev/updates/23
-
-        Type                  Name                                     Status                  Info
-        pulumi:pulumi:Stack   aws-classic-py-vpc-msk-kafka-client-dev  **failed**              1 error
-    +   └─ kafka:index:Topic  shaht-healthCheckTopic                   **creating failed**     1 error
-    
-    Diagnostics:
-    kafka:index:Topic (shaht-healthCheckTopic):
-        error: 1 error occurred:
-            * kafka: client has run out of available brokers to talk to: 3 errors occurred:
-            * dial tcp 10.0.2.173:2181: i/o timeout
-            * dial tcp 10.0.1.145:2181: i/o timeout
-            * dial tcp 10.0.0.189:2181: i/o timeout
-    
-    pulumi:pulumi:Stack (aws-classic-py-vpc-msk-kafka-client-dev):
-        error: update failed
+pulumi stack output
 ```
+
+  Results
+```bash
+    Outputs:
+    availabililty_zones          : 3
+    bootstrap_brokers_tls        : "b-1.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094,b-2.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094,b-3.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:9094"
+    cloudwatch_log_group_name    : "shaht-kms-cloudwatch-loggroup-e991096"
+    firehoserole_iam_role        : "shaht-firehoserole-28cad01"
+    kafka_subnets1               : "subnet-0ba6d65de3ac2d55e"
+    kafka_subnets2               : "subnet-07dcd0e44c39bf899"
+    kafka_subnets3               : "subnet-05cbb0d11fd758f41"
+    kms_key_id                   : "28872d4c-51a9-4d70-8f07-930ad6f26075"
+    msk_cluster_arn              : "arn:aws:kafka:us-east-2:052848974346:cluster/shaht-msk-kafka-cluster-1331e9a/9428f84b-ad0e-4ff8-acf2-e5ef5702608d-6"
+    msk_cluster_name             : "shaht-msk-kafka-cluster-1331e9a"
+    myfirehosedeliverysystem_name: "shaht-firehosedeliverysystem-1bfa8ea"
+    number_of_natgateways        : 1
+    private_subnets              : [
+        [0]: "subnet-0025cb4bfc0d9fca8"
+        [1]: "subnet-0a0fe9418e022594d"
+        [2]: "subnet-00ebb0a91be224c7d"
+    ]
+    public_subnets               : [
+        [0]: "subnet-0ba6d65de3ac2d55e"
+        [1]: "subnet-07dcd0e44c39bf899"
+        [2]: "subnet-05cbb0d11fd758f41"
+    ]
+    s3_bucket_name               : "shaht-bucket-6994ceb"
+    security_group_id            : "sg-0fc51f52c91b53706"
+    security_group_name          : "shaht-security-group-82d8eb0"
+    vpc_cidr_block               : "10.0.0.0/22"
+    vpc_id                       : "vpc-0b4728a58cc591768"
+    zookeeperConnectString       : "z-1.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181,z-2.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181,z-3.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181"
+```
+
+1. Get the stack reference via `pulumi stack output` since we will need it for the next program.
+
+1. Next Step. Go to ../aws-classic-py-vpc-msk-kafka-client-dev and run *pulumi up* there
