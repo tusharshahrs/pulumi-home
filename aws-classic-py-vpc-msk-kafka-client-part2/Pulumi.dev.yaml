@@ -1,0 +1,3 @@
+config:
+  aws-classic-py-vpc-msk-kafka-client-part2:mystackpath: shaht/aws-classic-py-vpc-msk-kafka-client/dev
+  aws:region: us-east-2
