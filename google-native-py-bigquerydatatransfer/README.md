@@ -1,6 +1,6 @@
 # Google Native with BigQuery Data Transfer in Python
 
-A Google Native stack with a big query data transfer in python
+A Google Native stack with a big query data transfer in python.  The big query data transfer configuration is created as a data transfer and another job in scheduled queries
 
 ## Prerequisites
 
@@ -12,7 +12,6 @@ Before trying to deploy this example, please make sure you have performed all of
 ## Special Issues
 
 - Google buckets cannot have the word or variation of *google* in its name due to the following naming [rules](https://cloud.google.com/storage/docs/naming-buckets)
-- Google native does not support a native sql user due to [this](https://github.com/pulumi/pulumi-google-native/issues/47) so we use google classic provider
 
 ## Running the Example
 
@@ -50,15 +49,16 @@ Before trying to deploy this example, please make sure you have performed all of
     ```bash
     Updating (dev)
 
-    View Live: https://app.pulumi.com/myuser/google-native-py-bigquerydatatransfer/dev/updates/132
+    View Live: https://app.pulumi.com/shaht/google-native-py-bigquerydatatransfer/dev/updates/155
 
-        Type                                      Name                                       Status      
-    +   pulumi:pulumi:Stack                       google-native-py-bigquerydatatransfer-dev  created     
-    +   ├─ google-native:storage/v1:Bucket        demo-mybucket                              created     
-    +   ├─ gcp:serviceAccount:Account             demo-serviceaccount                        created     
-    +   └─ gcp:projects:IAMBinding                demo-iambinding                            created     
-    +      └─ gcp:bigquery:Dataset                demo-dataset                               created     
-    +         └─ gcp:bigquery:DataTransferConfig  demo-datatransferconfig                    created     
+        Type                                         Name                                       Status      
+    +   pulumi:pulumi:Stack                          google-native-py-bigquerydatatransfer-dev  created     
+    +   ├─ google-native:storage/v1:Bucket           demo-mybucket                              created     
+    +   └─ gcp:serviceAccount:Account                demo-serviceaccount                        created     
+    +      └─ gcp:projects:IAMBinding                demo-iambinding                            created     
+    +         └─ gcp:bigquery:Dataset                demo-dataset                               created     
+    +            ├─ gcp:bigquery:DataTransferConfig  demo-datatransferconfig                    created     
+    +            └─ gcp:bigquery:DataTransferConfig  demo-datatransferconfig-storage            created     
     
     Outputs:
         big_query_dataset_friendly_name                 : "demo_test_bigquery_dataset"
@@ -67,16 +67,19 @@ Before trying to deploy this example, please make sure you have performed all of
         big_query_permissions_role                      : "roles/bigquery.admin"
         data_transfer_config_query_config_scheduled     : "demo-data-transfer-query"
         data_transfer_config_query_config_scheduled_time: "first sunday of quarter 00:00"
-        gcp_bucket                                      : "https://www.googleapis.com/storage/v1/b/demo-mybucket-b4731fc"
+        data_transfer_config_storage                    : "demo-data-transfer-storage"
+        gcp_bucket_name                                 : "demo-mybucket-558dfb2"
+        gcp_bucket_url                                  : "https://www.googleapis.com/storage/v1/b/demo-mybucket-558dfb2"
+        google_bucket_url                               : "gs://demo-mybucket-558dfb2"
         my_service_account_format_for_permissions       : "serviceAccount:demobigsa@pulumi-ce-team.iam.gserviceaccount.com"
         service_account_email                           : "demobigsa@pulumi-ce-team.iam.gserviceaccount.com"
         service_account_id                              : "demobigsa"
         service_account_name                            : "projects/pulumi-ce-team/serviceAccounts/demobigsa@pulumi-ce-team.iam.gserviceaccount.com"
 
     Resources:
-        + 6 created
+        + 7 created
 
-    Duration: 13s
+    Duration: 15s
     ```
 
 1.  Show the outputs
@@ -87,8 +90,7 @@ Before trying to deploy this example, please make sure you have performed all of
 
     Results
     ```bash
-    ❯ pulumi stack output
-    Current stack outputs (11):
+    Current stack outputs (14):
     OUTPUT                                            VALUE
     big_query_dataset_friendly_name                   demo_test_bigquery_dataset
     big_query_dataset_id                              projects/pulumi-ce-team/datasets/demo_example_dataset_for_bigquery
@@ -96,7 +98,10 @@ Before trying to deploy this example, please make sure you have performed all of
     big_query_permissions_role                        roles/bigquery.admin
     data_transfer_config_query_config_scheduled       demo-data-transfer-query
     data_transfer_config_query_config_scheduled_time  first sunday of quarter 00:00
-    gcp_bucket                                        https://www.googleapis.com/storage/v1/b/demo-mybucket-b4731fc
+    data_transfer_config_storage                      demo-data-transfer-storage
+    gcp_bucket_name                                   demo-mybucket-558dfb2
+    gcp_bucket_url                                    https://www.googleapis.com/storage/v1/b/demo-mybucket-558dfb2
+    google_bucket_url                                 gs://demo-mybucket-558dfb2
     my_service_account_format_for_permissions         serviceAccount:demobigsa@pulumi-ce-team.iam.gserviceaccount.com
     service_account_email                             demobigsa@pulumi-ce-team.iam.gserviceaccount.com
     service_account_id                                demobigsa
@@ -136,7 +141,7 @@ Before trying to deploy this example, please make sure you have performed all of
     - service_account_name                            : "projects/pulumi-ce-team/serviceAccounts/demobigsa@pulumi-ce-team.iam.gserviceaccount.com"
 
     Resources:
-        - 6 deleted
+        - 7 deleted
 
     Duration: 12s
 
