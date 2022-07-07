@@ -14,7 +14,7 @@ name = "demo"
 bucket = storage.Bucket(f"{name}-mybucket")
 
 # Export the bucket self-link
-pulumi.export('gcp_bucket', bucket.self_link)
+pulumi.export('gcp_bucket_url', bucket.self_link)
 
 # Create a service account
 bq_service_account = gcp.serviceaccount.Account(f"{name}-serviceaccount",
@@ -39,7 +39,8 @@ pulumi.export("my_service_account_format_for_permissions",my_service_account_for
 big_query_permissions = gcp.projects.IAMBinding(f"{name}-iambinding",
     project=myproject.project_id,
     role="roles/bigquery.admin",
-    members=[my_service_account_format_for_permissions]
+    members=[my_service_account_format_for_permissions],
+    opts=pulumi.ResourceOptions(depends_on=[bq_service_account], parent=bq_service_account)
     )
 
 pulumi.export("big_query_permissions_id",big_query_permissions.id)
@@ -59,10 +60,10 @@ my_bigquery_dataset = gcp.bigquery.Dataset(f"{name}-dataset",
         "owner": "demo",
     },
     accesses=[
-        #gcp.bigquery.DatasetAccessArgs(
-        #    role="roles/bigquery.admin",
-        #    user_by_email=bq_service_account.email,
-        #),
+        gcp.bigquery.DatasetAccessArgs(
+            role="roles/bigquery.admin",
+            user_by_email=bq_service_account.email,
+        ),
         #gcp.bigquery.DatasetAccessArgs(
         #    role="roles/bigquery.dataOwner",
         #    user_by_email=bq_service_account.email,
@@ -99,7 +100,13 @@ query_config = gcp.bigquery.DataTransferConfig(f"{name}-datatransferconfig",
 pulumi.export("data_transfer_config_query_config_scheduled",query_config.display_name)
 pulumi.export("data_transfer_config_query_config_scheduled_time",query_config.schedule)
 
-"""query_config_storage = gcp.bigquery.DataTransferConfig(f"{name}-datatransferconfig-storage",
+# manipulation of bucket name with gs:// format to pass into parameters
+pulumi.export("gcp_bucket_name",bucket.name)
+mystorage_bucket_url = Output.concat("gs://",bucket.name)
+pulumi.export("google_bucket_url",mystorage_bucket_url)
+
+
+query_config_storage = gcp.bigquery.DataTransferConfig(f"{name}-datatransferconfig-storage",
     display_name=f"{name}-data-transfer-storage",
     location="us",
     data_source_id="google_cloud_storage",
@@ -107,9 +114,14 @@ pulumi.export("data_transfer_config_query_config_scheduled_time",query_config.sc
     destination_dataset_id=my_bigquery_dataset.dataset_id,
     params={
         "destination_table_name_template": "my_table",
-        "write_disposition": "WRITE_APPEND",
-        "query": "SELECT name FROM table WHERE x = 'y'",
+        "write_disposition": "APPEND",
+        "file_format": "CSV",
+        "skip_leading_rows": "1",
+        "field_delimiter": ",",
+        "data_path_template": mystorage_bucket_url,
     },
     service_account_name=bq_service_account.email,
-    opts=pulumi.ResourceOptions(depends_on=[my_bigquery_dataset,big_query_permissions], parent=my_bigquery_dataset))
-"""
+    opts=pulumi.ResourceOptions(depends_on=[my_bigquery_dataset,big_query_permissions,query_config], parent=my_bigquery_dataset))
+
+# export the outputs from the storage transfer that is created above
+pulumi.export("data_transfer_config_storage",query_config_storage.display_name)
