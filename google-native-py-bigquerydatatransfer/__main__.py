@@ -1,8 +1,5 @@
 """A Google Cloud Python Pulumi program"""
 
-import email
-from turtle import up
-from urllib.request import BaseHandler
 import pulumi
 from pulumi_google_native.storage import v1 as storage
 from pulumi_google_native.bigquerydatatransfer import v1 as bqdt
