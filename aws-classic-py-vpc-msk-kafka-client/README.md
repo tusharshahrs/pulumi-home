@@ -1,5 +1,5 @@
 
-# AWS VPC in python with awsx package. MSK cluster in python
+# AWS VPC in python with awsx package and MSK cluster in python
 
 AWS VPC, igw, nat gateway, public and private subnets in python. MSK cluster.
 
@@ -82,6 +82,6 @@ pulumi stack output
     zookeeperConnectString       : "z-1.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181,z-2.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181,z-3.shahtmskkafkacluster13.9572ox.c6.kafka.us-east-2.amazonaws.com:2181"
 ```
 
-1. Get the stack reference via `pulumi stack output` since we will need it for the next program.
+1. Get the stack reference via `pulumi stack output` since we will need it for the next program
 
-1. Next Step. Go to ../aws-classic-py-vpc-msk-kafka-client-dev and run *pulumi up* there
+1. Next Step go to [aws-classic-py-vpc-msk-kafka-client-part-2](aws-classic-py-vpc-msk-kafka-client-part-2) and run *pulumi up* there

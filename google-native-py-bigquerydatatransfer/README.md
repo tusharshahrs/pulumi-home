@@ -1,6 +1,6 @@
 # Google Native with BigQuery Data Transfer in Python
 
-A Google Native stack with a big query data transfer in python.  The big query data transfer configuration is created as a data transfer and another job in scheduled queries
+A Google Native stack with a big query data transfer in python. The big query data transfer configuration is created as a data transfer and another job in scheduled queries
 
 ## Prerequisites
 
@@ -82,8 +82,8 @@ Before trying to deploy this example, please make sure you have performed all of
     Duration: 15s
     ```
 
-1.  Show the outputs
-    
+1. Show the outputs
+
     ```bash
     pulumi stack output
     ```
