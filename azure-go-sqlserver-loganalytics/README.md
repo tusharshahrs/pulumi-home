@@ -87,18 +87,16 @@ Busted due to [typo](https://github.com/pulumi/pulumi-azure-native/pull/1490)
 
 1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
 
-   [Azure SQL Auditing sending to Log Analytics](https://share.getcloudapp.com/nOuv6Dkg)
-
 1. Destroy the Stack
    ```bash
-   pulumi destoy -y
+   pulumi destroy -y
    ```
 
    Note:  The `extendedserverblobauditing` resource is not getting deleted correctly.
    Current workaround,
-    - go to azure portal and find the SQL Server.
+    - go to Azure Portal and find the SQL Server.
     - Delete the SQL Server
-    - go back to the command-line and type in `pulumi refresh -y`
+    - go back to the commandline and type in `pulumi refresh -y`
     - Run the destroy command again:  `pulumi destroy -y`
 
 1. Remove the stack
