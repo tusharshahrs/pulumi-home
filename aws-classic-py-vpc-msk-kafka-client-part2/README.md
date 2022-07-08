@@ -4,7 +4,7 @@ AWS ec2, keypair, sshkey created in python.  Used to ssh into server to connect 
 
 ## Deployment
 
-1. WARNING! WARNING! BEFORE doing ANYTHING here, you HAVE to HAVE the MSK Cluster Up. That is in: [aws-classic-py-vpc-msk-kafka-client](aws-classic-py-vpc-msk-kafka-client)
+1. WARNING! WARNING! BEFORE doing ANYTHING here, you HAVE to HAVE the MSK Cluster Up. That is in: [aws-classic-py-vpc-msk-kafka-client](../aws-classic-py-vpc-msk-kafka-client)
 
 1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
 
