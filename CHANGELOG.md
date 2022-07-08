@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## (2022-07-08)
-- added google-native-py-bigquerydatatransfer 
+- added google-native-py-bigquerydatatransfer
 - added aws-classic-py-vpc-msk-kafka-client
 - added aws-classic-py-vpc-msk-kafka-client-part2
 ## (2022-06-06)
