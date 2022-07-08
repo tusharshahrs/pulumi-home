@@ -82,14 +82,14 @@ AWS ec2, keypair, sshkey created in python.  Used to ssh into server to connect 
     Duration: 21s
    ```
 
-1. SSH into the ec2 severs, install pulumi, kafka, and then you have to connect to the brokers.
+1. SSH into the ec2 server, install pulumi, & kafka, and then you have to connect to the brokers.
 
-1. You would set the config similar to this: https://github.com/tusharshahrs/pulumi-homelab/blob/master/kafka-topics-ts/Pulumi.dev.yaml
+1. You would set the config similar to this: <https://github.com/tusharshahrs/pulumi-homelab/blob/master/kafka-topics-ts/Pulumi.dev.yaml>
 
     `*kafka:skipTlsVerify: "false"*`
 
     `*kafka:tlsEnabled: "true"*`
-    
+
     You would replace the brokers above with your brokers, not your zookeepers.
 
 1. Then run `pulumi up` from the ec2 msk instance to validate that the brokers connected.  You can see the topics in the aws console on the msk cluster if it worked.
