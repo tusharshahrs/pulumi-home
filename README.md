@@ -110,7 +110,7 @@ Example| Description | Cloud & Language   |
 Example   | Description | Cloud & Language   |
 --------- | -------- | -------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
-[oogle-native-py-bigquerydatatransfe](oogle-native-py-bigquerydatatransfe) | google cloud native - storage bucket, google classic - bigquery and service account and data transfer config |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
+[google-native-py-bigquerydatatransfer](google-native-py-bigquerydatatransfer) | google cloud native - storage bucket, google classic - bigquery and service account and data transfer config |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## DataDog
 Example   | Description | Cloud & Language   |
