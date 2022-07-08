@@ -96,7 +96,7 @@ Busted due to [typo](https://github.com/pulumi/pulumi-azure-native/pull/1490)
    Current workaround,
     - go to Azure Portal and find the SQL Server.
     - Delete the SQL Server
-    - go back to the commandline and type in `pulumi refresh -y`
+    - go back to the command-line and type in `pulumi refresh -y`
     - Run the destroy command again:  `pulumi destroy -y`
 
 1. Remove the stack

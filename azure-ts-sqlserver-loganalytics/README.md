@@ -86,7 +86,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
    Current workaround,
    - Go to Azure portal and find the **SQL Server**.
    - Delete the SQL Server
-   - Go back to the commandline and type in `pulumi destroy -y -r`.  The `-r` will refresh the state file before deleting the resources.
+   - Go back to the command-line and type in `pulumi destroy -y -r`.  The `-r` will refresh the state file before deleting the resources.
 
 1. Remove the stack
    ```bash
