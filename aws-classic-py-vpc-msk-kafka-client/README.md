@@ -84,4 +84,4 @@ pulumi stack output
 
 1. Get the stack reference via `pulumi stack output` since we will need it for the next program
 
-1. Next Step go to [aws-classic-py-vpc-msk-kafka-client-part-2](aws-classic-py-vpc-msk-kafka-client-part-2) and run *pulumi up* there
+1. Next Step go to [aws-classic-py-vpc-msk-kafka-client-part-2](../aws-classic-py-vpc-msk-kafka-client-part2) and run *pulumi up* there
