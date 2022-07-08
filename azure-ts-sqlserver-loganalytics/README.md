@@ -75,9 +75,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
     storageaccount_name          loganalyticssa65496eb1
    ```
 
-1. Check the azure portal to validate that the Azure SQL Auditing is turned on at the database level.
-
-   [Azure SQL Auditing sending to Log Analytics](https://share.getcloudapp.com/Kou4gEzl)
+1. Check the Azure portal to validate that the Azure SQL Auditing is turned on at the database level.
 
 1. Destroy the Stack
    ```bash
@@ -86,7 +84,7 @@ Deploys Azure SQL Server and Database with Auditing using Log Analytics
 
    Note:  The `serverblobauditingpolicy` resource is not getting deleted correctly.
    Current workaround,
-   - Go to azure portal and find the **SQL Server**.
+   - Go to Azure portal and find the **SQL Server**.
    - Delete the SQL Server
    - Go back to the command-line and type in `pulumi destroy -y -r`.  The `-r` will refresh the state file before deleting the resources.
 

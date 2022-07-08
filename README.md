@@ -70,6 +70,8 @@ Example| Description | Cloud & Language   |
 [aws-classic-py-get-ami](aws-classic-py-get-ami) | aws get ami | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-get-regions](aws-classic-py-get-regions/)| aws get regions | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 [aws-classic-py-vpc-quickstart](aws-classic-py-vpc-quickstart)| aws vpc with [aws quickstart vpc](https://www.pulumi.com/registry/packages/aws-quickstart-vpc/api-docs/) | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-py-vpc-msk-kafka-client](aws-classic-py-vpc-msk-kafka-client)| [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) with kinesis firehose, individual az via apply, msk kafka cluster | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
+[aws-classic-py-vpc-msk-kafka-client-part2](aws-classic-py-vpc-msk-kafka-client-part2)| [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) keypair, ami, ec2 instance as a client | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 
 ## Azure
 Example| Description | Cloud & Language   |
@@ -108,6 +110,7 @@ Example| Description | Cloud & Language   |
 Example   | Description | Cloud & Language   |
 --------- | -------- | -------------- |
 [google-native-py-network-postgres-function](google-native-py-network-postgres-function) | google cloud native - storage bucket & vpc & postgres |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
+[google-native-py-bigquerydatatransfer](google-native-py-bigquerydatatransfer) | google cloud native - storage bucket, google classic - bigquery and service account and data transfer config |[![GOOGLE PYTHON](https://img.shields.io/badge/GOOGLE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/google-native/)|
 
 ## DataDog
 Example   | Description | Cloud & Language   |

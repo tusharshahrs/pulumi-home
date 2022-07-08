@@ -121,7 +121,6 @@ automatically are authenticated and we avoid the **Missing Authentication Token*
 
 1. Validate via Postman
 
-   - Screenshot of [apigateway invoke URL](https://share.getcloudapp.com/v1uYEvXv)
    - Generated code for **Postman**
         ```bash
         curl --location --request POST 'https://62zlkrwz60.execute-api.us-east-2.amazonaws.com/dev/test1'
