@@ -139,12 +139,18 @@ AWS vpc built with [awsx package](https://www.pulumi.com/registry/packages/awsx/
 
    Results
    ```bash
-    Current stack outputs (4):
-    OUTPUT                          VALUE
-    cluster_name                    demo-eks-eksCluster-819846a
-    cluster_verion                  1.21
-    kubeconfig                      [secret]
-    managed_nodegroup_capacitytype  SPOT
+    Current stack outputs (10):
+        OUTPUT                          VALUE
+        cluster_name                    demo-eks-eksCluster-852b01d
+        cluster_security_group_egress   []
+        cluster_security_group_ingress  []
+        cluster_security_group_name     demo-eks-eksClusterSecurityGroup-6681328
+        vpc_az_zones                    3
+        vpc_cidr                        10.0.0.0/24
+        vpc_id                          vpc-05a388163d1983780
+        vpc_number_of_nat_gateways      1
+        vpc_private_subnet_ids          ["subnet-02c84318a01da1509","subnet-09ad075c7af2d3b4f","subnet-088e5cfb73416a8f9"]
+        vpc_public_subnet_ids           ["subnet-0126d9c48e5a0c740","subnet-0a446aa71ef4e59a2","subnet-0edcab41cdd5c9350"]
    ```
 
    If you need to see the value in kubeconfig, you will have to do the following
