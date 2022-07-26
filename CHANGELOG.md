@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-07-26)
+- added aws-classic-ts-eks-vpc-sg-default-rules
+- added aws-classic-ts-vpc-get-zones-awsx
 ## (2022-07-08)
 - added google-native-py-bigquerydatatransfer
 - added aws-classic-py-vpc-msk-kafka-client
