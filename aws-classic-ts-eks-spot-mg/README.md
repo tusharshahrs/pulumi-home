@@ -11,7 +11,7 @@ AWS eks with spot managed nodes in TypeScript
    pulumi stack init dev
    ```
 
-1. Create a Python virtualenv, activate it, and install dependencies:
+1. Install the dependencies
    ```bash
    npm install
    ```
