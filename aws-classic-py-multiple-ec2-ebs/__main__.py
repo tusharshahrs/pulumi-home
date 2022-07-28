@@ -21,7 +21,10 @@ myname = "shaht"
 myvpc = awsx.ec2.Vpc(f"{myname}-vpc",
     cidr_block= my_vpc_cidr_block,
     number_of_availability_zones = my_number_of_availability_zones,
-    nat_gateways = my_number_of_nat_gateways_requested
+    nat_gateways = my_number_of_nat_gateways_requested,
+    tags={
+        "Name":f"{myname}-vpc",
+      },
     )
 
 export("vpc_id",myvpc.vpc_id)
@@ -47,6 +50,7 @@ key = aws.ec2.KeyPair(f"{myname}-key",public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQ
 export("key_id",key.id)
 
 security_group = aws.ec2.SecurityGroup(f"{myname}-securitygroup",
+    vpc_id=myvpc.vpc_id,
     description='Security group rules for egress and ingress',
     egress=[
         aws.ec2.SecurityGroupEgressArgs(
@@ -62,15 +66,16 @@ security_group = aws.ec2.SecurityGroup(f"{myname}-securitygroup",
             protocol='tcp',
             from_port=443,
             to_port=443,
-            cidr_blocks=['99.159.49.102/0'],
+            cidr_blocks=['99.159.30.107/32'],
             description="ingress rules to server"
         )
-    ]
+    ],
     #ingress=[
     #    #{ 'protocol': 'icmp', 'from_port': 8, 'to_port': 0, 'cidr_blocks': ['0.0.0.0/0'] },
     #    { 'protocol': 'tcp', 'from_port': 443, 'to_port': 443, 'cidr_blocks': ['99.159.49.102/0'] }
     #    
     #],
+    opts=ResourceOptions(depends_on=myvpc),
 )
 
 export("security_group_name",security_group.name)
@@ -111,7 +116,7 @@ for x in range(1,5): # allows for creation of multiple of 3 instances, 3, 6, 9,1
       #},
       #
       #)]
-    opts=ResourceOptions(ignore_changes=["spot_price"]),
+    opts=ResourceOptions(ignore_changes=["spot_price"], depends_on=[security_group,key]),
     )
     ips.append(server.public_ip)
     hostnames.append(server._name)
