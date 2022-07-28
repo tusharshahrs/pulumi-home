@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-07-28)
+- added aws-classic-py-multiple-ec2-ebs
 ## (2022-07-26)
 - added aws-classic-ts-eks-vpc-sg-default-rules
 - added aws-classic-ts-vpc-get-zones-awsx
