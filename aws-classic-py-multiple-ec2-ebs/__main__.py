@@ -33,6 +33,11 @@ export("number_of_natgateways",my_number_of_nat_gateways_requested)
 export("availabililty_zones",my_number_of_availability_zones)
 export("public_subnets",myvpc.public_subnet_ids)
 export("private_subnets",myvpc.private_subnet_ids)
+export("private_subnets_1",myvpc.private_subnet_ids[0])
+export("private_subnets_1",myvpc.private_subnet_ids[1])
+export("private_subnets_1",myvpc.private_subnet_ids[2])
+
+
 
 # Get the AMI
 ami = aws.ec2.get_ami(
@@ -66,16 +71,15 @@ security_group = aws.ec2.SecurityGroup(f"{myname}-securitygroup",
             protocol='tcp',
             from_port=443,
             to_port=443,
-            cidr_blocks=['99.159.30.107/32'],
+            cidr_blocks=['0.0.0.0/0'],
             description="ingress rules to server"
         )
     ],
-    #ingress=[
-    #    #{ 'protocol': 'icmp', 'from_port': 8, 'to_port': 0, 'cidr_blocks': ['0.0.0.0/0'] },
-    #    { 'protocol': 'tcp', 'from_port': 443, 'to_port': 443, 'cidr_blocks': ['99.159.49.102/0'] }
-    #    
-    #],
-    opts=ResourceOptions(depends_on=myvpc),
+    tags={
+        "Name":f"{myname}-securitygroup",
+    },
+
+    opts=ResourceOptions(depends_on=myvpc,parent=myvpc),
 )
 
 export("security_group_name",security_group.name)
@@ -91,7 +95,9 @@ root_ebs= { "deleteOnTermination": True,
             "encrypted": True,
 }
 
-for x in range(1,5): # allows for creation of multiple of 3 instances, 3, 6, 9,12,..
+myrange = 5
+"""
+for x in range(0,myrange): # allows for creation of multiple of 3 instances, 3, 6, 9,12,..
  for az in aws.get_availability_zones().names: # spreads it across all az's
     #server = aws.ec2.Instance(f'web-server-{x}-{az}',
     server = aws.ec2.SpotInstanceRequest(f'webserver-{x}-{az}',
@@ -101,11 +107,12 @@ for x in range(1,5): # allows for creation of multiple of 3 instances, 3, 6, 9,1
       ami=ami.id,
       key_name=key.id,
       spot_price=0.25,
-      availability_zone=az,
+      #availability_zone=az,
       root_block_device=root_ebs,
       tags={
           "Name":f'webservers-{x}-{az}',
       },
+      subnet_id=
       #ebs_block_devices=[aws.ec2.InstanceEbsBlockDeviceArgs(
       #  delete_on_termination=True,
       #  encrypted=True,
@@ -122,3 +129,4 @@ for x in range(1,5): # allows for creation of multiple of 3 instances, 3, 6, 9,1
     hostnames.append(server._name)
 
 export("server_name",hostnames)
+"""
