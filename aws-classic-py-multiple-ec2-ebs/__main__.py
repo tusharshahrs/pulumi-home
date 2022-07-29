@@ -1,12 +1,12 @@
 """An AWS Python Pulumi program"""
 
-from multiprocessing.pool import TERMINATE
-from telnetlib import ENCRYPT
+#from multiprocessing.pool import TERMINATE
+#from telnetlib import ENCRYPT
 import pulumi
 import pulumi_aws as aws
 import pulumi_awsx as awsx
 
-from pulumi import export, ResourceOptions, Config
+from pulumi import export, ResourceOptions, Config, Output
 import json
 
 # importing local configs
@@ -16,7 +16,9 @@ my_number_of_nat_gateways_requested = config.get_int("number_of_nat_gateways") o
 my_number_of_availability_zones = config.get_int("number_of_availability_zones") or 3
 #myip = config.get_secret("my_ipaddress");
 
-myname = "shaht"
+# variable for name
+myname = "demo"
+
 # VPC
 myvpc = awsx.ec2.Vpc(f"{myname}-vpc",
     cidr_block= my_vpc_cidr_block,
@@ -30,12 +32,15 @@ myvpc = awsx.ec2.Vpc(f"{myname}-vpc",
 export("vpc_id",myvpc.vpc_id)
 export("vpc_cidr_block", my_vpc_cidr_block)
 export("number_of_natgateways",my_number_of_nat_gateways_requested)
-export("availabililty_zones",my_number_of_availability_zones)
+export("number_of_availabililty_zones",my_number_of_availability_zones)
 export("public_subnets",myvpc.public_subnet_ids)
+export("public_subnets_0",myvpc.public_subnet_ids[0])
+export("public_subnets_1",myvpc.public_subnet_ids[1])
+export("public_subnets_2",myvpc.public_subnet_ids[2])
 export("private_subnets",myvpc.private_subnet_ids)
-export("private_subnets_1",myvpc.private_subnet_ids[0])
+export("private_subnets_0",myvpc.private_subnet_ids[0])
 export("private_subnets_1",myvpc.private_subnet_ids[1])
-export("private_subnets_1",myvpc.private_subnet_ids[2])
+export("private_subnets_2",myvpc.private_subnet_ids[2])
 
 
 
@@ -51,9 +56,11 @@ ami = aws.ec2.get_ami(
 
 export("ami_id",ami.id)
 
+# Create the keypair
 key = aws.ec2.KeyPair(f"{myname}-key",public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 tushar@pulumi.com")
 export("key_id",key.id)
 
+# Create the security group and makes sure it is attached to the vpc
 security_group = aws.ec2.SecurityGroup(f"{myname}-securitygroup",
     vpc_id=myvpc.vpc_id,
     description='Security group rules for egress and ingress',
@@ -83,50 +90,53 @@ security_group = aws.ec2.SecurityGroup(f"{myname}-securitygroup",
 )
 
 export("security_group_name",security_group.name)
-#size = "t2.nano"
-size = "m4.2xlarge"
 
-ips = []
-hostnames = []
+# size of ec2 instance
+size = "t2.micro"
+#size = "m4.2xlarge"
 
+# set size, encryption and deletion of ebs ROOT volume
 root_ebs= { "deleteOnTermination": True,
-            #"volume_size": 12,
-            "volume_size":600,
+            "volume_size": 12,
             "encrypted": True,
 }
 
-myrange = 5
-"""
+# For collecting hostnames and ips to export
+ips = []
+hostnames = []
+
+
+myrange = 1
 for x in range(0,myrange): # allows for creation of multiple of 3 instances, 3, 6, 9,12,..
- for az in aws.get_availability_zones().names: # spreads it across all az's
-    #server = aws.ec2.Instance(f'web-server-{x}-{az}',
-    server = aws.ec2.SpotInstanceRequest(f'webserver-{x}-{az}',
+ #for az in aws.get_availability_zones().names: # spreads it across all az's
+  for y in range(0,2): # spreads it across all 3 subnets that are attached to the vpc
+    server = aws.ec2.Instance(f'webserver-{x}-{y}',
+    #server = aws.ec2.SpotInstanceRequest(f'webserver-{x}-{y}', # spot instancetemplate for testing
       instance_initiated_shutdown_behavior="terminate",
       instance_type=size,
-      vpc_security_group_ids=[security_group.id],
       ami=ami.id,
       key_name=key.id,
-      spot_price=0.25,
-      #availability_zone=az,
+      #spot_price=0.25, # uncomment when using spot
+      vpc_security_group_ids=[security_group.id],
+      subnet_id=myvpc.public_subnet_ids[y],
       root_block_device=root_ebs,
       tags={
-          "Name":f'webservers-{x}-{az}',
+          "Name":f'webserver-{x}-publicsubnet-{y}',
+          #"spot":"yes", # uncomment when using spot
       },
-      subnet_id=
-      #ebs_block_devices=[aws.ec2.InstanceEbsBlockDeviceArgs(
-      #  delete_on_termination=True,
-      #  encrypted=True,
-      #  volume_size=10,
-      #  device_name = "xvdd",
-      #  tags={
-      #    "Name":f'ebs-volume-{x}-{az}',
-      #},
-      #
-      #)]
+      ebs_block_devices=[aws.ec2.InstanceEbsBlockDeviceArgs(
+        delete_on_termination=True,
+        encrypted=True,
+        volume_size=10,
+        device_name = "xvdd",
+        tags={
+            "Name":f'ebs-volume-{x}-publicsubnet-{y}',
+      },
+      )],
+
     opts=ResourceOptions(ignore_changes=["spot_price"], depends_on=[security_group,key]),
     )
     ips.append(server.public_ip)
     hostnames.append(server._name)
 
-export("server_name",hostnames)
-"""
+export("server_names",hostnames)
