@@ -1,0 +1,11 @@
+{
+    "name": "aws-classic-ts-eks-vpc-sg-default-rules",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.36.0",
+        "@pulumi/awsx": "^0.40.0",
+        "@pulumi/eks": "^0.41.2"
+    }
+}

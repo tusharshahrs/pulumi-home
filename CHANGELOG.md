@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## (2022-07-28)
+- added aws-classic-py-multiple-ec2-ebs
+## (2022-07-26)
+- added aws-classic-ts-eks-vpc-sg-default-rules
+- added aws-classic-ts-vpc-get-zones-awsx
 ## (2022-07-08)
 - added google-native-py-bigquerydatatransfer
 - added aws-classic-py-vpc-msk-kafka-client
@@ -67,8 +72,8 @@
 - added azure-ts-managedinstance
 
 ## (2021-11-02)
-- added azure-ts-serverless-www-html
-- renamed azure-ts-serveless-www-html to azure-ts-serverless-www-html. Added the `r` at the end of `serve` to get `server`
+- added azure-ts-serverless-www-HTML
+- renamed azure-ts-serveless-www-HTML to azure-ts-serverless-www-HTML. Added the `r` at the end of `serve` to get `server`
 
 ## (2021-10-18)
 - added azure-go-sqlserver-servervulnerabilityassessment
