@@ -1,4 +1,4 @@
-# AWS EKS with vpc via AWSX package in Typescript
+# AWS EKS with vpc via AWSX package in TypeScript
 
 AWS vpc built with [awsx package](https://www.pulumi.com/registry/packages/awsx/installation-configuration/) and eks with no security groups, therefore, the [default rules](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html) for egress and ingress will apply.
 
