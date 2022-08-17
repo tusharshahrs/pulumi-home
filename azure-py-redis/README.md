@@ -48,7 +48,7 @@ We call the [listrediskeys](https://www.pulumi.com/registry/packages/azure-nativ
 
    Updating (dev2)
 
-    View Live: https://app.pulumi.com/shaht/azure-py-redis/dev2/updates/1
+    View Live: https://app.pulumi.com/myuser/azure-py-redis/dev2/updates/1
 
         Type                                     Name                 Status
     +   pulumi:pulumi:Stack                      azure-py-redis-dev2  created
