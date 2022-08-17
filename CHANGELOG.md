@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## (2022-07-28)
+## (2022-08-17)
+
+- added azure-py-redis
+
+## (2022-08-16)
 
 - added azure-ts-synapse-bigdatapool
 
