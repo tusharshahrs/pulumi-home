@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-08-18)
+
+- added aws-classic-ts-vpc-peeringconectionoption
 ## (2022-08-17)
 
 - added azure-py-redis
