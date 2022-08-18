@@ -21,7 +21,6 @@ jobs:
             "aws-classic-py-get-ami",
             "aws-classic-py-get-regions",
             "aws-classic-py-aws-load-balancer-controller-helm-release",
-            "aws-classic-py-multiple-ec2-ebs",
             "aws-classic-py-vpc-msk-kafka-client",
           ]
     steps:
@@ -31,14 +30,6 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Remove any old instances of Pulumi AWS resource provider plugins
-        run: | 
-            echo "removing aws plugins"
-            pulumi plugin rm resource aws
-      - name: Install pulumi aws plugin
-        run: | 
-            echo "installing aws plugins"
-            pulumi plugin install resource aws
       - run: |
           echo "python3 venv setup"
           python3 -m venv venv
