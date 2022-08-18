@@ -28,8 +28,10 @@ jobs:
           echo "Re-installing aws plugins"
           echo "python pip3 install"
           pip3 install -r requirements.txt
-          pulumi plugin rm resource aws -a -y
-          pulumi plugin install resource aws
+      - name: Install Pulumi AWS resource provider plugins
+        run: | 
+            pulumi plugin rm resource aws -a -y
+            pulumi plugin install resource aws --non-interactive --reinstall
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -45,6 +47,5 @@ jobs:
           comment-on-pr: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           work-dir: ${{matrix.python-example }}
-          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
