@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8.x", "3.9.x"]
+        python-version: ["3.9.x"]
         python-example:
           [
             "aws-classic-py-vpc-quickstart",
@@ -30,13 +30,17 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - run: |
+      - name: Setup python env
+        run: |
           echo "python3 venv setup"
           python3 -m venv venv
           echo "python3 source activate"
           source venv/bin/activate
           echo "python pip3 install"
           pip3 install -r requirements.txt
+        working-directory: ${{ matrix.python-example }}
+      - name: Install Pulumi AWS resource provider plugins
+        run: pulumi plugin install resource aws v5.4.0 --non-interactive --reinstall
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
