@@ -36,9 +36,8 @@ How to setup your **ACCESS TOKEN** - Only need to do this once, no need to do it
 1. On your cli: pulumi login
 
 ## AWS
-
-| Example                                                                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                  | Cloud & Language                                                                                                                                                                                                                                       |
-| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+Example| Description | Cloud & Language   |
+------| ------ | ---------------- |
 | [aws-classic-ts-vpc-with-ecs-fargate-py](aws-classic-ts-vpc-with-ecs-fargate-py)                                     | vpc built-in TypeScript - independent from ecs, ecs uses vpc via stackreferences                                                                                                                                                                                                                                                                                                             | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/) [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/) |
 | [aws-classic-ts-sshkey](aws-classic-ts-sshkey)                                                                       | ssh key                                                                                                                                                                                                                                                                                                                                                                                      | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)                                                                                                                         |
 | [aws-classic-ts-vpc-crosswalk](aws-classic-ts-vpc-crosswalk)                                                         | vpc built-in TypeScript via [crosswalk](https://www.pulumi.com/docs/guides/crosswalk/aws/vpc/)                                                                                                                                                                                                                                                                                               | [![AWS TYPESCRIPT](https://img.shields.io/badge/AWS--CLASSIC-TYPESCRIPT-blue)](https://www.pulumi.com/docs/reference/pkg/aws/)                                                                                                                         |
@@ -76,9 +75,8 @@ How to setup your **ACCESS TOKEN** - Only need to do this once, no need to do it
 | [aws-classic-py-multiple-ec2-ebs](aws-classic-py-multiple-ec2-ebs)                                                   | multilanguage [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) keypair, ami, multiple ec2s with ebs block, with apply                                                                                                                                                                                                                                             | [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)                                                                                                                                |
 
 ## Azure
-
-| Example                                                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Cloud & Language                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+Example| Description | Cloud & Language   |
+------| ------ | ---------------- |
 | [azure-classic-py-insights](azure-classic-py-insights)                                               | azure classic resource group, workspace & insights. azure native resource group & workspace mixed with azure classic insights                                                                                                                                                                                                                                                                                                                                                       | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)                                                                                                                                                       |
 | [azure-py-insights](azure-py-insights)                                                               | azure native resource group, workspace & azure classic insights. azure native resource group & workspace mixed with azure classic insights                                                                                                                                                                                                                                                                                                                                          | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)                                                                                                                                                       |
 | [azure-py-vnet](azure-py-vnet)                                                                       | azure virtual network with 2 subnets.                                                                                                                                                                                                                                                                                                                                                                                                                                               | [![AZURE PYTHON](https://img.shields.io/badge/AZURE-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/azure-native/)                                                                                                                                                       |
@@ -134,24 +132,24 @@ How to setup your **ACCESS TOKEN** - Only need to do this once, no need to do it
 
 We have setup [Pulumi GitHub Actions](https://www.pulumi.com/docs/guides/continuous-delivery/github-actions/#pulumi-github-actions).
 
-1.  Located in [.github/workflows](.github/workflows)
+1. Located in [.github/workflows](.github/workflows)
 
-1.  Pull WorkFlow Files for Python with comments by GitHub actions
+1. Pull WorkFlow Files for Python with comments by GitHub actions
 
     - aws [pull_request_python_aws.yml](.github/workflows/pull_request_python_aws.yml)
     - azure [pull_request_python_azure.yml](.github/workflows/pull_request_python_azure.yml)
     - gcp [pull_request_python_gcp.yml](.github/workflows/pull_request_python_gcp.yml)
 
-1.  Pull WorkFlow Files for TypeScript with comments by GitHub actions
+1. Pull WorkFlow Files for TypeScript with comments by GitHub actions
 
     - aws [pull_request_typescript_aws.yml](.github/workflows/pull_request_typescript_aws.yml)
     - azure [pull_request_typescript_azure.yml](.github/workflows/pull_request_typescript_azure.yml)
 
-1.  Pull WorkFlow Files for Go with comments by GitHub actions
+1. Pull WorkFlow Files for Go with comments by GitHub actions
 
     - aws, azure, & gcp [pull_request_go.yml](.github/workflows/pull_request_go.yml)
 
-1.  SuperLinter setup
+1. SuperLinter setup
 
     - [super-linter](https://github.com/github/super-linter) setup
     - superlinter.yml - `.github/workflows/superlinter.yml`
@@ -161,12 +159,12 @@ We have setup [Pulumi GitHub Actions](https://www.pulumi.com/docs/guides/continu
     - VALIDATE_PYTHON_ISORT turned OFF
     - VALIDATE_TYPESCRIPT_STANDARD turned OFF
 
-1.  AWS SSO login in for GitHub Actions
+1. AWS SSO login in for GitHub Actions
 
     - Set this[AWS SESSION TOKEN](https://github.com/aws-actions/configure-aws-credentials/blob/master/action.yml#L19) in pipeline
     - Set the token via [aws-sso-creds get](https://github.com/jaxxstorm/aws-sso-creds#get-credentials)
 
-1.  Removed from githubactions pipeline due to service principal issues even though preview and up work via cli
+1. Removed from githubactions pipeline due to service principal issues even though preview and up work via cli
     - azure-ts-keyvault, azure-classic-ts-datalakegen2, azure-classic-ts-datafactory
     - azure-py-insights, azure-classic-py-insights, azure-py-aks-diagnosticsetting
 
