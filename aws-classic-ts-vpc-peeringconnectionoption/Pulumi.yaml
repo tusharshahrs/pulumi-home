@@ -1,3 +1,3 @@
-name: aws-classic-ts-vpc-peeringconectionoption
+name: aws-classic-ts-vpc-peeringconnectionoption
 runtime: nodejs
 description: A minimal AWS TypeScript Pulumi program
