@@ -26,10 +26,10 @@ jobs:
           echo "python3 source activate"
           source venv/bin/activate
           echo "Re-installing aws plugins"
-          pulumi plugin rm resource aws -a -y
-          pulumi plugin install resource aws
           echo "python pip3 install"
           pip3 install -r requirements.txt
+          pulumi plugin rm resource aws -a -y
+          pulumi plugin install resource aws
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
