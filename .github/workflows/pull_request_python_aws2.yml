@@ -30,7 +30,7 @@ jobs:
           pip3 install -r requirements.txt
         working-directory: ${{ matrix.python-example }}
       - name: Install Pulumi AWS resource provider plugins
-        run: pulumi plugin install resource aws --non-interactive --reinstall
+        run: pulumi plugin install resource aws v5.4.0 --non-interactive --reinstall
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
