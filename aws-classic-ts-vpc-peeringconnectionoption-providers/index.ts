@@ -45,7 +45,6 @@ const peerVpcPeeringConnection = new aws.ec2.VpcPeeringConnection(`${name}-peerV
     peerVpcId: peervpc.id,
     peerOwnerId: peerOwnerAccountId,
     peerRegion: pulumi.interpolate`${accepter_oregon.region}`,
-    //autoAccept: true,
     autoAccept: false,
     tags: {
         Side: "Requester",
@@ -62,7 +61,6 @@ export const peerVpcPeeringConnection_id = peerVpcPeeringConnection.id;
 const peerVpcPeeringConnectionAccepter = new aws.ec2.VpcPeeringConnectionAccepter(`${name}-peerVpcPeeringConnectionAccepter`, {
     vpcPeeringConnectionId: peerVpcPeeringConnection.id,
     autoAccept: true,
-    //autoAccept: false,
     tags: {
         Side: "Accepter",
     },
