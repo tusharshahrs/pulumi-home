@@ -1,7 +1,7 @@
 # AWS 2 VPCs with VPCPeeringConnection and PeeringConnectionOptions with Providers
   Deploying 2 vpcs in different regions via providers and then connecting them via[vpcpeeringconnection](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/peeringconnectionoptions/#cross-account-usage) cross account. All same aws account, but will work on cross account.
 # Special Instructions for cross account
-  In the `peerVpcPeeringConnectionAccepter` resource, make sure you set `autoAccept: false,` when you are working cross account. Uncomment `requesterPeeringConnectionOptions` & `accepterPeeringConnectionOptions` blocks at the bottom when working cross account.
+  Uncomment `requesterPeeringConnectionOptions` & `accepterPeeringConnectionOptions` blocks at the bottom when working cross account.
 
 ## Deploying
 
