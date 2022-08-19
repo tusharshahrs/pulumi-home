@@ -1,5 +1,5 @@
 # AWS 2 VPCs with VPCPeeringConnection and PeeringConnectionOptions
-Deploying 2 vpcs in SAME regions connecting them viavpcpeeringconnection 
+Deploying 2 vpcs in SAME regions connecting them viavpcpeeringconnection
 
 ## Deploying
 
@@ -23,7 +23,7 @@ Deploying 2 vpcs in SAME regions connecting them viavpcpeeringconnection
    ```
  1. Populate the config
 
-   Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html). 
+   Here are aws [endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html).
    ```bash
    pulumi config set aws:region us-east-2 # any valid aws region endpoint
    ```
