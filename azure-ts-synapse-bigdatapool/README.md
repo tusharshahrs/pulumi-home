@@ -12,7 +12,8 @@ import * as synapse from "@pulumi/azure-native/synapse/v20210601preview";
 ```
 
 ## Special Note
-  To use `libraryrequirements:` you would set the input [customLibraries](https://www.pulumi.com/registry/packages/azure-native/api-docs/synapse/bigdatapool/#customlibraries_nodejs) that has a field called [LibraryInfo](https://www.pulumi.com/registry/packages/azure-native/api-docs/synapse/bigdatapool/#libraryinfo) which has a property called `containerName` that says: `Storage blob container name`. This is where the requirements.txt file and any libraries that are needed for the big data pool would be uploaded. We have an example that uploads everything in wwwroot to the blob storage called [azure-ts-appservice](https://github.com/pulumi/examples/tree/master/azure-ts-appservice)
+  To use `libraryrequirements:` you would set the input [customLibraries](https://www.pulumi.com/registry/packages/azure-native/api-docs/synapse/bigdatapool/#customlibraries_nodejs) that has a field called [LibraryInfo](https://www.pulumi.com/registry/packages/azure-native/api-docs/synapse/bigdatapool/#libraryinfo) which has a property called `containerName` that says: `Storage blob container name`.
+  This is where the requirements.txt file and any libraries that are needed for the big data pool would be uploaded. We have an example that uploads everything in wwwroot to the blob storage called [azure-ts-appservice](https://github.com/pulumi/examples/tree/master/azure-ts-appservice)
 
 
 ## Deployment
