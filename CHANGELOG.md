@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-08-19)
+- added aws-classic-ts-vpc-peeringconnectionoption-providers
 ## (2022-08-18)
 
 - added aws-classic-ts-vpc-peeringconnectionoption
