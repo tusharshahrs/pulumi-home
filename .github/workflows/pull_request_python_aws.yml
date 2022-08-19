@@ -7,10 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8.x', '3.9.x']
-        python-example: ['aws-classic-py-vpc-quickstart', 'aws-classic-py-beanstalk', 'aws-classic-py-eks-spot-mg', 'aws-classic-py-s3-staticwebsite',
-                         'aws-classic-py-apigateway-lambda-serverless', 'aws-classic-py-dynamodb', 'aws-classic-py-vpc', 'aws-classic-py-eks-spot-nodegroups',
-                         'aws-classic-py-get-ami', 'aws-classic-py-get-regions', 'aws-classic-py-aws-load-balancer-controller-helm-release']
+        python-version: ["3.9.x"]
+        python-example:
+          [
+            "aws-classic-py-vpc-quickstart",
+            "aws-classic-py-beanstalk",
+            "aws-classic-py-eks-spot-mg",
+            "aws-classic-py-s3-staticwebsite",
+            "aws-classic-py-apigateway-lambda-serverless",
+            "aws-classic-py-dynamodb",
+            "aws-classic-py-vpc",
+            "aws-classic-py-eks-spot-nodegroups",
+            "aws-classic-py-get-ami",
+            "aws-classic-py-get-regions",
+            "aws-classic-py-aws-load-balancer-controller-helm-release",
+            "aws-classic-py-vpc-msk-kafka-client",
+          ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -18,13 +30,18 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - run: |
+      - name: Setup python env
+        run: |
           echo "python3 venv setup"
           python3 -m venv venv
           echo "python3 source activate"
           source venv/bin/activate
           echo "python pip3 install"
+          python3 -m pip install --upgrade pip
           pip3 install -r requirements.txt
+        working-directory: ${{ matrix.python-example }}
+      - name: Install Pulumi AWS resource provider plugins
+        run: pulumi plugin install resource aws v5.4.0 --non-interactive --reinstall
         working-directory: ${{ matrix.python-example }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

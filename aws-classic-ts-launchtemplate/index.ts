@@ -66,7 +66,7 @@ const myamiId = aws.ec2.getAmi({
     mostRecent: true,
     filters: [{
         name: "name",
-        values: ["amzn2-ami-hvm-2.0.????????-x86_64-gp2"],
+        values: ["amzn2-ami-k*-hvm-*-x86_64-gp2"],
     }],
 }, { async: true }).then(ami => ami.id);
 
