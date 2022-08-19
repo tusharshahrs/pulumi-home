@@ -12,7 +12,7 @@ const accepter_oregon = new aws.Provider(`${name}-awsoregonoprovider`, {
   });
 
 export const ohio_provider_region = requester_ohio.region;
-export const oregon_provider_region = requester_ohio.region;
+export const oregon_provider_region = accepter_oregon.region;
 
 const mainvpc = new aws.ec2.Vpc(`${name}-mainVpc`, 
     {
@@ -35,14 +35,17 @@ const peervpc = new aws.ec2.Vpc(`${name}-peerVpc`,
 );
 
 export const peervpc_name = peervpc.id;
-
 const peerCallerIdentity = aws.getCallerIdentity({});
+export const peerOwnerAccountId = pulumi.secret(peerCallerIdentity.then(myidentity =>myidentity.accountId))
+
 
 // Requester's side of the connection.
 const peerVpcPeeringConnection = new aws.ec2.VpcPeeringConnection(`${name}-peerVpcPeeringConnection`, {
     vpcId: mainvpc.id,
     peerVpcId: peervpc.id,
-    peerOwnerId: peerCallerIdentity.then(peerCallerIdentity => peerCallerIdentity.accountId),
+    peerOwnerId: peerOwnerAccountId,
+    peerRegion: pulumi.interpolate`${accepter_oregon.region}`,
+    //autoAccept: true,
     autoAccept: false,
     tags: {
         Side: "Requester",
@@ -51,18 +54,26 @@ const peerVpcPeeringConnection = new aws.ec2.VpcPeeringConnection(`${name}-peerV
     provider: requester_ohio,
 });
 
+export const peerVpcPeeringConnection_acceptstatus = peerVpcPeeringConnection.acceptStatus;
+export const peerVpcPeeringConnection_id = peerVpcPeeringConnection.id;
+
 
 // Accepter's side of the connection.
 const peerVpcPeeringConnectionAccepter = new aws.ec2.VpcPeeringConnectionAccepter(`${name}-peerVpcPeeringConnectionAccepter`, {
     vpcPeeringConnectionId: peerVpcPeeringConnection.id,
     autoAccept: true,
+    //autoAccept: false,
     tags: {
         Side: "Accepter",
     },
-}, {
-    provider: accepter_oregon,
+}, 
+    {
+     provider: accepter_oregon, dependsOn: [mainvpc, peervpc]
 });
 
+export const peerVpcPeeringConnectionAccepter_status = peerVpcPeeringConnectionAccepter.acceptStatus
+
+/*
 const requesterPeeringConnectionOptions = new aws.ec2.PeeringConnectionOptions(`${name}-requesterPeeringConnectionOptions`, {
     vpcPeeringConnectionId: peerVpcPeeringConnectionAccepter.id,
     requester: {
@@ -72,6 +83,8 @@ const requesterPeeringConnectionOptions = new aws.ec2.PeeringConnectionOptions(`
     provider: requester_ohio,
 });
 
+export const requesterPeeringConnectionOptions_info = requesterPeeringConnectionOptions.id;
+
 const accepterPeeringConnectionOptions = new aws.ec2.PeeringConnectionOptions(`${name}accepterPeeringConnectionOptions`, {
     vpcPeeringConnectionId: peerVpcPeeringConnectionAccepter.id,
     accepter: {
@@ -80,3 +93,6 @@ const accepterPeeringConnectionOptions = new aws.ec2.PeeringConnectionOptions(`$
 }, {
     provider: accepter_oregon,
 });
+
+export const accepterPeeringConnectionOptions_info = accepterPeeringConnectionOptions.id;
+*/
