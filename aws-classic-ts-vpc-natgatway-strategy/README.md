@@ -1,4 +1,4 @@
-# AWS AWSX Multilang Vpc Single Nat Gateway in Typescript
+# AWS AWSX Multilang Vpc Single Nat Gateway in TypeScript
 
 [AWSX](https://www.pulumi.com/registry/packages/awsx/)multilang VPC, igw, single nat gateway strategy, public and private subnets
 

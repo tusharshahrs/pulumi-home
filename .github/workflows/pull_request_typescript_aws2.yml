@@ -27,7 +27,7 @@ jobs:
         working-directory: ${{ matrix.typescript-example }}
       - name: Install Pulumi AWS resource provider plugins
         run: pulumi plugin install resource aws v5.4.0 --non-interactive --reinstall
-        working-directory: ${{ matrix.python-example }}
+        working-directory: ${{ matrix.typescript-example }}
       - uses: pulumi/actions@v3
         with:
           command: preview
