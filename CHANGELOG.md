@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-08-22)
+- added aws-classic-py-vpc-awsx-natgateway-strategy
+- added aws-classic-ts-vpc-natgatway-strategy
 ## (2022-08-19)
 - added aws-classic-ts-vpc-peeringconnectionoption-providers
 ## (2022-08-18)
