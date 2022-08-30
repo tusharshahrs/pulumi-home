@@ -1,6 +1,6 @@
 # CHANGELOG
 ## (2022-08-30)
- - added aws-classic-ts-vpc-get-zones-awsx
+- added aws-classic-ts-vpc-get-zones-awsx
 ## (2022-08-22)
 - added aws-classic-py-vpc-awsx-natgateway-strategy
 - added aws-classic-ts-vpc-natgatway-strategy
