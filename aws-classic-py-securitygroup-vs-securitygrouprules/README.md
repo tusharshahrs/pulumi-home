@@ -1,6 +1,6 @@
 # AWS AWSX Multilang Vpc Single Nat Gateway SecurityGroup vs SecurityGroupRules in Python
 
-[AWSX](https://www.pulumi.com/registry/packages/awsx/)multilang VPC, igw, single nat gateway strategy, public and private subnets. [SecurityGroup](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/securitygroup/) vs [SecurityGroupRules](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/securitygrouprule/)
+[AWSX](https://www.pulumi.com/registry/packages/awsx/) multilang VPC, igw, single nat gateway strategy, public and private subnets. [SecurityGroup](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/securitygroup/) vs [SecurityGroupRules](https://www.pulumi.com/registry/packages/aws/api-docs/ec2/securitygrouprule/).  SecurityGroupRules does a replace and recreate.  SecurityGroup only updates the ports
 
 ## Deployment
 
