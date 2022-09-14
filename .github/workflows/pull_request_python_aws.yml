@@ -22,7 +22,7 @@ jobs:
             "aws-classic-py-get-regions",
             "aws-classic-py-aws-load-balancer-controller-helm-release",
             "aws-classic-py-vpc-msk-kafka-client",
-            "aws-classic-py-multiple-ec2-ebs", "aws-classic-py-vpc-awsx-natgateway-strategy"
+            "aws-classic-py-vpc-awsx-natgateway-strategy"
           ]
     steps:
       - uses: actions/checkout@v3
