@@ -10,7 +10,8 @@ jobs:
         python-version: ["3.9.x"]
         python-example:
           [
-            "aws-classic-py-multiple-ec2-ebs", "aws-classic-py-vpc-awsx-natgateway-strategy"
+            "aws-classic-py-multiple-ec2-ebs", "aws-classic-py-vpc-awsx-natgateway-strategy",
+            "aws-classic-py-vpc-msk-kafka-client"
           ]
     steps:
       - uses: actions/checkout@v3
