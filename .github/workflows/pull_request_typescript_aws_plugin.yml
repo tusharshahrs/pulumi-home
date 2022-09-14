@@ -1,4 +1,4 @@
-name: Pulumi_Pull_Request_Typescript_AWS
+name: Pulumi_Pull_Request_Typescript_AWS_plugin
 on:
   - pull_request
 jobs:
@@ -12,7 +12,7 @@ jobs:
                              'aws-classic-ts-vpc-crosswalk', 'aws-classic-ts-sshkey', 'aws-classic-ts-acm-awsguard', 'aws-classic-ts-launchtemplate',
                              'aws-classic-ts-vpc-ecs-autoscaling-lt', 'aws-classic-ts-eks-spot-mg', 'aws-classic-ts-lakeformation', 'aws-classic-ts-eks-different-awsprofile',
                              'aws-classic-ts-ebs-volume-snapshot', 'aws-classic-ts-ec2-instance-with-ebs-volume', 'aws-classic-ts-eks-cert-manager', 'aws-classic-ts-eks-vpc-sg-default-rules',
-                             'aws-classic-ts-vpc-peeringconnectionoption', 'aws-classic-ts-vpc-peeringconnectionoption-providers',
+                             'aws-classic-ts-vpc-peeringconnectionoption', 'aws-classic-ts-vpc-peeringconnectionoption-providers', 'aws-classic-ts-vpc-get-zones-awsx',
                              'aws-classic-ts-vpc-natgatway-strategy']
     steps:
       - uses: actions/checkout@v3
@@ -30,6 +30,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - run: npm install
         working-directory: ${{ matrix.typescript-example }}
+      - name: Install Pulumi AWS resource provider plugins
+        run: pulumi plugin install resource aws v5.4.0 --non-interactive --reinstall
+        working-directory: ${{ matrix.typescript-example }}  
       - uses: pulumi/actions@v3
         with:
           command: preview
