@@ -7,7 +7,6 @@ import * as eks from "@pulumi/eks";
 const config = new pulumi.Config();
 const vpc_cidrs = config.get("vpc_cidr") || "10.0.0.0/24"
 const availability_zones = config.getNumber("number_of_availability_zones") || 3
-const nat_gateways = config.getNumber("number_of_nat_gateways")|| 1
 
 const myname = 'demo'
 
@@ -15,24 +14,24 @@ const myname = 'demo'
 const myvpc = new awsx.ec2.Vpc(`${myname}-vpc`, {
     cidrBlock: vpc_cidrs,
     numberOfAvailabilityZones: availability_zones,
-    numberOfNatGateways: nat_gateways,
+    natGateways: {strategy: "Single"}
   });
 
 // export vpc outputs
-export const vpc_id = myvpc.id;
+export const vpc_id = myvpc.vpcId;
 export const vpc_az_zones = availability_zones;
 export const vpc_cidr = vpc_cidrs;
-export const vpc_number_of_nat_gateways = nat_gateways;
+export const vpc_number_of_nat_gateways = 1;
 export const vpc_private_subnet_ids = myvpc.privateSubnetIds;
 export const vpc_public_subnet_ids = myvpc.publicSubnetIds;
 
 // create a vpc, don't pass in security group.  Default ones will be created.
 const mycluster = new eks.Cluster(`${myname}-eks`, {
     instanceType: "t3a.micro",
-    version: "1.21",
+    version: "1.22",
     nodeRootVolumeSize: 10,
     encryptRootBlockDevice: true,
-    vpcId: myvpc.id,
+    vpcId: myvpc.vpcId,
     publicSubnetIds: myvpc.publicSubnetIds,
     privateSubnetIds: myvpc.privateSubnetIds,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"],
