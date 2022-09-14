@@ -86,8 +86,8 @@ security_group_rule1 = ec2.SecurityGroupRule(f'{myname}-securitygrouprules1',
 
 security_group_rule2 = ec2.SecurityGroupRule(f'{myname}-securitygrouprules2',
     type="egress",
-    from_port=81, # After the 1st pulumi up, change the port to 81 to see create-replace issue
-    to_port=81,   # After the 1st pulumi up, change the port to 81 to see create-replace issue
+    from_port=80, # After the 1st pulumi up, change the port to 81 to see create-replace issue
+    to_port=80,   # After the 1st pulumi up, change the port to 81 to see create-replace issue
     protocol="tcp",
     cidr_blocks=['0.0.0.0/0'],
     security_group_id=security_group_with_sg_rules.id,
