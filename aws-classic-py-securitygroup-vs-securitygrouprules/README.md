@@ -4,10 +4,11 @@
 
 ## Speical Note
 The issue we are working around: SecurityGroupRules does a replace and recreate(what we don't want).  SecurityGroup only updates the ports(what we want).
+```html
+NOTE on SecurityGroup and SecurityGroupRules: This provider currently provides both a standalone Security Group Rule resource (a single ingress or egress rule), and a Security Group resource with ingress and egress rules defined in-line. 
+At this time you cannot use a Security Group with in-line rules in conjunction with any Security Group Rule resources. Doing so will cause a conflict of rule settings and will overwrite rules.
 ```
-NOTE on Security Groups and Security Group Rules: This provider currently provides both a standalone Security Group Rule resource (a single ingress or egress rule), and a Security Group resource with ingress and egress rules defined in-line. At this time you cannot use a Security Group with in-line rules in conjunction with any Security Group Rule resources. Doing so will cause a conflict of rule settings and will overwrite rules.
-```
- 
+
 ## Deployment
 
 1. Initialize a new stack called: `dev` via [pulumi stack init](https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/).
