@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-09-13)
+- added aws-classic-py-securitygroup-vs-securitygrouprules
 ## (2022-09-01)
 - added aws-classic-py-vpc-get-zones-awsx
 ## (2022-08-30)

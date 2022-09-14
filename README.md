@@ -80,6 +80,8 @@ Example| Description | Cloud & Language   |
 | [aws-classic-py-multiple-ec2-ebs](aws-classic-py-multiple-ec2-ebs)| multilanguage [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) keypair, ami, multiple ec2s with ebs block, with apply| [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)|
 | [aws-classic-py-vpc-awsx-natgateway-strategy](aws-classic-py-vpc-awsx-natgateway-strategy)| multilanguage [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) vpc, natgateway single zone strategy, igw, public and private subnets| [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)|
 | [aws-classic-py-vpc-awsx-natgateway-strategy](aws-classic-py-vpc-awsx-natgateway-strategy)| [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) multilang vpc with single nat gateway strategy, availability zones, public and private subnets, NO APPLY| [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)|
+| [aws-classic-py-securitygroup-vs-securitygrouprules](aws-classic-py-securitygroup-vs-securitygrouprules)| [awsx vpc](https://www.pulumi.com/registry/packages/awsx/api-docs/ec2/vpc/) multilang vpc with single nat gateway strategy, availability zones, public and private subnets,  securitygroups vs securitygroup rules| [![AWS PYTHON](https://img.shields.io/badge/AWS--CLASSIC-PYTHON-green)](https://www.pulumi.com/docs/reference/pkg/aws/)|
+
 ## Azure
 Example| Description | Cloud & Language   |
 ------| ------ | ---------------- |
