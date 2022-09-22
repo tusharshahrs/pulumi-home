@@ -1,0 +1,12 @@
+{
+    "name": "aws-classic-ts-securitygroup-vs-securitygrouprules",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^14"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.40.1",
+        "@pulumi/aws": "^5.14.0",
+        "@pulumi/awsx": "1.0.0-beta.10"
+    }
+}
