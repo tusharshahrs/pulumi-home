@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## (2022-09-22)
+- added aws-classic-ts-securitygroup-vs-securitygrouprules
+
 ## (2022-09-13)
 - added aws-classic-py-securitygroup-vs-securitygrouprules
 ## (2022-09-01)
