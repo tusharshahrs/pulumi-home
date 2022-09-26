@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-09-26)
+- added aws-classic-ts-vpc-rds-postgres
 ## (2022-09-22)
 - added aws-classic-ts-securitygroup-vs-securitygrouprules
 
