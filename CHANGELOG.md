@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-10-04)
+- added aws-classic-ts-vpc-routetables
 ## (2022-09-26)
 - added aws-classic-ts-vpc-rds-postgres
 ## (2022-09-22)
