@@ -148,8 +148,7 @@ for (let x = 0; x < 3; x++ )
                        natGatewayId: nat_gateways[0].id,
                     },
                 ],
-            }, /*{ignoreChanges: ["routes"]}*/); // works after the 1st time
-    
+            });
     
     const private_rt_association = new aws.ec2.RouteTableAssociation(`${name}-private-rt-association-${x}`, {
         routeTableId: private_route_table.id,
