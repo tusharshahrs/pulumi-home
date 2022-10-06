@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## (2022-10-05)
+- aws-classic-ts-vpc-routetables-no-loops
 ## (2022-10-04)
 - added aws-classic-ts-vpc-routetables
 ## (2022-09-26)
