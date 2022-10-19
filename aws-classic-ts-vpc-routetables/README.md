@@ -1,6 +1,7 @@
-# AWS Vpc via EC2 in TypeScript
+# AWS VPC, Subnets, Route Table, and Route Table Association with Nat Gateway via EC2 in TypeScript
 
-[AWS](https://www.pulumi.com/registry/packages/aws/) vpc, subnet, igw, nat gateway, routes, route tables, route table association, public and private subnets.
+[AWS](https://www.pulumi.com/registry/packages/aws/) vpc, igw, nat gateway, route tables, route table association, public and private subnets.  Random diffs in
+routetable on every pulumi up
 
 ```
 

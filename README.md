@@ -132,6 +132,12 @@ Example| Description | Cloud & Language   |
 | ------------------------------------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | [datadog-py-monitorjson](datadog-py-monitorjson) | datadog monitorjson | [![DATADOG PYTHON](https://img.shields.io/badge/DATADOG-Python-blueviolet)](https://www.pulumi.com/registry/packages/datadog/api-docs/) |
 
+## Pulumi
+
+| Example                                          | Description         | Cloud & Language                                                                                                                        |
+| ------------------------------------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [pulumi-ts-map-string-string](pulumi-ts-map-string-string) | pulumi with no cloud. output `Map<string,string>` is empty while console.log shows the value | [![DATADOG PYTHON](https://img.shields.io/badge/DATADOG-Python-blueviolet)](https://www.pulumi.com/registry/packages/datadog/api-docs/) |
+
 ## Workshops
 
 | Example                                | Description                                                   | Cloud & Language                                                                                                                   |

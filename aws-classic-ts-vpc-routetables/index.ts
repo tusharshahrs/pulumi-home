@@ -1,10 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
 
-import * as av from "@pulumi/aws"
-
-const name = "shaht"
+const name = "demo"
 const myvpc = new aws.ec2.Vpc(`${name}-vpc`,
 {
     cidrBlock: "10.0.0.0/23",
@@ -109,12 +106,14 @@ for (let x = 0; x < 3; x++ )
             `${name}-natgateway-${x}`,
             {
                 subnetId: public_subnet.id,
-                allocationId: eip.id,
-                tags: {Name: `${name}-natgateway-${x}`}
-            },{parent: eip, dependsOn: eip});
+                allocationId: eip.allocationId,
+                tags: {
+                    Name: `${name}-natgateway-${x}`
+                }
+            },{parent: eip, dependsOn: [eip, myinternetgateway ]});
         
         eips.push(eip.tags)
-        nat_gateways.push(nat_gateway.tags)
+        nat_gateways.push(nat_gateway.id)
         current_number_of_nat_gateways += 1;
     }
 
@@ -131,12 +130,12 @@ for (let x = 0; x < 3; x++ )
                 'kubernetes.io/role/elb': '1',
             },
             mapPublicIpOnLaunch: false,
-        },{ parent: myvpc, dependsOn: nat_gateways }
+        },{ parent: myvpc, dependsOn: myvpc }
     );
     private_subnet_ids.push(private_subnet.id);
 
     
-    // The cidrBlock shows a diff and this is unexpected.
+    // The cidrBlock shows a random diff.
     const private_route_table = new aws.ec2.RouteTable(
         `${name}-private-rt-${x}`,
             {
@@ -145,7 +144,7 @@ for (let x = 0; x < 3; x++ )
                 routes: [
                     {
                        cidrBlock: '0.0.0.0/0',
-                       natGatewayId: nat_gateways[0].id,
+                       natGatewayId: pulumi.interpolate`${nat_gateways[0]}`,
                     },
                 ],
             });
