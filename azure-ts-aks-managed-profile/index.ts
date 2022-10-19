@@ -94,7 +94,7 @@ const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
         clientId: adApp.applicationId,
         secret: adSpPassword.value,
     },
-}, {dependsOn: [adSpPassword, adApp]});
+}, {deleteBeforeReplace: true,dependsOn: [adSpPassword, adApp]});
 
 export const managedcluster_name = cluster.name;
 export const managedcluster_aadprofile = cluster.aadProfile;
