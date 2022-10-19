@@ -2,6 +2,7 @@
 
 ## (2022-10-19)
 - pulumi-ts-map-string-string
+- azure-ts-aks-managed-profile
 ## (2022-10-05)
 - aws-classic-ts-vpc-routetables-no-loops
 ## (2022-10-04)
