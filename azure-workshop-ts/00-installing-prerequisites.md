@@ -31,7 +31,7 @@ You need an active Azure subscription to deploy the components of the applicatio
 
 Please be sure to have administrative access to the subscription.
 
-You will also use the command-line interface (CLI) tool to log in to an Azure subscription. You can install the CLI tool, as described [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
+You will also use the command-line interface (CLI) tool to log in to an Azure subscription. You can install the command-line tool, as described [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
 
 After you complete the installation, open a command prompt and type `az`. You should see the welcome message:
 

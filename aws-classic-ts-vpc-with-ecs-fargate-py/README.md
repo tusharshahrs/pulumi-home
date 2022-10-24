@@ -5,7 +5,7 @@
 This is [Pulumi](https://www.pulumi.com/) code for deploying your own [ECS Fargate cluster with tags](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html) written in python on top of vpc built-in TypeScript.
 
 ## Why would you do this?
-Code in whatever language you want, you can use things across go, python, typescript, and dotnet. Reuse whatever you can.
+Code in whatever language you want, you can use things across go, python, TypeScript, and dotnet. Reuse whatever you can.
 
 ## How is the vpc built?
 

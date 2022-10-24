@@ -3,7 +3,7 @@
 [AWS](https://www.pulumi.com/registry/packages/aws/) vpc, igw, nat gateway, route tables, route table association, public and private subnets.  Random diffs in
 routetable on every pulumi up
 
-```
+
 
 ## Deployment
 
@@ -44,7 +44,7 @@ routetable on every pulumi up
    ```bash
         View Live: https://app.pulumi.com/shaht/aws-classic-ts-securitygroup-vs-securitygrouprules/dev/updates/34
 
-PENDING
+
    ```
 
 1. View the outputs

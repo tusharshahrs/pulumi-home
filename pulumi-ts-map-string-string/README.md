@@ -52,12 +52,12 @@ Pulumi TypeScript Output Map<string,string> Issue.  console.log shows map output
     When writing to an output .. just use
     `Object.fromEntries(map.entries())`
     This requires the *ES2019* lib in the **tsconfig** to work
-   
+
     we don't support the JS container objects Map and Set for serialization. Likely easier to use this than remembering to convert:
-    ```
+    ```typescript
     public readonly somethingMapVar: Record<string, string>;
     ```
-   
+
 
 1. Destroy the stack
     ```bash

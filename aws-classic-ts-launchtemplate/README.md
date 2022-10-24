@@ -1,10 +1,10 @@
-# AWS EC2 instance launched via launchtemplate
+# AWS EC2 instance launched via Launchtemplate
 
 AWS EC2 instance launched via launchtemplate. The following resources are created:  vpc, securitygroup, sshkeypair,ami, role, instanceprofile, & ec2 instance is launched via a function that returns a launchtemplate. Note that there is a tags.ts where we added some tags.
 
 ## Requirements
 
-pulumi 3.0 & node.js 14.
+pulumi 3.0 & Node.js 14.
 
 ## Running the App
 

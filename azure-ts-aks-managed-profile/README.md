@@ -27,7 +27,7 @@ This example deploys an AKS cluster, creates an Azure Active AD application, cre
    ```bash
    pulumi config set azure-native:location eastus2
    ```
-   
+
 1. Run `pulumi up` to preview and deploy changes: You must select `y` to continue
   
     ```bash

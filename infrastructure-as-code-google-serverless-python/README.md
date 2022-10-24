@@ -27,7 +27,7 @@ You will need the following tools to complete this workshop:
 * A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens)
     * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/)
-* [Python](https://www.pulumi.com/docs/get-started/gcp/begin/#choose-your-language)
+* [Python 3.8 or higher](https://www.pulumi.com/docs/get-started/gcp/begin/#choose-your-language)
 * [Configure Pulumi to access your google cloud account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account)
 
 You'll need to know how to
