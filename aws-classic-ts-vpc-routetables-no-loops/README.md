@@ -2,7 +2,7 @@
 
 [AWS](https://www.pulumi.com/registry/packages/aws/) vpc, subnet, igw, nat gateway, routes, route tables, route table association, public and private subnets.
 
-```
+
 
 ## Deployment
 
