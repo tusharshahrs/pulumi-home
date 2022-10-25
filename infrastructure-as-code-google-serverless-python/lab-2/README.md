@@ -61,3 +61,50 @@ cd www
 touch index.html
 touch error.html
 ```
+
+Update the `index.html` with the following
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Serverless Example</title>
+    <script>
+        var config = {};
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("config.json");
+            config = await response.json();
+        });
+
+        async function getTheTime() {
+            const response = await fetch(`${config.api}/data`);
+            const data = await response.json();
+            document.querySelector("#now").textContent = `The cloud says it's ${new Date(data.now).toLocaleTimeString()}.`;
+        }
+    </script>
+</head>
+<body>
+    <h1>⌚ What time is it?</h1>
+    <p>
+        <button onclick="getTheTime()">Ask the cloud!</button>
+        <span id="now"></span>
+    </p>
+    <p>Deployed with 💜 by <a href="https://pulumi.com/templates">Pulumi</a>.</p>
+</body>
+</html>
+```
+
+Update the `error.html` with the following:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page not found</title>
+</head>
+<body>
+    Oops! That page wasn't found. Try our <a href="/">home page</a> instead.
+</body>
+</html>
+```
