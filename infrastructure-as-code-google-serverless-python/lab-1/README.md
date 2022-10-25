@@ -25,6 +25,14 @@ pulumi new gcp-python -y
 <b>Answer:</b> Pulumi takes the name from the directory, so the name of our new project is <code>my-first-app</code>. If you want to use a different name, use the <code>--name</code> flag or remove the <code>-y</code> flag so you can change the answer at the prompt.
 </details>
 
+## Add pulumi-synced-folder
+The **pulumi-synced-folder** is a Pulumi component that synchronizes a local folder to Google Cloud Storage. More information is available at [pulumi-synced-folder](https://github.com/pulumi/pulumi-synced-folder)
+
+
+Add the following to the bottom of the `requirements.txt`
+```python
+pulumi-synced-folder
+```
 ## Setup Virtual Environment
 
 To create our virtual environment run the following the commands:
@@ -51,4 +59,4 @@ Our project is comprised of multiple files:
 * **`Pulumi.dev.yaml`**: contains configuration values for the stack you just initialized.
 
 
-Next up, we setup the configuration and application in [Lab 2](../lab-2/).
+Next up, we setup the configuration and application in [lab 2](../lab-2/).
