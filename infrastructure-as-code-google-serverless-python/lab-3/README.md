@@ -219,3 +219,15 @@ Load the `siteURL` into a browser and see what you built!
 ```bash
 pulumi destroy -y
 ```
+
+## ShortCut - Pulumi Templates
+[Pulumi Templates](https://www.pulumi.com/templates/) are the fastest way to deploy infrastructure to AWS, Azure, and Google Cloud. After deploying, you can easily modify the infrastructure by updating the code in TypeScript, Python, Go, Java, .NET/C#, or YAML.
+
+This entire workshop can be reduced by following the [Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/) template to:
+
+```bash
+mkdir my-serverless-app && cd my-serverless-app
+pulumi new serverless-gcp-python -y
+pulumi up
+open $(pulumi stack output siteURL)
+```
