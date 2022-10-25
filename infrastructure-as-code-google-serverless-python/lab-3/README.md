@@ -70,7 +70,6 @@ site_bucket_iam_binding = gcp.storage.BucketIAMBinding(
         bucket=site_bucket.name, role="roles/storage.objectViewer", members=["allUsers"]
     ),
 )
-pulumi.export("site_bucket_iam_binding_etag", site_bucket_iam_binding.etag)
 ```
 
 ## Use a synced folder to manage the files of the website.
@@ -102,6 +101,44 @@ pulumi.export("app_bucket_url", app_bucket.url)
 ```
 
 We want to know the name of the app bucket we created.
+
+Run `pulumi up` and select `yes`
+Once the resources are up, check the output of the storage bucket.
+
+Check the outputs:
+```bash
+pulumi stack output
+```
+
+## Upload the serverless app to the storage bucket.
+Append the following to `__main__.py`
+```python
+app_archive = gcp.storage.BucketObject(
+    "app-archive",
+    gcp.storage.BucketObjectArgs(
+        bucket=app_bucket.name,
+        source=pulumi.asset.FileArchive(app_path),
+    ),
+)
+```
+## Create a Cloud Function that returns some data.
+Append the following to `__main__.py`
+```python
+data_function = gcp.cloudfunctions.Function(
+    "data-function",
+    gcp.cloudfunctions.FunctionArgs(
+        source_archive_bucket=app_bucket.name,
+        source_archive_object=app_archive.name,
+        runtime="python310",
+        entry_point="data",
+        trigger_http=True,
+    ),
+)
+
+pulumi.export("data_function_name", data_function.name)
+```
+
+We want to know the name of the function we created.
 
 Run `pulumi up` and select `yes`
 Once the resources are up, check the output of the storage bucket.
