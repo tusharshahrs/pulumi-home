@@ -1,14 +1,14 @@
-# Lab 2: Setup the Configuration and Files needed for Serverless
+# Lab 2: Setup the Configuration and Application Files for Google Cloud Serverless Function
 
 ## Configurations
-In many cases, different stacks for a single project will need differing values..
+In many cases, different stacks for a single project will need differing values.
 The key-value pairs for any given stack are stored in your project’s stack settings file, which is automatically named **Pulumi.<stack-name>.yaml**. For example, 
 `Pulumi.dev.yaml`
 
 The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
 
-Here is information on [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values)
-## Set the configuration for the environment
+More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values)
+## Set the configurations for the environment
 ```bash
 pulumi config
 ```
@@ -19,19 +19,19 @@ KEY          VALUE
 gcp:project
 ```
 
-The value for `gcp:project` could be set or empty.  First we set a bunch of variables via
-`pulumi config set`
+The value for `gcp:project` will be empty.  First, we set a bunch of variables via
+`pulumi config set` except the `gcp:project`
 ```bash
-pulumi config set gcp:region us-central1 # Set the gcp region
+pulumi config set gcp:region us-central1 # Set to any valid gcp region
 pulumi config set errorDocument  error.html
 pulumi config set indexDocument  index.html
 pulumi config set appPath ./app
 pulumi config set sitePath ./www
 ```
 
-Next, we set the `gcp:project`
+Next, set the `gcp:project`. This has to your gcp project that you have access to. If you use **pulumi-ce-team**, your workshop will `NOT WORK!`
 ```bash
-pulumi config set gcp:project pulumi-ce-team # This will be need to be your gcp project that you have access to. If you use pulumi-ce-team, your lab will NOT WORK
+pulumi config set gcp:project pulumi-ce-team
 ```
 
 Validate that all the config values are set.
@@ -108,3 +108,46 @@ Update the `error.html` with the following:
 </body>
 </html>
 ```
+
+## Create the App
+In the current location where the `Pulumi.dev.yaml` file resides we will perform the following:
+
+```bash
+mkdir app
+cd app
+touch requirement.txt
+touch main.py
+```
+
+Update the `requirements.txt` file with the following:
+```python
+functions-framework==3.2.0
+flask==2.1.0
+```
+
+Update the `main.py` file with the following:
+```python
+from datetime import datetime
+from flask import jsonify
+import functions_framework
+
+
+@functions_framework.http
+def data(request):
+
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+    }
+
+    if request.method == "OPTIONS":
+        return "", 204, headers
+
+    now = datetime.now()
+    now_in_ms = int(now.timestamp()) * 1000
+
+    headers["Content-Type"] = "application/json"
+    return jsonify({"now": now_in_ms}), 200, headers
+```
+
+Next up, [Lab 3](../lab-3/) where we build the resources
