@@ -4,7 +4,7 @@ Create all the Google Cloud Resources and deploy the function
 ## Add all the import statements
 Go back to where the `Pulumi.dev.yaml` file is located.
 
-Clear out the contents in `__main__.py` and replace it with the following:
+Clear out the contents in `__main__.py` and replace all of it with the following:
 
 ```python
 """A Google Cloud Function Python Pulumi program"""
@@ -183,4 +183,16 @@ site_config = gcp.storage.BucketObject(
         ),
     ),
 )
+```
+
+# Export the URLs of the website and serverless endpoint
+
+First, we need to join `https://storage.googleapis.com/` with the `site_bucket name` and then add the `index.html`.  To do this, we have to use an [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply)
+
+```python
+site_url_to_index = site_bucket.name.apply(
+        lambda name: f"https://storage.googleapis.com/{name}/index.html"
+    ),
+
+pulumi.export("site_url_to_index", site_url_to_index)
 ```
