@@ -29,11 +29,11 @@ index_document = config.get("indexDocument", "index.html")
 error_document = config.get("errorDocument", "error.html")
 ```
 
-## Create a storage bucket and configure it as a website
+## Create a storage bucket and configure it as a web site
 
 Append the following to `__main__.py`
 ```python
-# Create a storage bucket and configure it as a website.
+# Create a storage bucket and configure it as a web site.
 site_bucket = gcp.storage.Bucket(
     "site-bucket",
     gcp.storage.BucketArgs(
@@ -187,7 +187,7 @@ site_config = gcp.storage.BucketObject(
 
 ## Export the URLs of the website and serverless endpoint
 
-We have to call [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) to 
+We have to call [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) to
 create the URL that we need to hit.
 
 Append the following to `__main__.py`

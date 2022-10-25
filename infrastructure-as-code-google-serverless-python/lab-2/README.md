@@ -2,7 +2,7 @@
 
 ## Configurations
 In many cases, different stacks for a single project will need differing values.
-The key-value pairs for any given stack are stored in your project’s stack settings file, which is automatically named **`Pulumi.<stack-name>.yaml`**. For example, 
+The key-value pairs for any given stack are stored in your project’s stack settings file,which is automatically named **`Pulumi.<stack-name>.yaml`**. For example,
 `Pulumi.dev.yaml`
 
 The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
