@@ -1,7 +1,13 @@
-# Lab 2: Resources, Resource Providers, and Language Hosts
+# Lab 2: Setup the Configuration and Files needed for Serverless
 
-Let's talk about resources, resource providers, and language hosts.
+## Configurations
+In many cases, different stacks for a single project will need differing values..
+The key-value pairs for any given stack are stored in your project’s stack settings file, which is automatically named **Pulumi.<stack-name>.yaml**. For example, 
+`Pulumi.dev.yaml`
 
+The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
+
+Here is information on [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values)
 ## Set the configuration for the environment
 ```bash
 pulumi config
@@ -13,8 +19,8 @@ KEY          VALUE
 gcp:project
 ```
 
-The value for `gcp:project` could be set or empty.  First we will set a bunch of variables via
-[pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
+The value for `gcp:project` could be set or empty.  First we set a bunch of variables via
+`pulumi config set`
 ```bash
 pulumi config set gcp:region us-central1 # Set the gcp region
 pulumi config set errorDocument  error.html
@@ -25,10 +31,10 @@ pulumi config set sitePath ./www
 
 Next, we set the `gcp:project`
 ```bash
-pulumi config set gcp:project pulumi-ce-team # This will be your PROJECT. If you use this, your lab will NOT WORK
+pulumi config set gcp:project pulumi-ce-team # This will be need to be your gcp project that you have access to. If you use pulumi-ce-team, your lab will NOT WORK
 ```
 
-Validate that the all the values are set.
+Validate that all the config values are set.
 ```bash
 pulumi config
 ```
@@ -44,4 +50,14 @@ indexDocument  index.html
 sitePath       ./www
 ```
 
-**Note:** The *`Pulumi.dev.yaml`* contains all the values that we set via `pulumi config`
+**Note:** The *`Pulumi.dev.yaml`* contains all the updated values that we set above.
+
+## Create the index.html and error.html file
+In the current location where the `Pulumi.dev.yaml` file resides we will perform the following:
+
+```bash
+mkdir www
+cd www
+touch index.html
+touch error.html
+```
