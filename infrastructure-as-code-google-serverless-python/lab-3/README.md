@@ -46,7 +46,61 @@ pulumi.export("site_bucket_name", site_bucket.name)
 pulumi.export("site_bucket_url", site_bucket.url)
 ```
 
-Notice we want to know the name of the bucket we created.
+We want to know the name of the site bucket we created.
 
 Run `pulumi up` and select `yes`
 Once the resources are up, check the output of the storage bucket.
+
+Check the outputs:
+```bash
+pulumi stack output
+```
+
+## Create an IAM binding to allow public read access to the bucket.
+Append the following to `__main__.py`
+
+```python
+site_bucket_iam_binding = gcp.storage.BucketIAMBinding(
+    "site-bucket-iam-binding",
+    gcp.storage.BucketIAMBindingArgs(
+        bucket=site_bucket.name, role="roles/storage.objectViewer", members=["allUsers"]
+    ),
+)
+pulumi.export("site_bucket_iam_binding_etag", site_bucket_iam_binding.etag)
+```
+
+## Use a synced folder to manage the files of the website.
+Append the following to `__main__.py`
+```python
+synced_folder = synced.GoogleCloudFolder(
+    "synced-folder",
+    synced.GoogleCloudFolderArgs(
+        path=site_path,
+        bucket_name=site_bucket.name,
+    ),
+)
+```
+
+## Create another storage bucket for the serverless app.
+Append the following to `__main__.py`
+```python
+app_bucket = gcp.storage.Bucket(
+    "app-bucket",
+    gcp.storage.BucketArgs(
+        location="US",
+    ),
+)
+
+pulumi.export("app_bucket_name", app_bucket.name)
+pulumi.export("app_bucket_url", app_bucket.url)
+```
+
+We want to know the name of the app bucket we created.
+
+Run `pulumi up` and select `yes`
+Once the resources are up, check the output of the storage bucket.
+
+Check the outputs:
+```bash
+pulumi stack output
+```
