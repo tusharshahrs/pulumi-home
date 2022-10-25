@@ -2,8 +2,9 @@
 Create all the Google Cloud Resources and deploy the function
 
 ## Add all the import statements
+Go back to where the `Pulumi.dev.yaml` file is located.
 
-Clear out everything in `__main__.py` and replace it with the following:
+Clear out the contents in `__main__.py` and replace it with the following:
 
 ```python
 """A Google Cloud Function Python Pulumi program"""
@@ -26,3 +27,26 @@ app_path = config.get("appPath", "./app")
 index_document = config.get("indexDocument", "index.html")
 error_document = config.get("errorDocument", "error.html")
 ```
+
+## Create a storage bucket and configure it as a website.
+Append the following to `__main__.py`
+```python
+site_bucket = gcp.storage.Bucket(
+    "site-bucket",
+    gcp.storage.BucketArgs(
+        location="US",
+        website=gcp.storage.BucketWebsiteArgs(
+            main_page_suffix=index_document,
+            not_found_page=error_document,
+        ),
+    ),
+)
+
+pulumi.export("site_bucket_name", site_bucket.name)
+pulumi.export("site_bucket_url", site_bucket.url)
+```
+
+Notice we want to know the name of the bucket we created.
+
+Run `pulumi up` and select `yes`
+Once the resources are up, check the output of the storage bucket.
