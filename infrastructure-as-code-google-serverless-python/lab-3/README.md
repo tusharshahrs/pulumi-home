@@ -21,6 +21,7 @@ More details are at [Accessing Configuration from Code](https://www.pulumi.com/d
 
 Append the following to `__main__.py`
 ```python
+# Import the program's configuration settings.
 config = pulumi.Config()
 site_path = config.get("sitePath", "./www")
 app_path = config.get("appPath", "./app")
@@ -29,8 +30,10 @@ error_document = config.get("errorDocument", "error.html")
 ```
 
 ## Create a storage bucket and configure it as a website.
+
 Append the following to `__main__.py`
 ```python
+# Create a storage bucket and configure it as a website.
 site_bucket = gcp.storage.Bucket(
     "site-bucket",
     gcp.storage.BucketArgs(
@@ -60,6 +63,7 @@ pulumi stack output
 Append the following to `__main__.py`
 
 ```python
+# Create an IAM binding to allow public read access to the bucket.
 site_bucket_iam_binding = gcp.storage.BucketIAMBinding(
     "site-bucket-iam-binding",
     gcp.storage.BucketIAMBindingArgs(
@@ -72,6 +76,7 @@ pulumi.export("site_bucket_iam_binding_etag", site_bucket_iam_binding.etag)
 ## Use a synced folder to manage the files of the website.
 Append the following to `__main__.py`
 ```python
+# Use a synced folder to manage the files of the website.
 synced_folder = synced.GoogleCloudFolder(
     "synced-folder",
     synced.GoogleCloudFolderArgs(
@@ -84,6 +89,7 @@ synced_folder = synced.GoogleCloudFolder(
 ## Create another storage bucket for the serverless app.
 Append the following to `__main__.py`
 ```python
+# Create another storage bucket for the serverless app.
 app_bucket = gcp.storage.Bucket(
     "app-bucket",
     gcp.storage.BucketArgs(
