@@ -185,14 +185,26 @@ site_config = gcp.storage.BucketObject(
 )
 ```
 
-# Export the URLs of the website and serverless endpoint
-
-First, we need to join `https://storage.googleapis.com/` with the `site_bucket name` and then add the `index.html`.  To do this, we have to use an [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply)
+## Export the URLs of the website and serverless endpoint
+Append the following to `__main__.py`
 
 ```python
-site_url_to_index = site_bucket.name.apply(
+# Export the URLs of the website and serverless endpoint.
+pulumi.export(
+    "siteURL",
+    site_bucket.name.apply(
         lambda name: f"https://storage.googleapis.com/{name}/index.html"
     ),
+)
+pulumi.export("apiURL", data_function.https_trigger_url.apply(lambda url: url))
+```
 
-pulumi.export("site_url_to_index", site_url_to_index)
+We want to know the name of the function we created.
+
+Run `pulumi up` and select `yes`
+Once the resources are up, check the output of the storage bucket.
+
+Check the outputs:
+```bash
+pulumi stack output
 ```
