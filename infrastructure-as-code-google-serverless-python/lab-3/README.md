@@ -113,6 +113,7 @@ pulumi stack output
 ## Upload the serverless app to the storage bucket.
 Append the following to `__main__.py`
 ```python
+# Upload the serverless app to the storage bucket.
 app_archive = gcp.storage.BucketObject(
     "app-archive",
     gcp.storage.BucketObjectArgs(
@@ -122,8 +123,10 @@ app_archive = gcp.storage.BucketObject(
 )
 ```
 ## Create a Cloud Function that returns some data.
+
 Append the following to `__main__.py`
 ```python
+# Create a Cloud Function that returns some data.
 data_function = gcp.cloudfunctions.Function(
     "data-function",
     gcp.cloudfunctions.FunctionArgs(
@@ -146,4 +149,38 @@ Once the resources are up, check the output of the storage bucket.
 Check the outputs:
 ```bash
 pulumi stack output
+```
+
+## Create an IAM member to invoke the function.
+Append the following to `__main__.py`
+```python
+# Create an IAM member to invoke the function.
+invoker = gcp.cloudfunctions.FunctionIamMember(
+    "data-function-invoker",
+    gcp.cloudfunctions.FunctionIamMemberArgs(
+        project=data_function.project,
+        region=data_function.region,
+        cloud_function=data_function.name,
+        role="roles/cloudfunctions.invoker",
+        member="allUsers",
+    ),
+)
+```
+
+# Create a JSON configuration file for the website.
+
+Append the following to `__main__.py`
+```python
+# Create a JSON configuration file for the website.
+site_config = gcp.storage.BucketObject(
+    "site-config",
+    gcp.storage.BucketObjectArgs(
+        name="config.json",
+        bucket=site_bucket.name,
+        content_type="application/json",
+        source=data_function.https_trigger_url.apply(
+            lambda url: pulumi.StringAsset('{ "api": "' + url + '" }')
+        ),
+    ),
+)
 ```
