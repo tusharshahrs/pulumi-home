@@ -15,7 +15,7 @@ import pulumi_gcp as gcp
 import pulumi_synced_folder as synced
 ```  
 
-## Import the program's configuration settings.
+## Import the program's configuration settings
 We want to use what we added via `pulumi config` in this program.
 More details are at [Accessing Configuration from Code](https://www.pulumi.com/docs/intro/concepts/config/#code)
 
@@ -29,7 +29,7 @@ index_document = config.get("indexDocument", "index.html")
 error_document = config.get("errorDocument", "error.html")
 ```
 
-## Create a storage bucket and configure it as a website.
+## Create a storage bucket and configure it as a website
 
 Append the following to `__main__.py`
 ```python
@@ -59,7 +59,7 @@ Check the outputs:
 pulumi stack output
 ```
 
-## Create an IAM binding to allow public read access to the bucket.
+## Create an IAM binding to allow public read access to the bucket
 Append the following to `__main__.py`
 
 ```python
@@ -72,10 +72,10 @@ site_bucket_iam_binding = gcp.storage.BucketIAMBinding(
 )
 ```
 
-## Use a synced folder to manage the files of the website.
+## Use a synced folder to manage the files of the site
 Append the following to `__main__.py`
 ```python
-# Use a synced folder to manage the files of the website.
+# Use a synced folder to manage the files of the site.
 synced_folder = synced.GoogleCloudFolder(
     "synced-folder",
     synced.GoogleCloudFolderArgs(
@@ -85,7 +85,7 @@ synced_folder = synced.GoogleCloudFolder(
 )
 ```
 
-## Create another storage bucket for the serverless app.
+## Create another storage bucket for the serverless app
 Append the following to `__main__.py`
 ```python
 # Create another storage bucket for the serverless app.
@@ -110,7 +110,7 @@ Check the outputs:
 pulumi stack output
 ```
 
-## Upload the serverless app to the storage bucket.
+## Upload the serverless app to the storage bucket
 Append the following to `__main__.py`
 ```python
 # Upload the serverless app to the storage bucket.
@@ -122,7 +122,7 @@ app_archive = gcp.storage.BucketObject(
     ),
 )
 ```
-## Create a Cloud Function that returns some data.
+## Create a Cloud Function that returns some data
 
 Append the following to `__main__.py`
 ```python
@@ -151,7 +151,7 @@ Check the outputs:
 pulumi stack output
 ```
 
-## Create an IAM member to invoke the function.
+## Create an IAM member to invoke the function
 Append the following to `__main__.py`
 ```python
 # Create an IAM member to invoke the function.
@@ -167,11 +167,11 @@ invoker = gcp.cloudfunctions.FunctionIamMember(
 )
 ```
 
-# Create a JSON configuration file for the website.
+# Create a JSON configuration file for the site
 
 Append the following to `__main__.py`
 ```python
-# Create a JSON configuration file for the website.
+# Create a JSON configuration file for the site.
 site_config = gcp.storage.BucketObject(
     "site-config",
     gcp.storage.BucketObjectArgs(
