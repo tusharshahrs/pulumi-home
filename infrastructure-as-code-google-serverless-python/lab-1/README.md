@@ -30,11 +30,11 @@ pulumi new gcp-python -y
 To create our virtual environment run the following the commands:
 
 ```bash
-$ python3 -m venv venv
+python3 -m venv venv
 ```
 
 ```bash
-$ source venv/bin/activate
+source venv/bin/activate
 ```
 
 ```bash
