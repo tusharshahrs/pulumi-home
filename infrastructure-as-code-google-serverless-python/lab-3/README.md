@@ -206,5 +206,12 @@ Once the resources are up, check the output of the storage bucket.
 
 Check the outputs:
 ```bash
-pulumi stack output
+pulumi stack output siteURL
+```
+
+Load the output into a browser and see what you built!
+
+## Destroy the Resources - Critical Step to avoid cloud charges
+```bash
+pulumi destroy -y
 ```
