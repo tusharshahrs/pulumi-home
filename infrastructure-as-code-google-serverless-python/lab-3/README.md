@@ -6,6 +6,7 @@ Create all the Google Cloud Resources and deploy the function
 Clear out everything in `__main__.py` and replace it with the following:
 
 ```python
+"""A Google Cloud Function Python Pulumi program"""
 from cProfile import run
 from pip import main
 import pulumi
