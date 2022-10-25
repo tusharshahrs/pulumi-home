@@ -167,7 +167,7 @@ invoker = gcp.cloudfunctions.FunctionIamMember(
 )
 ```
 
-# Create a JSON configuration file for the site
+## Create a JSON configuration file for the site
 
 Append the following to `__main__.py`
 ```python
@@ -232,7 +232,7 @@ pulumi up -y
 open $(pulumi stack output siteURL)
 ```
 
-Remember to cleanup
+Remember to clean up your resources
 ```bash
 pulumi destroy -y
 ```
