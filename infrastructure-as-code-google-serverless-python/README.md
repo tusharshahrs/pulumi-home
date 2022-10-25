@@ -38,3 +38,5 @@ You'll need to know how to
 ## About this workshop
 
 This workshop discusses using Pulumi to create infrastructure, configure that infrastructure, and push your infrastructure to production.
+
+Let's get started with [Lab 1](/lab-1/).
