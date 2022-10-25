@@ -209,7 +209,7 @@ Check the outputs:
 pulumi stack output siteURL
 ```
 
-Load the output into a browser and see what you built!
+Load the `siteURL` into a browser and see what you built!
 
 ## Destroy the Resources - Critical Step to avoid cloud charges
 ```bash
