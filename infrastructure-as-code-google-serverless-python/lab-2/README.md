@@ -1,4 +1,4 @@
-# Lab 2: Setup the Configuration and Application Files for Google Cloud Serverless Function
+# Lab 2: Configuration and Application setup for Google Cloud Serverless Function
 
 ## Configurations
 In many cases, different stacks for a single project will need differing values.
@@ -150,4 +150,4 @@ def data(request):
     return jsonify({"now": now_in_ms}), 200, headers
 ```
 
-Next up, [Lab 3](../lab-3/) where we build the resources
+Next up, we create the resources in [Lab 3](../lab-3/) to deploy our function
