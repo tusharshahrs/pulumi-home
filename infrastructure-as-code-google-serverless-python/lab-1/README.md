@@ -50,6 +50,5 @@ Our project is comprised of multiple files:
 * **`Pulumi.yaml`**: your project's metadata, containing its name and language
 * **`Pulumi.dev.yaml`**: contains configuration values for the stack you just initialized.
 
-## Inspect your new project
 
-Next up, [Lab 2](../lab-2/).
+Next up, we setup the configuration and application in [Lab 2](../lab-2/).
