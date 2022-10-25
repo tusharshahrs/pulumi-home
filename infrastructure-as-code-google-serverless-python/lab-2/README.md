@@ -120,13 +120,13 @@ touch requirement.txt
 touch main.py
 ```
 
-Update the `requirements.txt` file with the following:
+Update the `requirements.txt` file that is under the `app` folder with the following:
 ```python
 functions-framework==3.2.0
 flask==2.1.0
 ```
 
-Update the `main.py` file with the following:
+Update the `main.py` file that is under the `app` folder with the following:
 ```python
 from datetime import datetime
 from flask import jsonify
