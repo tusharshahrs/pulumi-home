@@ -78,6 +78,7 @@ keys_var = [
 
 
 vault_1 = keyvault.Vault(f'{name}-keyvault',
+    #properties=keyvault.VaultPropertiesResponseArgs(
     properties=keyvault.VaultPropertiesArgs(
         access_policies=[{
             "objectId": config.object_id,
