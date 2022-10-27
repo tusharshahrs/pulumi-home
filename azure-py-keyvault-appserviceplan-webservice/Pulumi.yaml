@@ -1,0 +1,6 @@
+name: azure-py-keyvault-appserviceplan-webservice
+description: A minimal Azure Native Python Pulumi program
+runtime:
+    name: python
+    options:
+        virtualenv: venv

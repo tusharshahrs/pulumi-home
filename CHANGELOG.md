@@ -1,10 +1,12 @@
 # CHANGELOG
 
+## (2022-10-27) 
+- added azure-py-keyvault-appserviceplan-webservice
 ## (2022-10-19)
-- pulumi-ts-map-string-string
-- azure-ts-aks-managed-profile
+- added pulumi-ts-map-string-string
+- added azure-ts-aks-managed-profile
 ## (2022-10-05)
-- aws-classic-ts-vpc-routetables-no-loops
+- added aws-classic-ts-vpc-routetables-no-loops
 ## (2022-10-04)
 - added aws-classic-ts-vpc-routetables
 ## (2022-09-26)
