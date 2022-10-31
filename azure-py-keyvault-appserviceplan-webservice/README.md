@@ -80,7 +80,7 @@ This example deploys a resource group, appserviceplan, webapp, calls authorizati
     web_app_1_name           demo-webapp27f4c939
    ```
 
-   If you need to see the values for the subscription id or the tenant id, you will have to do the following
+   If you need to see the values for the subscription ID or the tenant ID, you will have to do the following
    ```bash
    pulumi stack output --show-secrets
    ```
