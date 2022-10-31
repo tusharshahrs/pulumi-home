@@ -116,7 +116,7 @@ In the current location where the `Pulumi.dev.yaml` file resides we will perform
 cd ..
 mkdir app
 cd app
-touch requirement.txt
+touch requirements.txt
 touch main.py
 ```
 
