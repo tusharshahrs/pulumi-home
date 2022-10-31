@@ -29,7 +29,7 @@ index_document = config.get("indexDocument", "index.html")
 error_document = config.get("errorDocument", "error.html")
 ```
 
-## Create A Storage Bucket and Configure it as a Website
+## Create A Storage Bucket and Configure it as a Site
 
 Append the following to `__main__.py`
 ```python

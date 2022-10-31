@@ -1,8 +1,8 @@
 # CHANGELOG
 
-# (2022-10-31)
-- added azure-py-storage-account-networkrulesetresponseargs 
-## (2022-10-27) 
+## (2022-10-31)
+- added azure-py-storage-account-networkrulesetresponseargs
+## (2022-10-27)
 - added azure-py-keyvault-appserviceplan-webservice
 ## (2022-10-19)
 - added pulumi-ts-map-string-string
