@@ -1,6 +1,6 @@
 # Azure Key Vault with AppServicePlan and WebApp in Python
 
-This example deploys a resource group, and a storage account, and has a workaround for the following issue [storage NetworkRuleSetResponseArgs no attribute](https://github.com/pulumi/pulumi-azure-native/issues/2057).
+This example deploys a resource group, and a storage account, and has a workaround for the following issue [storage account NetworkRuleSetResponseArgs has no attribute](https://github.com/pulumi/pulumi-azure-native/issues/2061).
 
 ## Deploying the App
 
