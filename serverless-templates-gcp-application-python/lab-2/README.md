@@ -60,6 +60,7 @@ mkdir www
 cd www
 touch index.html
 touch error.html
+cd ..
 ```
 
 Update the `index.html` with the following
@@ -113,11 +114,11 @@ Update the `error.html` with the following:
 In the current location where the `Pulumi.dev.yaml` file resides we will perform the following:
 
 ```bash
-cd ..
 mkdir app
 cd app
 touch requirements.txt
 touch main.py
+cd ..
 ```
 
 Update the `requirements.txt` file that is under the `app` folder with the following:
