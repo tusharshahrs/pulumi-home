@@ -59,7 +59,7 @@ pulumi stack output
     kafka_subnets1               : "subnet-0ba6d65de3ac2d55e"
     kafka_subnets2               : "subnet-07dcd0e44c39bf899"
     kafka_subnets3               : "subnet-05cbb0d11fd758f41"
-    kms_key_id                   : "28872d4c-51a9-4d70-8f07-930ad6f26075"
+    kms_key_id                   : "abcdabcd-abcd-efgh-ijkl-ijklefghabcd"
     msk_cluster_arn              : "arn:aws:kafka:us-east-2:052848974346:cluster/shaht-msk-kafka-cluster-1331e9a/9428f84b-ad0e-4ff8-acf2-e5ef5702608d-6"
     msk_cluster_name             : "shaht-msk-kafka-cluster-1331e9a"
     myfirehosedeliverysystem_name: "shaht-firehosedeliverysystem-1bfa8ea"

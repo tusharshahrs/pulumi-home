@@ -5,7 +5,7 @@ AWS sshkey and acm cert creation in TypeScript
 
 # Requirements
 
-pulumi 3.0 & node.js 14.
+pulumi 3.0 & Node.js 14.
 
 ## Running the App
 

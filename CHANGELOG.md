@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## (2022-10-31)
+- added azure-py-storage-account-networkrulesetresponseargs
+## (2022-10-27)
+- added azure-py-keyvault-appserviceplan-webservice
+## (2022-10-19)
+- added pulumi-ts-map-string-string
+- added azure-ts-aks-managed-profile
+## (2022-10-05)
+- added aws-classic-ts-vpc-routetables-no-loops
+## (2022-10-04)
+- added aws-classic-ts-vpc-routetables
 ## (2022-09-26)
 - added aws-classic-ts-vpc-rds-postgres
 ## (2022-09-22)

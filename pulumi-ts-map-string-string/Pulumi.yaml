@@ -1,0 +1,3 @@
+name: pulumi-ts-map-string-string
+description: A minimal TypeScript Pulumi program
+runtime: nodejs

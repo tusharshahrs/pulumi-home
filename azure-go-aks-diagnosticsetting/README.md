@@ -63,7 +63,7 @@ This example deploys an AKS cluster, creates an Azure Active AD application, cre
         managedcluster_name      : "diag-go-aks15ebfe96"
         primarystoragekey        : "[secret]"
         resourcegroup_name       : "diag-rgbbcfc404"
-        sshKey                   : "1cc5b81a04a31d2d0082af9be565ddbf6a4129c4"
+        sshKey                   : "abcdefghijklmnopeqrstuklmnveklmnewxyzklmn"
         storageaccount_name      : "diagsa0022fd6d"
 
     Resources:
@@ -89,7 +89,7 @@ This example deploys an AKS cluster, creates an Azure Active AD application, cre
     managedcluster_name        diag-go-aks15ebfe96
     primarystoragekey          [secret]
     resourcegroup_name         diag-rgbbcfc404
-    sshKey                     1cc5b81a04a31d2d0082af9be565ddbf6a4129c4
+    sshKey                     abcdefghijklmnopeqrstuklmnveklmnewxyzklmn
     storageaccount_name        diagsa0022fd6d
    ```
 

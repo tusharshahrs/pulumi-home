@@ -74,7 +74,7 @@ AWS ec2, keypair, sshkey created in python.  Used to ssh into server to connect 
         msk_ec2_client  : "i-0c82ae7211eda5a5c"
         my_ami_id       : "ami-0d8f6eb4f641ef691"
         my_ami_name     : "amzn2-ami-hvm-2.0.20190618-x86_64-gp2"
-        sshPrivateKey_id: "5b4478bc6c46b0e4aa7a3b1b429471f1926a9899"
+        sshPrivateKey_id: "abcdefghijklmnopqrstuv"
 
     Resources:
         + 4 created
