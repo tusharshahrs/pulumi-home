@@ -11,7 +11,7 @@ jobs:
         go-example: ['azure-go-resourcegroup', 'azure-go-sqlserver-loganalytics', 'azure-go-subscriptionid-from-resourcegroup', 'azure-go-sqlserver-servervulnerabilityassessment']
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - run: go mod download
