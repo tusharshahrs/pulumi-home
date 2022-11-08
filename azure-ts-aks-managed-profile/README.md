@@ -1,6 +1,6 @@
 # Azure Kubernetes Service (AKS) Cluster using the native Azure Provider in TypeScript
 
-This example deploys an AKS cluster, creates an Azure Active AD application, creates a Service Principal and sets credentials to manage access to the cluster.  Furthermore, we toggle `enableAzureRBAC` in the cluster from `true` to `false`
+This example deploys an AKS cluster, creates an Azure Active AD application, creates a Service Principal and sets credentials to manage access to the cluster.  Then toggle [enableAzureRBAC](https://github.com/pulumi/pulumi-azure-native/blob/master/CHANGELOG.md#1850-2022-11-07) in the cluster from `true` to `false` getting an `update` instead of `create-replace`
 
 ## Deploying the App
 
