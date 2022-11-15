@@ -106,6 +106,7 @@ vault_1 = keyvault.Vault(f'{name}-keyvault',
 
 export('vault_1_name', vault_1.name)
 
+
 keyvault_2_classic = keyvault_classic.KeyVault(f'{name}-keyvtclassic',
     resource_group_name=resource_group.name,
     sku_name="standard",
@@ -114,9 +115,12 @@ keyvault_2_classic = keyvault_classic.KeyVault(f'{name}-keyvtclassic',
     tenant_id=config.tenant_id,
     enabled_for_template_deployment=True,
     opts=pulumi.ResourceOptions(depends_on=[resource_group])
-
 )
-keyvault_2_ =keyvault_classic.AccessPolicy(f'{name}-keyvtclassic-accesspolicy',
+
+export('vault_2_name', keyvault_2_classic.name)
+
+
+keyvault_2_accesspolicy=keyvault_classic.AccessPolicy(f'{name}-keyvtclassic-accesspolicy',
         tenant_id=config.tenant_id,
         object_id=config.object_id,
         key_permissions=keys_var,
@@ -125,5 +129,3 @@ keyvault_2_ =keyvault_classic.AccessPolicy(f'{name}-keyvtclassic-accesspolicy',
         key_vault_id=keyvault_2_classic.id,
         opts=pulumi.ResourceOptions(depends_on=[resource_group,keyvault_2_classic])
 )
-
-export('vault_2_name', keyvault_2_classic.name)
