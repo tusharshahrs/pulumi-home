@@ -1,0 +1,8 @@
+config:
+  azure-native:location: eastus2
+  azure-python-getresourcegroup:resource_group_1: resourceGroup95d97d88
+  azure-python-getresourcegroup:resource_group_2: resourceGroup0f2766d0
+  azure-python-getresourcegroup:subscription_id:
+    secure: AAABAJvCHk3VzhVWYRq5zkJ0NXQqOGoHPDTNr8wnJ9zbjqNiDGhg0DJzlclEeof60HUun3HHbIADSi13ru11EBsU8Nk=
+  azure-python-getresourcegroup:tenant_id:
+    secure: AAABAGs+fFjY/QLYyeN3xZzisHdOnIwkPi/3GL5q2o+4PY5vUIvuPQHeLae4OFhZi6flhud6Gq5rt7YR8/mR1sA6Qb4=

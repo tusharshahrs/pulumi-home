@@ -9,7 +9,7 @@ import pulumi_tls as tls
 import base64
 
 config = pulumi.Config()
-name="mydemo"
+name="shahtshaht"
 
 # Create new resource group
 resource_group = resources.ResourceGroup(f'{name}-aks')
@@ -36,12 +36,12 @@ if managed_cluster_name is None:
     managed_cluster_name = f'{name}-azure-aks'
 
 # Create network. Skipping due to ip block conflict
-"""
+
 mynetwork = network.VirtualNetwork(f'{name}-vnet', 
             resource_group_name=resource_group.name,
             location=resource_group.location,
             address_space=network.AddressSpaceArgs(
-                address_prefixes=["10.0.0.0/25"],
+                address_prefixes=["10.0.0.0/22"],
             ),
             #opts=ResourceOptions(ignore_changes=["subnet1", "subnet2"])
 )
@@ -50,7 +50,8 @@ mynetwork = network.VirtualNetwork(f'{name}-vnet',
 subnet1 = network.Subnet(f'{name}-subnet-1',
             resource_group_name = resource_group.name,
             virtual_network_name = mynetwork.name,
-            address_prefix="10.0.0.80/28",
+            #address_prefix="10.0.0.80/28",
+            address_prefix="10.0.2.0/24",
             opts=ResourceOptions(parent=mynetwork)
 )
 
@@ -58,30 +59,43 @@ subnet1 = network.Subnet(f'{name}-subnet-1',
 subnet2 = network.Subnet(f'{name}-subnet-2',
             resource_group_name = resource_group.name,
             virtual_network_name = mynetwork.name,
-            address_prefix= "10.0.0.112/28",
+            #address_prefix="10.0.0.112/28",
+            address_prefix="10.0.3.0/24",
             opts=ResourceOptions(parent=mynetwork)
 )
-"""
+
 my_count = 3
 my_max_pods = 10
 my_disk_size_in_gb = 30
-my_kubernetes_version = "1.22.6"
+my_kubernetes_version = "1.24.3"
+
+
 managed_cluster = containerservice.ManagedCluster(
     managed_cluster_name,
     resource_group_name=resource_group.name,
-        agent_pool_profiles=[{
-        "count": my_count,
-        "max_pods": my_max_pods,
-        "mode": "System",
-        "name": "agentpool",
-        "node_labels": {},
-        "os_disk_size_gb": my_disk_size_in_gb,
-        "os_type": "Linux",
-        "type": "VirtualMachineScaleSets",
-        "vm_size": "Standard_E2s_v3",
+    auto_scaler_profile=containerservice.ManagedClusterPropertiesAutoScalerProfileArgs(
+        balance_similar_node_groups="true",
+        expander="priority",
+        max_node_provision_time="15m",
+        new_pod_scale_up_delay="60s",
+        scale_down_delay_after_add="15m",
+        scan_interval="20s",
+        skip_nodes_with_system_pods="false",
+    ),
+    agent_pool_profiles=[containerservice.ManagedClusterAgentPoolProfileArgs(
+        count= my_count,
+        max_pods=my_max_pods,
+        mode="System",
+        name="agentpool",
+        node_labels={},
+        os_disk_size_gb=my_disk_size_in_gb,
+        os_type="Linux",
+        type="VirtualMachineScaleSets",
+        vm_size="Standard_E2s_v3",
         #"vm_size": "Standard_DS2_v2",
-        #"vnet_subnet_id": subnet1.id, # Skipping due to ip block conflict
-    }],
+        #vnet_subnet_id=subnet2.id, # Skipping due to ip block conflict
+    )],
+    
         linux_profile={
         "admin_username": "testuser",
         "ssh": {
@@ -105,7 +119,7 @@ managed_cluster = containerservice.ManagedCluster(
         name="Basic",
         tier="Free",
     ),
-    opts=ResourceOptions(depends_on=[ad_sp,ad_sp_password,ssh_key])
+    opts=ResourceOptions(depends_on=[ad_sp,ad_sp_password,ssh_key,subnet1,subnet2]),
 
 )
 
@@ -120,11 +134,12 @@ encoded = creds.kubeconfigs[0].value
 kubeconfig = encoded.apply(
     lambda enc: base64.b64decode(enc).decode())
 
+
 pulumi.export("resource_group_name", resource_group.name)
 pulumi.export("ad_app_name", ad_app.id)
 pulumi.export("ad_sp_display_name", ad_sp.display_name)
-#pulumi.export("vnet_name", mynetwork.name)
-#pulumi.export("vnet_subnet1", subnet1.name)
-#pulumi.export("vnet_subnet2", subnet2.name)
+pulumi.export("vnet_name", mynetwork.name)
+pulumi.export("vnet_subnet1", subnet1.name)
+pulumi.export("vnet_subnet2", subnet2.name)
 pulumi.export("managed_cluster_name", managed_cluster.name)
 pulumi.export("kubeconfig", Output.secret(kubeconfig))

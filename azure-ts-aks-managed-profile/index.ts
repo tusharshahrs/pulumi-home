@@ -6,7 +6,7 @@ import * as azuread from "@pulumi/azuread";
 import * as tls from "@pulumi/tls";
 
 
-const name = "demo11";
+const name = "shaht94";
 // Create an Azure Resource Group
 const resourceGroup = new resources.ResourceGroup(`${name}-rg`);
 
@@ -40,7 +40,7 @@ const adApp = new azuread.Application(`${name}-aad-application`,
 
 export const adApp_name = adApp.id;
 
-const adSp = new azuread.ServicePrincipal(`${name}-ad-sp`,
+const adSp = new azuread.ServicePrincipal(`${name}-adsp`,
 {
     applicationId: adApp.applicationId,
 }, {parent: adApp, dependsOn: adApp});
@@ -65,8 +65,8 @@ const sshKey = new tls.PrivateKey(`${name}-ssh-key`, {
 
 const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     resourceGroupName: resourceGroup.name,
-    aadProfile: {enableAzureRBAC: true, managed: true, tenantID: pulumi.interpolate`${current_tenantid}`, adminGroupObjectIDs: ["632a98c5-4db4-484b-a5b6-a3c1d81cbd79"]}, // After 1st pulumi up, comment this out.
-    //aadProfile: {enableAzureRBAC: false, managed: true, tenantID: pulumi.interpolate`${current_tenantid}`, adminGroupObjectIDs: ["632a98c5-4db4-484b-a5b6-a3c1d81cbd79"]},  // Uncomment this and run pulumi up.  The preview shows create-replace of entire cluster.
+    //aadProfile: {enableAzureRBAC: true, managed: true, tenantID: pulumi.interpolate`${current_tenantid}`, adminGroupObjectIDs: ["632a98c5-4db4-484b-a5b6-a3c1d81cbd79"]}, // After 1st pulumi up, comment this out.
+    aadProfile: {enableAzureRBAC: false, managed: true, tenantID: pulumi.interpolate`${current_tenantid}`, adminGroupObjectIDs: ["632a98c5-4db4-484b-a5b6-a3c1d81cbd79"]},  // Uncomment this and run pulumi up.  The preview shows create-replace of entire cluster.
     agentPoolProfiles: [{
         count: 3,
         maxPods: 11,
