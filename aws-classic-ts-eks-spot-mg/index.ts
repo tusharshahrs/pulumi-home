@@ -61,46 +61,48 @@ const namespace = new k8s.core.v1.Namespace(`${my_name}-namespace`,{},
     {  provider: k8sProvider, dependsOn: [mycluster]},);
 
 
-    const foobarcrd  = new k8s.apiextensions.v1beta1.CustomResourceDefinition(`${my_name}-foobarcrd`, {
-        metadata: { name: "foobars.stable.example.com" },
-        spec: {
-            group: "stable.example.com",
-            versions: [
-                {
-                    name: "v1",
-                    served: true,
-                    storage: true,
-                    /*schema: {
-                        openAPIV3Schema: {
-                            type: "object",
-                            properties: {
-                                spec: {
-                                    type: "object",
-                                    properties: {
-                                        foo: {
-                                            type: "string",
+const foobarcrd  = new k8s.apiextensions.v1beta1.CustomResourceDefinition(`${my_name}-foobarcrd`, {
+//const foobarcrd  = new k8s.apiextensions.v1.CustomResourceDefinition(`${my_name}-foobarcrd`, {
+            metadata: { name: "foobars.stable.example.com" },
+            spec: {
+                group: "stable.example.com",
+                versions: [
+                    {
+                        name: "v1",
+                        served: true,
+                        storage: true,
+                        /*schema: {
+                            openAPIV3Schema: {
+                                type: "object",
+                                /*properties: {
+                                    spec: {
+                                        type: "object",
+                                        properties: {
+                                            foo: {
+                                                type: "string",
+                                            },
+                                            bar: {
+                                                type: "string",
+                                            },
                                         },
-                                        bar: {
-                                            type: "string",
-                                        },
-                                    },
-                                }
-                            }
-                        }
-                    }*/
+                                    }
+                                }*/
+                            //}
+                        //}
+                    }
+                ],
+                scope: "Namespaced",
+                names: {
+                    plural: "foobars",
+                    singular: "foobar",
+                    kind: "FooBar",
+                    shortNames: ["fb"]
                 }
-            ],
-            scope: "Namespaced",
-            names: {
-                plural: "foobars",
-                singular: "foobar",
-                kind: "FooBar",
-                shortNames: ["fb"]
             }
-        }
-    },
-    { provider: k8sProvider, dependsOn: [namespace, mycluster]});
-    //{ provider: k8sProvider, dependsOn: [namespace, mycluster], import: "foobars.stable.example.com"});
+        },
+        //{ provider: k8sProvider, dependsOn: [namespace, mycluster]});
+        { provider: k8sProvider, dependsOn: [namespace, mycluster], import: "foobars.stable.example.com"});
+       
 
 
 export const cluster_name = mycluster.eksCluster.name;
