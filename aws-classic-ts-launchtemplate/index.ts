@@ -5,11 +5,11 @@ import * as tls from "@pulumi/tls";
 import { output } from "@pulumi/pulumi";
 import { Tag } from "./tags";
 
-const myname = "demo"
+const myname = "shaht"
 const mytags: Tag = {
-    Name: 'zscaler',
+    Name: `${myname}`,
     t_active: 'TRUE',
-    t_app: 'Zscaler',
+    t_app: 'myapps',
     t_billing_center: 'Production-Technology',
     t_autoScale: 'TRUE',
     t_contact: 'securityops@something.com',
@@ -21,16 +21,21 @@ const mytags: Tag = {
     t_repository: 'https://github.com'
 };
 
+const awsprovider   = new aws.Provider(`${myname}-awsprovider`,{
+    region: "us-west-2",
+});
+
 // Allocate a new VPC with the CIDR range from config file:
 const myvpc = new awsx.ec2.Vpc(`${myname}-vpc`, {
-    cidrBlock: "10.0.0.0/25",
+    cidrBlock: "10.0.0.0/24",
     numberOfAvailabilityZones: 3,
-    numberOfNatGateways: 1,
-  });
+    natGateways: {strategy: "Single"},
+  },{provider: awsprovider});
+
 
 const mysecuritygroup_allowTls = new aws.ec2.SecurityGroup(`${myname}-securitygroup-allowtls`, {
     description: "Allow TLS inbound traffic",
-    vpcId: myvpc.id,
+    vpcId: myvpc.vpcId,
     ingress: [{
         description: "TLS from VPC",
         fromPort: 443,
@@ -48,31 +53,9 @@ const mysecuritygroup_allowTls = new aws.ec2.SecurityGroup(`${myname}-securitygr
     tags: {
         Name: "allow_tls",
     },
-});
+}, {provider: awsprovider,dependsOn: [myvpc]});
 
-const sshPrivateKey = new tls.PrivateKey(`${myname}-privatekey`, {
-    algorithm: "RSA",
-    rsaBits: 4096,
-});
-
-const mykeypair = new aws.ec2.KeyPair(`${myname}-keypair`, {
-    publicKey: sshPrivateKey.publicKeyOpenssh,
-    keyName: `${myname}`,
-});
-
-// Get the AMI
-const myamiId = aws.ec2.getAmi({
-    owners: ["amazon"],
-    mostRecent: true,
-    filters: [{
-        name: "name",
-        values: ["amzn2-ami-k*-hvm-*-x86_64-gp2"],
-    }],
-}, { async: true }).then(ami => ami.id);
-
-const size = "t3a.micro";
-
-const myrole = new aws.iam.Role(`${myname}-role`, {
+const myiamrole = new aws.iam.Role(`${myname}-role`, {
     path: "/",
     assumeRolePolicy: `{
     "Version": "2012-10-17",
@@ -88,14 +71,38 @@ const myrole = new aws.iam.Role(`${myname}-role`, {
     ]
 }
 `,
+},{provider: awsprovider});
+
+const instanceprofile = new aws.iam.InstanceProfile(`${myname}-instanceprofile`, {
+        role: myiamrole.name},
+ { provider: awsprovider, dependsOn: myiamrole});
+
+const sshPrivateKey = new tls.PrivateKey(`${myname}-privatekey`, {
+    algorithm: "ED25519",
+    ecdsaCurve: "P521",
 });
 
+/*
+const mypublickey = tls.getPublicKeyOutput({
+     privateKeyOpenssh:sshPrivateKey.privateKeyOpenssh,
+});
+*/
+const mykeypair = new aws.ec2.KeyPair(`${myname}-keypair`, {
+    publicKey: sshPrivateKey.publicKeyOpenssh,
+},{provider: awsprovider, dependsOn: [sshPrivateKey]});
 
-const instanceprofile = new aws.iam.InstanceProfile(`${myname}-instanceprofile`, {role: myrole.name});
-// Getting the private subnet0
-export const vpc_private_subnet_0 = myvpc.privateSubnetIds.then(theprivatesubnets=> theprivatesubnets[0]);
-// Changing from promise to string so that we can pass it into the launchtemplate function
-export const vpc_private_subnet_0_string = pulumi.interpolate`${vpc_private_subnet_0}`
+// Get the AMI
+const myamiId = aws.ec2.getAmi({
+    owners: ["amazon"],
+    mostRecent: true,
+    filters: [{
+        name: "name",
+        values: ["amzn2-ami-k*-hvm-*-x86_64-gp2"],
+    }],
+},{provider: awsprovider, async: true }).then(ami => ami.id);
+
+const size = "t3a.nano";
+
 
 export function get_airflow_webserver_template(airflow_profile: aws.iam.InstanceProfile, securityGroupIds: pulumi.Output<string>[], subnetIds: pulumi.Output<string>, user_data: string) {
 
@@ -150,17 +157,25 @@ export function get_airflow_webserver_template(airflow_profile: aws.iam.Instance
         tags: {...mytags},
         //tagsAll: {},
         userData: user_data
-    })
+    },{provider: awsprovider})
 }
 
+export const vpc_private_subnet_0 = myvpc.privateSubnetIds[0];
+
 const myinstance = new aws.ec2.Instance(`${myname}-server`, {
-    launchTemplate: {"name": get_airflow_webserver_template(instanceprofile,[mysecuritygroup_allowTls.id], vpc_private_subnet_0_string,"").name},
+    launchTemplate: {"name": get_airflow_webserver_template(instanceprofile,[mysecuritygroup_allowTls.id], vpc_private_subnet_0,"").name},
 
-  }, {dependsOn: [myvpc]});
+  }, {provider: awsprovider,dependsOn: [myvpc]});
 
-export const vpc_name = myvpc.id;
+export const awsprovider_region = awsprovider.region;
+export const vpc_name = myvpc.vpcId;
 export const vpc_private_subnet_ids = myvpc.privateSubnetIds;
 export const vpc_public_subnet_ids = myvpc.publicSubnetIds;
 export const securitygroup_name = mysecuritygroup_allowTls.name;
+export const iam_role = myiamrole.name;
 export const instanceprofile_name = instanceprofile.name;
-export const launchtemplate_name = myinstance.launchTemplate;
+export const sshPrivateKey_name = sshPrivateKey.id;
+export const sshPrivateKey_publickeyopenssh = pulumi.secret(sshPrivateKey.publicKeyOpenssh);
+export const mykeypair_name = mykeypair.keyName;
+export const mykeypair_publickey =pulumi.secret(mykeypair.publicKey);
+export const myamiId_id = myamiId;
