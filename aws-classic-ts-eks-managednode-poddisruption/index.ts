@@ -59,7 +59,7 @@ const managed_node_group = new eks.ManagedNodeGroup(
   );
 
 export const managed_node_group_name = managed_node_group.nodeGroup.id;
-export const managed_node_group_launchtemplate = managed_node_group.nodeGroup.launchTemplate;  
+export const managed_node_group_launchtemplate = managed_node_group.nodeGroup;  
 export const managed_node_group_version =managed_node_group.nodeGroup.version;
 //export const managed_node_group_templateVersion = managed_node_group.nodeGroup.launchTemplateVersion;  
 
@@ -70,16 +70,26 @@ export const kubeconfig = cluster.kubeconfig;
 // Create a Kubernetes provider using the EKS cluster's kubeconfig.
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig });
 
+// Create a namespace using the eks cluster's kubeconfig
+const mynamespace = new k8s.core.v1.Namespace(
+  `${name}-namespace`,
+  {},
+  { provider: k8sprovider, dependsOn: [cluster] },
+);
+export const namespace_name = mynamespace.metadata.name;
+
 // Create a Pod Disruption Budget.
 const pdb = new k8s.policy.v1.PodDisruptionBudget(`${name}-pdb`, {
-    metadata: { namespace: "default" },
+    //metadata: { namespace: "default" },
+    metadata: { namespace: mynamespace.metadata.name },
     spec: {
-        minAvailable: 2,
+        minAvailable: 1,
         //maxUnavailable: 3,
         selector: {
             matchLabels: {
                 app: "myapp",
             },
         },
+        unhealthyPodEvictionPolicy: "NoEviction", // criteria for evicting unhealthy pods (NoEviction, StaticallyKubeletOnly)
     },
 }, { provider: k8sprovider });
