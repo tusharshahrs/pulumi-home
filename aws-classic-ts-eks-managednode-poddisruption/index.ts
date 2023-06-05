@@ -71,7 +71,7 @@ export const managed_node_group_launchtemplate = managed_node_group.nodeGroup;
 export const managed_node_group_version =managed_node_group.nodeGroup.version;
 //export const managed_node_group_templateVersion = managed_node_group.nodeGroup.launchTemplateVersion;  
 
-/*
+
 // Create a namespace using the eks cluster's kubeconfig
 const mynamespace = new k8s.core.v1.Namespace(
   `${name}-namespace`,
@@ -80,13 +80,15 @@ const mynamespace = new k8s.core.v1.Namespace(
 );
 export const namespace_name = mynamespace.metadata.name;
 
+
 // Create a Pod Disruption Budget.
 const pdb = new k8s.policy.v1.PodDisruptionBudget(`${name}-pdb`, {
     //metadata: { namespace: "default" },
     metadata: { namespace: mynamespace.metadata.name },
     spec: {
+      minAvailable: "50%",
       //minAvailable: "100%", // This is an error, minAvailable should be an integer or percentage less than 100.
-      maxUnavailable: "100%",
+      //maxUnavailable: "100%",
         //minAvailable: 1,
         //maxUnavailable: 3,
         selector: {
@@ -98,5 +100,6 @@ const pdb = new k8s.policy.v1.PodDisruptionBudget(`${name}-pdb`, {
     },
 }, { provider: k8sprovider });
 
-export const pdbName1 = pdb.metadata.name;
-*/
+export const pdbname1 = pdb.metadata.name;
+export const pdbname1_status = pdb.status;
+export const pdbname1_urn= pdb.urn;
