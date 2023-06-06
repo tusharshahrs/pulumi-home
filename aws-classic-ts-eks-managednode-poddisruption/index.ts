@@ -14,6 +14,9 @@ const vpc = new awsx.ec2.Vpc(`${name}-vpc`, {
     tags: { "Name": `${name}-vpc` },
 });
 
+export const vpc_id = vpc.vpcId;
+export const public_subnet_ids = vpc.publicSubnetIds;
+export const private_subnet_ids = vpc.privateSubnetIds;
 
 // Create an EKS cluster with a managed node group.
 const cluster = new eks.Cluster(`${name}-eks`, {
@@ -21,10 +24,10 @@ const cluster = new eks.Cluster(`${name}-eks`, {
     publicSubnetIds: vpc.publicSubnetIds,
     privateSubnetIds: vpc.privateSubnetIds,
     skipDefaultNodeGroup: true,
-    instanceType: "t2.small",
+    instanceType: "t3a.small",
     desiredCapacity: 3,
-    maxSize: 5,
-    version: "1.24",
+    //maxSize: 5,
+    version: "1.25",
     encryptRootBlockDevice: true,
     nodeRootVolumeSize: 10,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
@@ -44,6 +47,7 @@ const managed_node_group = new eks.ManagedNodeGroup(
       cluster: cluster,
       //capacityType: "SPOT",
       instanceTypes: ["t3a.micro"],
+      
       //nodeRole: cluster.instanceRoles.apply((roles) => roles[0]),
       nodeRoleArn: cluster.instanceRoles[0].arn,
       //nodeRole: roles[0],
@@ -88,7 +92,7 @@ const pdb = new k8s.policy.v1.PodDisruptionBudget(`${name}-pdb`, {
     spec: {
       minAvailable: "50%",
       //minAvailable: "100%", // This is an error, minAvailable should be an integer or percentage less than 100.
-      //maxUnavailable: "100%",
+      //maxUnavailable: "0%",
         //minAvailable: 1,
         //maxUnavailable: 3,
         selector: {
