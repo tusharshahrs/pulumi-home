@@ -57,6 +57,7 @@ export const securitygroup_eksnode_tags = eksclustersecuritygroup.tags;
 const mylaunchTemplate = new aws.ec2.LaunchTemplate(`${my_name}-launchtemplate`, {
     tags: {"Name": `${my_name}-launchtemplate`},
     // DO NOT pass in a ami image, it the instances will say FAILED_CREATE to connect to the eks cluster.
+    //imageId: "ami-055c9a441998a8f28",
     instanceType: "t3a.small", // Toggle this instance type with the one below so that the launch template changes versions.
     //instanceType: "t3a.nano", // Toggle this instance type with the one above so that the launch template changes versions.
     description: "This is the example launch template for the EKS cluster managed node group by Tushar Shah",
@@ -142,7 +143,8 @@ const mycluster = new aws.eks.Cluster(`${my_name}-eks`, {
 // create the eks node group with the launch template
 const eksnodegroup = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup`, {
     clusterName: mycluster.name,
-    subnetIds: myvpc.publicSubnetIds, // Provide a list of subnet IDs associate with the node group
+    //subnetIds: myvpc.publicSubnetIds, // Provide a list of subnet IDs associate with the node group
+    subnetIds: myvpc.privateSubnetIds, // Provide a list of subnet IDs associate with the node group
     nodeRoleArn: nodeRole.arn,
     launchTemplate: {
       id: mylaunchTemplate.id,
@@ -156,7 +158,7 @@ const eksnodegroup = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup`, {
   });
 
 // export the nodegroup name
-const eksnodegroup_name = eksnodegroup.id;
+export const eksnodegroup_name = eksnodegroup.nodeGroupName;
 
 // Generate a kubeconfig for the EKS cluster.
 const mykubeconfig = pulumi.all([
