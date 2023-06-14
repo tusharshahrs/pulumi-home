@@ -38,169 +38,157 @@ AWS EKS with Launch Templates, Poddisruptionbudgets. DO NOT pass in an AMI.  We 
 
    Results
    ```bash
+
+     pulumi up -y
     Previewing update (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-ts-eks-spot-mg/dev/previews/3c1ad096-8593-4769-9a16-267b62b42e6c
+    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-eks-launchtemplate-poddisruptionbudget/dev/previews/cd5183e0-aa6c-46d7-b84b-5e84b387a057
 
-        Type                              Name                                Plan       
-    +   pulumi:pulumi:Stack               aws-ts-eks-spot-mg-dev              create.    
-    +   ├─ awsx:x:ec2:Vpc                 demo-vpc                            create     
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-private-2                  create     
-    +   │  ├─ awsx:x:ec2:InternetGateway  demo-vpc                            create     
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-private-0                  create     
-    +   │  ├─ awsx:x:ec2:NatGateway       demo-vpc-0                          create     
-    +   │  │  └─ aws:ec2:Eip              demo-vpc-0                          create     
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-1                   create     
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-1                   create     
-    +   │  │  └─ aws:ec2:RouteTable       demo-vpc-public-1                   create     
-    +   │  │  └─ aws:ec2:RouteTable       demo-vpc-public-1                   create     
-    +   │  │  └─ aws:ec2:RouteTable       demo-vpc-public-1                   create     
-    +   │  │  └─ aws:ec2:InternetGateway  demo-vpc                            create     
-    +   │  │  ├─ aws:ec2:RouteTable       demo-vpc-private-1                  create     
-    +   │  │  ├─ aws:ec2:RouteTable       demo-vpc-private-1                  create     
-    +   │  │  ├─ aws:ec2:RouteTable       demo-vpc-private-1                  create     
-    +   │  │  └─ aws:ec2:Subnet           demo-vpc-private-1                  create     
-    +   │  │  └─ aws:ec2:Subnet           demo-vpc-private-1                  create     
-    +   │  │  └─ aws:ec2:Subnet           demo-vpc-private-1                  create     
-    +   │  │  └─ aws:ec2:Route            demo-vpc-public-1-ig                create     
-    +   │  │  ├─ aws:ec2:RouteTable       demo-vpc-public-0                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-0                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-0                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-0                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-0                   create     
-    +   │  │  ├─ aws:ec2:Route                  demo-vpc-public-0-ig                create     
-    +   │  │  ├─ aws:ec2:Route                  demo-vpc-public-0-ig                create     
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-private-2                  create     
-    +   │  ├─ awsx:x:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  ├─ awsx:x:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  │  └─ aws:ec2:NatGateway             demo-vpc-0                          create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-public-2                   create     
-    +   │  │  ├─ aws:ec2:Route                  demo-vpc-public-2-ig                create     
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                      create     
-    +   │  └─ aws:ec2:Vpc                       demo-vpc                               create     
-    +   ├─ aws:iam:Policy                       AWSLoadBalancerControllerIAMPolicy     create     
-    +   ├─ aws:iam:Policy                       EKSClusterAutoscalePolicy              create     
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                 create..   
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-3                   create     
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                 create     
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-1                   create     
-    +   ├─ aws:iam:InstanceProfile              demo-instanceProfile-0                 create     
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-2                   create     
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-4                   create     
-    +   ├─ eks:index:Cluster                    demo-eks                               create     
-    +   │  ├─ eks:index:ServiceRole             demo-eks-eksRole                       create     
-    +   │  │  ├─ aws:iam:Role                   demo-eks-eksRole-role                  create     
-    +   │  │  ├─ aws:iam:RolePolicyAttachment   demo-eks-eksRole-4b490823                   create     
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                      create     
-    +   │  ├─ aws:ec2:SecurityGroup             demo-eks-eksClusterSecurityGroup            create     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-eks-eksClusterInternetEgressRule       create     
-    +   │  ├─ aws:eks:Cluster                   demo-eks-eksCluster                         create     
-    +   │  ├─ pulumi:providers:kubernetes       demo-eks-eks-k8s                            create     
-    +   │  ├─ pulumi:providers:kubernetes       demo-eks-provider                           create     
-    +   │  ├─ kubernetes:core/v1:ConfigMap      demo-eks-nodeAccess                         create     
-    +   │  ├─ aws:ec2:SecurityGroup             demo-eks-nodeSecurityGroup                  create     
-    +   │  ├─ eks:index:VpcCni                  demo-eks-vpc-cni                            create     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeIngressRule                 create     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeInternetEgressRule          create     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeClusterIngressRule          create     
-    +   │  ├─ aws:ec2:SecurityGroupRule         demo-eks-eksClusterIngressRule              create     
-    +   │  └─ aws:ec2:SecurityGroupRule         demo-eks-eksExtApiServerClusterIngressRule  create     
-    +   └─ eks:index:ManagedNodeGroup           demo-manangednodegroup-spot                 create     
-    +      └─ aws:eks:NodeGroup                 demo-manangednodegroup-spot                 create     
-    
+        Type                                          Name                                                       Plan       
+    +   pulumi:pulumi:Stack                           aws-classic-ts-eks-launchtemplate-poddisruptionbudget-dev  create     
+    +   ├─ aws:iam:Role                               mydemo-nodeRole                                            create     
+    +   ├─ aws:iam:Role                               mydemo-eksRole                                             create     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSWorkerNodePolicy                          create     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEC2ContainerRegistryReadOnly                 create     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSCNIPolicy                                 create     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSVPCResourceController                     create     
+    +   ├─ aws:iam:RolePolicyAttachment               mydemo-eksPolicyAttachment                                 create     
+    +   ├─ awsx:ec2:Vpc                               mydemo-vpc                                                 create     
+    +   │  └─ aws:ec2:Vpc                             mydemo-vpc                                                 create     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-private-3                                       create     
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-private-3                                       create     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-3                                       create     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-private-3                                       create     
+    +   │     ├─ aws:ec2:InternetGateway              mydemo-vpc                                                 create     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-public-1                                        create     
+    +   │     │  ├─ aws:ec2:RouteTable                mydemo-vpc-public-1                                        create     
+    +   │     │  │  ├─ aws:ec2:Route                  mydemo-vpc-public-1                                        create     
+    +   │     │  │  └─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-1                                        create     
+    +   │     │  ├─ aws:ec2:Eip                       mydemo-vpc-1                                               create     
+    +   │     │  └─ aws:ec2:NatGateway                mydemo-vpc-1                                               create     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-private-1                                       create     
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-private-1                                       create     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-1                                       create     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-private-1                                       create     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-public-2                                        create     
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-public-2                                        create     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-2                                        create     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-public-2                                        create     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-private-2                                       create     
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-private-2                                       create     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-2                                       create     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-private-2                                       create     
+    +   │     └─ aws:ec2:Subnet                       mydemo-vpc-public-3                                        create     
+    +   │        └─ aws:ec2:RouteTable                mydemo-vpc-public-3                                        create     
+    +   │           ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-3                                        create     
+    +   │           └─ aws:ec2:Route                  mydemo-vpc-public-3                                        create     
+    +   ├─ aws:ec2:SecurityGroup                      mydemo-eks-cluster-sg                                      create     
+    +   ├─ aws:ec2:LaunchTemplate                     mydemo-launchtemplate                                      create     
+    +   ├─ aws:eks:Cluster                            mydemo-eks                                                 create     
+    +   ├─ pulumi:providers:kubernetes                mydemo-k8sprovider                                         create     
+    +   ├─ aws:eks:NodeGroup                          mydemo-eksNodeGroup                                        create     
+    +   ├─ kubernetes:core/v1:Namespace               mydemo-namespace                                           create     
+    +   └─ kubernetes:policy/v1:PodDisruptionBudget   mydemo-pdb                                                 create     
+
+
+    Outputs:
+        kubeconfig                 : output<string>
+        mylaunchTemplate_id        : output<string>
+        mylaunchTemplate_version   : output<string>
+        mynamespace_name           : output<string>
+        myvpc_id                   : output<string>
+        myvpc_private_subnets      : output<string>
+        myvpc_public_subnets       : output<string>
+        pdb_name                   : output<string>
+        securitygroup_eksnode_id   : output<string>
+        securitygroup_eksnode_name : "mydemo-eks-cluster-sg-eac9fec"
+        securitygroup_eksnode_tags : {
+            Name: "mydemo-eks-cluster-sg"
+        }
+        securitygroup_eksnode_vpcid: output<string>
+
     Resources:
-        + 67 to create
+        + 44 to create
 
     Updating (dev)
 
-    View Live: https://app.pulumi.com/shaht/aws-ts-eks-spot-mg/dev/updates/5
+    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-eks-launchtemplate-poddisruptionbudget/dev/updates/37
 
-        Type                              Name                                Status       
-    +   pulumi:pulumi:Stack               aws-ts-eks-spot-mg-dev              creating...  
-    +   ├─ awsx:x:ec2:Vpc                 demo-vpc                            created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-1                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-private-2                  created      
-    +   │  ├─ awsx:x:ec2:NatGateway       demo-vpc-0                          created      
-    +   │  ├─ awsx:x:ec2:NatGateway       demo-vpc-0                          created      
-    +   │  │  └─ aws:ec2:Eip              demo-vpc-0                          created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-private-0                  created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-0                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-0                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-0                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-0                   created      
-    +   │  │  └─ aws:ec2:RouteTable       demo-vpc-public-0                   creating..   
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-2                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-2                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-2                   created      
-    +   │  ├─ awsx:x:ec2:Subnet           demo-vpc-public-2                   created      
-    +   │  │  ├─ aws:ec2:RouteTable       demo-vpc-public-2                   creating..   
-    +   │  │  ├─ aws:ec2:RouteTable             demo-vpc-public-2                   created      
-    +   │  │  ├─ aws:ec2:RouteTable             demo-vpc-public-2                   created      
-    +   │  │  ├─ aws:ec2:RouteTable             demo-vpc-public-2                   created      
-    +   │  │  └─ aws:ec2:Subnet                 demo-vpc-public-2                   creating.    
-    +   │  │  └─ aws:ec2:Route                  demo-vpc-public-2-ig                creating     
-    +   │  │  └─ aws:ec2:Route                  demo-vpc-public-2-ig                creating     
-    +   │  │  └─ aws:ec2:Route                  demo-vpc-public-2-ig                created      
-    +   │  │  └─ aws:ec2:Route                  demo-vpc-public-2-ig                created      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                   creating     
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-private-0                  creating     
-    +   │  │  └─ aws:ec2:InternetGateway        demo-vpc                            created      
-    +   │  │  └─ aws:ec2:InternetGateway        demo-vpc                            created      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-private-0                  creating.    
-    +   │  │  ├─ aws:ec2:Subnet                 demo-vpc-private-1                  created      
-    +   │  │  ├─ aws:ec2:RouteTable             demo-vpc-private-1                  created      
-    +   │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-private-0                  creating     
-    +   │  └─ aws:ec2:Vpc                       demo-vpc                            created      
-    +   ├─ aws:iam:Policy                       EKSClusterAutoscalePolicy              created      
-    +   │  │  └─ aws:ec2:NatGateway             demo-vpc-0                             creating..   
-    +   ├─ aws:iam:Policy                       AWSLoadBalancerControllerIAMPolicy     created      
-    +   ├─ aws:iam:Policy                       AWSLoadBalancerControllerIAMPolicy     created      
-    +   ├─ aws:iam:Policy                       AWSLoadBalancerControllerIAMPolicy     created      
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                 creating     
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                 creating..   
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-4                        created      
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-2                        created      
-    +   ├─ aws:iam:InstanceProfile              demo-instanceProfile-0                      created      
-    +   ├─ aws:iam:RolePolicyAttachment         demo-role-0-policy-3                        created      
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                      creating     
-    +   ├─ eks:index:ManagedNodeGroup           demo-manangednodegroup-spot                 created      
-    +   └─ eks:index:Cluster                    demo-eks                                    created      
-    +   pulumi:pulumi:Stack                     aws-ts-eks-spot-mg-dev                      creating.    
-    +      ├─ eks:index:ServiceRole             demo-eks-eksRole                            created      
-    +      │  ├─ aws:iam:Role                   demo-eks-eksRole-role                       created     
-    +      │  ├─ aws:iam:RolePolicyAttachment   demo-eks-eksRole-90eb1c99                   created     
-    +      │  └─ aws:iam:RolePolicyAttachment   demo-eks-eksRole-4b490823                   created     
-    +      ├─ aws:ec2:SecurityGroup             demo-eks-eksClusterSecurityGroup            created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksClusterInternetEgressRule       created     
-    +      ├─ aws:eks:Cluster                   demo-eks-eksCluster                         created     
-    +      ├─ aws:ec2:SecurityGroup             demo-eks-nodeSecurityGroup                  created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeClusterIngressRule          created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksExtApiServerClusterIngressRule  created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksClusterIngressRule              created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeIngressRule                 created     
-    +      ├─ aws:ec2:SecurityGroupRule         demo-eks-eksNodeInternetEgressRule          created     
-    +      ├─ pulumi:providers:kubernetes       demo-eks-eks-k8s                            created     
-    +      ├─ pulumi:providers:kubernetes       demo-eks-provider                           created     
-    +      ├─ eks:index:VpcCni                  demo-eks-vpc-cni                            created     
-    +      └─ kubernetes:core/v1:ConfigMap      demo-eks-nodeAccess                         created     
-    
-    Diagnostics:
-    pulumi:pulumi:Stack (aws-ts-eks-spot-mg-dev):
-        Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
-    
+        Type                                          Name                                                       Status              
+    +   pulumi:pulumi:Stack                           aws-classic-ts-eks-launchtemplate-poddisruptionbudget-dev  created (697s)      
+    +   ├─ awsx:ec2:Vpc                               mydemo-vpc                                                 created (3s)        
+    +   │  └─ aws:ec2:Vpc                             mydemo-vpc                                                 created (11s)       
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-public-1                                        created (11s)       
+    +   │     │  ├─ aws:ec2:Eip                       mydemo-vpc-1                                               created (0.75s)     
+    +   │     │  ├─ aws:ec2:RouteTable                mydemo-vpc-public-1                                        created (0.97s)     
+    +   │     │  │  ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-1                                        created (0.75s)     
+    +   │     │  │  └─ aws:ec2:Route                  mydemo-vpc-public-1                                        created (1s)        
+    +   │     │  └─ aws:ec2:NatGateway                mydemo-vpc-1                                               created (104s)      
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-private-3                                       created (1s)        
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-private-3                                       created (0.74s)     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-3                                       created (0.47s)     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-private-3                                       created (0.86s)     
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-public-2                                        created (11s)       
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-public-2                                        created (0.97s)     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-2                                        created (0.93s)     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-public-2                                        created (1s)        
+    +   │     ├─ aws:ec2:InternetGateway              mydemo-vpc                                                 created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-private-2                                       created (1s)        
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-private-2                                       created (0.79s)     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-2                                       created (0.52s)     
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-private-2                                       created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       mydemo-vpc-public-3                                        created (11s)       
+    +   │     │  └─ aws:ec2:RouteTable                mydemo-vpc-public-3                                        created (0.81s)     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-public-3                                        created (1s)        
+    +   │     │     └─ aws:ec2:Route                  mydemo-vpc-public-3                                        created (1s)        
+    +   │     └─ aws:ec2:Subnet                       mydemo-vpc-private-1                                       created (1s)        
+    +   │        └─ aws:ec2:RouteTable                mydemo-vpc-private-1                                       created (0.78s)     
+    +   │           ├─ aws:ec2:RouteTableAssociation  mydemo-vpc-private-1                                       created (0.77s)     
+    +   │           └─ aws:ec2:Route                  mydemo-vpc-private-1                                       created (1s)        
+    +   ├─ aws:iam:Role                               mydemo-nodeRole                                            created (0.75s)     
+    +   ├─ aws:iam:Role                               mydemo-eksRole                                             created (0.78s)     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSWorkerNodePolicy                          created (0.46s)     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEC2ContainerRegistryReadOnly                 created (0.64s)     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSCNIPolicy                                 created (0.78s)     
+    +   ├─ aws:iam:RolePolicyAttachment               example-AmazonEKSVPCResourceController                     created (0.78s)     
+    +   ├─ aws:iam:RolePolicyAttachment               mydemo-eksPolicyAttachment                                 created (0.98s)     
+    +   ├─ aws:ec2:SecurityGroup                      mydemo-eks-cluster-sg                                      created (2s)        
+    +   ├─ aws:ec2:LaunchTemplate                     mydemo-launchtemplate                                      created (0.48s)     
+    +   ├─ aws:eks:Cluster                            mydemo-eks                                                 created (551s)      
+    +   ├─ aws:eks:NodeGroup                          mydemo-eksNodeGroup                                        created (87s)       
+    +   ├─ pulumi:providers:kubernetes                mydemo-k8sprovider                                         created (0.34s)     
+    +   ├─ kubernetes:core/v1:Namespace               mydemo-namespace                                           created (0.40s)     
+    +   └─ kubernetes:policy/v1:PodDisruptionBudget   mydemo-pdb                                                 created (0.42s)     
+
+
     Outputs:
-        cluster_name                  : "demo-eks-eksCluster-819846a"
-        cluster_verion                : "1.21"
-        kubeconfig                    : "[secret]"
-        managed_nodegroup_capacitytype: "SPOT"
+        kubeconfig                 : [secret]
+        mylaunchTemplate_id        : "lt-075b435416b002519"
+        mylaunchTemplate_version   : 1
+        mynamespace_name           : "mydemo-namespace-e8caec1e"
+        myvpc_id                   : "vpc-069fbae2744f8a01c"
+        myvpc_private_subnets      : [
+            [0]: "subnet-0ea9d0a1aabafba51"
+            [1]: "subnet-08c56d65e36341360"
+            [2]: "subnet-0db7449c629300e0d"
+        ]
+        myvpc_public_subnets       : [
+            [0]: "subnet-0eba3d99f12d41a25"
+            [1]: "subnet-0d9a113e3b7162d87"
+            [2]: "subnet-0d9a5fff69cdf1539"
+        ]
+        pdb_name                   : "mydemo-pdb-60cab9b2"
+        securitygroup_eksnode_id   : "sg-0399be12b463618ad"
+        securitygroup_eksnode_name : "mydemo-eks-cluster-sg-a6d06e1"
+        securitygroup_eksnode_tags : {
+            Name: "mydemo-eks-cluster-sg"
+        }
+        securitygroup_eksnode_vpcid: "vpc-069fbae2744f8a01c"
 
     Resources:
-        + 67 created
+        + 44 created
 
-    Duration: 14m10s
+    Duration: 13m2s
    ```
 
 1. View the outputs.
@@ -210,12 +198,20 @@ AWS EKS with Launch Templates, Poddisruptionbudgets. DO NOT pass in an AMI.  We 
 
    Results
    ```bash
-    Current stack outputs (4):
-    OUTPUT                          VALUE
-    cluster_name                    demo-eks-eksCluster-819846a
-    cluster_verion                  1.21
-    kubeconfig                      [secret]
-    managed_nodegroup_capacitytype  SPOT
+    Current stack outputs (12):
+    OUTPUT                       VALUE
+    kubeconfig                   [secret]
+    mylaunchTemplate_id          lt-075b435416b002519
+    mylaunchTemplate_version     1
+    mynamespace_name             mydemo-namespace-e8caec1e
+    myvpc_id                     vpc-069fbae2744f8a01c
+    myvpc_private_subnets        ["subnet-0ea9d0a1aabafba51","subnet-08c56d65e36341360","subnet-0db7449c629300e0d"]
+    myvpc_public_subnets         ["subnet-0eba3d99f12d41a25","subnet-0d9a113e3b7162d87","subnet-0d9a5fff69cdf1539"]
+    pdb_name                     mydemo-pdb-60cab9b2
+    securitygroup_eksnode_id     sg-0399be12b463618ad
+    securitygroup_eksnode_name   mydemo-eks-cluster-sg-a6d06e1
+    securitygroup_eksnode_tags   {"Name":"mydemo-eks-cluster-sg"}
+    securitygroup_eksnode_vpcid  vpc-069fbae2744f8a01c
    ```
 
    If you need to see the value in kubeconfig, you will have to do the following
