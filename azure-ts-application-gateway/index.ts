@@ -72,6 +72,15 @@ const publicIp = new network.PublicIPAddress(`${name}-publicIp`, {
     tags: {"Name": `${name}-publicIp`, "owner": "shaht"},
 });
 
+// Create public IP address
+const publicIp2 = new network.PublicIPAddress(`${name}-publicIp2`, {
+    resourceGroupName: resourceGroup.name,
+    publicIPAddressVersion: "IPv4",
+    publicIPAllocationMethod: "Dynamic",
+    //publicIPAllocationMethod: "Static",
+    tags: {"Name": `${name}-publicIp2`, "owner": "shaht"},
+});
+
 export const publicIpName = publicIp.name;
 export const publicIpAddress = publicIp.ipAddress;
 
@@ -87,6 +96,7 @@ export const appGatewayWildcardCertificateName = `${name}-appGw-WildcardCert`;
 export const appGatewayCorsRewriteRuleSetName = `${name}-appGw-Cors-RewriteRule`;
 export const mysubscriptionid = resourceGroup.id.apply(myrg => myrg.split("/")[2]);
 
+// The sku is preventing this from coming up.
 const myapplicationgateway = new network.ApplicationGateway(`${name}-applicationgateway`, {
     resourceGroupName: resourceGroup.name,
     applicationGatewayName: `${name}-applicationgateway`,  // No auto-naming for this resource since we need to know its name in an input.
@@ -122,14 +132,14 @@ const myapplicationgateway = new network.ApplicationGateway(`${name}-application
         requestTimeout: 30,
         cookieBasedAffinity: "Disabled",
     }],
-    /*
+    
     // No SSL cert to use so commented out
-    sslCertificates: [{
-        name: appGatewayWildcardCertificateName,
-        //data: WildcardCert,
-        password: "changeit"
-    }],
-    */
+    //sslCertificates: [{
+    //    name: appGatewayWildcardCertificateName,
+    //    //data: WildcardCert,
+    //    password: "changeit"
+    //}],
+    
     httpListeners: [{
         name: appGatewayHttpListenerName,
         //protocol: "Https", // Don't have a ssl cert
@@ -141,9 +151,9 @@ const myapplicationgateway = new network.ApplicationGateway(`${name}-application
         frontendPort: {
               id: pulumi.interpolate`/subscriptions/${mysubscriptionid}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/applicationGateways/${name}-applicationgateway/frontendPorts/${appGatewayFrontendPortHttpName}`
         },
-        /*sslCertificate: {
-            id: pulumi.interpolate`/subscriptions/${mysubscriptionid}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/applicationGateways/${name}-applicationgateway/sslCertificates/${appGatewayWildcardCertificateName}`
-        },*/
+        //sslCertificate: {
+        //    id: pulumi.interpolate`/subscriptions/${mysubscriptionid}/resourceGroups/${resourceGroupName}/providers/Microsoft.Network/applicationGateways/${name}-applicationgateway/sslCertificates/${appGatewayWildcardCertificateName}`
+        //},
     }],
     requestRoutingRules: [{
         backendAddressPool: {
@@ -177,14 +187,16 @@ const myapplicationgateway = new network.ApplicationGateway(`${name}-application
     }],    
     sku: {
         capacity: 2,
-        //name: "Standard_v1",
-        //tier: "Standard_v1",
-        name: "WAF_v2",
-        tier: "WAF_v2",
-        //name: "Standard_v2",
-        //tier: "Standard_v2",
-        // Standard gives this error:  SKU Standard_v2 can only reference public ip with Standard SKU
+        name: "Standard_V2",
+        tier: "Standard_V2",
+        //name: "WAF_v2",
+        //tier: "WAF_v2",
+        //name:"Standard_v2",
+        //tier:"Standard_v2",
+        // Standard_v2 gives this error:  SKU Standard_v2 can only reference public ip with Standard SKU
         // https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/configure-public-ip-application-gateway dynamic ip requires sku standard 1
+        // Standard_v1 is retired as of April 2023: We announced the deprecation of Application Gateway V1 SKU (Standard and WAF) on April 28, 2023.
+        // https://learn.microsoft.com/en-us/azure/application-gateway/migrate-v1-v2   
     },
 });
 
