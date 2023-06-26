@@ -44,7 +44,7 @@ const vnet = new network.VirtualNetwork(`${name}-vnet`, {
 export const vnetName = vnet.name;
 // Create subnets
 const publicSubnets = [];
-const privateSubnets = [];
+//const privateSubnets = [];
 
 for (let i = 1; i <= 3; i++) {
     publicSubnets.push(new network.Subnet(`${name}-publicSubnet${i}`, {
@@ -52,33 +52,29 @@ for (let i = 1; i <= 3; i++) {
         virtualNetworkName: vnet.name,
         addressPrefix: `10.0.${i * 2}.0/24`,
     }, {dependsOn: [vnet]}));
-
+   
+    // Commented out prviate subnet creation because we don't need it for this demo and it's causing an error on creation where you have to run pulumi up twice in a row.
+    /*
     privateSubnets.push(new network.Subnet(`${name}-privateSubnet${i}`, {
         resourceGroupName: resourceGroup.name,
         virtualNetworkName: vnet.name,
         addressPrefix: `10.0.${i * 2 + 1}.0/24`,
-    }, {dependsOn: [vnet]}));
+    }, {dependsOn: [vnet], publicSubnets}));
+    */
 }
 
+
 export const publicSubnetNames = publicSubnets.map(sn => sn.name);
-export const privateSubnetNames = privateSubnets.map(sn => sn.name);
+//export const privateSubnetNames = privateSubnets.map(sn => sn.name);
 
 // Create public IP address
 const publicIp = new network.PublicIPAddress(`${name}-publicIp`, {
     resourceGroupName: resourceGroup.name,
     publicIPAddressVersion: "IPv4",
-    publicIPAllocationMethod: "Dynamic",
-    //publicIPAllocationMethod: "Static",
+    //publicIPAllocationMethod: "Dynamic", // Allocation method Dynamic is not allowed for SKU Standard_v2 when public IP is used by Application Gateway
+    publicIPAllocationMethod: "Static",
+    sku: {name: "Standard", tier: "Regional"}, // required to avoid the following error later on:SKU Standard_v2 can only reference public ip with Standard SKU
     tags: {"Name": `${name}-publicIp`, "owner": "shaht"},
-});
-
-// Create public IP address
-const publicIp2 = new network.PublicIPAddress(`${name}-publicIp2`, {
-    resourceGroupName: resourceGroup.name,
-    publicIPAddressVersion: "IPv4",
-    publicIPAllocationMethod: "Dynamic",
-    //publicIPAllocationMethod: "Static",
-    tags: {"Name": `${name}-publicIp2`, "owner": "shaht"},
 });
 
 export const publicIpName = publicIp.name;
@@ -189,14 +185,6 @@ const myapplicationgateway = new network.ApplicationGateway(`${name}-application
         capacity: 2,
         name: "Standard_V2",
         tier: "Standard_V2",
-        //name: "WAF_v2",
-        //tier: "WAF_v2",
-        //name:"Standard_v2",
-        //tier:"Standard_v2",
-        // Standard_v2 gives this error:  SKU Standard_v2 can only reference public ip with Standard SKU
-        // https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/configure-public-ip-application-gateway dynamic ip requires sku standard 1
-        // Standard_v1 is retired as of April 2023: We announced the deprecation of Application Gateway V1 SKU (Standard and WAF) on April 28, 2023.
-        // https://learn.microsoft.com/en-us/azure/application-gateway/migrate-v1-v2   
     },
 });
 

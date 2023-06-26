@@ -1,6 +1,6 @@
-# Azure Application Gateway with Resource Groups, Vnet, Subnets, and Public Ips, and 
+# Azure Application Gateway with Resource Groups, Vnet, Subnets, and Public Ips 
 
-This example deploys a resource group, vnet, 3 public subnets, 3 private subnets, 2 public ip address, and tries to deploy a application gateway. When deploying the application gateway, we are running into SKU issues.  Standard_v1 is retired as of April 2023: We announced the deprecation of Application Gateway V1 SKU (Standard and WAF) on April 28, 2023 as per [Microsoft](https://learn.microsoft.com/en-us/azure/application-gateway/migrate-v1-v2). Therefore the program will fail to come up due to SKU issues. We declared a bunch of names and did not us auto-naming across the board because the azure resource is circular, you have to know the name and use it before it is created.
+This example deploys a resource group, vnet, 3 public subnets, one public ip address, and deploy an application gateway. Standard_v1 is retired as of April 2023: We announced the deprecation of Application Gateway V1 SKU (Standard and WAF) on April 28, 2023 as per [Microsoft](https://learn.microsoft.com/en-us/azure/application-gateway/migrate-v1-v2). We declared a bunch of names and did not use auto-naming across the board because you have to know the name and use it before it is created.
 ## Deploying the App
 
 1. Login to Azure CLI (you will be prompted to do this during deployment if you forget this step)
@@ -35,44 +35,96 @@ This example deploys a resource group, vnet, 3 public subnets, 3 private subnets
 
     Results
     ```bash
-        View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/azure-ts-application-gateway/dev/previews/baecccc2-2c5d-40b6-a1f8-961286a414b4
+      ❯ pulumi up -y
+      Previewing update (dev)
 
-        Type                                        Name                              Plan       
-    +   pulumi:pulumi:Stack                         azure-ts-application-gateway-dev  create     
-    +   ├─ azure-native:resources:ResourceGroup     shaht-rg                          create     
-    +   ├─ azure-native:network:PublicIPAddress     shaht-publicIp                    create     
-    +   ├─ azure-native:storage:StorageAccount      shahtsa                           create     
-    +   ├─ azure-native:network:PublicIPAddress     shaht-publicIp2                   create     
-    +   ├─ azure-native:network:VirtualNetwork      shaht-vnet                        create     
-    +   ├─ azure-native:network:Subnet              shaht-publicSubnet3               create     
-    +   ├─ azure-native:network:Subnet              shaht-publicSubnet1               create     
-    +   ├─ azure-native:network:Subnet              shaht-privateSubnet3              create     
-    +   ├─ azure-native:network:Subnet              shaht-publicSubnet2               create     
-    +   ├─ azure-native:network:Subnet              shaht-privateSubnet2              create     
-    +   ├─ azure-native:network:Subnet              shaht-privateSubnet1              create     
-    +   └─ azure-native:network:ApplicationGateway  shaht-applicationgateway          create     
+      View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/azure-ts-application-gateway/dev/previews/e3b47487-ef09-4fd8-a509-f781eaffc040
+
+         Type                                        Name                              Plan       
+      +   pulumi:pulumi:Stack                         azure-ts-application-gateway-dev  create     
+      +   ├─ azure-native:resources:ResourceGroup     shaht-rg                          create     
+      +   ├─ azure-native:storage:StorageAccount      shahtsa                           create     
+      +   ├─ azure-native:network:VirtualNetwork      shaht-vnet                        create     
+      +   ├─ azure-native:network:PublicIPAddress     shaht-publicIp                    create     
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet2               create     
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet1               create     
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet3               create     
+      +   └─ azure-native:network:ApplicationGateway  shaht-applicationgateway          create     
 
 
-Current stack outputs (18):
-    OUTPUT                               VALUE
-    appGatewayBackendPoolName            shaht-appGw-be-address-pool
-    appGatewayCorsRewriteRuleSetName     shaht-appGw-Cors-RewriteRule
-    appGatewayFrontendConfigurationName  shahtappGwPublicFrontendIp
-    appGatewayFrontendPortHttpName       shaht-apigw-httpPort
-    appGatewayFrontendPortHttpsName      shaht-apigw-httpsPort
-    appGatewayHttpListenerName           shaht-appGw-http-port-listener
-    appGatewayHttpSettings443Name        shaht-appGw-be-443
-    appGatewayHttpSettings80Name         shaht-appGw-be-80
-    appGatewayHttpsListenerName          shaht-appGw-https-port-listener
-    appGatewayWildcardCertificateName    shaht-appGw-WildcardCert
-    mysubscriptionid                     32b9cb2e-69be-4040-80a6-02cd6b2cc5ec
-    primaryStorageKey                    [secret]
-    privateSubnetNames                   ["shaht-privateSubnet1","shaht-privateSubnet2","shaht-privateSubnet3"]
-    publicIpName                         shaht-publicIp42421671
-    publicSubnetNames                    ["shaht-publicSubnet1","shaht-publicSubnet2","shaht-publicSubnet3"]
-    resourceGroupName                    shaht-rg5b5c93b0
-    storageAccountName                   shahtsa9385d4a3
-    vnetName                             shaht-vnet3a37caf3
+      Outputs:
+         appGatewayBackendPoolName          : "shaht-appGw-be-address-pool"
+         appGatewayCorsRewriteRuleSetName   : "shaht-appGw-Cors-RewriteRule"
+         appGatewayFrontendConfigurationName: "shahtappGwPublicFrontendIp"
+         appGatewayFrontendPortHttpName     : "shaht-apigw-httpPort"
+         appGatewayFrontendPortHttpsName    : "shaht-apigw-httpsPort"
+         appGatewayHttpListenerName         : "shaht-appGw-http-port-listener"
+         appGatewayHttpSettings443Name      : "shaht-appGw-be-443"
+         appGatewayHttpSettings80Name       : "shaht-appGw-be-80"
+         appGatewayHttpsListenerName        : "shaht-appGw-https-port-listener"
+         appGatewayWildcardCertificateName  : "shaht-appGw-WildcardCert"
+         applicationGatewayName             : output<string>
+         mysubscriptionid                   : output<string>
+         primaryStorageKey                  : output<string>
+         publicIpAddress                    : output<string>
+         publicIpName                       : output<string>
+         publicSubnetNames                  : [
+            [0]: output<string>
+            [1]: output<string>
+            [2]: output<string>
+         ]
+         resourceGroupName                  : output<string>
+         storageAccountName                 : output<string>
+         vnetName                           : output<string>
+
+      Resources:
+         + 9 to create
+
+      Updating (dev)
+
+      View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/azure-ts-application-gateway/dev/updates/41
+
+         Type                                        Name                              Status              
+      +   pulumi:pulumi:Stack                         azure-ts-application-gateway-dev  created (309s)      
+      +   ├─ azure-native:resources:ResourceGroup     shaht-rg                          created (0.73s)     
+      +   ├─ azure-native:network:VirtualNetwork      shaht-vnet                        created (4s)        
+      +   ├─ azure-native:storage:StorageAccount      shahtsa                           created (21s)       
+      +   ├─ azure-native:network:PublicIPAddress     shaht-publicIp                    created (2s)        
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet1               created (3s)        
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet2               created (4s)        
+      +   ├─ azure-native:network:Subnet              shaht-publicSubnet3               created (4s)        
+      +   └─ azure-native:network:ApplicationGateway  shaht-applicationgateway          created (294s)      
+
+
+      Outputs:
+         appGatewayBackendPoolName          : "shaht-appGw-be-address-pool"
+         appGatewayCorsRewriteRuleSetName   : "shaht-appGw-Cors-RewriteRule"
+         appGatewayFrontendConfigurationName: "shahtappGwPublicFrontendIp"
+         appGatewayFrontendPortHttpName     : "shaht-apigw-httpPort"
+         appGatewayFrontendPortHttpsName    : "shaht-apigw-httpsPort"
+         appGatewayHttpListenerName         : "shaht-appGw-http-port-listener"
+         appGatewayHttpSettings443Name      : "shaht-appGw-be-443"
+         appGatewayHttpSettings80Name       : "shaht-appGw-be-80"
+         appGatewayHttpsListenerName        : "shaht-appGw-https-port-listener"
+         appGatewayWildcardCertificateName  : "shaht-appGw-WildcardCert"
+         applicationGatewayName             : "shaht-applicationgateway"
+         mysubscriptionid                   : "32b9cb2e-69be-4040-80a6-02cd6b2cc5ec"
+         primaryStorageKey                  : [secret]
+         publicIpAddress                    : "172.177.251.245"
+         publicIpName                       : "shaht-publicIp24cb7b59"
+         publicSubnetNames                  : [
+            [0]: "shaht-publicSubnet1"
+            [1]: "shaht-publicSubnet2"
+            [2]: "shaht-publicSubnet3"
+         ]
+         resourceGroupName                  : "shaht-rg6debd300"
+         storageAccountName                 : "shahtsa743d5d79"
+         vnetName                           : "shaht-vnet59d31549"
+
+      Resources:
+         + 9 created
+
+      Duration: 5m11s
     ```
 
 1. View the outputs.
@@ -82,7 +134,8 @@ Current stack outputs (18):
 
    Results
    ```bash
-   Current stack outputs (18):
+   pulumi stack output
+   Current stack outputs (19):
     OUTPUT                               VALUE
     appGatewayBackendPoolName            shaht-appGw-be-address-pool
     appGatewayCorsRewriteRuleSetName     shaht-appGw-Cors-RewriteRule
@@ -94,14 +147,15 @@ Current stack outputs (18):
     appGatewayHttpSettings80Name         shaht-appGw-be-80
     appGatewayHttpsListenerName          shaht-appGw-https-port-listener
     appGatewayWildcardCertificateName    shaht-appGw-WildcardCert
+    applicationGatewayName               shaht-applicationgateway
     mysubscriptionid                     32b9cb2e-69be-4040-80a6-02cd6b2cc5ec
     primaryStorageKey                    [secret]
-    privateSubnetNames                   ["shaht-privateSubnet1","shaht-privateSubnet2","shaht-privateSubnet3"]
-    publicIpName                         shaht-publicIp42421671
+    publicIpAddress                      172.177.251.245
+    publicIpName                         shaht-publicIp24cb7b59
     publicSubnetNames                    ["shaht-publicSubnet1","shaht-publicSubnet2","shaht-publicSubnet3"]
-    resourceGroupName                    shaht-rg5b5c93b0
-    storageAccountName                   shahtsa9385d4a3
-    vnetName                             shaht-vnet3a37caf3
+    resourceGroupName                    shaht-rg6debd300
+    storageAccountName                   shahtsa743d5d79
+    vnetName                             shaht-vnet59d31549
 
    ```
 
