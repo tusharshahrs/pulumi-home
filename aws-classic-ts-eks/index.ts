@@ -43,8 +43,8 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(
     //subnetIds: (myvpc.publicSubnetIds, myvpc.privateSubnetIds),
     subnetIds: myvpc.privateSubnetIds,
     //instanceTypes: ["t3a.micro"], // will not work for hpa
-    instanceTypes: ["t3a.large"],
-    //instanceTypes: ["c5.large"],
+    //instanceTypes: ["t3a.large"],
+    instanceTypes: ["c5.large"],
     capacityType: "SPOT",
     nodeRole: mycluster.instanceRoles.apply((roles) => roles[0]),
     tags: {
@@ -120,6 +120,9 @@ const metricsServer = new k8s.helm.v3.Release(
     repositoryOpts: {
       repo: "https://kubernetes-sigs.github.io/metrics-server/",
     },
+    values: {
+      apiService: {insecureSkipTLSVerify : true},
+    }
    },
   { provider: k8sprovider, dependsOn: [mynamespace] }
 );
@@ -131,7 +134,7 @@ export const metrics_server_name = metricsServer.name;
 // Then uncomment this and run pulumi up
 // Then run this: kubectl -n shaht-ns-6f984d31 get deploy shaht-nginx-deployment-e1b3d05e --show-managed-fields -o yaml >mystack2withhpa.yaml
 // Maybe try to hit it with load
-/*
+
 const horizontalpodautoscaler = new k8s.autoscaling.v2.HorizontalPodAutoscaler(
   `${myname}-hpa`,
   {
@@ -163,4 +166,3 @@ const horizontalpodautoscaler = new k8s.autoscaling.v2.HorizontalPodAutoscaler(
 );
 
 export const horizontalpodautoscaler_name = horizontalpodautoscaler.metadata.name;
-*/
