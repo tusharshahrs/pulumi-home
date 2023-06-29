@@ -3,7 +3,6 @@ import * as eks from "@pulumi/eks";
 import * as k8s from "@pulumi/kubernetes";
 import * as awsx from "@pulumi/awsx";
 import { Namespace } from "@pulumi/kubernetes/core/v1";
-import { Tag } from "@pulumi/aws/ec2";
 
 const myname = "shaht";
 
@@ -20,7 +19,7 @@ const mycluster = new eks.Cluster(`${myname}-eks`, {
   publicSubnetIds: myvpc.publicSubnetIds,
   privateSubnetIds: myvpc.privateSubnetIds,
   instanceType: "t3a.small",
-  version: "1.23",
+  version: "1.23",  // Keep this version of the k8s to replicate the bug that customer encounters
   nodeRootVolumeSize: 10,
   encryptRootBlockDevice: true,
   enabledClusterLogTypes: [
@@ -40,11 +39,10 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(
   {
     cluster: mycluster,
     labels: { managed: "true", spot: "true" },
-    //subnetIds: (myvpc.publicSubnetIds, myvpc.privateSubnetIds),
     subnetIds: myvpc.privateSubnetIds,
-    //instanceTypes: ["t3a.micro"], // will not work for hpa
-    //instanceTypes: ["t3a.large"],
-    instanceTypes: ["c5.large"],
+    //instanceTypes: ["t3a.micro"], // will NOT work for hpa
+    //instanceTypes: ["t3a.large"],  // will NOT work for hpa
+    instanceTypes: ["c5.large"],  // Must use c5.large or bigger instance for hpa to work
     capacityType: "SPOT",
     nodeRole: mycluster.instanceRoles.apply((roles) => roles[0]),
     tags: {
@@ -63,11 +61,12 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(
   { dependsOn: [myvpc, mycluster] }
 );
 
-export const managed_node_group_spot_name =
-  managed_node_group_spot.nodeGroup.id;
+export const managed_node_group_spot_name = managed_node_group_spot.nodeGroup.id;
+  
 
 const k8sprovider = new k8s.Provider(`${myname}-k8sprovider`, {
   kubeconfig: mycluster.kubeconfig,
+  enableServerSideApply: true,
 });
 
 const mynamespace = new Namespace(
@@ -111,6 +110,20 @@ const nginxDeployment = new k8s.apps.v1.Deployment(
 );
 export const nginx_deployment_name = nginxDeployment.metadata.name;
 
+// This will route traffic to the Deployment pods.
+const service = new k8s.core.v1.Service(`${myname}-service`, {
+  metadata: { labels: nginxLabels, namespace: mynamespace.metadata.name },
+  spec: {
+      type: "LoadBalancer",
+      ports: [{ port: 8081, targetPort: 8080 }],
+      selector: nginxLabels,
+  },
+}, { provider: k8sprovider, dependsOn: [mynamespace, nginxDeployment] })
+
+export const service_name = service.metadata.name;
+export const service_url = service.status.loadBalancer.ingress[0].hostname;
+
+// pre-requisite for hpa
 const metricsServer = new k8s.helm.v3.Release(
   `${myname}-metricsserver`,
   {
@@ -120,21 +133,16 @@ const metricsServer = new k8s.helm.v3.Release(
     repositoryOpts: {
       repo: "https://kubernetes-sigs.github.io/metrics-server/",
     },
-    values: {
-      apiService: {insecureSkipTLSVerify : true},
-    }
    },
   { provider: k8sprovider, dependsOn: [mynamespace] }
 );
 
 export const metrics_server_name = metricsServer.name;
 
-// Bring up cluster without this 1st.  Then run this:
 // kubectl -n shaht-ns-6f984d31 get deploy shaht-nginx-deployment-e1b3d05e --show-managed-fields -o yaml >mystack1withnohpa.yaml
-// Then uncomment this and run pulumi up
-// Then run this: kubectl -n shaht-ns-6f984d31 get deploy shaht-nginx-deployment-e1b3d05e --show-managed-fields -o yaml >mystack2withhpa.yaml
-// Maybe try to hit it with load
+// kubectl -n shaht-ns-6f984d31 get deploy shaht-nginx-deployment-e1b3d05e --show-managed-fields -o yaml >mystack2withhpa.yaml
 
+// HPA, Scaling occurs on cpu and memory utilization
 const horizontalpodautoscaler = new k8s.autoscaling.v2.HorizontalPodAutoscaler(
   `${myname}-hpa`,
   {
@@ -145,7 +153,8 @@ const horizontalpodautoscaler = new k8s.autoscaling.v2.HorizontalPodAutoscaler(
         kind: "Deployment",
         name: nginxDeployment.metadata.name,
       },
-      minReplicas: 5,
+       minReplicas: 4, // Comment this line out when testing with hpa and uncomment the next line and run pulumi up the 1st time.
+      //minReplicas: 6, // Uncomment this line when testing with hpa and comment out the previous line and run pulumi up the 2nd time to trigger the error.
       maxReplicas: 15,
       metrics: [
          {
@@ -154,7 +163,7 @@ const horizontalpodautoscaler = new k8s.autoscaling.v2.HorizontalPodAutoscaler(
               name: "cpu",
               target: {
                   type: "Utilization",
-                  averageUtilization: 80,
+                  averageUtilization: 30,
               },
           },
           
