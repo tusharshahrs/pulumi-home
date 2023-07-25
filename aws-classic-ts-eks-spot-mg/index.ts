@@ -73,12 +73,12 @@ export const securitygroup_eksnode_tags = eksclustersecuritygroup.tags;
 
 const mylaunchTemplate = new aws.ec2.LaunchTemplate(`${my_name}-launchtemplate`, {
   tags: {"Name": `${my_name}-launchtemplate`},
-  imageId: "ami-028b7bddbfee3053f", // Customize the image ID based on your requirements: amazon-eks-node-1.25-v20230513
-  instanceType: "t3a.micro", // Customize the instance type based on your requirements 
+  //imageId: "ami-028b7bddbfee3053f", // Customize the image ID based on your requirements: amazon-eks-node-1.25-v20230513
+  instanceType: "t3a.small", // Customize the instance type based on your requirements 
   description: "This is the example launch template for the EKS cluster managed node group by Tushar Shah",
   updateDefaultVersion: true,
-  blockDeviceMappings: [{ebs: {volumeSize: 20, volumeType: "gp2", deleteOnTermination: "true", }, deviceName: "/dev/xvda",}],
   vpcSecurityGroupIds: [eksclustersecuritygroup.id],
+  
 }
 );
 
@@ -137,14 +137,7 @@ const example_AmazonEC2ContainerRegistryReadOnly = new aws.iam.RolePolicyAttachm
   role: nodeRole.name,
 });
 
-/*
-const nodePolicyAttachment = new aws.iam.RolePolicyAttachment(`${my_name}-nodePolicyAttachment`, {
-  policyArn: [aws.iam.ManagedPolicy.AmazonEKSWorkerNodePolicy,aws.iam.ManagedPolicy.AmazonEKS_CNI_Policy,aws.iam.ManagedPolicies.AmazonEC2ContainerRegistryReadOnly].join(","),
-  role: nodeRole.name,
-});
-*/
-
-const myclusterawseks = new aws.eks.Cluster(`${my_name}-eks`, {
+const mycluster = new aws.eks.Cluster(`${my_name}-eks`, {
  roleArn: eksRole.arn,
  version: "1.25",
  enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"],
@@ -156,8 +149,8 @@ const myclusterawseks = new aws.eks.Cluster(`${my_name}-eks`, {
   },
 });
 
-const eksNodeGroup = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup`, {
-  clusterName: myclusterawseks.name,
+const eksnodegroup = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup`, {
+  clusterName: mycluster.name,
   subnetIds: myvpc.publicSubnetIds, // Provide a list of subnet IDs associate with the node group
   nodeRoleArn: nodeRole.arn,
   launchTemplate: {
@@ -165,11 +158,30 @@ const eksNodeGroup = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup`, {
     version: pulumi.interpolate`${mylaunchTemplate.latestVersion}`,
   },
   scalingConfig: {
+      desiredSize: 2,
+      maxSize: 8,
+      minSize: 2,
+  },
+});
+
+/*
+const eksNodeGroup2 = new aws.eks.NodeGroup(`${my_name}-eksNodeGroup-lt`, {
+  clusterName: myclusterawseks.name,
+  //subnetIds: myvpc.publicSubnetIds, // Provide a list of subnet IDs associate with the node group
+  subnetIds: myvpc.privateSubnetIds, // Provide a list of subnet IDs associate with the node group
+  nodeRoleArn: nodeRole.arn,
+  launchTemplate: {
+    id: mylaunchTemplate.id,
+    version: pulumi.interpolate`${mylaunchTemplate.latestVersion}`,
+  },
+  
+  scalingConfig: {
       desiredSize: 3,
       maxSize: 8,
       minSize: 2,
   },
 });
+*/
 
 /*
 const mynodegroup = new aws.eks.NodeGroup(`${my_name}-eks-nodegroup`, {
@@ -197,6 +209,7 @@ const mynodegroup = new aws.eks.NodeGroup(`${my_name}-eks-nodegroup`, {
   ],
 }, { dependsOn: [myclusterawseks, mylaunchTemplate] });
 */
+
 /*
 const mycluster = new eks.Cluster(
   `${my_name}-eks`,
@@ -228,48 +241,18 @@ export const cluster_name = mycluster.eksCluster.name;
 export const cluster_verion = mycluster.eksCluster.version;
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 export const eksclustersecuritygroupinfo = eksclustersecuritygroup;
+*/
+//const kubeconfig = aws.eks.Cluster.get("kubeconfig", { clusterName: mycluster.name });
 // comment out entire block if you are using ~/.kube/config
+
+/*
 const k8sProvider = new k8s.Provider(`${my_name}-k8sprovider`, {
   kubeconfig: mycluster.kubeconfig,
 });
 */
-
-// Added to launch template
-//export const kubernetes_io_cluster_my_cluster_tag = pulumi.interpolate`kubernetes.io/cluster/${cluster_name}`;
-//export const kubernetes_io_cluster_my_cluster_tag_owned = kubernetes_io_cluster_my_cluster_tag.apply(mynametag => {
-//  return JSON.parse(`{"${mynametag}":"owned"}`);
-//});
-
-//export const aws_eks_cluster_name_tag = "aws:eks:cluster-name";
-//export const aws_eks_cluster_name_tag_owned = { return JSON.parse(`{"${aws_eks_cluster_name_tag}":${cluster_name}`)};
-//export const stuff = aws_eks_cluster_name_tag.concat(":", ${cluster_name});
-//export const sg_cluster_name = cluster_name_tag.apply(mynametag => { return JSON.parse`{"${mynametag}":"owned"}`);
-//export const security_group_name = pulumi.interpolate`eks-cluster-sg2-${cluster_name}`;
-//export const aws_eks_cluster_name_tag = pulumi.interpolate`aws:eks:cluster-name:${cluster_name}`;
-
-
-
-//export const securitygroupclusterforclustersecuritygroup= mycluster.nodeSecurityGroup.id;
-//export const clusteringressrule = mycluster.eksClusterIngressRule.id;
-
-// Need the following for the launch template because the node group will NOT join the cluster otherwise.
-// https://github.com/pulumi/pulumi-eks/blob/master/nodejs/eks/nodegroup.ts#L1043-L1049
-//export const nodeSecurityGroupId = pulumi.all([mycluster.nodeSecurityGroup.id, mycluster.eksClusterIngressRule.id]).apply(([id]) => id);
-
-// Collect the IDs of any extra, user-specific security groups.
-// This exists here:  https://www.pulumi.com/registry/packages/eks/api-docs/cluster/#coredata
-//export  const extraNodeSecurityGroupIds = mycluster.core.nodeGroupOptions.extraNodeSecurityGroups?.map((sg) => sg.id) ?? [];
-
-
-
-//export const mysecuritygroup_nodeSecurityGroup = mycluster.nodeSecurityGroup.id;
-//export const mysecuritygroup_eksClusterIngressRule = mycluster.eksClusterIngressRule.id;
-
-//export const mysecuritygroup1 = mycluster.defaultNodeGroup?.extraNodeSecurityGroups?.map((sg) => sg.id);
-//export const mysecuritygroup2 = mycluster.clusterSecurityGroup.id;
-//export const my_privatesubnetids= myvpc.privateSubnetIds;
-//export const my_publicsubnetids= myvpc.publicSubnetIds;
-//const mysubnetsidstopass = myvpc.privateSubnetIds,myvpc.publicSubnetIds
+const k8sProvider = new k8s.Provider(`${my_name}-k8sprovider`, {
+  kubeconfig: aws.eks.Cluster.get("kubeconfig", { clusterName: mycluster.name }),
+});
 /*
 const managed_node_group_spot = new eks.ManagedNodeGroup(
   `${my_name}-mng-nolt`,
@@ -297,46 +280,19 @@ const managed_node_group_spot = new eks.ManagedNodeGroup(
   { dependsOn: [myvpc, mycluster, mylaunchTemplate]}
 );
 */
-/*
-const managed_node_group2 = new eks.ManagedNodeGroup(
-  `${my_name}-manangednodegroup`,
-  {
-    cluster: mycluster,
-    //instanceTypes: ["t3a.micro"],
-    nodeRole: roles[0],
-    labels: { managed: "true", spot: "false" },
-    launchTemplate: {
-      id: mylaunchTemplate.id,
-      version: pulumi.interpolate`${mylaunchTemplate.latestVersion}`,
-    },
-    
-    tags: {
-      team: "team-ce",
-      environment: "development",
-      launch_template: "yes"
-    },
 
-    scalingConfig: {
-      desiredSize: 3,
-      minSize: 2,
-      maxSize: 8,
-    },
-  },
-  { dependsOn: [myvpc, mycluster, mylaunchTemplate]}
-);
-*/
 /*
 const mynamespace = new k8s.core.v1.Namespace(
     `${my_name}-namespace`,
     {},
   
     //{dependsOn: [mycluster] }  // Use this for ~/.kube/config
-    { dependsOn: [mycluster, managed_node_group_spot] }
+    { dependsOn: [mycluster, eksnodegroup] }
   );
 
-  export const managed_node_group_name = managed_node_group_spot.nodeGroup.id;
-  export const managed_node_group_version = managed_node_group_spot.nodeGroup.version;  
-  export const managed_node_group_launchtemplate = managed_node_group_spot.nodeGroup.launchTemplate;  
+  export const managed_node_group_name = eksnodegroup.id;
+  export const managed_node_group_version = eksnodegroup.version;  
+  export const managed_node_group_launchtemplate = eksnodegroup.launchTemplate;  
 */
 
 /*  
@@ -382,6 +338,7 @@ const foobarcrd = new k8s.apiextensions.v1.CustomResourceDefinition(
 /*
 // Create a Pod Disruption Budget.
 const pdb = new k8s.policy.v1.PodDisruptionBudget(`${my_name}-pdb`, {
+  //metadata: { namespace: "default",  },
   metadata: { namespace: "default",  },
   spec: {
       minAvailable: 1,
@@ -392,8 +349,9 @@ const pdb = new k8s.policy.v1.PodDisruptionBudget(`${my_name}-pdb`, {
           },
       },
   },
-}, { dependsOn: [mycluster,mynamespace], provider: k8sProvider });
-
+}, { dependsOn: [mycluster], provider: k8sprovider}); // Comment out this line after the first run when you are trying to create the issue.
+*/
+/*
 const pdb2 = new k8s.policy.v1.PodDisruptionBudget(`${my_name}-pdb2`, {
   metadata: {
       //name: "example-pdb2",
@@ -417,7 +375,7 @@ const pdb2 = new k8s.policy.v1.PodDisruptionBudget(`${my_name}-pdb2`, {
       //unhealthyPodEvictionPolicy: "NoEviction", // criteria for evicting unhealthy pods (NoEviction, StaticallyKubeletOnly)
   },
 }, { dependsOn: [mycluster,mynamespace], provider: k8sProvider });
-
-export const mypdb = pdb.metadata.name;
-export const mypdb2 = pdb2.metadata.name;
 */
+export const mypdb = pdb.metadata.name;
+//export const mypdb2 = pdb2.metadata.name;
+
