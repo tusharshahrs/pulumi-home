@@ -4,7 +4,7 @@ import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 import * as k8s from "@pulumi/kubernetes";
 
-const name = "tusharnolt";
+const name = "tusharnoseperatelt";
 
 // Create a VPC with 3 public and 3 private subnets with the CIDR block 10.0.0.0/22.
 const vpc = new awsx.ec2.Vpc(`${name}-vpc`, {
@@ -45,10 +45,9 @@ const managed_node_group = new eks.ManagedNodeGroup(
     `${name}-manangednodegroup`,
     {
       cluster: cluster,
-      //capacityType: "SPOT",
+      capacityType: "SPOT",
       instanceTypes: ["t3a.micro"],
       
-      //nodeRole: cluster.instanceRoles.apply((roles) => roles[0]),
       nodeRoleArn: cluster.instanceRoles[0].arn,
       //nodeRole: roles[0],
       labels: { managed: "true", spot: "true" },
@@ -63,7 +62,7 @@ const managed_node_group = new eks.ManagedNodeGroup(
       scalingConfig: {
         desiredSize: 3,
         minSize: 2,
-        maxSize: 10,
+        maxSize: 8,
       },
       diskSize: 10,
     },
@@ -86,6 +85,7 @@ export const namespace_name = mynamespace.metadata.name;
 
 
 // Create a Pod Disruption Budget.
+//Deploy an invalid one after the 1st time.  Make a change to the LT first.
 const pdb = new k8s.policy.v1.PodDisruptionBudget(`${name}-pdb`, {
     //metadata: { namespace: "default" },
     metadata: { namespace: mynamespace.metadata.name },
