@@ -4,9 +4,11 @@
         "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.36.0",
-        "@pulumi/eks": "^0.41.2",
-        "@pulumi/kubernetes": "^3.20.2"
+        "@pulumi/pulumi": "3.60.0",
+        "@pulumi/eks": "^1.0.2",
+        "@pulumi/kubernetes": "3.24.2",
+        "@pulumi/awsx": "^1.0.0",
+        "@pulumi/aws": "5.33.0"
 
     }
 }

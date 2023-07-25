@@ -1,7 +1,8 @@
 {
-    "name": "aws-classic-ts-eks-spot-mg",
+    "name": "aws-classic-ts-eks-launchtemplate-poddisruptionbudget",
+    "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^16.0.0"
+        "@types/node": "^16"
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.65.1",
@@ -9,6 +10,5 @@
         "@pulumi/awsx": "^1.0.0",
         "@pulumi/eks": "1.0.2",
         "@pulumi/kubernetes": "3.28.1"
-
     }
 }
