@@ -1,0 +1,98 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2023-08-29T10:13:26.638475-04:00",
+            "magic": "7f5ec831fbfcaaafb30fe1f9dd0eebc4a62372e9fda10d9bab6256b2deca869d",
+            "version": "v3.78.1"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "team-ce",
+                "project": "aws-classic-py-redis",
+                "stack": "dev"
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::aws-classic-py-redis::pulumi:pulumi:Stack::aws-classic-py-redis-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "created": "2023-08-29T13:09:00.049251Z",
+                "modified": "2023-08-29T13:09:00.049251Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::aws-classic-py-redis::pulumi:providers:aws::default_4_1_0",
+                "custom": true,
+                "id": "45764efe-7c9d-4cda-9a98-6a22a725a3fe",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "region": "us-east-2",
+                    "version": "4.1.0"
+                },
+                "outputs": {
+                    "region": "us-east-2",
+                    "version": "4.1.0"
+                },
+                "created": "2023-08-29T13:09:00.877004Z",
+                "modified": "2023-08-29T13:09:00.877004Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::aws-classic-py-redis::aws:ec2/vpc:Vpc::shaht-vpc",
+                "custom": true,
+                "id": "vpc-02988c7b48d115999",
+                "type": "aws:ec2/vpc:Vpc",
+                "inputs": {
+                    "__defaults": [
+                        "assignGeneratedIpv6CidrBlock",
+                        "instanceTenancy"
+                    ],
+                    "assignGeneratedIpv6CidrBlock": false,
+                    "cidrBlock": "10.0.0.0/16",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": {
+                        "Name": "shaht-vpc"
+                    }
+                },
+                "outputs": {
+                    "__meta": "{\"schema_version\":\"1\"}",
+                    "arn": "arn:aws:ec2:us-east-2:052848974346:vpc/vpc-02988c7b48d115999",
+                    "assignGeneratedIpv6CidrBlock": false,
+                    "cidrBlock": "10.0.0.0/16",
+                    "defaultNetworkAclId": "acl-01f3e4ec7ba403142",
+                    "defaultRouteTableId": "rtb-0f5b07ae1cf8abdae",
+                    "defaultSecurityGroupId": "sg-00a65e8694350c0ac",
+                    "dhcpOptionsId": "dopt-5cffe534",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "id": "vpc-02988c7b48d115999",
+                    "instanceTenancy": "default",
+                    "ipv6AssociationId": "",
+                    "ipv6CidrBlock": "",
+                    "mainRouteTableId": "rtb-0f5b07ae1cf8abdae",
+                    "ownerId": "052848974346",
+                    "tags": {
+                        "Name": "shaht-vpc"
+                    },
+                    "tagsAll": {
+                        "Name": "shaht-vpc"
+                    }
+                },
+                "parent": "urn:pulumi:dev::aws-classic-py-redis::pulumi:pulumi:Stack::aws-classic-py-redis-dev",
+                "provider": "urn:pulumi:dev::aws-classic-py-redis::pulumi:providers:aws::default_4_1_0::45764efe-7c9d-4cda-9a98-6a22a725a3fe",
+                "propertyDependencies": {
+                    "cidrBlock": null,
+                    "enableDnsHostnames": null,
+                    "enableDnsSupport": null,
+                    "tags": null
+                },
+                "created": "2023-08-29T13:09:15.630533Z",
+                "modified": "2023-08-29T14:05:32.938155Z"
+            }
+        ]
+    }
+}
