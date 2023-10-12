@@ -55,7 +55,8 @@ mysecuritygroup = aws.ec2.SecurityGroup(f'{name}-sg',
         #protocol="-1",
         #self= True,
         protocol='tcp',
-        cidr_blocks=["99.159.29.103/32"])
+        # Change this CIDR BLOCK to your own IP address
+        cidr_blocks=["0.0.0.0/0/32"])
         ],
         
     tags= {'Name': f'{name}-sg'},

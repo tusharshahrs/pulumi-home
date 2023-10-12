@@ -42,6 +42,8 @@ Version of pulumi-aws
    pulumi config set aws:region us-east-2 # any valid aws region
    ```
 
+1. Change the cidr block for `ingress` to your own ip address or something else in the securitygroup
+
 1. Launch
 
    ```bash
