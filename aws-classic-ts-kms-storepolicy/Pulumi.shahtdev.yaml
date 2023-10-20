@@ -1,0 +1,3 @@
+config:
+  aws-classic-ts-kms-storepolicy:configKmsKeyCmk: team-ce/aws-classic-ts-kms-iampolicy/shahtdev
+  aws:region: us-east-2
