@@ -1,0 +1,3 @@
+name: aws-classic-ts-kms-iampolicy
+runtime: nodejs
+description: A minimal AWS TypeScript Pulumi program
