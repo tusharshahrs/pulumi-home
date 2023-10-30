@@ -62,8 +62,8 @@ func main() {
 
 		// Create a VPC Endpoint for S3
 		myvpcEndpoint, err := ec2.NewVpcEndpoint(ctx, "shaht-myS3Endpoint", &ec2.VpcEndpointArgs{
-			VpcId:             myvpc.ID(),
-			SubnetIds:         pulumi.StringArray{mysubnet1.ID(), mysubnet2.ID()},
+			VpcId:             myvpc.ID(),                                         // We are passing in the vpc id here
+			SubnetIds:         pulumi.StringArray{mysubnet1.ID(), mysubnet2.ID()}, // We are passing in the subnets here
 			ServiceName:       pulumi.String("com.amazonaws.us-east-2.s3"),
 			VpcEndpointType:   pulumi.String("Interface"),
 			PrivateDnsEnabled: pulumi.Bool(false),
@@ -82,7 +82,7 @@ func main() {
 			LoadBalancerType:         pulumi.String("application"),
 			EnableDeletionProtection: pulumi.Bool(false),
 			SecurityGroups:           pulumi.StringArray{mysg.ID()},
-			Subnets:                  pulumi.StringArray{mysubnet1.ID(), mysubnet2.ID()},
+			Subnets:                  pulumi.StringArray{mysubnet1.ID(), mysubnet2.ID()}, // We are passing in the subnets here without an apply
 			Tags: pulumi.StringMap{
 				"Name": pulumi.String("shahtmyAlb"),
 			},
@@ -131,13 +131,10 @@ func main() {
 		ctx.Export("subnet2Id", mysubnet2.ID()) // You have to pass these in as inputs
 		ctx.Export("securityGroupId", mysg.ID())
 		ctx.Export("vpcEndpointId", myvpcEndpoint.ID())
-		ctx.Export("vpcEndpointId_networkinterfaces", myvpcEndpoint.NetworkInterfaceIds)
-		ctx.Export("vpcEndpointId_subnetids", myvpcEndpoint.SubnetIds) // Shows up as empty, that is why apply will not work
+		ctx.Export("vpcEndpointId_networkinterfaces", myvpcEndpoint.NetworkInterfaceIds) // Shows up in an Array as an output
+		ctx.Export("vpcEndpointId_subnetids", myvpcEndpoint.SubnetIds)                   // Shows up in an Array, instead of using an apply, you can use the subnets above and pass them in.
 		ctx.Export("myalbinfo", myalb.DnsName)
 		//ctx.Export("bucketName", mybucket.ID())
-		//ctx.Export("s3EndpointId", myvpcEndpoint.ID())
-		//ctx.Export("securityGroupId", mysg.ID())
-		//ctx.Export("vpcEndpointId2", myvpcEndpoint.SubnetIds)
 		return nil
 	})
 }
