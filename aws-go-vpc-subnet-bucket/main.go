@@ -88,6 +88,9 @@ func main() {
 			},
 		})
 
+		if err != nil {
+			return err
+		}
 		/*
 			// Create an AWS resource (S3 Bucket)
 			mybucket, err := s3.NewBucket(ctx, "shahtmy-bucket", &s3.BucketArgs{
