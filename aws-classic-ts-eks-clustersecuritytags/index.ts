@@ -33,8 +33,8 @@ const cluster = new eks.Cluster(`${name}-eks`, {
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
     //clusterSecurityGroupTags: { 'ts/carpark.blue': 'true' },  // original tag that works, use when cluster comes up 1st time.  Then comment out
-    clusterSecurityGroupTags: { 'ts/carpark.green': 'true' },  // new tag that does NOT work with pulumi cli 3.91.  Uncomment out after cluster comes up 1st time. OR the line below
-    //clusterSecurityGroupTags: { "ts/carpark.green": "true" },  // new tag that does NOT work with pulumi cli 3.91.  Uncomment out after cluster comes up 1st time. OR the line below
+    clusterSecurityGroupTags: { 'ts/carpark.green': 'true' },  // new tag that does NOT work with pulumi cli 3.91.  Uncomment out after cluster comes up 1st time. OR the line below. Does work with pulumi cli 3.92
+    //clusterSecurityGroupTags: { "ts/carpark.green": "true" },  // new tag that does NOT work with pulumi cli 3.91.  Uncomment out after cluster comes up 1st time. OR the line below. Does work with pulumi cli 3.92
  
 });
 
