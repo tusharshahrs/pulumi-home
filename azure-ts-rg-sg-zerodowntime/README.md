@@ -1,4 +1,4 @@
-* November Cohorts Code
+**Zero Downtime with Downtime mixed in**
 
     1. Create a new directory and cd into it.  This way we know it is empty. We are not going to use the same one as last time so you can see the difference in the code.
 
@@ -38,7 +38,7 @@
     az subscription list
     ```
 
-    1.  Set your current azure subscription.  Note this is what I am doing. Kevin has granted everyone access to the sandbox account.
+    1.  Set your current azure subscription.  Note this is what I am doing. Make sure you have access to the sandbox account(Verify this on call).
     ```
     az account set --subscription
     ```
@@ -62,12 +62,12 @@
         Microsoft Entra Roles
         Azure Resources 
         PIM:  https://portal.azure.com/#view/Microsoft_Azure_PIMCommon/ActivationMenuBlade/~/azurerbac
-        ( Have Kevin talk about PIM before training or during training)
+        ( Let's talk about PIM before training or during training)
 
         Search for `azure learning environment`
         Role called:  `Contributor` Scroll to the right and click on the `Activate`
-        Set the Duration to 1.5 hours
-        Reason:  Demoing pim to the pulumi cohort
+        Set the Duration to some hours
+        Reason:  Demoing sandbox for Pulumi
 
     * Pulumi Resource Group
 
