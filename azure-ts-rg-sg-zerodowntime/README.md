@@ -149,11 +149,11 @@
       delete
    
   1. Next we are going to change the resource group name to:  Shows CRUD
-     `resourceGroupName: "shahtestresourcegroup",`
+     `resourceGroupName: "shahtestresourcegroup",` # We are hard coding the resource group here on purpose.
     This will show 2 resources updated.
 
   1. Rename the `resourceGroupName: "shahtestresourcegroup",` to:
-    `resourceGroupName: "shahtrg",`
+    `resourceGroupName: "shahtrg",`  # Hard coded resource group renamed
     Note, when you run pulumi up, the preview will show:
     replace     [diff: ~accountName,resourceGroupName]
     replace     [diff: ~resourceGroupName]
