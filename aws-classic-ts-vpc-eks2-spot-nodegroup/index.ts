@@ -20,20 +20,20 @@ const grafana_loki_user = config.requireSecret("GRAFANA_LOKI_USERNAME");
 const grafana_tempo_user = config.requireSecret("GRAFANA_TEMPO_USERNAME");
 
 // Create a VPC with 3 public and 3 private subnets with the CIDR block 10.0.0.0/22.
-const vpc = new awsx.ec2.Vpc(`${name}-vpc`, {
+const myvpc = new awsx.ec2.Vpc(`${name}-vpc`, {
     cidrBlock: "10.0.0.0/23",
     numberOfAvailabilityZones: 3,
     natGateways: { strategy: "Single"}, // Only using a single nat gateway to save costs
     tags: { "Name": `${name}-vpc` },
 });
 
-export const vpc_id = vpc.vpcId;
-export const public_subnet_ids = vpc.publicSubnetIds;
-export const private_subnet_ids = vpc.privateSubnetIds;
+export const vpc_id = myvpc.vpcId;
+export const public_subnet_ids = myvpc.publicSubnetIds;
+export const private_subnet_ids = myvpc.privateSubnetIds;
 
 
 const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`, {
-  vpcId: vpc.vpcId,
+  vpcId: myvpc.vpcId,
   revokeRulesOnDelete: true,
   description: "EKS created security group created by code.",
   tags: { "Name": `${name}-eksclustersg` },
@@ -55,17 +55,17 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
           cidrBlocks:[myip]  // uncomment this line to allow access from your local machine.
       },
     ],
-  }, {parent: vpc, dependsOn: [vpc] });
+  }, {parent: myvpc, dependsOn: [myvpc] });
 
 // The name of the security group
 const eksclustersecuritygroup_id = eksclustersecuritygroup.name;
 
 
 // Create an EKS cluster with a managed node group.
-const cluster = new eks.Cluster(`${name}-eks`, {
-    vpcId: vpc.vpcId,
-    publicSubnetIds: vpc.publicSubnetIds,
-    privateSubnetIds: vpc.privateSubnetIds,
+const mycluster = new eks.Cluster(`${name}-eks`, {
+    vpcId: myvpc.vpcId,
+    publicSubnetIds: myvpc.publicSubnetIds,
+    privateSubnetIds: myvpc.privateSubnetIds,
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
     instanceType: "t3a.small",    
@@ -75,25 +75,25 @@ const cluster = new eks.Cluster(`${name}-eks`, {
     nodeRootVolumeSize: 10,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
-});
+}, {dependsOn: [myvpc]});
 
-export const cluster_name = cluster.eksCluster.name;
+export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
-export const kubeconfig = pulumi.secret(cluster.kubeconfig);
+export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
-      cluster: cluster,
+      cluster: mycluster,
       capacityType: "SPOT",
       instanceTypes: ["t3a.medium"],
-      nodeRoleArn: cluster.instanceRoles[0].arn,
+      nodeRoleArn: mycluster.instanceRoles[0].arn,
       labels: { managed: "true", spot: "true" },
       tags: {
         "Name": `${name}-manangednodegroup`,
       },
-      subnetIds: vpc.privateSubnetIds,
+      subnetIds: myvpc.privateSubnetIds,
       scalingConfig: {
         desiredSize: 3,
         minSize: 2,
@@ -101,13 +101,13 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       },
       diskSize: 20,
     },
-    { parent: cluster, dependsOn: [cluster]}
+    { parent: mycluster, dependsOn: [mycluster]}
   );
 
 // Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s namespace and helm chart later
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig });
 const k8sproviderinfo = k8sprovider.id;
-/*
+
 // Create a Kubernetes Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
   {}, 
@@ -128,7 +128,7 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
       repo: "https://grafana.github.io/helm-charts",
   },
   values: {
-    cluster: { name: cluster.eksCluster.name },
+    cluster: { name: mycluster.eksCluster.name },
     externalServices: {
           prometheus: {
             host: "https://prometheus-prod-13-prod-us-east-0.grafana.net",
@@ -155,7 +155,7 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
   opencost: {
     opencost: {
       exporter: {
-        defaultClusterId: cluster.eksCluster.name,
+        defaultClusterId: mycluster.eksCluster.name,
       },
       prometheus: {
         external: {
@@ -172,4 +172,3 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
 
 // Export the prometheus metrics helmrelease name
 export const prometheus_metrics_helmrelease_name = prometheusmetrics.name;
-*/
