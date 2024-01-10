@@ -1,0 +1,11 @@
+config:
+  aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_AUTH:
+    secure: AAABAAhYKDUuPWfd4e00w/lqttOzkq82gbjfEGawma66B2BkPD4Fc+Bpxs0yi2hl/eQrY9FqkEBB99qZx2RUjT3qD1UUmSx1L96nYSzBLRZIgT2JvUcr/0LxNGvlF/ldW+vSq++bPHOxNtYJuLLqPSIap0kzop7s3eIQ6a/PccISrBqLAWl+AVlNzbu08jAZ59CnCSrAyV3xYlu8OJiCqMcfCklSshJ0DrgBIRbUzxcRkqL21G9orZKzIGU8RtC/
+  aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_LOKI_USERNAME:
+    secure: AAABALF4H4ADiMvHOIvECY2666Awb3olDqKR0EjUWmf46iet5HA=
+  aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_PROMETHEUS_USERNAME:
+    secure: AAABAFXVigRhvsUzVQG7YR4z3fr4gojv2vcZeO3Ith9EMIPs4/29
+  aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_TEMPO_USERNAME:
+    secure: AAABADglwMGxXI8/FOQOZk8iltaoTHZC1LOJkmAwQK3lpp7ACCo=
+  aws-classic-ts-vpc-eks2-spot-nodegroup:myipaddress: 99.159.29.103/32
+  aws:region: us-east-2
