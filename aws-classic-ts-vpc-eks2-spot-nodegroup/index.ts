@@ -3,7 +3,6 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 import * as k8s from "@pulumi/kubernetes";
-import * as grafana from "@lbrlabs/pulumi-grafana";
 
 const config = new pulumi.Config();
 const myip = config.get("myipaddress") || "0.0.0.0/0"

@@ -9,7 +9,6 @@
         "@pulumi/aws": "^6.18.0",
         "@pulumi/awsx": "^2.4.0",
         "@pulumi/kubernetes": "^4.5.6",
-        "@pulumi/eks": "2.0.0",
-        "@lbrlabs/pulumi-grafana": "^0.2.0"
+        "@pulumi/eks": "2.0.0"
     }
 }

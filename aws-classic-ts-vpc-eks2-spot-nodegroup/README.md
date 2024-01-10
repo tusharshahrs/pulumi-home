@@ -1,4 +1,4 @@
-# AWS EKS2 SPOT Managed Nodes and Grafana Monitoring for Grafana Prometheus Metrics, Loki, Tempo, & Opencost
+# AWS EKS2 SPOT Managed Nodes and Grafana Monitoring for Prometheus Metrics, Loki, Tempo, & Opencost
 
 AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](https://www.pulumi.com/registry/packages/eks/), [grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/) with spot managed nodes in TypeScript. Creating helm release for grafana prometheus metrics, loki, tempo, and opencost. Avoiding metric server
 
