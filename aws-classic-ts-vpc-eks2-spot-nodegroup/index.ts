@@ -11,19 +11,19 @@ const name = "demo";
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
-const grafanaauth = config.getSecret("GRAFANA_AUTH");
+const grafanaauth = config.requireSecret("GRAFANA_AUTH");
 // get the grafana prometheus user from the pulumi config
-const grafana_prometheus_user = config.getSecret("GRAFANA_PROMETHEUS_USERNAME");
+const grafana_prometheus_user = config.requireSecret("GRAFANA_PROMETHEUS_USERNAME");
 // get the grafana loki user from the pulumi config
-const grafana_loki_user = config.getSecret("GRAFANA_LOKI_USERNAME");
+const grafana_loki_user = config.requireSecret("GRAFANA_LOKI_USERNAME");
 // get the grafana tempo user from the pulumi config
-const grafana_tempo_user = config.getSecret("GRAFANA_TEMPO_USERNAME");
+const grafana_tempo_user = config.requireSecret("GRAFANA_TEMPO_USERNAME");
 
 // Create a VPC with 3 public and 3 private subnets with the CIDR block 10.0.0.0/22.
 const vpc = new awsx.ec2.Vpc(`${name}-vpc`, {
     cidrBlock: "10.0.0.0/23",
     numberOfAvailabilityZones: 3,
-    natGateways: { strategy: "Single"},
+    natGateways: { strategy: "Single"}, // Only using a single nat gateway to save costs
     tags: { "Name": `${name}-vpc` },
 });
 
@@ -45,17 +45,19 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
   }],
   ingress: [
       {
-          description: "Ingress to self cluster.  ",
+          description: "Ingress to self cluster.",
           protocol: "-1",
           fromPort: 0,
           toPort: 0,
-          //self: true, // This allows us to call the securitygroup itself as a source
-          cidrBlocks:[myip]
+          // This allows us to call the securitygroup itself as a source // 
+          self: true,          // Comment this out if you need access to the nodegroup from your local machine and 
+          //cidrBlocks:[myip]  // UnComment this out if you need access to the nodegroup from your local machine
       },
     ],
-  });
+  }, {parent: vpc, dependsOn: [vpc] });
 
-export const eksclustersecuritygroup_id = eksclustersecuritygroup.name;
+// The name of the security group
+const eksclustersecuritygroup_id = eksclustersecuritygroup.name;
 
 
 // Create an EKS cluster with a managed node group.
@@ -72,19 +74,18 @@ const cluster = new eks.Cluster(`${name}-eks`, {
     nodeRootVolumeSize: 10,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
-});
+}, { parent: vpc, dependsOn: [vpc,eksclustersecuritygroup]});
 
 export const cluster_name = cluster.eksCluster.name;
-// Export the cluster's kubeconfig.
+// Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(cluster.kubeconfig);
 
-
+// Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
       cluster: cluster,
       capacityType: "SPOT",
       instanceTypes: ["t3a.small"],
-      //securityGroupIds: [eksclustersecuritygroup.id],
       nodeRoleArn: cluster.instanceRoles[0].arn,
       labels: { managed: "true", spot: "true" },
       tags: {
@@ -98,25 +99,28 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       },
       diskSize: 20,
     },
-    { dependsOn: [vpc,cluster]}
+    { parent: cluster, dependsOn: [vpc,cluster]}
   );
 
-// Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s
+// Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s namespace and helm chart later
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig });
 const k8sproviderinfo = k8sprovider.id;
 
 // Create a Kubernetes Namespace
-const namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, {}, { provider: k8sprovider });
-export const metrics_ns = namespace.metadata.name;
+const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
+  {}, 
+  { provider: k8sprovider, parent: managed_node_group, dependsOn: [managed_node_group] });
+
+export const metrics_ns = metrics_namespace.metadata.name;
 
 export const managed_node_group_name = managed_node_group.nodeGroup.id;
 export const managed_node_group_version =managed_node_group.nodeGroup.version;
 
-
+// Creating a helm release for prometheus metrics, loki, tempo, and opencost
 const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`, {
   chart: "k8s-monitoring",
   version: "0.8.3",
-  namespace: namespace.metadata.name,
+  namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://grafana.github.io/helm-charts",
   },
@@ -161,6 +165,7 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
     enabled: true,
   },
 },
-}, { provider: k8sprovider });
+}, { provider: k8sprovider, parent: metrics_namespace, dependsOn: [metrics_namespace, managed_node_group] });
 
+// Export the prometheus metrics helmrelease name
 export const prometheus_metrics_helmrelease_name = prometheusmetrics.name;
