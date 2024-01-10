@@ -31,6 +31,7 @@ export const vpc_id = vpc.vpcId;
 export const public_subnet_ids = vpc.publicSubnetIds;
 export const private_subnet_ids = vpc.privateSubnetIds;
 
+
 const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`, {
   vpcId: vpc.vpcId,
   revokeRulesOnDelete: true,
@@ -51,7 +52,7 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
           toPort: 0,
           // This allows us to call the securitygroup itself as a source // 
           self: true,          // Comment this out if you need access to the nodegroup from your local machine and 
-          //cidrBlocks:[myip]  // UnComment this out if you need access to the nodegroup from your local machine
+          cidrBlocks:[myip]  // uncomment this line to allow access from your local machine.
       },
     ],
   }, {parent: vpc, dependsOn: [vpc] });
@@ -67,25 +68,26 @@ const cluster = new eks.Cluster(`${name}-eks`, {
     privateSubnetIds: vpc.privateSubnetIds,
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
-    instanceType: "t3a.nano",    
+    instanceType: "t3a.small",    
     desiredCapacity: 2,
     version: "1.26",
     nodeRootVolumeEncrypted: true,
     nodeRootVolumeSize: 10,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
-}, { parent: vpc, dependsOn: [vpc,eksclustersecuritygroup]});
+});
 
 export const cluster_name = cluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(cluster.kubeconfig);
+
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
       cluster: cluster,
       capacityType: "SPOT",
-      instanceTypes: ["t3a.small"],
+      instanceTypes: ["t3a.medium"],
       nodeRoleArn: cluster.instanceRoles[0].arn,
       labels: { managed: "true", spot: "true" },
       tags: {
@@ -99,13 +101,13 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       },
       diskSize: 20,
     },
-    { parent: cluster, dependsOn: [vpc,cluster]}
+    { parent: cluster, dependsOn: [cluster]}
   );
 
 // Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s namespace and helm chart later
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig });
 const k8sproviderinfo = k8sprovider.id;
-
+/*
 // Create a Kubernetes Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
   {}, 
@@ -115,6 +117,7 @@ export const metrics_ns = metrics_namespace.metadata.name;
 
 export const managed_node_group_name = managed_node_group.nodeGroup.id;
 export const managed_node_group_version =managed_node_group.nodeGroup.version;
+
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
 const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`, {
@@ -169,3 +172,4 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
 
 // Export the prometheus metrics helmrelease name
 export const prometheus_metrics_helmrelease_name = prometheusmetrics.name;
+*/
