@@ -1,6 +1,21 @@
 # AWS EKS2 SPOT Managed Nodes and Grafana Monitoring for Prometheus Metrics, Loki, Tempo, & Opencost
 
-AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](https://www.pulumi.com/registry/packages/eks/), [grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/) with spot managed nodes in TypeScript. Creating helm release for grafana prometheus metrics, loki, tempo, and opencost. Avoiding metric server
+AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](https://www.pulumi.com/registry/packages/eks/), [grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/) with spot managed nodes in TypeScript. Creating helm release for grafana prometheus metrics, loki, tempo, and opencost. Avoiding metric server.
+
+## Requirements
+ -  Add the following managed policy arn role: `arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy` in `iam.ts`
+ -  Must install Amazon EBS CSI driver via [helm release/chart](https://artifacthub.io/packages/helm/deliveryhero/aws-ebs-csi-driver) if running k8s version 1.23+ as per [aws managing ebs csi](https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html).  
+ - Otherwise, you will encounter the following error: [K8s Pods Failure : error while running "VolumeBinding" prebind plugin for pod "app": Failed to bind volumes: timed out waiting for the condition](https://stackoverflow.com/questions/68725070/k8s-pods-failure-error-while-running-volumebinding-prebind-plugin-for-pod-a)
+
+
+## Metrics
+   Installed the prometheus metrics via helm chart Sign up for a user account at: grafanalabs.com
+
+## Kubcost
+ - requires aws ebs csi driver for k8s 1.23+
+ - changed the volume size from 30Gi to 12Gi to save cost.
+ - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
+ -  
 
 ## Deployment
 
@@ -33,6 +48,7 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
    pulumi config set --secret GRAFANA_PROMETHEUS_USERNAME blahblahblah2222 # required for grafana prometheus monitoring
    pulumi config set --secret GRAFANA_LOKI_USERNAME blahblahblah333 # required for  grafana loki 
    pulumi config set --secret GRAFANA_TEMPO_USERNAME blahblahblah444 # required for  grafana tempo
+   pulumi config set --secret KUBECOST_TOKEN blahblahblah555 # required for  kubecost
    ```
 
 1. Launch
@@ -224,23 +240,43 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 
    Results
    ```bash
-    Current stack outputs (9):
+    Current stack outputs (11):
     OUTPUT                               VALUE
-    cluster_name                         demo-eks-eksCluster-75f0a4c
+    aws_ebs_csi_driver_chart             demo-awsebscsidriver-fb5a2a3b
+    cluster_name                         demo-eks-eksCluster-22a0aa7
     kubeconfig                           [secret]
-    managed_node_group_name              demo-eks-eksCluster-75f0a4c:demo-manangednodegroup-deb122c
+    kubecost_ns                          demo-kubecost-ns-c8c13276
+    managed_node_group_name              demo-eks-eksCluster-22a0aa7:demo-manangednodegroup-b296a9b
     managed_node_group_version           1.26
-    metrics_ns                           demo-metric-ns-1c8e628f
-    private_subnet_ids                   ["subnet-0dedbf947772dfdfd","subnet-0481666f6c215571b","subnet-0c853b4344232535e"]
-    prometheus_metrics_helmrelease_name  demo-grafanak8smonitoring-5177cd5c
-    public_subnet_ids                    ["subnet-035056b317d9a53ad","subnet-0cb50511e45dc5015","subnet-0bc964f8b4b66d927"]
-    vpc_id                               vpc-098f92b6de22c9af3
+    metrics_ns                           demo-metric-ns-cd6741d2
+    private_subnet_ids                   ["subnet-0ef0ae57e3c896723","subnet-003a14cf1919b2ee5","subnet-045e8b50dcd8ac498"]
+    prometheus_metrics_helmrelease_name  demo-grafanahelmchart-858f6111
+    public_subnet_ids                    ["subnet-02257cb4e034e84b6","subnet-0cfb974d62a861913","subnet-0d26f0871d41138df"]
+    vpc_id                               vpc-0770d598fe8dbb215
    ```
 
    If you need to see the value in kubeconfig, you will have to do the following
    ```bash
    pulumi stack output --show-secrets kubeconfig
    ```
+
+1. To view Prometheus metrics(Note, this makes it easy to identify the ebs permission issue in volume expansion for kubecost):
+      https://REPLACEYOURID.grafana.net/a/grafana-k8s-app/navigation
+
+
+1. To view kubecost: 
+   Load something like:  `kubectl port-forward --namespace kubecost  deployment/cost-analyzer9090 --address 0.0.0.0`
+
+   For Example: 
+   ```bash
+   kubectl port-forward --namespace demo-kubecost-ns-c8c13276 deployment/demo-kubecosthelmchart-4781769d-cost-analyzer 9090 --address 0.0.0.0
+   ```
+
+   To have it run in the background:
+   ```bash
+   nohup kubectl port-forward --namespace demo-kubecost-ns-c8c13276 deployment/demo-kubecosthelmchart-4781769d-cost-analyzer 9090 --address 0.0.0.0 > /dev/null 2>&1 &
+   ```
+   Load:  `http://0.0.0.0:9090`
 
 1. Clean up
    ```bash
