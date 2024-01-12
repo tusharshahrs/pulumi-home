@@ -73,7 +73,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
     instanceRole: roles[0],
-    instanceType: "t3a.medium",    
+    instanceType: "t3a.small",
     desiredCapacity: 3,
     version: "1.26",
     nodeRootVolumeEncrypted: true,
@@ -107,7 +107,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
         minSize: 3,
         maxSize: 8,
       },
-      diskSize: 30,
+      diskSize: 20,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
@@ -135,6 +135,7 @@ export const managed_node_group_version =managed_node_group.nodeGroup.version;
 
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
+// https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
   chart: "k8s-monitoring",
   version: "0.8.3",
@@ -188,6 +189,7 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
 // Export the prometheus metrics helmrelease name
 export const helm_chart_prometheus_metrics = prometheusmetrics.name;
 
+
 //https://artifacthub.io/packages/helm/deliveryhero/aws-ebs-csi-driver  Required after k8s 1.23
 // Install the AWS EBS CSI Driver using a Helm chart.
 const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, {
@@ -206,6 +208,7 @@ export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
 
 
 // Creating a helm release for kube cost
+// https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
   chart: "cost-analyzer",
   version: "1.108",
@@ -215,14 +218,14 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
   },
   values: {
     kubecostToken: kubecost_token,
-    kubecostModel: {
-      promClusterIDLabel: mycluster.eksCluster.name,
-    },
     persistentVolume: {
-      size: "12Gi",
-      dbSize: "12Gi",
+      size: "18Gi",
+      dbSize: "18Gi",
     },
     prometheus: {
+      server:{
+        retention: "1d",
+      },
       kubeStateMetrics: {
         enabled: false,
       },
@@ -236,8 +239,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
       },
     },
   }
-}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace] });
+}, { provider: k8sprovider, dependsOn: [awsEbsCsiDriverChart] });
 
 // export the kubecost helmrelease name
 export const helm_chart_kubecost = kubecostchart.name;  
-

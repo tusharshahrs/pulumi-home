@@ -61,176 +61,202 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
    ```bash
     Previewing update (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-vpc-eks2-spot-nodegroup/dev/previews/b31126eb-a2f4-4693-9200-354c2b2ace15
+    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-vpc-eks2-spot-nodegroup/dev/previews/f172e771-7ce7-4841-ad2b-081ddc282b7c
 
         Type                                          Name                                        Plan       Info
     +   pulumi:pulumi:Stack                           aws-classic-ts-vpc-eks2-spot-nodegroup-dev  create     2 messages
+    +   ├─ aws:iam:Policy                             AWSLoadBalancerControllerIAMPolicy          create     
+    +   ├─ aws:iam:Role                               demo-role-role-0-iamrole                    create     
+    +   ├─ aws:iam:Policy                             EKSClusterAutoscalePolicy                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-2                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-3                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-4                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-0                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-5                   create     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-1                   create     
     +   ├─ awsx:ec2:Vpc                               demo-vpc                                    create     
     +   │  ├─ aws:ec2:Vpc                             demo-vpc                                    create     
-    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-3                           create     
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-3                           create     
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-3                           create     
-    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-public-3                           create     
-    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-2                           create     
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-2                           create     
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                           create     
-    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-public-2                           create     
-    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-1                          create     
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-1                          create     
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-1                          create     
-    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-1                          create     
+    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-1                           create     
+    +   │  │  │  ├─ aws:ec2:Eip                       demo-vpc-1                                  create     
+    +   │  │  │  ├─ aws:ec2:RouteTable                demo-vpc-public-1                           create     
+    +   │  │  │  │  ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-1                           create     
+    +   │  │  │  │  └─ aws:ec2:Route                  demo-vpc-public-1                           create     
+    +   │  │  │  └─ aws:ec2:NatGateway                demo-vpc-1                                  create     
     +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-3                          create     
     +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-3                          create     
     +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-3                          create     
     +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-3                          create     
-    +   │  │  ├─ aws:ec2:InternetGateway              demo-vpc                                    create     
+    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-2                           create     
+    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-2                           create     
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                           create     
+    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-public-2                           create     
     +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-2                          create     
     +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-2                          create     
     +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-2                          create     
     +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-2                          create     
-    +   │  │  └─ aws:ec2:Subnet                       demo-vpc-public-1                           create     
-    +   │  │     ├─ aws:ec2:Eip                       demo-vpc-1                                  create     
-    +   │  │     ├─ aws:ec2:RouteTable                demo-vpc-public-1                           create     
-    +   │  │     │  ├─ aws:ec2:Route                  demo-vpc-public-1                           create     
-    +   │  │     │  └─ aws:ec2:RouteTableAssociation  demo-vpc-public-1                           create     
-    +   │  │     └─ aws:ec2:NatGateway                demo-vpc-1                                  create     
+    +   │  │  ├─ aws:ec2:InternetGateway              demo-vpc                                    create     
+    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-3                           create     
+    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-3                           create     
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-3                           create     
+    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-public-3                           create     
+    +   │  │  └─ aws:ec2:Subnet                       demo-vpc-private-1                          create     
+    +   │  │     └─ aws:ec2:RouteTable                demo-vpc-private-1                          create     
+    +   │  │        ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-1                          create     
+    +   │  │        └─ aws:ec2:Route                  demo-vpc-private-1                          create     
     +   │  └─ aws:ec2:SecurityGroup                   demo-eksclustersg                           create     
     +   ├─ eks:index:Cluster                          demo-eks                                    create     
-    +   │  ├─ eks:index:ServiceRole                   demo-eks-instanceRole                       create     
-    +   │  │  ├─ aws:iam:Role                         demo-eks-instanceRole-role                  create     
-    +   │  │  ├─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-03516f97              create     
-    +   │  │  ├─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-e1b295bd              create     
-    +   │  │  └─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-3eb088f2              create     
     +   │  ├─ eks:index:ServiceRole                   demo-eks-eksRole                            create     
     +   │  │  ├─ aws:iam:Role                         demo-eks-eksRole-role                       create     
     +   │  │  └─ aws:iam:RolePolicyAttachment         demo-eks-eksRole-4b490823                   create     
     +   │  ├─ aws:eks:Cluster                         demo-eks-eksCluster                         create     
-    +   │  ├─ pulumi:providers:kubernetes             demo-eks-provider                           create     
     +   │  ├─ pulumi:providers:kubernetes             demo-eks-eks-k8s                            create     
+    +   │  ├─ pulumi:providers:kubernetes             demo-eks-provider                           create     
     +   │  ├─ aws:ec2:SecurityGroup                   demo-eks-nodeSecurityGroup                  create     
     +   │  ├─ kubernetes:core/v1:ConfigMap            demo-eks-nodeAccess                         create     
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksExtApiServerClusterIngressRule  create     
-    +   │  ├─ eks:index:VpcCni                        demo-eks-vpc-cni                            create     
     +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeClusterIngressRule          create     
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksClusterIngressRule              create     
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeIngressRule                 create     
+    +   │  ├─ eks:index:VpcCni                        demo-eks-vpc-cni                            create     
     +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeInternetEgressRule          create     
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeIngressRule                 create     
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksExtApiServerClusterIngressRule  create     
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksClusterIngressRule              create     
     +   │  └─ eks:index:ManagedNodeGroup              demo-manangednodegroup                      create     
-    +   │     ├─ aws:eks:NodeGroup                    demo-manangednodegroup                      create     
-    +   │     └─ kubernetes:core/v1:Namespace         demo-metric-ns                              create     
-    +   │        └─ kubernetes:helm.sh/v3:Release     demo-grafanak8smonitoring                   create     
-    +   └─ pulumi:providers:kubernetes                demo-k8sprovider                            create     
+    +   │     └─ aws:eks:NodeGroup                    demo-manangednodegroup                      create     
+    +   ├─ pulumi:providers:kubernetes                demo-k8sprovider                            create     
+    +   ├─ kubernetes:core/v1:Namespace               demo-metric-ns                              create     
+    +   │  └─ kubernetes:helm.sh/v3:Release           demo-grafanahelmchart                       create     
+    +   ├─ kubernetes:core/v1:Namespace               demo-kubecost-ns                            create     
+    +   │  └─ kubernetes:helm.sh/v3:Release           demo-kubecosthelmchart                      create     
+    +   └─ kubernetes:helm.sh/v3:Release              demo-awsebscsidriver                        create     
 
     Diagnostics:
     pulumi:pulumi:Stack (aws-classic-ts-vpc-eks2-spot-nodegroup-dev):
-        (node:36663) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+        (node:60070) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
         (Use `node --trace-deprecation ...` to show where the warning was created)
 
     Outputs:
-        cluster_name                       : "demo-eks-eksCluster-31877ad"
-        kubeconfig                         : output<string>
-        managed_node_group_name            : output<string>
-        managed_node_group_version         : output<string>
-        metrics_ns                         : output<string>
-        private_subnet_ids                 : output<string>
-        prometheus_metrics_helmrelease_name: output<string>
-        public_subnet_ids                  : output<string>
-        vpc_id                             : output<string>
+        cluster_name                 : "demo-eks-eksCluster-2e733f7"
+        helm_chart_aws_ebs_csi_driver: output<string>
+        helm_chart_kubecost          : output<string>
+        helm_chart_prometheus_metrics: output<string>
+        kubeconfig                   : output<string>
+        managed_node_group_name      : output<string>
+        managed_node_group_version   : output<string>
+        namespace_kubecost           : output<string>
+        namespace_metrics            : output<string>
+        private_subnet_ids           : output<string>
+        public_subnet_ids            : output<string>
+        vpc_id                       : output<string>
 
     Resources:
-        + 56 to create
+        + 63 to create
 
     Do you want to perform this update? yes
     Updating (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-vpc-eks2-spot-nodegroup/dev/updates/54
+    View in Browser (Ctrl+O): https://app.pulumi.com/tushar-pulumi-corp/aws-classic-ts-vpc-eks2-spot-nodegroup/dev/updates/83
 
         Type                                          Name                                        Status              Info
-    +   pulumi:pulumi:Stack                           aws-classic-ts-vpc-eks2-spot-nodegroup-dev  created (763s)      2 messages
-    +   ├─ awsx:ec2:Vpc                               demo-vpc                                    created (3s)        
-    +   │  ├─ aws:ec2:Vpc                             demo-vpc                                    created (1s)        
-    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-2                          created (0.81s)     
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-2                          created (1s)        
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-2                          created (0.83s)     
-    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-2                          created (1s)        
-    +   │  │  ├─ aws:ec2:InternetGateway              demo-vpc                                    created (1s)        
-    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-3                           created (11s)       
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-3                           created (1s)        
-    +   │  │  │     ├─ aws:ec2:Route                  demo-vpc-public-3                           created (1s)        
-    +   │  │  │     └─ aws:ec2:RouteTableAssociation  demo-vpc-public-3                           created (1s)        
+    +   pulumi:pulumi:Stack                           aws-classic-ts-vpc-eks2-spot-nodegroup-dev  created (736s)      7 messages
+    +   ├─ aws:iam:Role                               demo-role-role-0-iamrole                    created (0.58s)     
+    +   ├─ aws:iam:Policy                             EKSClusterAutoscalePolicy                   created (0.56s)     
+    +   ├─ aws:iam:Policy                             AWSLoadBalancerControllerIAMPolicy          created (0.71s)     
+    +   ├─ awsx:ec2:Vpc                               demo-vpc                                    created (1s)        
+    +   │  ├─ aws:ec2:Vpc                             demo-vpc                                    created (2s)        
+    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-1                           created (11s)       
+    +   │  │  │  ├─ aws:ec2:Eip                       demo-vpc-1                                  created (0.95s)     
+    +   │  │  │  ├─ aws:ec2:RouteTable                demo-vpc-public-1                           created (1s)        
+    +   │  │  │  │  ├─ aws:ec2:Route                  demo-vpc-public-1                           created (1s)        
+    +   │  │  │  │  └─ aws:ec2:RouteTableAssociation  demo-vpc-public-1                           created (1s)        
+    +   │  │  │  └─ aws:ec2:NatGateway                demo-vpc-1                                  created (95s)       
     +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-3                          created (1s)        
     +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-3                          created (1s)        
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-3                          created (0.84s)     
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-3                          created (0.95s)     
     +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-3                          created (1s)        
+    +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-2                          created (1s)        
+    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-2                          created (1s)        
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-2                          created (0.95s)     
+    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-2                          created (1s)        
+    +   │  │  ├─ aws:ec2:InternetGateway              demo-vpc                                    created (1s)        
     +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-public-2                           created (12s)       
-    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-2                           created (0.97s)     
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                           created (1s)        
+    +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-public-2                           created (1s)        
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-2                           created (0.74s)     
     +   │  │  │     └─ aws:ec2:Route                  demo-vpc-public-2                           created (1s)        
     +   │  │  ├─ aws:ec2:Subnet                       demo-vpc-private-1                          created (2s)        
     +   │  │  │  └─ aws:ec2:RouteTable                demo-vpc-private-1                          created (1s)        
-    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-1                          created (0.59s)     
-    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-1                          created (0.83s)     
-    +   │  │  └─ aws:ec2:Subnet                       demo-vpc-public-1                           created (13s)       
-    +   │  │     ├─ aws:ec2:Eip                       demo-vpc-1                                  created (1s)        
-    +   │  │     ├─ aws:ec2:RouteTable                demo-vpc-public-1                           created (1s)        
-    +   │  │     │  ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-1                           created (1s)        
-    +   │  │     │  └─ aws:ec2:Route                  demo-vpc-public-1                           created (1s)        
-    +   │  │     └─ aws:ec2:NatGateway                demo-vpc-1                                  created (105s)      
+    +   │  │  │     ├─ aws:ec2:RouteTableAssociation  demo-vpc-private-1                          created (0.61s)     
+    +   │  │  │     └─ aws:ec2:Route                  demo-vpc-private-1                          created (1s)        
+    +   │  │  └─ aws:ec2:Subnet                       demo-vpc-public-3                           created (13s)       
+    +   │  │     └─ aws:ec2:RouteTable                demo-vpc-public-3                           created (1s)        
+    +   │  │        ├─ aws:ec2:RouteTableAssociation  demo-vpc-public-3                           created (0.89s)     
+    +   │  │        └─ aws:ec2:Route                  demo-vpc-public-3                           created (1s)        
     +   │  └─ aws:ec2:SecurityGroup                   demo-eksclustersg                           created (2s)        
-    +   ├─ eks:index:Cluster                          demo-eks                                    created (450s)      
-    +   │  ├─ eks:index:ServiceRole                   demo-eks-instanceRole                       created (3s)        
-    +   │  │  ├─ aws:iam:Role                         demo-eks-instanceRole-role                  created (0.72s)     
-    +   │  │  ├─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-03516f97              created (0.55s)     
-    +   │  │  ├─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-e1b295bd              created (0.71s)     
-    +   │  │  └─ aws:iam:RolePolicyAttachment         demo-eks-instanceRole-3eb088f2              created (0.96s)     
-    +   │  ├─ eks:index:ServiceRole                   demo-eks-eksRole                            created (3s)        
-    +   │  │  ├─ aws:iam:Role                         demo-eks-eksRole-role                       created (0.59s)     
-    +   │  │  └─ aws:iam:RolePolicyAttachment         demo-eks-eksRole-4b490823                   created (0.92s)     
-    +   │  ├─ aws:eks:Cluster                         demo-eks-eksCluster                         created (444s)      
-    +   │  ├─ aws:ec2:SecurityGroup                   demo-eks-nodeSecurityGroup                  created (3s)        
-    +   │  ├─ pulumi:providers:kubernetes             demo-eks-eks-k8s                            created (0.46s)     
-    +   │  ├─ pulumi:providers:kubernetes             demo-eks-provider                           created (0.79s)     
-    +   │  ├─ eks:index:VpcCni                        demo-eks-vpc-cni                            created (3s)        
-    +   │  ├─ kubernetes:core/v1:ConfigMap            demo-eks-nodeAccess                         created (0.89s)     
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksClusterIngressRule              created (0.92s)     
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksExtApiServerClusterIngressRule  created (1s)        
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-2                   created (0.48s)     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-1                   created (0.63s)     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-4                   created (0.86s)     
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-3                   created (1s)        
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-0                   created (1s)        
+    +   ├─ aws:iam:RolePolicyAttachment               demo-role-role-0-policy-5                   created (1s)        
+    +   ├─ eks:index:Cluster                          demo-eks                                    created (415s)      
+    +   │  ├─ eks:index:ServiceRole                   demo-eks-eksRole                            created (1s)        
+    +   │  │  ├─ aws:iam:Role                         demo-eks-eksRole-role                       created (0.50s)     
+    +   │  │  └─ aws:iam:RolePolicyAttachment         demo-eks-eksRole-4b490823                   created (0.31s)     
+    +   │  ├─ aws:eks:Cluster                         demo-eks-eksCluster                         created (412s)      
+    +   │  ├─ aws:ec2:SecurityGroup                   demo-eks-nodeSecurityGroup                  created (2s)        
+    +   │  ├─ pulumi:providers:kubernetes             demo-eks-provider                           created (0.78s)     
+    +   │  ├─ pulumi:providers:kubernetes             demo-eks-eks-k8s                            created (0.90s)     
+    +   │  ├─ kubernetes:core/v1:ConfigMap            demo-eks-nodeAccess                         created (0.63s)     
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeClusterIngressRule          created (0.96s)     
+    +   │  ├─ eks:index:VpcCni                        demo-eks-vpc-cni                            created (2s)        
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeIngressRule                 created (1s)        
     +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeInternetEgressRule          created (1s)        
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeIngressRule                 created (2s)        
-    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksNodeClusterIngressRule          created (2s)        
-    +   │  └─ eks:index:ManagedNodeGroup              demo-manangednodegroup                      created (0.40s)     
-    +   │     ├─ aws:eks:NodeGroup                    demo-manangednodegroup                      created (117s)      
-    +   │     └─ kubernetes:core/v1:Namespace         demo-metric-ns                              created (0.43s)     
-    +   │        └─ kubernetes:helm.sh/v3:Release     demo-grafanak8smonitoring                   created (49s)       
-    +   └─ pulumi:providers:kubernetes                demo-k8sprovider                            created (1s)        
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksExtApiServerClusterIngressRule  created (2s)        
+    +   │  ├─ aws:ec2:SecurityGroupRule               demo-eks-eksClusterIngressRule              created (2s)        
+    +   │  └─ eks:index:ManagedNodeGroup              demo-manangednodegroup                      created (0.38s)     
+    +   │     └─ aws:eks:NodeGroup                    demo-manangednodegroup                      created (117s)      
+    +   ├─ pulumi:providers:kubernetes                demo-k8sprovider                            created (0.68s)     
+    +   ├─ kubernetes:core/v1:Namespace               demo-metric-ns                              created (0.50s)     
+    +   │  └─ kubernetes:helm.sh/v3:Release           demo-grafanahelmchart                       created (57s)       
+    +   ├─ kubernetes:core/v1:Namespace               demo-kubecost-ns                            created (0.72s)     
+    +   │  └─ kubernetes:helm.sh/v3:Release           demo-kubecosthelmchart                      created (61s)       
+    +   └─ kubernetes:helm.sh/v3:Release              demo-awsebscsidriver                        created (27s)       
 
     Diagnostics:
     pulumi:pulumi:Stack (aws-classic-ts-vpc-eks2-spot-nodegroup-dev):
-        (node:36736) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+        (node:60104) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
         (Use `node --trace-deprecation ...` to show where the warning was created)
 
+        Warning: resource clusterroles/aws-node is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+        Warning: resource serviceaccounts/aws-node is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+        Warning: resource clusterrolebindings/aws-node is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+        Warning: resource daemonsets/aws-node is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+        Warning: resource customresourcedefinitions/eniconfigs.crd.k8s.amazonaws.com is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+
     Outputs:
-        cluster_name                       : "demo-eks-eksCluster-75f0a4c"
-        kubeconfig                         : [secret]
-        managed_node_group_name            : "demo-eks-eksCluster-75f0a4c:demo-manangednodegroup-deb122c"
-        managed_node_group_version         : "1.26"
-        metrics_ns                         : "demo-metric-ns-1c8e628f"
-        private_subnet_ids                 : [
-            [0]: "subnet-0dedbf947772dfdfd"
-            [1]: "subnet-0481666f6c215571b"
-            [2]: "subnet-0c853b4344232535e"
+        cluster_name                 : "demo-eks-eksCluster-0043b7e"
+        helm_chart_aws_ebs_csi_driver: "demo-awsebscsidriver-9156cbb4"
+        helm_chart_kubecost          : "demo-kubecosthelmchart-703318d0"
+        helm_chart_prometheus_metrics: "demo-grafanahelmchart-339ff724"
+        kubeconfig                   : [secret]
+        managed_node_group_name      : "demo-eks-eksCluster-0043b7e:demo-manangednodegroup-81aceaf"
+        managed_node_group_version   : "1.26"
+        namespace_kubecost           : "demo-kubecost-ns-e23188d4"
+        namespace_metrics            : "demo-metric-ns-6f32bc9a"
+        private_subnet_ids           : [
+            [0]: "subnet-00ce6043492aee514"
+            [1]: "subnet-04cdf40329b897f62"
+            [2]: "subnet-02c6e6577f7f081f9"
         ]
-        prometheus_metrics_helmrelease_name: "demo-grafanak8smonitoring-5177cd5c"
-        public_subnet_ids                  : [
-            [0]: "subnet-035056b317d9a53ad"
-            [1]: "subnet-0cb50511e45dc5015"
-            [2]: "subnet-0bc964f8b4b66d927"
+        public_subnet_ids            : [
+            [0]: "subnet-0874bb6b98130231d"
+            [1]: "subnet-0c7389ec35dbdbb76"
+            [2]: "subnet-079fa596937944fcd"
         ]
-        vpc_id                             : "vpc-098f92b6de22c9af3"
+        vpc_id                       : "vpc-026fe530773f2c0c7"
 
     Resources:
-        + 56 created
+        + 63 created
 
-    Duration: 12m46s
+    Duration: 12m20s
    ```
 
 1. View the outputs.
@@ -240,19 +266,20 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 
    Results
    ```bash
-    Current stack outputs (11):
-    OUTPUT                               VALUE
-    aws_ebs_csi_driver_chart             demo-awsebscsidriver-fb5a2a3b
-    cluster_name                         demo-eks-eksCluster-22a0aa7
-    kubeconfig                           [secret]
-    kubecost_ns                          demo-kubecost-ns-c8c13276
-    managed_node_group_name              demo-eks-eksCluster-22a0aa7:demo-manangednodegroup-b296a9b
-    managed_node_group_version           1.26
-    metrics_ns                           demo-metric-ns-cd6741d2
-    private_subnet_ids                   ["subnet-0ef0ae57e3c896723","subnet-003a14cf1919b2ee5","subnet-045e8b50dcd8ac498"]
-    prometheus_metrics_helmrelease_name  demo-grafanahelmchart-858f6111
-    public_subnet_ids                    ["subnet-02257cb4e034e84b6","subnet-0cfb974d62a861913","subnet-0d26f0871d41138df"]
-    vpc_id                               vpc-0770d598fe8dbb215
+    Current stack outputs (12):
+    OUTPUT                         VALUE
+    cluster_name                   demo-eks-eksCluster-0043b7e
+    helm_chart_aws_ebs_csi_driver  demo-awsebscsidriver-9156cbb4
+    helm_chart_kubecost            demo-kubecosthelmchart-703318d0
+    helm_chart_prometheus_metrics  demo-grafanahelmchart-339ff724
+    kubeconfig                     [secret]
+    managed_node_group_name        demo-eks-eksCluster-0043b7e:demo-manangednodegroup-81aceaf
+    managed_node_group_version     1.26
+    namespace_kubecost             demo-kubecost-ns-e23188d4
+    namespace_metrics              demo-metric-ns-6f32bc9a
+    private_subnet_ids             ["subnet-00ce6043492aee514","subnet-04cdf40329b897f62","subnet-02c6e6577f7f081f9"]
+    public_subnet_ids              ["subnet-0874bb6b98130231d","subnet-0c7389ec35dbdbb76","subnet-079fa596937944fcd"]
+    vpc_id                         vpc-026fe530773f2c0c7
    ```
 
    If you need to see the value in kubeconfig, you will have to do the following
