@@ -3,10 +3,12 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 import * as k8s from "@pulumi/kubernetes";
+import * as iam from "./iam";
 
 const config = new pulumi.Config();
 const myip = config.get("myipaddress") || "0.0.0.0/0"
 const name = "demo";
+const roles = iam.createRoles(`${name}-role`, 1);
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
@@ -17,6 +19,9 @@ const grafana_prometheus_user = config.requireSecret("GRAFANA_PROMETHEUS_USERNAM
 const grafana_loki_user = config.requireSecret("GRAFANA_LOKI_USERNAME");
 // get the grafana tempo user from the pulumi config
 const grafana_tempo_user = config.requireSecret("GRAFANA_TEMPO_USERNAME");
+// get the kubecost token from the pulumi config
+const kubecost_token = config.requireSecret("KUBECOST_TOKEN");
+
 
 // Create a VPC with 3 public and 3 private subnets with the CIDR block 10.0.0.0/22.
 const myvpc = new awsx.ec2.Vpc(`${name}-vpc`, {
@@ -51,7 +56,7 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
           toPort: 0,
           // This allows us to call the securitygroup itself as a source // 
           self: true,          // Comment this out if you need access to the nodegroup from your local machine and 
-          cidrBlocks:[myip]  // uncomment this line to allow access from your local machine.
+          //cidrBlocks:[myip]  // uncomment this line to allow access from your local machine only if you are passing in your static ip address.
       },
     ],
   }, {parent: myvpc, dependsOn: [myvpc] });
@@ -67,15 +72,18 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     privateSubnetIds: myvpc.privateSubnetIds,
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
-    instanceType: "t3a.small",    
-    desiredCapacity: 2,
+    instanceRole: roles[0],
+    instanceType: "t3a.medium",    
+    desiredCapacity: 3,
     version: "1.26",
     nodeRootVolumeEncrypted: true,
     nodeRootVolumeSize: 10,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
-}, {dependsOn: [myvpc]});
+},// {dependsOn: [myvpc]});
+     { dependsOn: [eksclustersecuritygroup]});
 
+// Export the cluster name
 export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
@@ -86,40 +94,48 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
       cluster: mycluster,
       capacityType: "SPOT",
-      instanceTypes: ["t3a.medium"],
-      nodeRoleArn: mycluster.instanceRoles[0].arn,
+      instanceTypes: ["t3a.large"],
+      nodeRole: roles[0],
+      //nodeRoleArn: mycluster.instanceRoles[0].arn,
       labels: { managed: "true", spot: "true" },
       tags: {
         "Name": `${name}-manangednodegroup`,
       },
       subnetIds: myvpc.privateSubnetIds,
       scalingConfig: {
-        desiredSize: 3,
-        minSize: 2,
+        desiredSize: 4,
+        minSize: 3,
         maxSize: 8,
       },
-      diskSize: 20,
+      diskSize: 30,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
 
 // Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s namespace and helm chart later
-const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig });
+const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig }, {dependsOn: [managed_node_group] });
 const k8sproviderinfo = k8sprovider.id;
 
-// Create a Kubernetes Namespace
+// Create a Metrics Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
   {}, 
-  { provider: k8sprovider, parent: managed_node_group, dependsOn: [managed_node_group] });
+  { provider: k8sprovider, dependsOn: [k8sprovider]});
 
-export const metrics_ns = metrics_namespace.metadata.name;
+export const namespace_metrics = metrics_namespace.metadata.name;
+
+// Create a Kubecost Namespace
+const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
+  {}, 
+  { provider: k8sprovider, dependsOn: [managed_node_group] });
+
+export const namespace_kubecost = kubecost_namespace.metadata.name;
 
 export const managed_node_group_name = managed_node_group.nodeGroup.id;
 export const managed_node_group_version =managed_node_group.nodeGroup.version;
 
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
-const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`, {
+const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
   chart: "k8s-monitoring",
   version: "0.8.3",
   namespace: metrics_namespace.metadata.name,
@@ -167,7 +183,61 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanak8smonitoring`
     enabled: true,
   },
 },
-}, { provider: k8sprovider, parent: metrics_namespace, dependsOn: [metrics_namespace, managed_node_group] });
+}, { provider: k8sprovider, parent: metrics_namespace, dependsOn: [metrics_namespace] });
 
 // Export the prometheus metrics helmrelease name
-export const prometheus_metrics_helmrelease_name = prometheusmetrics.name;
+export const helm_chart_prometheus_metrics = prometheusmetrics.name;
+
+//https://artifacthub.io/packages/helm/deliveryhero/aws-ebs-csi-driver  Required after k8s 1.23
+// Install the AWS EBS CSI Driver using a Helm chart.
+const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, {
+  chart: "aws-ebs-csi-driver",
+  version: "2.26.1", // Replace with the specific version you want to install
+  namespace: "kube-system",
+  repositoryOpts: {
+      repo: "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/",
+  },
+  values: {
+      // Custom values for the aws-ebs-csi-driver chart can be specified here if needed.
+  },
+}, { provider: k8sprovider });
+// Export the awsebscsidriverchart  name
+export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
+
+
+// Creating a helm release for kube cost
+const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
+  chart: "cost-analyzer",
+  version: "1.108",
+  namespace: kubecost_namespace.metadata.name,
+  repositoryOpts: {
+      repo: "https://kubecost.github.io/cost-analyzer/",
+  },
+  values: {
+    kubecostToken: kubecost_token,
+    kubecostModel: {
+      promClusterIDLabel: mycluster.eksCluster.name,
+    },
+    persistentVolume: {
+      size: "12Gi",
+      dbSize: "12Gi",
+    },
+    prometheus: {
+      kubeStateMetrics: {
+        enabled: false,
+      },
+      serviceAccounts: {
+        nodeExporter: {
+          create: false,
+        },
+      },
+      nodeExporter: {
+        enabled: false,
+      },
+    },
+  }
+}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace] });
+
+// export the kubecost helmrelease name
+export const helm_chart_kubecost = kubecostchart.name;  
+

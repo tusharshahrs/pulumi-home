@@ -7,4 +7,6 @@ config:
     secure: AAABAFXVigRhvsUzVQG7YR4z3fr4gojv2vcZeO3Ith9EMIPs4/29
   aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_TEMPO_USERNAME:
     secure: AAABADglwMGxXI8/FOQOZk8iltaoTHZC1LOJkmAwQK3lpp7ACCo=
+  aws-classic-ts-vpc-eks2-spot-nodegroup:KUBECOST_TOKEN:
+    secure: AAABANyeYJUQV2Ap6s5g/x+yxUF3byt969713PAI9CbidaCydksVqOuANbzFvQ9TODVZWdB95+8fmKrFwwcigFKS6yY+BMXepO6z
   aws:region: us-east-2
