@@ -10,6 +10,10 @@ const myip = config.get("myipaddress") || "0.0.0.0/0"
 const name = "demo";
 const roles = iam.createRoles(`${name}-role`, 1);
 
+// Get the AWS region from the pulumi config since we need it for the aws vpc cni helm chart
+const awsConfig = new pulumi.Config("aws");
+export const awsRegion = awsConfig.get("region")
+
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
 const grafanaauth = config.requireSecret("GRAFANA_AUTH");
@@ -73,11 +77,11 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
     instanceRole: roles[0],
-    instanceType: "t3a.small",
+    instanceType: "t3a.medium",
     desiredCapacity: 3,
     version: "1.26",
     nodeRootVolumeEncrypted: true,
-    nodeRootVolumeSize: 10,
+    nodeRootVolumeSize: 30,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
 },// {dependsOn: [myvpc]});
@@ -88,6 +92,17 @@ export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 
+/*
+const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
+  clusterName: mycluster.eksCluster.name,
+  addonName: "vpc-cni",
+  addonVersion: "v1.16.0-eksbuild.1",  // Specific to 1.26
+  resolveConflictsOnCreate: "OVERWRITE", 
+  configurationValues: pulumi.jsonStringify({
+  }),
+  serviceAccountRoleArn: roles[0].arn,
+}, {deleteBeforeReplace: true, dependsOn: [mycluster]});
+*/
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
@@ -103,14 +118,17 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       },
       subnetIds: myvpc.privateSubnetIds,
       scalingConfig: {
-        desiredSize: 4,
+        desiredSize: 3,
         minSize: 3,
         maxSize: 8,
       },
-      diskSize: 20,
+      diskSize: 50,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
+
+export const managed_node_group_name = managed_node_group.nodeGroup.id;
+export const managed_node_group_version =managed_node_group.nodeGroup.version;
 
 // Create a Kubernetes provider using the EKS cluster's kubeconfig. We do this so we can use it easily in k8s namespace and helm chart later
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig }, {dependsOn: [managed_node_group] });
@@ -129,9 +147,6 @@ const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`,
   { provider: k8sprovider, dependsOn: [managed_node_group] });
 
 export const namespace_kubecost = kubecost_namespace.metadata.name;
-
-export const managed_node_group_name = managed_node_group.nodeGroup.id;
-export const managed_node_group_version =managed_node_group.nodeGroup.version;
 
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
@@ -206,7 +221,6 @@ const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, 
 // Export the awsebscsidriverchart  name
 export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
 
-
 // Creating a helm release for kube cost
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
@@ -239,7 +253,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
       },
     },
   }
-}, { provider: k8sprovider, dependsOn: [awsEbsCsiDriverChart] });
+}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [awsEbsCsiDriverChart] });
 
 // export the kubecost helmrelease name
-export const helm_chart_kubecost = kubecostchart.name;  
+export const helm_chart_kubecost = kubecostchart.name;
