@@ -2,6 +2,26 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import * as iam from "./iam";
 
+// https://docs.aws.amazon.com/eks/latest/userguide/cni-network-policy.html#network-policies-troubleshooting
+// Add the following permissions as a stanza or separate policy to the IAM role that you are using for the VPC CNI.
+// Scroll Down to the section Prerequisites. 
+const amazon_vpc_cni_plugin_iam_role_policy = `{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogGroups",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}`
+
 // Creates a eks cluster autoscale policy json for cluster-autoscaler  helm3 chart
 const eks_cluster_autoscale_policy = `{
 	"Version": "2012-10-17",
@@ -235,6 +255,14 @@ const my_custom_policyAWSLoadBalancerControllerIAMPolicy = new aws.iam.Policy("A
     policy: `${eks_aws_load_balancer_controller_policy}`,
 });
 
+// Creates a separate policy to the AIM role that you are using for the VPC CNI
+// Step 4: Create an IAM policy called AWSLoadBalancerControllerIAMPolicy
+const my_custom_policyAMAZONVPCCNI = new aws.iam.Policy("AMAZON_VPC_CNI", {
+    description: "Only the network policy logs are sent by the node agent. Other logs made by the VPC CNI aren't included. Amazon VPC CNI IAM Policy for aws vpc cni add on",
+    path: "/",
+    policy: `${amazon_vpc_cni_plugin_iam_role_policy}`,
+});
+
 // Added AmazonEBSCSIDriverPolicy for aws ebs csi driver helm3 chart since it is required after k8s 1.23
 let managedPolicyArns: string[] = [
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
@@ -268,6 +296,11 @@ export function createRole(name: string): aws.iam.Role {
     const rpa1 = new aws.iam.RolePolicyAttachment(`${name}-policy-${counter++}`,
     { policyArn: my_custom_policyAWSLoadBalancerControllerIAMPolicy.arn, role: role },
     { dependsOn: my_custom_policyAWSLoadBalancerControllerIAMPolicy });
+
+    // Adding Custom Policy for my_custom_policyAMAZONVPCCNI
+    const rpa2 = new aws.iam.RolePolicyAttachment(`${name}-policy-${counter++}`,
+    { policyArn: my_custom_policyAMAZONVPCCNI.arn, role: role },
+    { dependsOn: my_custom_policyAMAZONVPCCNI });
 
     return role;
 }
