@@ -9,6 +9,7 @@ const config = new pulumi.Config();
 const myip = config.get("myipaddress") || "0.0.0.0/0"
 const name = "demo";
 const roles = iam.createRoles(`${name}-role`, 1);
+const instance_profile = iam.createInstanceProfiles(`${name}-instance-profile`, roles);
 
 // Get the AWS region from the pulumi config since we need it for the aws vpc cni helm chart
 const awsConfig = new pulumi.Config("aws");
@@ -68,7 +69,6 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
 // The name of the security group
 const eksclustersecuritygroup_id = eksclustersecuritygroup.name;
 
-
 // Create an EKS cluster with a managed node group.
 const mycluster = new eks.Cluster(`${name}-eks`, {
     vpcId: myvpc.vpcId,
@@ -76,6 +76,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     privateSubnetIds: myvpc.privateSubnetIds,
     skipDefaultNodeGroup: true,
     clusterSecurityGroup: eksclustersecuritygroup,
+    //instanceProfileName: instance_profile[0].name,
     instanceRole: roles[0],
     instanceType: "t3a.medium",
     desiredCapacity: 3,
@@ -91,18 +92,6 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
 export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
-
-/*
-const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
-  clusterName: mycluster.eksCluster.name,
-  addonName: "vpc-cni",
-  addonVersion: "v1.16.0-eksbuild.1",  // Specific to 1.26
-  resolveConflictsOnCreate: "OVERWRITE", 
-  configurationValues: pulumi.jsonStringify({
-  }),
-  serviceAccountRoleArn: roles[0].arn,
-}, {deleteBeforeReplace: true, dependsOn: [mycluster]});
-*/
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
@@ -122,7 +111,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
         minSize: 3,
         maxSize: 8,
       },
-      diskSize: 50,
+      diskSize: 40,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
@@ -153,7 +142,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
   chart: "k8s-monitoring",
-  version: "0.8.3",
+  version: "0.8.5",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://grafana.github.io/helm-charts",
@@ -209,7 +198,7 @@ export const helm_chart_prometheus_metrics = prometheusmetrics.name;
 // Install the AWS EBS CSI Driver using a Helm chart.
 const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, {
   chart: "aws-ebs-csi-driver",
-  version: "2.26.1", // Replace with the specific version you want to install
+  version: "2.17.1", // Replace with the specific version you want to install
   namespace: "kube-system",
   repositoryOpts: {
       repo: "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/",
@@ -225,13 +214,16 @@ export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
   chart: "cost-analyzer",
-  version: "1.108",
+  version: "1.108.1",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
   },
   values: {
     kubecostToken: kubecost_token,
+    networkCosts: {
+      enabled: true,
+    },
     persistentVolume: {
       size: "18Gi",
       dbSize: "18Gi",
@@ -239,6 +231,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
     prometheus: {
       server:{
         retention: "1d",
+        global: { external_labels: {cluster_id: mycluster.eksCluster.name}}, // Found in https://github.com/kubecost/cost-analyzer-helm-chart/blob/develop/cost-analyzer/values.yaml#L838
       },
       kubeStateMetrics: {
         enabled: false,
