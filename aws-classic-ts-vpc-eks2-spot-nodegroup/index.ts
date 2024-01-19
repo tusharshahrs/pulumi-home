@@ -13,7 +13,6 @@ const instance_profile = iam.createInstanceProfiles(`${name}-instance-profile`, 
 
 // Get the AWS region from the pulumi config since we need it for the aws vpc cni helm chart
 const awsConfig = new pulumi.Config("aws");
-export const awsRegion = awsConfig.get("region")
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
@@ -93,6 +92,7 @@ export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 
+
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
@@ -111,7 +111,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
         minSize: 3,
         maxSize: 8,
       },
-      diskSize: 40,
+      diskSize: 50,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
