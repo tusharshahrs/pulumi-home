@@ -81,7 +81,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     desiredCapacity: 3,
     version: "1.26",
     nodeRootVolumeEncrypted: true,
-    nodeRootVolumeSize: 30,
+    nodeRootVolumeSize: 50,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
     createOidcProvider: true,
@@ -184,7 +184,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
         minSize: 3,
         maxSize: 8,
       },
-      diskSize: 50,
+      diskSize: 60,
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
