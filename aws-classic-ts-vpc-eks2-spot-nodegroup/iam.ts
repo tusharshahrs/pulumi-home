@@ -2,6 +2,7 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import * as iam from "./iam";
 
+// Took this out:     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
 // Added AmazonEBSCSIDriverPolicy for aws ebs csi driver helm3 chart since it is required after k8s 1.23
 // Added AmazonEKSClusterPolicy for eks cluster
 // https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonEKSVPCResourceController.html
@@ -80,6 +81,7 @@ const my_custom_policy_AmazonEKSAdminPolicy= new aws.iam.Policy("AmazonEKSAdminP
 // https://docs.aws.amazon.com/eks/latest/userguide/cni-network-policy.html#network-policies-troubleshooting
 // Add the following permissions as a stanza or separate policy to the IAM role that you are using for the VPC CNI.
 // Scroll Down to the section Prerequisites. 
+/*
 const amazon_vpc_cni_plugin_iam_role_policy = `{
     "Version": "2012-10-17",
     "Statement": [
@@ -104,7 +106,7 @@ const my_custom_policyAMAZONVPCCNI = new aws.iam.Policy("AMAZONVPCCNIPolicy", {
     path: "/",
     policy: `${amazon_vpc_cni_plugin_iam_role_policy}`,
 });
-
+*/
 // Creates a eks cluster autoscale policy json for cluster-autoscaler  helm3 chart
 const eks_cluster_autoscale_policy = `{
 	"Version": "2012-10-17",
@@ -400,9 +402,11 @@ export function createRole(name: string): aws.iam.Role {
     { dependsOn: my_custom_policyAWSLoadBalancerControllerIAMPolicy });
 
     // Adding Custom Policy for my_custom_policyAMAZONVPCCNI
+    /*
     const rpa5 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyAMAZONVPCCNI-${counter++}`,
     { policyArn: my_custom_policyAMAZONVPCCNI.arn, role: role },
     { dependsOn: my_custom_policyAMAZONVPCCNI });
+    */
 
     /*
     // Adding Custom Policy for my_custom_policyEKS_Node_IAM_Role_Policy

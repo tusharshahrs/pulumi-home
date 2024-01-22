@@ -84,6 +84,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     nodeRootVolumeSize: 30,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
     tags: { "Name": `${name}-eks` },
+    createOidcProvider: true,
 },// {dependsOn: [myvpc]});
      { dependsOn: [eksclustersecuritygroup]});
 
@@ -92,6 +93,72 @@ export const cluster_name = mycluster.eksCluster.name;
 // Export the cluster's kubeconfig as a secret (required to be secret).
 export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 
+//export const cluster_oidc_arn = mycluster.core.oidcProvider?.arn;
+//export const cluster_oidc_url = mycluster.core.oidcProvider?.url;
+
+const cluster_oidc_arn = pulumi.interpolate`${mycluster.core.oidcProvider?.arn}`;
+const cluster_oidc_url = pulumi.interpolate`${mycluster.core.oidcProvider?.url}`;
+
+
+const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
+    .apply(([arn, url]) =>
+        aws.iam.getPolicyDocumentOutput({
+            statements: [{
+                effect: "Allow",
+                actions: ["sts:AssumeRoleWithWebIdentity"],
+                principals: [
+                    {
+                        type: "Federated",
+                        identifiers: [
+                            arn,
+                        ],
+                    },
+                ],
+                conditions: [
+                    {
+                        test: "StringEquals",
+                        variable: `${url.replace('https://', '')}:sub`,
+                        values: ["system:serviceaccount:kube-system:aws-node"],
+                    },
+                    {
+                        test: "StringEquals",
+                        variable: `${url.replace('https://', '')}:aud`,
+                        values: ["sts.amazonaws.com"],
+                    }
+                ],
+            }],
+        })
+    );
+    
+  const myassumeRolePolicyJson = myassumeRolePolicy.json;
+
+  // Create a role for the VPC CNI
+    const vpcRoleCniRole = new aws.iam.Role(`${name}-eks-vpc-cni-role`, {
+      assumeRolePolicy: myassumeRolePolicy.json,
+  });
+
+  export const vpcRoleCniName = vpcRoleCniRole.name;
+  
+  const vpcRolePolicy = new aws.iam.RolePolicyAttachment(`${name}-eks-vpc-cni-role-policy`, {
+    role: vpcRoleCniRole,
+    policyArn: "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+});
+
+export const vpcRolePolicyName = vpcRolePolicy.id;
+
+// Version you need to use for the vpc-cni addon https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html
+// https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
+const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
+  clusterName: mycluster.eksCluster.name,
+  addonName: "vpc-cni",
+  addonVersion: "v1.16.0-eksbuild.1",  // Specific to 1.26
+  resolveConflictsOnCreate: "OVERWRITE", 
+  configurationValues: pulumi.jsonStringify({
+  }),
+  serviceAccountRoleArn: vpcRoleCniRole.arn,
+}, {dependsOn: [mycluster]});
+
+export const vpcCniAddonName = vpcCniAddon.addonName;
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
