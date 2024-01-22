@@ -225,7 +225,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 // https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 // https://artifacthub.io/packages/helm/prometheus-community/prometheus
 
-const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-grafana-k8s-monitoring-helmchart`, {
+const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
   chart: "k8s-monitoring",
   version: "0.8.5",
   namespace: metrics_namespace.metadata.name,
@@ -288,7 +288,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 
 // Creating a helm release for kube cost
 // https://github.com/kubecost/cost-analyzer-helm-chart
-const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
+const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
   chart: "cost-analyzer",
   version: "1.108.1",
   namespace: kubecost_namespace.metadata.name,
