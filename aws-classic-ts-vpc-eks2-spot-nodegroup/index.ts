@@ -96,10 +96,12 @@ export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 //export const cluster_oidc_arn = mycluster.core.oidcProvider?.arn;
 //export const cluster_oidc_url = mycluster.core.oidcProvider?.url;
 
+// OIDC with apply. https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
+// Had to use interpolate because of the ? in the url and arn part below.
 const cluster_oidc_arn = pulumi.interpolate`${mycluster.core.oidcProvider?.arn}`;
 const cluster_oidc_url = pulumi.interpolate`${mycluster.core.oidcProvider?.url}`;
 
-
+// Create a policy document to allow the aws-node service account to assume the role
 const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
     .apply(([arn, url]) =>
         aws.iam.getPolicyDocumentOutput({
@@ -137,17 +139,21 @@ const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
       assumeRolePolicy: myassumeRolePolicy.json,
   });
 
+  // Export the aws vpc cni role name
   export const vpcRoleCniName = vpcRoleCniRole.name;
   
+  // Create a role policy for the aws VPC CNI
   const vpcRolePolicy = new aws.iam.RolePolicyAttachment(`${name}-eks-vpc-cni-role-policy`, {
     role: vpcRoleCniRole,
     policyArn: "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
 });
 
+// Export the aws vpc cni role policy name
 export const vpcRolePolicyName = vpcRolePolicy.id;
 
 // Version you need to use for the vpc-cni addon https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html
 // https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
+// create the vpc cni addon, need to use the specific version for 1.25 and above
 const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
   clusterName: mycluster.eksCluster.name,
   addonName: "vpc-cni",
@@ -190,6 +196,23 @@ export const managed_node_group_version =managed_node_group.nodeGroup.version;
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, { kubeconfig }, {dependsOn: [managed_node_group] });
 const k8sproviderinfo = k8sprovider.id;
 
+//https://artifacthub.io/packages/helm/deliveryhero/aws-ebs-csi-driver  Required after k8s 1.23
+// Install the AWS EBS CSI Driver using a Helm chart.
+const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, {
+  chart: "aws-ebs-csi-driver",
+  version: "2.17.1", // Replace with the specific version you want to install
+  namespace: "kube-system",
+  repositoryOpts: {
+      repo: "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/",
+  },
+  values: {
+      // Custom values for the aws-ebs-csi-driver chart can be specified here if needed.
+  },
+}, { provider: k8sprovider });
+// Export the awsebscsidriverchart  name
+export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
+
+
 // Create a Metrics Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
   {}, 
@@ -197,17 +220,12 @@ const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`,
 
 export const namespace_metrics = metrics_namespace.metadata.name;
 
-// Create a Kubecost Namespace
-const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
-  {}, 
-  { provider: k8sprovider, dependsOn: [managed_node_group] });
-
-export const namespace_kubecost = kubecost_namespace.metadata.name;
-
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
 // https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
-const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
+// https://artifacthub.io/packages/helm/prometheus-community/prometheus
+
+const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-grafana-k8s-monitoring-helmchart`, {
   chart: "k8s-monitoring",
   version: "0.8.5",
   namespace: metrics_namespace.metadata.name,
@@ -255,27 +273,18 @@ const prometheusmetrics = new k8s.helm.v3.Release(`${name}-grafanahelmchart`, {
     enabled: true,
   },
 },
-}, { provider: k8sprovider, parent: metrics_namespace, dependsOn: [metrics_namespace] });
+}, { provider: k8sprovider, deleteBeforeReplace: true , parent: metrics_namespace, dependsOn: [metrics_namespace] });
+// Added deleteBeforeReplace: true to fix the issue with the helm chart not updating correctly: https://github.com/pulumi/pulumi-kubernetes/issues/2758 v3.helm.Release error: cannot re-use a name that is still in use
 
 // Export the prometheus metrics helmrelease name
-export const helm_chart_prometheus_metrics = prometheusmetrics.name;
+export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
 
+// Create a Kubecost Namespace
+const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
+  {}, 
+  { provider: k8sprovider, dependsOn: [managed_node_group] });
 
-//https://artifacthub.io/packages/helm/deliveryhero/aws-ebs-csi-driver  Required after k8s 1.23
-// Install the AWS EBS CSI Driver using a Helm chart.
-const awsEbsCsiDriverChart = new k8s.helm.v3.Release(`${name}-awsebscsidriver`, {
-  chart: "aws-ebs-csi-driver",
-  version: "2.17.1", // Replace with the specific version you want to install
-  namespace: "kube-system",
-  repositoryOpts: {
-      repo: "https://kubernetes-sigs.github.io/aws-ebs-csi-driver/",
-  },
-  values: {
-      // Custom values for the aws-ebs-csi-driver chart can be specified here if needed.
-  },
-}, { provider: k8sprovider });
-// Export the awsebscsidriverchart  name
-export const helm_chart_aws_ebs_csi_driver = awsEbsCsiDriverChart.name;
+export const namespace_kubecost = kubecost_namespace.metadata.name;
 
 // Creating a helm release for kube cost
 // https://github.com/kubecost/cost-analyzer-helm-chart
