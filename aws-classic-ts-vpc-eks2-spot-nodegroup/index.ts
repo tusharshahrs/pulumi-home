@@ -300,10 +300,10 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmchart`, {
     networkCosts: {
       enabled: true,
     },
-    persistentVolume: {
-      size: "18Gi",
-      dbSize: "18Gi",
-    },
+    //persistentVolume: {
+    //  size: "18Gi",
+    //  dbSize: "18Gi",
+    //},
     prometheus: {
       server:{
         retention: "1d",
