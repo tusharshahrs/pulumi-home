@@ -227,7 +227,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 
 const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
   chart: "k8s-monitoring",
-  version: "0.8.5",
+  version: "0.8.6",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://grafana.github.io/helm-charts",
@@ -278,6 +278,7 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
 
 // Export the prometheus metrics helmrelease name
 export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
+
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
