@@ -13,6 +13,7 @@ const instance_profile = iam.createInstanceProfiles(`${name}-instance-profile`, 
 
 // Get the AWS region from the pulumi config since we need it for the aws vpc cni helm chart
 const awsConfig = new pulumi.Config("aws");
+const awsRegion = awsConfig.require("region");
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
@@ -279,7 +280,25 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
 // Export the prometheus metrics helmrelease name
 export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
 
+// Creating a helm release for cluster autoscaler
+const cluster_autoscaler_hpa = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
+  chart: "cluster-autoscaler",
+  version: "9.34.1",
+  namespace: "kube-system",
+  repositoryOpts: {
+      repo: "https://kubernetes.github.io/autoscaler",
+  },
+  values: {
+    autoDiscovery: {cluster_name: mycluster.eksCluster.name},
+    awsRegion: awsRegion,
+    servieMonitor: {namespace: metrics_namespace.metadata.name},
+    prometheusRule: {namespace: metrics_namespace.metadata.name },	
+  }
+}, { provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
 
+// export the cluster autoscaler hpa helmrelease name
+export const helm_chart_cluster_autoscaler_hpa = cluster_autoscaler_hpa.name;
+//
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
   {}, 
