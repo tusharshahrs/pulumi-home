@@ -3,7 +3,6 @@ import * as resources from "@pulumi/azure-native/resources";
 import * as storage from "@pulumi/azure-native/storage";
 import * as network from "@pulumi/azure-native/network";
 import * as azuread from "@pulumi/azuread";
-import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 import * as containerservice from "@pulumi/azure-native/containerservice";
 import * as k8s from "@pulumi/kubernetes";
@@ -97,7 +96,10 @@ for (let i = 4; i <= 6; i++) {
 }
 
 export const publicSubnetNames = publicSubnets.map(sn => sn.name);
+export const publicSubnetFullPath = publicSubnets.map(sn => sn.id);
 export const privateSubnetNames = privateSubnets.map(sn => sn.name);
+export const privateSubnetFullPath = privateSubnets.map(sn => sn.id);
+
 
 
 
@@ -111,18 +113,7 @@ export const azuread_application_id = adApp.id;
 
 export const azuread_application_display_name = adApp.displayName;
 
-// Generate random password for the service principal
-/*
-const password = new random.RandomPassword(`${name}-password`, {
-    length: 20,
-    special: true,
-    upper: true,
-    lower: true,
-    number: true,
-});
 
-export const randompassword = password.result;
-*/
 // Create a new service principal for the AKS cluster
 const adSp = new azuread.ServicePrincipal(`${name}-adsp`,
 {
@@ -154,6 +145,7 @@ const maxPodsCount = 10;
 const osDiskSizeinGB = 30;
 const vmSizeInfo = "Standard_DS2_v2";
 
+
 const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     resourceGroupName: resourceGroup.name,
     
@@ -167,6 +159,9 @@ const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
         osType: "Linux",
         type: "VirtualMachineScaleSets",
         vmSize: "Standard_DS2_v2",
+        //vnetSubnetID: privateSubnetFullPath[0],
+        //vnetSubnetID: publicSubnetFullPath[0],
+        //vnetSubnetID: publicSubnetFullPath[1],
         //vnetSubnetID: publicSubnets[0].id,
         //vnetSubnetID: publicSubnets[0].id,
         //vnetSubnetID: privateSubnets[2].id,
@@ -185,7 +180,6 @@ const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     nodeResourceGroup: `${name}-managedcluster-ng`,
     networkProfile: {
         // https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni?tabs=configure-networking-portal
-        //networkPolicy: "calico",
         networkPolicy: "azure",
         networkPlugin: "azure",
         // https://learn.microsoft.com/en-us/azure/load-balancer/skus
@@ -215,13 +209,20 @@ export const kubeconfig = pulumi.all([cluster.name, resourceGroup.name]).apply((
     })
 );
 
-const creds = containerservice.listManagedClusterUserCredentialsOutput({
-    resourceGroupName: resourceGroup.name,
-    resourceName: cluster.name,
-});
+const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, {
+    kubeconfig: kubeconfig,
+}, {dependsOn: cluster});
 
+// Create a Metrics Namespace
+const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
+  {}, 
+  { provider: k8sprovider, dependsOn: [k8sprovider]});
 
-// Export the kubeconfig for the AKS cluster
-export const kubeconfig2 =
-    creds.kubeconfigs[0].value
-        .apply(enc => Buffer.from(enc, "base64").toString());
+export const namespace_metrics = metrics_namespace.metadata.name;
+
+// Create a Kubecost Namespace
+const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
+  {}, 
+  { provider: k8sprovider, dependsOn: [k8sprovider] });
+
+export const namespace_kubecost = kubecost_namespace.metadata.name;
