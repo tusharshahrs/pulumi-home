@@ -342,7 +342,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
       },
     },
   }
-}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [awsEbsCsiDriverChart] });
+}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [awsEbsCsiDriverChart]});
 
 // export the kubecost helmrelease name
 export const helm_chart_kubecost = kubecostchart.name;
