@@ -5,6 +5,8 @@ import * as network from "@pulumi/azure-native/network";
 import * as azuread from "@pulumi/azuread";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+import * as containerservice from "@pulumi/azure-native/containerservice";
+import * as k8s from "@pulumi/kubernetes";
 
 // variable name
 const name = "shaht1";
@@ -110,6 +112,7 @@ export const azuread_application_id = adApp.id;
 export const azuread_application_display_name = adApp.displayName;
 
 // Generate random password for the service principal
+/*
 const password = new random.RandomPassword(`${name}-password`, {
     length: 20,
     special: true,
@@ -119,21 +122,106 @@ const password = new random.RandomPassword(`${name}-password`, {
 });
 
 export const randompassword = password.result;
-
+*/
 // Create a new service principal for the AKS cluster
 const adSp = new azuread.ServicePrincipal(`${name}-adsp`,
 {
-    applicationId: adApp.clientId,
+    clientId: adApp.clientId,
 }, {parent: adApp, dependsOn: adApp});
+
+const ad_sp_password = new azuread.ServicePrincipalPassword(`${name}-adsp-password`, {
+    servicePrincipalId: adSp.id,
+    endDate: "2024-03-01T00:00:00Z",
+
+}, {parent: adSp, dependsOn: adSp});
 
 export const azuread_service_principal_name = adSp.displayName;
 
 // Generate a SSH Key
-const key = new tls.PrivateKey(`${name}-ssh-private-key`, {
-    algorithm: "ECDSA",
-    ecdsaCurve: "P384",
+const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
+    //algorithm: "ECDSA",
+    //ecdsaCurve: "P384",
+    algorithm: "RSA",
+    rsaBits: 4096,
 });
 
 // Export the subnet IDs
 //export const publicSubnetsIds = pulumi.all(publicSubnetIds);
 //export const privateSubnetsIds = pulumi.all(privateSubnetIds);
+
+const nodeCount = 3;
+const maxPodsCount = 10;
+const osDiskSizeinGB = 30;
+const vmSizeInfo = "Standard_DS2_v2";
+
+const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
+    resourceGroupName: resourceGroup.name,
+    
+    agentPoolProfiles: [{
+        count: nodeCount,
+        maxPods: maxPodsCount,
+        mode: "System",
+        name: "agentpool",
+        nodeLabels: {},
+        osDiskSizeGB: osDiskSizeinGB,
+        osType: "Linux",
+        type: "VirtualMachineScaleSets",
+        vmSize: "Standard_DS2_v2",
+        //vnetSubnetID: publicSubnets[0].id,
+        //vnetSubnetID: publicSubnets[0].id,
+        //vnetSubnetID: privateSubnets[2].id,
+    }],
+    dnsPrefix: resourceGroup.name,
+    enableRBAC: true,
+    kubernetesVersion: "1.26.10",
+    linuxProfile: {
+        adminUsername: "aksuser",
+        ssh: {
+            publicKeys: [{
+                keyData: sshkey.publicKeyOpenssh,
+            }],
+        },
+    },
+    nodeResourceGroup: `${name}-managedcluster-ng`,
+    networkProfile: {
+        // https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni?tabs=configure-networking-portal
+        //networkPolicy: "calico",
+        networkPolicy: "azure",
+        networkPlugin: "azure",
+        // https://learn.microsoft.com/en-us/azure/load-balancer/skus
+        loadBalancerSku: "standard",         
+    },
+    sku: {
+        name: "Base",
+        tier: "Free"},
+    servicePrincipalProfile: {
+        clientId: adApp.clientId,
+        secret: ad_sp_password.value,
+    },
+    tags: {"Name": `${name}-managedcluster`},
+}, {deleteBeforeReplace: true,dependsOn: [adSp, adApp,virtualNetwork]});
+
+export const cluster_name = cluster.name;
+export const cluster_k8s_version = cluster.kubernetesVersion;
+
+// Export the kubeconfig for the AKS cluster
+export const kubeconfig = pulumi.all([cluster.name, resourceGroup.name]).apply(([name, rgName]) =>
+    containerservice.listManagedClusterUserCredentials({
+        resourceName: name,
+        resourceGroupName: rgName,
+    }).then(creds => {
+        const encoded = creds.kubeconfigs[0].value;
+        return Buffer.from(encoded, 'base64').toString();
+    })
+);
+
+const creds = containerservice.listManagedClusterUserCredentialsOutput({
+    resourceGroupName: resourceGroup.name,
+    resourceName: cluster.name,
+});
+
+
+// Export the kubeconfig for the AKS cluster
+export const kubeconfig2 =
+    creds.kubeconfigs[0].value
+        .apply(enc => Buffer.from(enc, "base64").toString());
