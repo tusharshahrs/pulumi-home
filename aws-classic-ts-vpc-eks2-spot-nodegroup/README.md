@@ -13,9 +13,7 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 
 ## Kubcost
  - requires aws ebs csi driver for k8s 1.23+
- - changed the volume size from 30Gi to 12Gi to save cost.
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
- -  
 
 ## Deployment
 
