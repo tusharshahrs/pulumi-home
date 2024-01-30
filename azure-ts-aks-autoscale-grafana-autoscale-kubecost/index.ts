@@ -9,6 +9,20 @@ import * as k8s from "@pulumi/kubernetes";
 
 // variable name
 const name = "shaht1";
+const config = new pulumi.Config();
+
+// https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
+// get the grafana auth token from the pulumi config
+const grafanaauth = config.requireSecret("GRAFANA_AUTH");
+// get the grafana prometheus user from the pulumi config
+const grafana_prometheus_user = config.requireSecret("GRAFANA_PROMETHEUS_USERNAME");
+// get the grafana loki user from the pulumi config
+const grafana_loki_user = config.requireSecret("GRAFANA_LOKI_USERNAME");
+// get the grafana tempo user from the pulumi config
+const grafana_tempo_user = config.requireSecret("GRAFANA_TEMPO_USERNAME");
+// get the kubecost token from the pulumi config
+const kubecost_token = config.requireSecret("KUBECOST_TOKEN");
+
 // Create an Azure Resource Group
 const resourceGroup = new resources.ResourceGroup(`${name}-rg`, 
     {tags: {"Name": `${name}-rg`}});
@@ -146,7 +160,7 @@ const osDiskSizeinGB = 30;
 const vmSizeInfo = "Standard_DS2_v2";
 
 
-const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
+const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     resourceGroupName: resourceGroup.name,
     
     agentPoolProfiles: [{
@@ -195,11 +209,11 @@ const cluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     tags: {"Name": `${name}-managedcluster`},
 }, {deleteBeforeReplace: true,dependsOn: [adSp, adApp,virtualNetwork]});
 
-export const cluster_name = cluster.name;
-export const cluster_k8s_version = cluster.kubernetesVersion;
+export const cluster_name = mycluster.name;
+export const cluster_k8s_version = mycluster.kubernetesVersion;
 
 // Export the kubeconfig for the AKS cluster
-export const kubeconfig = pulumi.all([cluster.name, resourceGroup.name]).apply(([name, rgName]) =>
+export const kubeconfig = pulumi.all([mycluster.name, resourceGroup.name]).apply(([name, rgName]) =>
     containerservice.listManagedClusterUserCredentials({
         resourceName: name,
         resourceGroupName: rgName,
@@ -211,7 +225,7 @@ export const kubeconfig = pulumi.all([cluster.name, resourceGroup.name]).apply((
 
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, {
     kubeconfig: kubeconfig,
-}, {dependsOn: cluster});
+}, {dependsOn: mycluster});
 
 // Create a Metrics Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
@@ -219,6 +233,60 @@ const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`,
   { provider: k8sprovider, dependsOn: [k8sprovider]});
 
 export const namespace_metrics = metrics_namespace.metadata.name;
+
+// Creating a helm release for prometheus metrics, loki, tempo, and opencost
+// https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
+// https://artifacthub.io/packages/helm/prometheus-community/prometheus
+
+const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
+    chart: "k8s-monitoring",
+    version: "0.8.6",
+    namespace: metrics_namespace.metadata.name,
+    repositoryOpts: {
+        repo: "https://grafana.github.io/helm-charts",
+    },
+    values: {
+      cluster: { name: mycluster.name },
+      externalServices: {
+            prometheus: {
+              host: "https://prometheus-prod-13-prod-us-east-0.grafana.net",
+              basicAuth: {
+                username: grafana_prometheus_user,
+                password: grafanaauth,
+              },
+            },
+            loki: {
+              host: "https://logs-prod-006.grafana.net",
+              basicAuth: {
+                username: grafana_loki_user,
+                password: grafanaauth,
+              },
+            },
+            tempo: {
+              host: "https://tempo-prod-04-prod-us-east-0.grafana.net",
+              basicAuth: {
+                username: grafana_tempo_user,
+                password: grafanaauth,
+              },
+            },
+      },
+    opencost: {
+      opencost: {
+        exporter: {
+          defaultClusterId: mycluster.eksCluster.name,
+        },
+        prometheus: {
+          external: {
+            url: "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom",
+          },
+        },
+      },
+    },
+    traces: {
+      enabled: true,
+    },
+  },
+  }, { provider: k8sprovider, deleteBeforeReplace: true , parent: metrics_namespace, dependsOn: [metrics_namespace] });
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
