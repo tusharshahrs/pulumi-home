@@ -2,6 +2,9 @@ import * as pulumi from "@pulumi/pulumi";
 import * as resources from "@pulumi/azure-native/resources";
 import * as storage from "@pulumi/azure-native/storage";
 import * as network from "@pulumi/azure-native/network";
+import * as azuread from "@pulumi/azuread";
+import * as random from "@pulumi/random";
+import * as tls from "@pulumi/tls";
 
 // variable name
 const name = "shaht1";
@@ -84,7 +87,9 @@ for (let i = 4; i <= 6; i++) {
         resourceGroupName: resourceGroup.name,
         virtualNetworkName: virtualNetwork.name,
         addressPrefix: `10.0.${i}.0/24`, // Increment the third octet for each subnet
-    }, {parent: virtualNetwork, dependsOn: publicSubnets[i-3]});
+    }, 
+    {parent: virtualNetwork, dependsOn: publicSubnets[i-3]});
+    //{parent: virtualNetwork});
     //privateSubnetIds.push(subnet.id);
     privateSubnets.push(subnet);
 }
@@ -92,6 +97,42 @@ for (let i = 4; i <= 6; i++) {
 export const publicSubnetNames = publicSubnets.map(sn => sn.name);
 export const privateSubnetNames = privateSubnets.map(sn => sn.name);
 
+
+
+// Create an AD Application. Pre-Req for service principal
+const adApp = new azuread.Application(`${name}-aad-application`,
+    {
+        displayName:`${name}-aad-application`,
+    });
+
+export const azuread_application_id = adApp.id;
+
+export const azuread_application_display_name = adApp.displayName;
+
+// Generate random password for the service principal
+const password = new random.RandomPassword(`${name}-password`, {
+    length: 20,
+    special: true,
+    upper: true,
+    lower: true,
+    number: true,
+});
+
+export const randompassword = password.result;
+
+// Create a new service principal for the AKS cluster
+const adSp = new azuread.ServicePrincipal(`${name}-adsp`,
+{
+    applicationId: adApp.clientId,
+}, {parent: adApp, dependsOn: adApp});
+
+export const azuread_service_principal_name = adSp.displayName;
+
+// Generate a SSH Key
+const key = new tls.PrivateKey(`${name}-ssh-private-key`, {
+    algorithm: "ECDSA",
+    ecdsaCurve: "P384",
+});
 
 // Export the subnet IDs
 //export const publicSubnetsIds = pulumi.all(publicSubnetIds);
