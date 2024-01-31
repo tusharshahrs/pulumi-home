@@ -231,7 +231,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 
 const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
   chart: "k8s-monitoring",
-  version: "0.9.1",
+  version: "0.9.2",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: metrics_namespace.metadata.name,
