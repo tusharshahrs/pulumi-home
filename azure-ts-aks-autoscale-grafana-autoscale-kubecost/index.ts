@@ -37,7 +37,7 @@ const storageAccount = new storage.StorageAccount(`${name}sa`, {
     },
     kind: storage.Kind.StorageV2,
     tags: {"Name": `${name}sa`},
-});
+}, {parent: resourceGroup, dependsOn: resourceGroup});
 
 export const storageAccountName = storageAccount.name;
 
@@ -57,7 +57,7 @@ const virtualNetwork = new network.VirtualNetwork(`${name}-vnet`, {
         addressPrefixes: ["10.0.0.0/21"],
     },
     tags: {"Name": `${name}-vnet`},
-}, {parent: resourceGroup});
+}, {parent: resourceGroup, dependsOn: resourceGroup});
 
 export const virtualNetworkname = virtualNetwork.name;
 
@@ -65,7 +65,7 @@ export const virtualNetworkname = virtualNetwork.name;
 https://www.davidc.net/sites/default/subnets/subnets.html
 VNET: 10.0.0.0 Mask Bits: 21
 Subnet address	Range of addresses	Useable IPs	Hosts	Divide	Join
-10.0.0.0/24	10.0.0.0 - 10.0.0.255	10.0.0.1 - 10.0.0.254	254	Divide   // DON"T USE THIS				
+10.0.0.0/24	10.0.0.0 - 10.0.0.255	10.0.0.1 - 10.0.0.254	254	Divide   			
 10.0.1.0/24	10.0.1.0 - 10.0.1.255	10.0.1.1 - 10.0.1.254	254	Divide	
 10.0.2.0/24	10.0.2.0 - 10.0.2.255	10.0.2.1 - 10.0.2.254	254	Divide		
 10.0.3.0/24	10.0.3.0 - 10.0.3.255	10.0.3.1 - 10.0.3.254	254	Divide	
@@ -80,12 +80,31 @@ Subnet address	Range of addresses	Useable IPs	Hosts	Divide	Join
 //export let publicSubnetIds: pulumi.Output<string>[] = [];
 //export let privateSubnetIds: pulumi.Output<string>[] = [];
 
-
 const publicSubnets = [];
 const privateSubnets = [];
-let my_previous_subnet = null;
 // Create 3 public subnets
-for (let i = 1; i <= 3; i++) {
+for (let i = 0; i <= 2; i++) {
+    const publicsubnet  = new network.Subnet(`${name}-publicSubnet${i}`, {
+        resourceGroupName: resourceGroup.name,
+        virtualNetworkName: virtualNetwork.name,
+        addressPrefix: `10.0.${i}.0/24`, // Increment the third octet for each subnet
+    }, {parent: virtualNetwork});
+    //publicSubnetIds.push(subnet.id);
+    publicSubnets.push(publicsubnet);
+    
+    // Creating private subnet, we want 3 private subnets.  If we want 4, bump the i to 4, assuming we have 4 public subnets
+    const privatesubnet = new network.Subnet(`${name}-privateSubnet${i+3}`, {
+        resourceGroupName: resourceGroup.name,
+        virtualNetworkName: virtualNetwork.name,
+        addressPrefix: `10.0.${i+3}.0/24`, // Increment the third octet for each subnet
+    },{parent: publicsubnet, dependsOn: publicsubnet});
+    privateSubnets.push(privatesubnet); 
+}
+/*
+const publicSubnets = [];
+const privateSubnets = [];
+// Create 3 public subnets
+for (let i = 0; i <= 2; i++) {
     const subnet  = new network.Subnet(`${name}-publicSubnet${i}`, {
         resourceGroupName: resourceGroup.name,
         virtualNetworkName: virtualNetwork.name,
@@ -97,24 +116,22 @@ for (let i = 1; i <= 3; i++) {
 }
 
 // Create 3 private subnets
-for (let i = 4; i <= 6; i++) {
+for (let i = 3; i <= 5; i++) {
     const subnet = new network.Subnet(`${name}-privateSubnet${i}`, {
         resourceGroupName: resourceGroup.name,
         virtualNetworkName: virtualNetwork.name,
         addressPrefix: `10.0.${i}.0/24`, // Increment the third octet for each subnet
     }, 
-    {parent: virtualNetwork, dependsOn: publicSubnets[i-3]});
+    {parent: virtualNetwork, dependsOn: publicSubnets[i-1]});
     //{parent: virtualNetwork});
     //privateSubnetIds.push(subnet.id);
     privateSubnets.push(subnet);
 }
-
+*/
 export const publicSubnetNames = publicSubnets.map(sn => sn.name);
 export const publicSubnetFullPath = publicSubnets.map(sn => sn.id);
 export const privateSubnetNames = privateSubnets.map(sn => sn.name);
 export const privateSubnetFullPath = privateSubnets.map(sn => sn.id);
-
-
 
 
 // Create an AD Application. Pre-Req for service principal
@@ -124,7 +141,6 @@ const adApp = new azuread.Application(`${name}-aad-application`,
     });
 
 export const azuread_application_id = adApp.id;
-
 export const azuread_application_display_name = adApp.displayName;
 
 
@@ -143,9 +159,10 @@ const ad_sp_password = new azuread.ServicePrincipalPassword(`${name}-adsp-passwo
 export const azuread_service_principal_name = adSp.displayName;
 
 // Generate a SSH Key
+// https://learn.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows?source=recommendations#supported-ssh-key-formats
 const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
-    //algorithm: "ECDSA",
-    //ecdsaCurve: "P384",
+    //algorithm: "ECDSA", // ECDSA is not supported by AKS 
+    //ecdsaCurve: "P384", // ECDSA is not supported by AKS
     algorithm: "RSA",
     rsaBits: 4096,
 });
@@ -155,17 +172,17 @@ const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
 //export const privateSubnetsIds = pulumi.all(privateSubnetIds);
 
 const nodeCount = 3;
-const maxPodsCount = 10;
+const maxPodsCount = 5;
 const osDiskSizeinGB = 30;
 const vmSizeInfo = "Standard_DS2_v2";
 
 
 const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     resourceGroupName: resourceGroup.name,
-    
+    // Default node pool only runs critical system pods
     agentPoolProfiles: [{
         count: nodeCount,
-        maxPods: maxPodsCount,
+        //maxPods: maxPodsCount,
         mode: "System",
         name: "agentpool",
         nodeLabels: {},
@@ -180,7 +197,9 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
         //vnetSubnetID: publicSubnets[0].id,
         //vnetSubnetID: privateSubnets[2].id,
     }],
-    dnsPrefix: resourceGroup.name,
+    //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
+    //nodeResourceGroup: `${name}-mc-nodegroup`,
+    dnsPrefix: `${name}-dns`,
     enableRBAC: true,
     kubernetesVersion: "1.26.10",
     linuxProfile: {
@@ -191,7 +210,6 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
             }],
         },
     },
-    nodeResourceGroup: `${name}-managedcluster-ng`,
     networkProfile: {
         // https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni?tabs=configure-networking-portal
         networkPolicy: "azure",
@@ -207,25 +225,53 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
         secret: ad_sp_password.value,
     },
     tags: {"Name": `${name}-managedcluster`},
-}, {deleteBeforeReplace: true,dependsOn: [adSp, adApp,virtualNetwork]});
+}, {parent: virtualNetwork, dependsOn: [adSp, adApp,virtualNetwork, privateSubnets[1]]});
 
 export const cluster_name = mycluster.name;
 export const cluster_k8s_version = mycluster.kubernetesVersion;
 
+const userPoolnodecount = 3;
+const userPoolmaxcount = 5;
+const userPoolmincount = 1;
+const userPoolosDiskSizeinGB = 40;
+// Create additional user-defined agent pool
+const userAgentPool = new containerservice.AgentPool(`${name}-userAgentPool`, {
+    resourceGroupName: resourceGroupName,
+    resourceName: mycluster.name,
+    agentPoolName: `${name}spotpool`, // Replace with your desired agent pool name
+    count: userPoolnodecount, // Desired node count for user pool
+    vmSize: "Standard_DS2_v2", // The size of the VMs in the pool Not enought quota
+    type: "VirtualMachineScaleSets",
+    osType: "Linux", // Operating system type
+    mode: "User", // Mode must be 'User' for additional agent pools
+    osDiskSizeGB: userPoolosDiskSizeinGB, // OS Disk Size in GB
+    tags: {"Name": `${name}-userAgentPool`},
+    //maxCount: userPoolmaxcount, // Maximum number of nodes for autoscaling
+    //minCount: userPoolmincount, // Minimum number of nodes for autoscaling
+    //enableAutoScaling: true,
+    //scaleSetPriority: "Spot",
+    //spotMaxPrice: -1,
+    //scaleSetEvictionPolicy: "Delete",
+},{parent: mycluster, dependsOn: [mycluster]});
+
+export const user_agentpool_name = userAgentPool.name;
+
+
 // Export the kubeconfig for the AKS cluster
-export const kubeconfig = pulumi.all([mycluster.name, resourceGroup.name]).apply(([name, rgName]) =>
-    containerservice.listManagedClusterUserCredentials({
-        resourceName: name,
-        resourceGroupName: rgName,
-    }).then(creds => {
-        const encoded = creds.kubeconfigs[0].value;
-        return Buffer.from(encoded, 'base64').toString();
-    })
-);
+// Breaking up into multiple steps so we can make it a secrets and it is easier to read
+const creds = containerservice.listManagedClusterUserCredentialsOutput({
+    resourceGroupName: resourceGroup.name,
+    resourceName: mycluster.name,
+});
+
+const encoded = creds.kubeconfigs[0].value;
+// Export the kubeconfig as a secret
+export const kubeconfig = pulumi.secret(encoded.apply(enc => Buffer.from(enc, "base64").toString()));
 
 const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, {
     kubeconfig: kubeconfig,
 }, {dependsOn: mycluster});
+
 
 // Create a Metrics Namespace
 const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
@@ -273,7 +319,7 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
     opencost: {
       opencost: {
         exporter: {
-          defaultClusterId: mycluster.eksCluster.name,
+          defaultClusterId: mycluster.name,
         },
         prometheus: {
           external: {
@@ -293,4 +339,63 @@ const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`,
   {}, 
   { provider: k8sprovider, dependsOn: [k8sprovider] });
 
-export const namespace_kubecost = kubecost_namespace.metadata.name;
+  export const namespace_kubecost = kubecost_namespace.metadata.name;
+
+// Creating a helm release for kube cost
+// https://github.com/kubecost/cost-analyzer-helm-chart
+const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
+    chart: "cost-analyzer",
+    version: "2.0.0",
+    namespace: kubecost_namespace.metadata.name,
+    repositoryOpts: {
+        repo: "https://kubecost.github.io/cost-analyzer/",
+    },
+    values: {
+      kubecostToken: kubecost_token,
+      networkCosts: {
+        enabled: true,
+      },
+      //persistentVolume: {
+      //  size: "18Gi",
+      //  dbSize: "18Gi",
+      //},
+      prometheus: {
+        server:{
+          retention: "1d",
+          global: { external_labels: {cluster_id: mycluster.name}}, // Found in https://github.com/kubecost/cost-analyzer-helm-chart/blob/develop/cost-analyzer/values.yaml#L838
+        },
+        kubeStateMetrics: {
+          enabled: false,
+        },
+        serviceAccounts: {
+          nodeExporter: {
+            create: false,
+          },
+        },
+        nodeExporter: {
+          enabled: false,
+        },
+      },
+    }
+  }, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace, prometheusmetrics_k8s_monitoring]});
+  
+  // export the kubecost helmrelease name
+  export const helm_chart_kubecost = kubecostchart.name;
+
+// Creating a helm release for cluster autoscaler
+// https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#azure
+/*
+const cluster_autoscaler_hpa = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
+    chart: "cluster-autoscaler",
+    version: "9.34.1",
+    namespace: "kube-system",
+    repositoryOpts: {
+        repo: "https://kubernetes.github.io/autoscaler",
+    },
+    values: {
+      autoDiscovery: {cluster_name: mycluster.name},
+      servieMonitor: {namespace: metrics_namespace.metadata.name},
+      prometheusRule: {namespace: metrics_namespace.metadata.name },	
+    }
+  }, { provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
+*/
