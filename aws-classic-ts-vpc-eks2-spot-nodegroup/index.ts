@@ -87,7 +87,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     tags: { "Name": `${name}-eks` },
     createOidcProvider: true,
 },// {dependsOn: [myvpc]});
-     { dependsOn: [eksclustersecuritygroup]});
+     { parent: eksclustersecuritygroup, dependsOn: [eksclustersecuritygroup]});
 
 // Export the cluster name
 export const cluster_name = mycluster.eksCluster.name;
@@ -281,6 +281,7 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
 export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
 
 // Creating a helm release for cluster autoscaler
+// https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---using-auto-discovery-of-tagged-instance-groups
 const cluster_autoscaler_hpa = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
   chart: "cluster-autoscaler",
   version: "9.34.1",
