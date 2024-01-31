@@ -152,9 +152,12 @@ const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
 // Export the aws vpc cni role policy name
 export const vpcRolePolicyName = vpcRolePolicy.id;
 
+// kubectl -n kube-system describe ds aws-node  | grep amazon-k8s-cni: | cut -d : -f 3
+// Not needed after pulumi-eks 2.2.1 where this is upgraded to v1.16.0
 // Version you need to use for the vpc-cni addon https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html
 // https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
 // create the vpc cni addon, need to use the specific version for 1.25 and above
+/*
 const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
   clusterName: mycluster.eksCluster.name,
   addonName: "vpc-cni",
@@ -166,7 +169,7 @@ const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
 }, {dependsOn: [mycluster]});
 
 export const vpcCniAddonName = vpcCniAddon.addonName;
-
+*/
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
@@ -228,10 +231,13 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 
 const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
   chart: "k8s-monitoring",
-  version: "0.8.6",
+  version: "0.9.0",
+  //chart: "prometheus",
+  //version: "25.11.0",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
-      repo: "https://grafana.github.io/helm-charts",
+      repo: "https://grafana.github.io/helm-charts/",
+      //repo: "https://prometheus-community.github.io/helm-charts/",
   },
   values: {
     cluster: { name: mycluster.eksCluster.name },
