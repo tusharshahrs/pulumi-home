@@ -1,5 +1,5 @@
 config:
-  azure-native:location: eastus2
+  azure-native:location: centralus
   azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_AUTH:
     secure: AAABAOt6Ftx4FdQjMB0sZE2ohUbDCeEM8BKWopOEOwn8txeVW8J+ojLl6tHIk5/Tv66iFYVvyc3DCLSk6c8grY/zqGJ/Mk7gvSn0G9YYOFtLlp89h/tXU7+WHCy4058O+zb0V/Rj+xiFkOVIew668/myIPT91tmBwoXCTkAk9K7iZqhEOcTWoAlzUp4zuAQDbN126trL4zWzx1wDUnMGhhoh8/jDRpSzZ8714S7An5CFKknZy5+s/r0yMsrvO704
   azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_LOKI_USERNAME:
