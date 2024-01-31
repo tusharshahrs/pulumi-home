@@ -13,6 +13,7 @@ const instance_profile = iam.createInstanceProfiles(`${name}-instance-profile`, 
 
 // Get the AWS region from the pulumi config since we need it for the aws vpc cni helm chart
 const awsConfig = new pulumi.Config("aws");
+const awsRegion = awsConfig.require("region");
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
 // get the grafana auth token from the pulumi config
@@ -86,7 +87,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     tags: { "Name": `${name}-eks` },
     createOidcProvider: true,
 },// {dependsOn: [myvpc]});
-     { dependsOn: [eksclustersecuritygroup]});
+     { parent: eksclustersecuritygroup, dependsOn: [eksclustersecuritygroup]});
 
 // Export the cluster name
 export const cluster_name = mycluster.eksCluster.name;
@@ -151,9 +152,12 @@ const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
 // Export the aws vpc cni role policy name
 export const vpcRolePolicyName = vpcRolePolicy.id;
 
+// kubectl -n kube-system describe ds aws-node  | grep amazon-k8s-cni: | cut -d : -f 3
+// Not needed after pulumi-eks 2.2.1 where this is upgraded to v1.16.0
 // Version you need to use for the vpc-cni addon https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html
 // https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
 // create the vpc cni addon, need to use the specific version for 1.25 and above
+/*
 const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
   clusterName: mycluster.eksCluster.name,
   addonName: "vpc-cni",
@@ -165,7 +169,7 @@ const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
 }, {dependsOn: [mycluster]});
 
 export const vpcCniAddonName = vpcCniAddon.addonName;
-
+*/
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
@@ -227,10 +231,13 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 
 const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
   chart: "k8s-monitoring",
-  version: "0.8.6",
+  version: "0.9.2",
+  //chart: "prometheus",
+  //version: "25.11.0",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
-      repo: "https://grafana.github.io/helm-charts",
+      repo: "https://grafana.github.io/helm-charts/",
+      //repo: "https://prometheus-community.github.io/helm-charts/",
   },
   values: {
     cluster: { name: mycluster.eksCluster.name },
@@ -279,7 +286,26 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
 // Export the prometheus metrics helmrelease name
 export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
 
+// Creating a helm release for cluster autoscaler
+// https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---using-auto-discovery-of-tagged-instance-groups
+const cluster_autoscaler_hpa = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
+  chart: "cluster-autoscaler",
+  version: "9.34.1",
+  namespace: "kube-system",
+  repositoryOpts: {
+      repo: "https://kubernetes.github.io/autoscaler",
+  },
+  values: {
+    autoDiscovery: {cluster_name: mycluster.eksCluster.name},
+    awsRegion: awsRegion,
+    servieMonitor: {namespace: metrics_namespace.metadata.name},
+    prometheusRule: {namespace: metrics_namespace.metadata.name },	
+  }
+}, { provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
 
+// export the cluster autoscaler hpa helmrelease name
+export const helm_chart_cluster_autoscaler_hpa = cluster_autoscaler_hpa.name;
+//
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
   {}, 
@@ -291,7 +317,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
   chart: "cost-analyzer",
-  version: "1.108.1",
+  version: "2.0.0",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
@@ -323,7 +349,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
       },
     },
   }
-}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [awsEbsCsiDriverChart] });
+}, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [awsEbsCsiDriverChart]});
 
 // export the kubecost helmrelease name
 export const helm_chart_kubecost = kubecostchart.name;

@@ -1,0 +1,12 @@
+config:
+  azure-native:location: centralus
+  azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_AUTH:
+    secure: AAABAOt6Ftx4FdQjMB0sZE2ohUbDCeEM8BKWopOEOwn8txeVW8J+ojLl6tHIk5/Tv66iFYVvyc3DCLSk6c8grY/zqGJ/Mk7gvSn0G9YYOFtLlp89h/tXU7+WHCy4058O+zb0V/Rj+xiFkOVIew668/myIPT91tmBwoXCTkAk9K7iZqhEOcTWoAlzUp4zuAQDbN126trL4zWzx1wDUnMGhhoh8/jDRpSzZ8714S7An5CFKknZy5+s/r0yMsrvO704
+  azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_LOKI_USERNAME:
+    secure: AAABAJMnRxPJZ3hmuGCY9AZkyb6iEKJUjDkmJP7dqzzM7B+8wsI=
+  azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_PROMETHEUS_USERNAME:
+    secure: AAABACD/SaL47cXpqH8s133nuWNd6JsqgCAyLnOIrHlD3ty04mOe
+  azure-ts-aks-autoscale-grafana-autoscale-kubecost:GRAFANA_TEMPO_USERNAME:
+    secure: AAABACCMYXGFKjszggPnHx1mtSdn4aNtLwOEePzCaP8nJshQhVs=
+  azure-ts-aks-autoscale-grafana-autoscale-kubecost:KUBECOST_TOKEN:
+    secure: AAABAGo3abzFFKWqj1I7b57bUnD3FdhCpn1dgWy5wTwlzxVCNWaFYnDj9F5KQt5jw+FTioRQ629gL6Q9aAaXmcq6/bqpP0iZu2cc

@@ -2,7 +2,6 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import * as iam from "./iam";
 
-// Took this out:     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
 // Added AmazonEBSCSIDriverPolicy for aws ebs csi driver helm3 chart since it is required after k8s 1.23
 // Added AmazonEKSClusterPolicy for eks cluster
 // https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonEKSVPCResourceController.html
@@ -77,53 +76,37 @@ const my_custom_policy_AmazonEKSAdminPolicy= new aws.iam.Policy("AmazonEKSAdminP
     policy: `${AmazonEKSAdminPolicy}`,
 });
 
-
-// https://docs.aws.amazon.com/eks/latest/userguide/cni-network-policy.html#network-policies-troubleshooting
-// Add the following permissions as a stanza or separate policy to the IAM role that you are using for the VPC CNI.
-// Scroll Down to the section Prerequisites. 
-/*
-const amazon_vpc_cni_plugin_iam_role_policy = `{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "logs:DescribeLogGroups",
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "*"
-        }
-    ]
-}`
-
-// Creates a separate policy to the AIM role that you are using for the VPC CNI
-// Create an IAM policy called AMAZONVPCCNIPolicy
-const my_custom_policyAMAZONVPCCNI = new aws.iam.Policy("AMAZONVPCCNIPolicy", {
-    description: "Only the network policy logs are sent by the node agent. Other logs made by the VPC CNI aren't included. Amazon VPC CNI IAM Policy for aws vpc cni add on",
-    path: "/",
-    policy: `${amazon_vpc_cni_plugin_iam_role_policy}`,
-});
-*/
+// https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#iam-policy
 // Creates a eks cluster autoscale policy json for cluster-autoscaler  helm3 chart
 const eks_cluster_autoscale_policy = `{
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Effect": "Allow",
-		"Action": [
-			"autoscaling:DescribeAutoScalingGroups",
-			"autoscaling:DescribeAutoScalingInstances",
-			"autoscaling:DescribeLaunchConfigurations",
-			"autoscaling:DescribeTags",
-            "autoscaling:SetDesiredCapacity",
-            "autoscaling:TerminateInstanceInAutoScalingGroup",
-            "ec2:DescribeLaunchTemplateVersions"
-		],
-		"Resource": "*"
-	}]
-}`
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "autoscaling:DescribeAutoScalingGroups",
+          "autoscaling:DescribeAutoScalingInstances",
+          "autoscaling:DescribeLaunchConfigurations",
+          "autoscaling:DescribeScalingActivities",
+          "autoscaling:DescribeTags",
+          "ec2:DescribeInstanceTypes",
+          "ec2:DescribeLaunchTemplateVersions"
+        ],
+        "Resource": ["*"]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "autoscaling:SetDesiredCapacity",
+          "autoscaling:TerminateInstanceInAutoScalingGroup",
+          "ec2:DescribeImages",
+          "ec2:GetInstanceTypesFromInstanceRequirements",
+          "eks:DescribeNodegroup"
+        ],
+        "Resource": ["*"]
+      }
+    ]
+  }`
 
 // Creates a eks cluster autoscale policy json
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---iam
@@ -341,31 +324,6 @@ const my_custom_policyAWSLoadBalancerControllerIAMPolicy = new aws.iam.Policy("A
     policy: `${eks_aws_load_balancer_controller_policy}`,
 });
 
-// https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html
-// Amazon EKS node IAM role
-//  Verify that the trust relationship contains the following policy. If the trust relationship doesn't match, copy the policy into the Edit trust policy window and choose Update policy.
-/*
-const eks_node_iam_role_policy = `{
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "sts:AssumeRole",
-        "Service": "ec2.amazonaws.com",
-        "Effect": "Allow",
-        "Sid": ""
-      }
-    ]
-  }`
-
-// Amazon EKS node IAM role
-// Step 5: Create an IAM policy called EKSNODEIAMROLEPolicy
-const my_custom_policyEKS_Node_IAM_Role_Policy= new aws.iam.Policy("EKSNODEIAMROLEPolicy", {
-    description: "EKS Node Iam Role Policy Assume Role",
-    path: "/",
-    policy: `${eks_node_iam_role_policy}`,
-});
-*/
-
 // Creates a role and attaches the EKS worker node IAM managed policies
 export function createRole(name: string): aws.iam.Role {
     const role = new aws.iam.Role(`${name}-iamrole`, {
@@ -400,20 +358,6 @@ export function createRole(name: string): aws.iam.Role {
     const rpa4 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyAWSLoadBalancerControllerIAMPolicy-${counter++}`,
     { policyArn: my_custom_policyAWSLoadBalancerControllerIAMPolicy.arn, role: role },
     { dependsOn: my_custom_policyAWSLoadBalancerControllerIAMPolicy });
-
-    // Adding Custom Policy for my_custom_policyAMAZONVPCCNI
-    /*
-    const rpa5 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyAMAZONVPCCNI-${counter++}`,
-    { policyArn: my_custom_policyAMAZONVPCCNI.arn, role: role },
-    { dependsOn: my_custom_policyAMAZONVPCCNI });
-    */
-
-    /*
-    // Adding Custom Policy for my_custom_policyEKS_Node_IAM_Role_Policy
-    const rpa6 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyEKS_Node_IAM_Role_Policy-${counter++}`,
-    { policyArn: my_custom_policyEKS_Node_IAM_Role_Policy.arn, role: role },
-    { dependsOn: my_custom_policyEKS_Node_IAM_Role_Policy });
-    */
 
     return role;
 }
