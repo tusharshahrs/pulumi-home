@@ -8,7 +8,7 @@ import * as containerservice from "@pulumi/azure-native/containerservice";
 import * as k8s from "@pulumi/kubernetes";
 
 // variable name
-const name = "shaht1";
+const name = "demo2";
 const config = new pulumi.Config();
 
 // https://github.com/grafana/k8s-monitoring-helm/blob/main/charts/k8s-monitoring/README.md
@@ -27,7 +27,7 @@ const kubecost_token = config.requireSecret("KUBECOST_TOKEN");
 const resourceGroup = new resources.ResourceGroup(`${name}-rg`, 
     {tags: {"Name": `${name}-rg`}});
 
-export const resourceGroupName = resourceGroup.name;
+export const resource_group_name = resourceGroup.name;
 
 // Create an Azure resource (Storage Account)
 const storageAccount = new storage.StorageAccount(`${name}sa`, {
@@ -39,7 +39,7 @@ const storageAccount = new storage.StorageAccount(`${name}sa`, {
     tags: {"Name": `${name}sa`},
 }, {parent: resourceGroup, dependsOn: resourceGroup});
 
-export const storageAccountName = storageAccount.name;
+export const storage_account_name = storageAccount.name;
 
 // Export the primary key of the Storage Account
 const storageAccountKeys = storage.listStorageAccountKeysOutput({
@@ -47,7 +47,7 @@ const storageAccountKeys = storage.listStorageAccountKeysOutput({
     accountName: storageAccount.name
 });
 
-export const primaryStorageKey = pulumi.secret(storageAccountKeys.keys[0].value);
+export const primary_storage_key = pulumi.secret(storageAccountKeys.keys[0].value);
 
 
 // Create an Azure Virtual Network
@@ -59,7 +59,7 @@ const virtualNetwork = new network.VirtualNetwork(`${name}-vnet`, {
     tags: {"Name": `${name}-vnet`},
 }, {parent: resourceGroup, dependsOn: resourceGroup});
 
-export const virtualNetworkname = virtualNetwork.name;
+export const vnet_name = virtualNetwork.name;
 
 /*
 https://www.davidc.net/sites/default/subnets/subnets.html
@@ -128,10 +128,10 @@ for (let i = 3; i <= 5; i++) {
     privateSubnets.push(subnet);
 }
 */
-export const publicSubnetNames = publicSubnets.map(sn => sn.name);
-export const publicSubnetFullPath = publicSubnets.map(sn => sn.id);
-export const privateSubnetNames = privateSubnets.map(sn => sn.name);
-export const privateSubnetFullPath = privateSubnets.map(sn => sn.id);
+export const public_subnet_names = publicSubnets.map(sn => sn.name);
+const public_subnet_full_path = publicSubnets.map(sn => sn.id);
+export const private_subnet_names = privateSubnets.map(sn => sn.name);
+const private_subnet_full_path = privateSubnets.map(sn => sn.id);
 
 
 // Create an AD Application. Pre-Req for service principal
@@ -172,10 +172,7 @@ const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
 //export const privateSubnetsIds = pulumi.all(privateSubnetIds);
 
 const nodeCount = 3;
-const maxPodsCount = 5;
-const osDiskSizeinGB = 30;
-const vmSizeInfo = "Standard_DS2_v2";
-
+const osDiskSizeinGB = 60;
 
 const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, {
     resourceGroupName: resourceGroup.name,
@@ -190,15 +187,8 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
         osType: "Linux",
         type: "VirtualMachineScaleSets",
         vmSize: "Standard_DS2_v2",
-        //vnetSubnetID: privateSubnetFullPath[0],
-        //vnetSubnetID: publicSubnetFullPath[0],
-        //vnetSubnetID: publicSubnetFullPath[1],
-        //vnetSubnetID: publicSubnets[0].id,
-        //vnetSubnetID: publicSubnets[0].id,
-        //vnetSubnetID: privateSubnets[2].id,
     }],
     //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
-    //nodeResourceGroup: `${name}-mc-nodegroup`,
     dnsPrefix: `${name}-dns`,
     enableRBAC: true,
     kubernetesVersion: "1.26.10",
@@ -230,15 +220,16 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
 export const cluster_name = mycluster.name;
 export const cluster_k8s_version = mycluster.kubernetesVersion;
 
-const userPoolnodecount = 3;
-const userPoolmaxcount = 5;
+const userPoolnodecount = 1;
+const userPoolmaxcount = 3;
 const userPoolmincount = 1;
-const userPoolosDiskSizeinGB = 40;
+const userPoolosDiskSizeinGB = 50;
 // Create additional user-defined agent pool
+
 const userAgentPool = new containerservice.AgentPool(`${name}-userAgentPool`, {
-    resourceGroupName: resourceGroupName,
+    resourceGroupName: resourceGroup.name,
     resourceName: mycluster.name,
-    agentPoolName: `${name}spotpool`, // Replace with your desired agent pool name
+    agentPoolName: `${name}spot`, // Replace with your desired agent pool name
     count: userPoolnodecount, // Desired node count for user pool
     vmSize: "Standard_DS2_v2", // The size of the VMs in the pool Not enought quota
     type: "VirtualMachineScaleSets",
@@ -246,12 +237,12 @@ const userAgentPool = new containerservice.AgentPool(`${name}-userAgentPool`, {
     mode: "User", // Mode must be 'User' for additional agent pools
     osDiskSizeGB: userPoolosDiskSizeinGB, // OS Disk Size in GB
     tags: {"Name": `${name}-userAgentPool`},
-    //maxCount: userPoolmaxcount, // Maximum number of nodes for autoscaling
-    //minCount: userPoolmincount, // Minimum number of nodes for autoscaling
-    //enableAutoScaling: true,
-    //scaleSetPriority: "Spot",
-    //spotMaxPrice: -1,
-    //scaleSetEvictionPolicy: "Delete",
+    maxCount: userPoolmaxcount, // Maximum number of nodes for autoscaling
+    minCount: userPoolmincount, // Minimum number of nodes for autoscaling
+    enableAutoScaling: true, // Enable autoscaling.  Required to make use of minCount and maxCount and spot
+    scaleSetPriority: "Spot",
+    spotMaxPrice: -1,
+    scaleSetEvictionPolicy: "Delete",
 },{parent: mycluster, dependsOn: [mycluster]});
 
 export const user_agentpool_name = userAgentPool.name;
@@ -286,7 +277,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 
 const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
     chart: "k8s-monitoring",
-    version: "0.8.6",
+    version: "0.9.0",
     namespace: metrics_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",
@@ -333,6 +324,9 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
     },
   },
   }, { provider: k8sprovider, deleteBeforeReplace: true , parent: metrics_namespace, dependsOn: [metrics_namespace] });
+
+  // Export the prometheus metrics helmrelease name
+export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
