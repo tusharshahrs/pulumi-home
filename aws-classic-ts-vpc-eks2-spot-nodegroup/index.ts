@@ -317,7 +317,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
   chart: "cost-analyzer",
-  version: "2.0.0",
+  version: "2.0.1",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
