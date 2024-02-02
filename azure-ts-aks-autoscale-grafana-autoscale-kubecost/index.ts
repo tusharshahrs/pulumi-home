@@ -265,20 +265,20 @@ const k8sprovider = new k8s.Provider(`${name}-k8sprovider`, {
 
 
 // Create a Metrics Namespace
-const metrics_namespace = new k8s.core.v1.Namespace(`${name}-metric-ns`, 
+const grafana_k8s_monitoring_namespace = new k8s.core.v1.Namespace(`${name}-monitoring-ns`, 
   {}, 
   { provider: k8sprovider, dependsOn: [k8sprovider]});
 
-export const namespace_metrics = metrics_namespace.metadata.name;
+export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace.metadata.name;
 
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
 // https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 // https://artifacthub.io/packages/helm/prometheus-community/prometheus
 
-const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoringhelmr`, {
+const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
     chart: "k8s-monitoring",
     version: "0.9.2",
-    namespace: metrics_namespace.metadata.name,
+    namespace: grafana_k8s_monitoring_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",
     },
@@ -323,10 +323,10 @@ const prometheusmetrics_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smon
       enabled: true,
     },
   },
-  }, { provider: k8sprovider, deleteBeforeReplace: true , parent: metrics_namespace, dependsOn: [metrics_namespace] });
+  }, { provider: k8sprovider, deleteBeforeReplace: true , parent: grafana_k8s_monitoring_namespace, dependsOn: [grafana_k8s_monitoring_namespace] });
 
   // Export the prometheus metrics helmrelease name
-export const helm_chart_prometheus_metrics = prometheusmetrics_k8s_monitoring.name;
+export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
@@ -337,7 +337,7 @@ const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`,
 
 // Creating a helm release for kube cost
 // https://github.com/kubecost/cost-analyzer-helm-chart
-const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
+const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelm`, {
     chart: "cost-analyzer",
     version: "2.0.1",
     namespace: kubecost_namespace.metadata.name,
@@ -371,7 +371,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
         },
       },
     }
-  }, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace, prometheusmetrics_k8s_monitoring]});
+  }, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace, grafana_k8s_monitoring]});
   
   // export the kubecost helmrelease name
   export const helm_chart_kubecost = kubecostchart.name;
@@ -379,7 +379,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelmr`, {
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#azure
 /*
-const cluster_autoscaler_hpa = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
+const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
     chart: "cluster-autoscaler",
     version: "9.34.1",
     namespace: "kube-system",
