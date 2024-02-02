@@ -243,9 +243,11 @@ const userAgentPool = new containerservice.AgentPool(`${name}-userAgentPool`, {
     scaleSetPriority: "Spot",
     spotMaxPrice: -1,
     scaleSetEvictionPolicy: "Delete",
+    //nodeLabels: {"cluster-autoscaler-enabled=true,cluster-autoscaler-name=": pulumi.interpolate`${mycluster.name}`},
 },{parent: mycluster, dependsOn: [mycluster]});
 
 export const user_agentpool_name = userAgentPool.name;
+export const useragentpool_agentpoolname = userAgentPool.id;
 
 
 // Export the kubeconfig for the AKS cluster
@@ -373,12 +375,17 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelm`, {
     }
   }, { provider: k8sprovider, parent: kubecost_namespace, dependsOn: [kubecost_namespace, grafana_k8s_monitoring]});
   
-  // export the kubecost helmrelease name
-  export const helm_chart_kubecost = kubecostchart.name;
+// export the kubecost helmrelease name
+export const helm_chart_kubecost = kubecostchart.name;
+
+  // Extract the subscription ID from the resource group ID for cluster autoscaler.
+export const subscriptionID = resourceGroup.id.apply(myrg => myrg.split("/")[2]);
+const current = azuread.getClientConfig({});
+export const tenantid = current.then(mycurrent=>mycurrent.clientId)
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#azure
-/*
+
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
     chart: "cluster-autoscaler",
     version: "9.34.1",
@@ -387,9 +394,16 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhe
         repo: "https://kubernetes.github.io/autoscaler",
     },
     values: {
-      autoDiscovery: {cluster_name: mycluster.name},
-      servieMonitor: {namespace: metrics_namespace.metadata.name},
-      prometheusRule: {namespace: metrics_namespace.metadata.name },	
-    }
-  }, { provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
-*/
+      cloudProvider: "azure",
+      azureClientID: adApp.clientId,
+      azureClientSecret: ad_sp_password.value,
+      azureSubscriptionID: subscriptionID,
+      azureTenantID: tenantid,
+      azureResourceGroup: resourceGroup.name,
+      azureVMType: "vmss",
+      AZURE_VMSS_CACHE_TTL: "60",
+      }
+  }, { provider: k8sprovider, parent: grafana_k8s_monitoring, dependsOn: [grafana_k8s_monitoring] });
+
+// export the cluster autoscaler helmrelease name
+export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
