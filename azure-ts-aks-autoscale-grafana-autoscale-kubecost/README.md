@@ -1,13 +1,14 @@
 # Azure Managed Cluster AKS Grafana Monitoring for Prometheus Metrics, Loki, Tempo, & Opencost, and Kubecost
 
-Azure native [2](https://www.pulumi.com/registry/packages/azure-native/),[grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/). Creating helm release for grafana prometheus metrics, loki, tempo, and opencost. Avoiding metric server. KubeCost 2
+Azure native [2](https://www.pulumi.com/registry/packages/azure-native/),[grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/). Creating helm release for grafana k8s-monitoring, loki, tempo, and opencost. Avoiding metric-server(built in). KubeCost 2
 
 ## Requirements
 
 ## Metrics
    Comes installed with it for AKS.  
    
-## HPA pending
+## HPA
+    Automatic with AKS
 
 ## Kubcost
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
