@@ -329,8 +329,8 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler-h
 }, //{ provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
 { provider: k8sprovider, parent: grafana_k8s_monitoring_namespace, dependsOn: [grafana_k8s_monitoring_namespace] });
 
-// export the cluster autoscaler hpa helmrelease name
-export const helm_chart_cluster_autoscaler_hpa = cluster_autoscaler.name;
+// export the cluster autoscaler helmrelease name
+export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
 //
 
 
@@ -351,6 +351,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
       repo: "https://kubecost.github.io/cost-analyzer/",
   },
   values: {
+    
     kubecostToken: kubecost_token,
     networkCosts: {
       enabled: true,
