@@ -10,6 +10,9 @@ Azure native [2](https://www.pulumi.com/registry/packages/azure-native/),[grafan
 ## HPA
     Automatic with AKS
 
+## Cluster Autoscaler
+   https://github.com/kubernetes/autoscaler/tree/master/charts/cluster-autoscaler#azure
+
 ## Kubcost
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
 
