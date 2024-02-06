@@ -85,7 +85,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     nodeRootVolumeEncrypted: true,
     nodeRootVolumeSize: 40,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
-    tags: { "Name": `${name}-eks` },
+    tags: { "Name": `${name}-eks`},
     createOidcProvider: true,
 },// {dependsOn: [myvpc]});
      { parent: eksclustersecuritygroup, dependsOn: [eksclustersecuritygroup]});
@@ -368,7 +368,16 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`,
                 },
             },
         },
-    
+    extraArgs: {
+      "balance-similar-node-groups": true,
+      "skip-nodes-with-system-pods": false,
+      "expander": "least-waste",
+      //"node-group-auto-discovery": "asg:tag=k8s.io/cluster-autoscaler/enabled", // Worked, part 1
+      //"node-group-auto-discovery": ["asg:tag=k8s.io/cluster-autoscaler/enabled",`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`],  // Didn't work
+      //"node-group-auto-discovery":  {"asg:tag=k8s.io/cluster-autoscaler/enabled",`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`},
+      //"node-group-auto-discovery": "asg:tag":`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`,
+
+    },
     servieMonitor: {namespace: grafana_k8s_monitoring_namespace.metadata.name},
     prometheusRule: {namespace: grafana_k8s_monitoring_namespace.metadata.name },	
   }
