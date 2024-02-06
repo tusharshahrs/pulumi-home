@@ -345,6 +345,9 @@ export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 //         `name: "cluster-autoscaler", // required otherwise it will not show up in the cluster`
 //         `labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up`
 //         `"eks.amazonaws.com/role-arn": clusterautoscaleRole.arn,`
+
+const nodegroupautodiscovery = pulumi.interpolate`asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`;
+
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`, {
   chart: "cluster-autoscaler",
   version: "9.35.0",
@@ -372,11 +375,8 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`,
       "balance-similar-node-groups": true,
       "skip-nodes-with-system-pods": false,
       "expander": "least-waste",
+      "node-group-auto-discovery": nodegroupautodiscovery,
       //"node-group-auto-discovery": "asg:tag=k8s.io/cluster-autoscaler/enabled", // Worked, part 1
-      //"node-group-auto-discovery": ["asg:tag=k8s.io/cluster-autoscaler/enabled",`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`],  // Didn't work
-      //"node-group-auto-discovery":  {"asg:tag=k8s.io/cluster-autoscaler/enabled",`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`},
-      //"node-group-auto-discovery": "asg:tag":`k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`,
-
     },
     servieMonitor: {namespace: grafana_k8s_monitoring_namespace.metadata.name},
     prometheusRule: {namespace: grafana_k8s_monitoring_namespace.metadata.name },	
