@@ -101,12 +101,14 @@ export const kubeconfig = pulumi.secret(mycluster.kubeconfig);
 
 // OIDC with apply. https://www.linkedin.com/pulse/how-enable-network-policies-eks-using-aws-vpc-cni-plugin-engin-diri/
 // Had to use interpolate because of the ? in the url and arn part below.
-/*
+
+// OIDC with apply for cluster autoscaler
 const cluster_oidc_arn = pulumi.interpolate`${mycluster.core.oidcProvider?.arn}`;
 const cluster_oidc_url = pulumi.interpolate`${mycluster.core.oidcProvider?.url}`;
 
-// Create a policy document to allow the aws-node service account to assume the role
-const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
+// Create a policy document to allow the cluster autoscaler to scale
+// STEP 3: Create IAM OIDC provider
+const assumerolewithwebidentity = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
     .apply(([arn, url]) =>
         aws.iam.getPolicyDocumentOutput({
             statements: [{
@@ -124,7 +126,8 @@ const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
                     {
                         test: "StringEquals",
                         variable: `${url.replace('https://', '')}:sub`,
-                        values: ["system:serviceaccount:kube-system:aws-node"],
+                        //values: ["system:serviceaccount:kube-system:aws-node"],
+                        values: ["system:serviceaccount:kube-system:cluster-autoscaler"],
                     },
                     {
                         test: "StringEquals",
@@ -135,26 +138,44 @@ const myassumeRolePolicy = pulumi.all([cluster_oidc_arn, cluster_oidc_url])
             }],
         })
     );
-    
-  const myassumeRolePolicyJson = myassumeRolePolicy.json;
-
-  // Create a role for the VPC CNI
-    const vpcRoleCniRole = new aws.iam.Role(`${name}-eks-vpc-cni-role`, {
-      assumeRolePolicy: myassumeRolePolicy.json,
-  });
-
-  // Export the aws vpc cni role name
-  export const vpcRoleCniName = vpcRoleCniRole.name;
   
-  // Create a role policy for the aws VPC CNI
-  const vpcRolePolicy = new aws.iam.RolePolicyAttachment(`${name}-eks-vpc-cni-role-policy`, {
-    role: vpcRoleCniRole,
-    policyArn: "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
-});
 
-// Export the aws vpc cni role policy name
-export const vpcRolePolicyName = vpcRolePolicy.id;
-*/
+    //STEP 4: Create IAM policy
+    const AmazonEKSClusterAutoscalerjson= `{
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "autoscaling:DescribeAutoScalingGroups",
+                  "autoscaling:DescribeAutoScalingInstances",
+                  "autoscaling:DescribeLaunchConfigurations",
+                  "autoscaling:DescribeTags",
+                  "autoscaling:SetDesiredCapacity",
+                  "autoscaling:TerminateInstanceInAutoScalingGroup",
+                  "ec2:DescribeLaunchTemplateVersions"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          }
+      ]
+    }`
+  
+  // Create IAM policy to let users view nodes and workloads for all clusters in the AWS Management Console
+  // Give it a name AmazonEKSClusterAutoscalerPolicy.
+  const AmazonEKSClusterAutoscalerpolicy= new aws.iam.Policy("AmazonEKSClusterAutoscalerPolicy", {
+      description: "Allows CA to increase or decrease the number of nodes in the cluster.",
+      path: "/",
+      policy: `${AmazonEKSClusterAutoscalerjson}`,
+  });    
+
+    // Create the role for the cluster autoscaler
+    const clusterautoscaleRole = new aws.iam.Role(`${name}-clusterautoscalerRole`, {
+      assumeRolePolicy: assumerolewithwebidentity.json,
+      description: "Allows the cluster autoscaler to access AWS resources on your behalf.",
+      managedPolicyArns: [AmazonEKSClusterAutoscalerpolicy.arn],
+      tags: { "Name": `${name}-clusterautoscalerRole` },
+    });
+  
 
 // kubectl -n kube-system describe ds aws-node  | grep amazon-k8s-cni: | cut -d : -f 3
 // Not needed after pulumi-eks 2.2.1 where this is upgraded to v1.16.0 via a config map
@@ -195,6 +216,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
         maxSize: 12,
       },
       diskSize: 50,
+      
     },
     { parent: mycluster, dependsOn: [mycluster]}
   );
@@ -316,41 +338,42 @@ export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---using-auto-discovery-of-tagged-instance-groups
-/*
+
+
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler-helm`, {
   chart: "cluster-autoscaler",
   version: "9.35.0",
   namespace: "kube-system",
-  //name: "cluster-autoscaler",
+  name: "cluster-autoscaler",
   repositoryOpts: {
       repo: "https://kubernetes.github.io/autoscaler",
   },
   values: {
-    autoDiscovery: {cluster_name: mycluster.eksCluster.name},
+    autoDiscovery: {
+                    cluster_name: mycluster.eksCluster.name,
+                    labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"},
+                   },
     awsRegion: awsRegion,
-    //rbac: {create: true},
     rbac: {
-            // Define the service account and associate the IAM role with cluster-autoscaler
+    //        // Define the service account and associate the IAM role with cluster-autoscaler
             serviceAccount: {
                 create: true,
-                name: "cluster-autoscaler",
                 annotations: {
-                    "eks.amazonaws.com/role-arn": roles[0].arn,
+                    "eks.amazonaws.com/role-arn": clusterautoscaleRole.arn,
                 },
             },
         },
-
     
     servieMonitor: {namespace: grafana_k8s_monitoring_namespace.metadata.name},
     prometheusRule: {namespace: grafana_k8s_monitoring_namespace.metadata.name },	
   }
-}, //{ provider: k8sprovider, parent: prometheusmetrics_k8s_monitoring, dependsOn: [prometheusmetrics_k8s_monitoring] });
+},
 { provider: k8sprovider, parent: grafana_k8s_monitoring_namespace, dependsOn: [grafana_k8s_monitoring_namespace] });
 
 // export the cluster autoscaler helmrelease name
 export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
-//
-*/
+
+
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
