@@ -338,20 +338,25 @@ export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---using-auto-discovery-of-tagged-instance-groups
-
-
-const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler-helm`, {
+// Best instructions: https://www.kubecost.com/kubernetes-autoscaling/kubernetes-cluster-autoscaler/
+// https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/CA_with_AWS_IAM_OIDC.md#change-2
+// requires oidc, 
+//          namespace: "kube-system", // required otherwise it will not show up in the cluster`
+//         `name: "cluster-autoscaler", // required otherwise it will not show up in the cluster`
+//         `labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up`
+//         `"eks.amazonaws.com/role-arn": clusterautoscaleRole.arn,`
+const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`, {
   chart: "cluster-autoscaler",
   version: "9.35.0",
-  namespace: "kube-system",
-  name: "cluster-autoscaler",
+  namespace: "kube-system", // required otherwise it will not show up in the cluster
+  name: "cluster-autoscaler", // avoiding autonaming to help on troubleshooting
   repositoryOpts: {
       repo: "https://kubernetes.github.io/autoscaler",
   },
   values: {
     autoDiscovery: {
                     cluster_name: mycluster.eksCluster.name,
-                    labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"},
+                    labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up
                    },
     awsRegion: awsRegion,
     rbac: {
