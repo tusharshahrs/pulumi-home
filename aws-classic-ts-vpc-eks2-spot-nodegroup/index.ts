@@ -69,6 +69,7 @@ const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`
 // The name of the security group
 const eksclustersecuritygroup_id = eksclustersecuritygroup.name;
 
+
 // Create an EKS cluster with a managed node group.
 const mycluster = new eks.Cluster(`${name}-eks`, {
     vpcId: myvpc.vpcId,
@@ -173,6 +174,8 @@ const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
 
 export const vpcCniAddonName = vpcCniAddon.addonName;
 */
+
+
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
@@ -189,7 +192,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       scalingConfig: {
         desiredSize: 3,
         minSize: 3,
-        maxSize: 8,
+        maxSize: 12,
       },
       diskSize: 50,
     },
@@ -253,10 +256,10 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // Creating a helm release for prometheus metrics, loki, tempo, and opencost
 // https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 // https://artifacthub.io/packages/helm/prometheus-community/prometheus
-
+// https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.9.2",
+  version: "0.9.3",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
@@ -313,16 +316,31 @@ export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#aws---using-auto-discovery-of-tagged-instance-groups
+/*
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler-helm`, {
   chart: "cluster-autoscaler",
-  version: "9.34.1",
+  version: "9.35.0",
   namespace: "kube-system",
+  //name: "cluster-autoscaler",
   repositoryOpts: {
       repo: "https://kubernetes.github.io/autoscaler",
   },
   values: {
     autoDiscovery: {cluster_name: mycluster.eksCluster.name},
     awsRegion: awsRegion,
+    //rbac: {create: true},
+    rbac: {
+            // Define the service account and associate the IAM role with cluster-autoscaler
+            serviceAccount: {
+                create: true,
+                name: "cluster-autoscaler",
+                annotations: {
+                    "eks.amazonaws.com/role-arn": roles[0].arn,
+                },
+            },
+        },
+
+    
     servieMonitor: {namespace: grafana_k8s_monitoring_namespace.metadata.name},
     prometheusRule: {namespace: grafana_k8s_monitoring_namespace.metadata.name },	
   }
@@ -332,7 +350,7 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler-h
 // export the cluster autoscaler helmrelease name
 export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
 //
-
+*/
 
 // Create a Kubecost Namespace
 const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`, 
@@ -345,7 +363,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
   chart: "cost-analyzer",
-  version: "2.0.1",
+  version: "2.0.2",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
@@ -378,7 +396,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
       },
     },
   }
-}, { provider: k8sprovider, deleteBeforeReplace: true, parent: kubecost_namespace, dependsOn: [kubecost_namespace, grafana_k8s_monitoring]});
+}, { provider: k8sprovider, deleteBeforeReplace: true, parent: kubecost_namespace, dependsOn: [kubecost_namespace]});
 
 // export the kubecost helmrelease name
 export const helm_chart_kubecost = kubecostchart.name;
