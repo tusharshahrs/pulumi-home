@@ -279,7 +279,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
     chart: "k8s-monitoring",
-    version: "0.9.2",
+    version: "0.10.0",
     namespace: grafana_k8s_monitoring_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",
@@ -341,7 +341,7 @@ const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`,
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelm`, {
     chart: "cost-analyzer",
-    version: "2.0.1",
+    version: "2.0.2",
     namespace: kubecost_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://kubecost.github.io/cost-analyzer/",
@@ -385,15 +385,22 @@ export const tenantid = current.then(mycurrent=>mycurrent.clientId)
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#azure
+// Need the below for cluster autoscaler to pick up the nodegroups
+const nodegroupautodiscovery = pulumi.interpolate`label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${mycluster.name}`;
 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
     chart: "cluster-autoscaler",
-    version: "9.34.1",
+    version: "9.35.0",
     namespace: "kube-system",
+    name: "cluster-autoscaler",
     repositoryOpts: {
         repo: "https://kubernetes.github.io/autoscaler",
     },
     values: {
+      autoDiscovery: {
+        cluster_name: mycluster.name,
+        labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up
+       },
       cloudProvider: "azure",
       azureClientID: adApp.clientId,
       azureClientSecret: ad_sp_password.value,
@@ -402,6 +409,12 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhe
       azureResourceGroup: resourceGroup.name,
       azureVMType: "vmss",
       AZURE_VMSS_CACHE_TTL: "60",
+      extraArgs: {
+        "balance-similar-node-groups": true,
+        "skip-nodes-with-system-pods": false,
+        "expander": "least-waste",
+        "node-group-auto-discovery": nodegroupautodiscovery,
+      },
       }
   }, { provider: k8sprovider, parent: grafana_k8s_monitoring, dependsOn: [grafana_k8s_monitoring] });
 
