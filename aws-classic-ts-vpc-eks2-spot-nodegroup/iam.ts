@@ -4,13 +4,17 @@ import * as iam from "./iam";
 
 // Added AmazonEBSCSIDriverPolicy for aws ebs csi driver helm3 chart since it is required after k8s 1.23
 // Added AmazonEKSClusterPolicy for eks cluster
+//     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+//
 // https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonEKSVPCResourceController.html
+// https://www.pulumi.com/ai/answers/ba591503-0b87-440e-89bb-c541ae73dece
 let managedPolicyArns: string[] = [
     "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+    "arn:aws:iam::aws:policy/AmazonEKSServicePolicy",
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
-    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
     "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
     "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+    "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
 ];
 
 //     "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController",
@@ -76,6 +80,7 @@ const my_custom_policy_AmazonEKSAdminPolicy= new aws.iam.Policy("AmazonEKSAdminP
     policy: `${AmazonEKSAdminPolicy}`,
 });
 
+/*
 // https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#iam-policy
 // Creates a eks cluster autoscale policy json for cluster-autoscaler  helm3 chart
 const eks_cluster_autoscale_policy = `{
@@ -116,9 +121,11 @@ const my_custom_policy_eksclusterautoscalePolicy = new aws.iam.Policy("EKSCluste
     path: "/",
     policy: `${eks_cluster_autoscale_policy}`,
 });
+*/
 
 // The AWS Load Balancer Controller helm3 chart: https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller
 // requires the following iam policy: https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
 const eks_aws_load_balancer_controller_policy = `{
     "Version": "2012-10-17",
     "Statement": [
@@ -349,15 +356,18 @@ export function createRole(name: string): aws.iam.Role {
         { policyArn: my_custom_policy_AmazonEKSAdminPolicy.arn, role: role },
         { dependsOn: my_custom_policy_AmazonEKSAdminPolicy });
 
+    // Adding Custom Policy for my_custom_policyAWSLoadBalancerControllerIAMPolicy
+    const rpa3 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyAWSLoadBalancerControllerIAMPolicy-${counter++}`,
+    { policyArn: my_custom_policyAWSLoadBalancerControllerIAMPolicy.arn, role: role },
+    { dependsOn: my_custom_policyAWSLoadBalancerControllerIAMPolicy });
+
+
     // Adding Custom Policy for cluster autoscale
+    /*
     const rpa3 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policy_eksclusterautoscalePolicy-${counter++}`,
         { policyArn: my_custom_policy_eksclusterautoscalePolicy.arn, role: role },
         { dependsOn: my_custom_policy_eksclusterautoscalePolicy });
-
-    // Adding Custom Policy for my_custom_policyAWSLoadBalancerControllerIAMPolicy
-    const rpa4 = new aws.iam.RolePolicyAttachment(`${name}-rpa_my_custom_policyAWSLoadBalancerControllerIAMPolicy-${counter++}`,
-    { policyArn: my_custom_policyAWSLoadBalancerControllerIAMPolicy.arn, role: role },
-    { dependsOn: my_custom_policyAWSLoadBalancerControllerIAMPolicy });
+    */
 
     return role;
 }
