@@ -283,7 +283,8 @@ Azure native [2](https://www.pulumi.com/registry/packages/azure-native/),[grafan
 
    If you need to see the value in kubeconfig, you will have to do the following
    ```bash
-   pulumi stack output --show-secrets kubeconfig
+   pulumi stack output --show-secrets kubeconfig > kubeconfig
+   export KUBECONFIG=$PWD/kubeconfig
    ```
 
 1. To view Prometheus metrics(Note, this makes it easy to identify the ebs permission issue in volume expansion for kubecost):

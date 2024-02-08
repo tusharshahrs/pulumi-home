@@ -6,6 +6,9 @@ import * as azuread from "@pulumi/azuread";
 import * as tls from "@pulumi/tls";
 import * as containerservice from "@pulumi/azure-native/containerservice";
 import * as k8s from "@pulumi/kubernetes";
+import * as authorization from "@pulumi/azure-native/authorization";
+import * as managedIdentity from "@pulumi/azure-native/managedidentity";
+import { managedidentity } from "@pulumi/azure-native";
 
 // variable name
 const name = "demo2";
@@ -29,6 +32,12 @@ const resourceGroup = new resources.ResourceGroup(`${name}-rg`,
 
 export const resource_group_name = resourceGroup.name;
 
+// To get the Subscription ID and Tenant ID, we use the `getClientConfig` function from `pulumi` package.
+const clientConfig = pulumi.output(authorization.getClientConfig());
+// Output the Subscription ID and Tenant ID
+export const subscriptionID = clientConfig.subscriptionId;
+export const tenantId = clientConfig.tenantId;
+
 // Create an Azure resource (Storage Account)
 const storageAccount = new storage.StorageAccount(`${name}sa`, {
     resourceGroupName: resourceGroup.name,
@@ -41,13 +50,21 @@ const storageAccount = new storage.StorageAccount(`${name}sa`, {
 
 export const storage_account_name = storageAccount.name;
 
+// User assigned identity for aks
+const myuserAssignedIdentity = new managedidentity.UserAssignedIdentity(`${name}-userAssignedIdentity`, {
+    resourceGroupName: resourceGroup.name,
+    tags: {"Name": `${name}-userAssignedIdentity`},
+}, {parent: resourceGroup, dependsOn: resourceGroup});
+
+export const user_assigned_identity_name = myuserAssignedIdentity.name;
+
 // Export the primary key of the Storage Account
 const storageAccountKeys = storage.listStorageAccountKeysOutput({
     resourceGroupName: resourceGroup.name,
     accountName: storageAccount.name
 });
 
-export const primary_storage_key = pulumi.secret(storageAccountKeys.keys[0].value);
+const primary_storage_key = pulumi.secret(storageAccountKeys.keys[0].value);
 
 
 // Create an Azure Virtual Network
@@ -100,40 +117,22 @@ for (let i = 0; i <= 2; i++) {
     },{parent: publicsubnet, dependsOn: publicsubnet});
     privateSubnets.push(privatesubnet); 
 }
-/*
-const publicSubnets = [];
-const privateSubnets = [];
-// Create 3 public subnets
-for (let i = 0; i <= 2; i++) {
-    const subnet  = new network.Subnet(`${name}-publicSubnet${i}`, {
-        resourceGroupName: resourceGroup.name,
-        virtualNetworkName: virtualNetwork.name,
-        addressPrefix: `10.0.${i}.0/24`, // Increment the third octet for each subnet
-        
-    }, {parent: virtualNetwork});
-    //publicSubnetIds.push(subnet.id);
-    publicSubnets.push(subnet);
-}
 
-// Create 3 private subnets
-for (let i = 3; i <= 5; i++) {
-    const subnet = new network.Subnet(`${name}-privateSubnet${i}`, {
-        resourceGroupName: resourceGroup.name,
-        virtualNetworkName: virtualNetwork.name,
-        addressPrefix: `10.0.${i}.0/24`, // Increment the third octet for each subnet
-    }, 
-    {parent: virtualNetwork, dependsOn: publicSubnets[i-1]});
-    //{parent: virtualNetwork});
-    //privateSubnetIds.push(subnet.id);
-    privateSubnets.push(subnet);
-}
-*/
 export const public_subnet_names = publicSubnets.map(sn => sn.name);
 const public_subnet_full_path = publicSubnets.map(sn => sn.id);
 export const private_subnet_names = privateSubnets.map(sn => sn.name);
 const private_subnet_full_path = privateSubnets.map(sn => sn.id);
 
+// Generate a SSH Key
+// https://learn.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows?source=recommendations#supported-ssh-key-formats
+const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
+  //algorithm: "ECDSA", // ECDSA is not supported by AKS 
+  //ecdsaCurve: "P384", // ECDSA is not supported by AKS
+  algorithm: "RSA",
+  rsaBits: 4096,
+});
 
+/*
 // Create an AD Application. Pre-Req for service principal
 const adApp = new azuread.Application(`${name}-aad-application`,
     {
@@ -150,6 +149,7 @@ const adSp = new azuread.ServicePrincipal(`${name}-adsp`,
     clientId: adApp.clientId,
 }, {parent: adApp, dependsOn: adApp});
 
+// Create a Service Principal Password
 const ad_sp_password = new azuread.ServicePrincipalPassword(`${name}-adsp-password`, {
     servicePrincipalId: adSp.id,
     endDate: "2024-03-01T00:00:00Z",
@@ -158,18 +158,7 @@ const ad_sp_password = new azuread.ServicePrincipalPassword(`${name}-adsp-passwo
 
 export const azuread_service_principal_name = adSp.displayName;
 
-// Generate a SSH Key
-// https://learn.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows?source=recommendations#supported-ssh-key-formats
-const sshkey = new tls.PrivateKey(`${name}-ssh-private-key`, {
-    //algorithm: "ECDSA", // ECDSA is not supported by AKS 
-    //ecdsaCurve: "P384", // ECDSA is not supported by AKS
-    algorithm: "RSA",
-    rsaBits: 4096,
-});
-
-// Export the subnet IDs
-//export const publicSubnetsIds = pulumi.all(publicSubnetIds);
-//export const privateSubnetsIds = pulumi.all(privateSubnetIds);
+*/
 
 const nodeCount = 3;
 const osDiskSizeinGB = 60;
@@ -188,7 +177,12 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
         type: "VirtualMachineScaleSets",
         vmSize: "Standard_DS2_v2",
     }],
-    //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
+    identity: { 
+      type: "UserAssigned",
+      userAssignedIdentities: [myuserAssignedIdentity.id],
+    },
+       
+   //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
     dnsPrefix: `${name}-dns`,
     enableRBAC: true,
     kubernetesVersion: "1.26.10",
@@ -210,12 +204,13 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
     sku: {
         name: "Base",
         tier: "Free"},
-    servicePrincipalProfile: {
-        clientId: adApp.clientId,
-        secret: ad_sp_password.value,
-    },
+    //servicePrincipalProfile: {
+    //    clientId: adApp.clientId,
+    //    secret: ad_sp_password.value,
+    //},
     tags: {"Name": `${name}-managedcluster`},
-}, {parent: virtualNetwork, dependsOn: [adSp, adApp,virtualNetwork, privateSubnets[1]]});
+},// {parent: virtualNetwork, dependsOn: [adSp, adApp,virtualNetwork, privateSubnets[1]]});
+{parent: virtualNetwork, dependsOn: [virtualNetwork, myuserAssignedIdentity, privateSubnets[1]]});
 
 export const cluster_name = mycluster.name;
 export const cluster_k8s_version = mycluster.kubernetesVersion;
@@ -243,12 +238,13 @@ const userAgentPool = new containerservice.AgentPool(`${name}-userAgentPool`, {
     scaleSetPriority: "Spot",
     spotMaxPrice: -1,
     scaleSetEvictionPolicy: "Delete",
+    
+    
     //nodeLabels: {"cluster-autoscaler-enabled=true,cluster-autoscaler-name=": pulumi.interpolate`${mycluster.name}`},
 },{parent: mycluster, dependsOn: [mycluster]});
 
 export const user_agentpool_name = userAgentPool.name;
 export const useragentpool_agentpoolname = userAgentPool.id;
-
 
 // Export the kubeconfig for the AKS cluster
 // Breaking up into multiple steps so we can make it a secrets and it is easier to read
@@ -378,15 +374,62 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelm`, {
 // export the kubecost helmrelease name
 export const helm_chart_kubecost = kubecostchart.name;
 
-  // Extract the subscription ID from the resource group ID for cluster autoscaler.
-export const subscriptionID = resourceGroup.id.apply(myrg => myrg.split("/")[2]);
-const current = azuread.getClientConfig({});
-export const tenantid = current.then(mycurrent=>mycurrent.clientId)
+// https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler/cloudprovider/azure#permissions
+// Create an AD Application for cluster autoscaler.  Limitation of Azure of having 1:1 with service principal.
+// https://learn.microsoft.com/en-us/answers/questions/264240/creating-multiple-service-principals-for-single-aps  
+// Pre-Req for contributor role of cluster autoscaler service principal
+const adAppClusterautoscale = new azuread.Application(`${name}-aad-applicationclusterautoscale`,
+    {
+        displayName:`${name}-aad-applicationclusterautoscale`,
+    });
+
+export const azuread_application_id_clusterautoscale = adAppClusterautoscale.id;
+export const azuread_application_display_name_clusterautoscale = adAppClusterautoscale.displayName;
+
+// Create a new service principal for the cluster autoscaler
+const adSpClusterautoscale = new azuread.ServicePrincipal(`${name}-adspClusterautoscale`,
+{
+    clientId: adAppClusterautoscale.clientId,
+}, {parent: adAppClusterautoscale, dependsOn: adAppClusterautoscale});
+
+export const azuread_service_principal_name_clusterautoscale = adAppClusterautoscale.displayName;
+
+// Create a Service Principal Password
+const ad_sp_passwordClusterautoscale = new azuread.ServicePrincipalPassword(`${name}-adsp-passwordClusterautoscale`, {
+  servicePrincipalId: adSpClusterautoscale.id,
+  endDate: "2024-04-01T00:00:00Z",
+
+}, {parent: adSpClusterautoscale, dependsOn: adSpClusterautoscale});
+
+export const ad_sp_passwordClusterautoscale_value = ad_sp_passwordClusterautoscale.value;
+
+// Create a contributor role assignment for the service principal
+const roleAssignmentClusterautoscale = new authorization.RoleAssignment("roleAssignmentClusterautoscale", {
+  principalId: adSpClusterautoscale.id,
+  roleDefinitionId: "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c", // Contributor role
+  scope: pulumi.interpolate`/subscriptions/${subscriptionID}`, // Subscription scope
+  principalType: authorization.PrincipalType.ServicePrincipal,
+});
+
+export const roleAssignmentClusterautoscale_id = roleAssignmentClusterautoscale.name;
+
 
 // Creating a helm release for cluster autoscaler
 // https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler#azure
 // Need the below for cluster autoscaler to pick up the nodegroups
 const nodegroupautodiscovery = pulumi.interpolate`label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${mycluster.name}`;
+
+// This function will encode the subscription ID to base64 when the ID becomes available
+function encodeToBase64(input: pulumi.Output<string>): pulumi.Output<string> {
+  return input.apply(id => Buffer.from(id).toString('base64'));
+}
+
+const adAppClusterautoscale_base64encoded = encodeToBase64(adAppClusterautoscale.id);
+const ad_sp_passwordClusterautoscale_base64encoded = encodeToBase64(ad_sp_passwordClusterautoscale.value);
+const resourceGroup_base64encoded = encodeToBase64(resourceGroup.name);
+const subscriptionIDbase_64encoded = encodeToBase64(subscriptionID);
+const tenantid_base64encoded = encodeToBase64(tenantId);
+
 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
     chart: "cluster-autoscaler",
@@ -402,11 +445,11 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhe
         labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up
        },
       cloudProvider: "azure",
-      azureClientID: adApp.clientId,
-      azureClientSecret: ad_sp_password.value,
-      azureSubscriptionID: subscriptionID,
-      azureTenantID: tenantid,
-      azureResourceGroup: resourceGroup.name,
+      azureClientID: adAppClusterautoscale_base64encoded,
+      azureClientSecret: ad_sp_passwordClusterautoscale_base64encoded,
+      azureSubscriptionID: subscriptionIDbase_64encoded,
+      azureTenantID: tenantid_base64encoded,
+      azureResourceGroup: resourceGroup_base64encoded,
       azureVMType: "vmss",
       AZURE_VMSS_CACHE_TTL: "60",
       extraArgs: {
@@ -416,7 +459,7 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhe
         "node-group-auto-discovery": nodegroupautodiscovery,
       },
       }
-  }, { provider: k8sprovider, parent: grafana_k8s_monitoring, dependsOn: [grafana_k8s_monitoring] });
+  }, { provider: k8sprovider, parent: k8sprovider, dependsOn: [k8sprovider] });
 
 // export the cluster autoscaler helmrelease name
 export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
