@@ -126,8 +126,9 @@ const assumerolewithwebidentity = pulumi.all([cluster_oidc_arn, cluster_oidc_url
                     {
                         test: "StringEquals",
                         variable: `${url.replace('https://', '')}:sub`,
-                        //values: ["system:serviceaccount:kube-system:aws-node"],
-                        values: ["system:serviceaccount:kube-system:cluster-autoscaler"],
+                        //values: ["system:serviceaccount:kube-system:cluster-autoscaler"],cluster-autoscaler-aws-cluster-autoscaler
+                        // https://github.com/kubernetes/autoscaler/issues/4922#issuecomment-1380157352
+                        values: ["system:serviceaccount:kube-system:cluster-autoscaler-aws-cluster-autoscaler"],
                     },
                     {
                         test: "StringEquals",
@@ -139,6 +140,7 @@ const assumerolewithwebidentity = pulumi.all([cluster_oidc_arn, cluster_oidc_url
         })
     );
   
+export const assumerolewithwebidentityjson = pulumi.secret(assumerolewithwebidentity.json);
 
     //STEP 4: Create IAM policy
     const AmazonEKSClusterAutoscalerjson= `{
@@ -204,7 +206,6 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
       capacityType: "SPOT",
       instanceTypes: ["t3a.large"],
       nodeRole: roles[0],
-      //nodeRoleArn: mycluster.instanceRoles[0].arn,
       labels: { managed: "true", spot: "true" },
       tags: {
         "Name": `${name}-manangednodegroup`,
