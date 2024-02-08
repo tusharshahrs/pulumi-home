@@ -346,6 +346,7 @@ export const helm_chart_grafana_k8s_monitoring = grafana_k8s_monitoring.name;
 //         `labels: {"k8s-addon":"cluster-autoscaler.addons.k8s.io","k8s-app":"cluster-autoscaler"}, // critical part, need this for it to show up`
 //         `"eks.amazonaws.com/role-arn": clusterautoscaleRole.arn,`
 
+// Need the below for cluster autoscaler to pick up the nodegroups
 const nodegroupautodiscovery = pulumi.interpolate`asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${mycluster.eksCluster.name}`;
 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`, {
