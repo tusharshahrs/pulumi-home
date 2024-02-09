@@ -10,11 +10,16 @@ Azure native [2](https://www.pulumi.com/registry/packages/azure-native/),[grafan
 ## HPA
     Automatic with AKS
 
-## Cluster Autoscaler
-   https://github.com/kubernetes/autoscaler/tree/master/charts/cluster-autoscaler#azure
+## Grafana
+    - prometheus k8s-monitoring. Sign up for a user account at: grafanalabs.com
+    - installed via helm chart(release)
 
 ## Kubcost
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
+
+## Cluster Autoscaler - NO
+   Does not work via cli or via helm chart because the permission on the service principal are not approved.
+   https://github.com/kubernetes/autoscaler/tree/master/charts/cluster-autoscaler#azure
 
 ## Deployment
 

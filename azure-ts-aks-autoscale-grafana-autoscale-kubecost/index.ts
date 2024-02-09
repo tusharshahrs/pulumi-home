@@ -404,8 +404,11 @@ const ad_sp_passwordClusterautoscale = new azuread.ServicePrincipalPassword(`${n
 export const ad_sp_passwordClusterautoscale_value = ad_sp_passwordClusterautoscale.value;
 
 // Create a contributor role assignment for the service principal
+// b24988ac-6180-42a0-ab88-20f7382dd24c is the role definition ID for the Contributor role
+// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#all
 const roleAssignmentClusterautoscale = new authorization.RoleAssignment("roleAssignmentClusterautoscale", {
   principalId: adSpClusterautoscale.id,
+  roleAssignmentName: "Contributor",
   roleDefinitionId: "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c", // Contributor role
   scope: pulumi.interpolate`/subscriptions/${subscriptionID}`, // Subscription scope
   principalType: authorization.PrincipalType.ServicePrincipal,
@@ -430,7 +433,8 @@ const resourceGroup_base64encoded = encodeToBase64(resourceGroup.name);
 const subscriptionIDbase_64encoded = encodeToBase64(subscriptionID);
 const tenantid_base64encoded = encodeToBase64(tenantId);
 
-
+// command line helm install fails also because the application does not have permission for the rbac role that has been assigned to the service principal for contributor. 
+/* 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
     chart: "cluster-autoscaler",
     version: "9.35.0",
@@ -463,3 +467,4 @@ const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhe
 
 // export the cluster autoscaler helmrelease name
 export const helm_chart_cluster_autoscaler = cluster_autoscaler.name;
+*/
