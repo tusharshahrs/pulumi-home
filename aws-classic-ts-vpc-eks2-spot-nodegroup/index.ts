@@ -4,6 +4,7 @@ import * as awsx from "@pulumi/awsx";
 import * as eks from "@pulumi/eks";
 import * as k8s from "@pulumi/kubernetes";
 import * as iam from "./iam";
+import exp = require("constants");
 
 const config = new pulumi.Config();
 const myip = config.get("myipaddress") || "0.0.0.0/0"
@@ -40,7 +41,7 @@ export const vpc_id = myvpc.vpcId;
 export const public_subnet_ids = myvpc.publicSubnetIds;
 export const private_subnet_ids = myvpc.privateSubnetIds;
 
-
+// Create a security group for the EKS cluster.
 const eksclustersecuritygroup = new aws.ec2.SecurityGroup(`${name}-eksclustersg`, {
   vpcId: myvpc.vpcId,
   revokeRulesOnDelete: true,
@@ -198,6 +199,71 @@ const vpcCniAddon = new aws.eks.Addon(`${name}-amazon-vpc-cni-addon`, {
 export const vpcCniAddonName = vpcCniAddon.addonName;
 */
 
+// https://docs.kubecost.com/install-and-configure/advanced-configuration/cluster-controller#eks-setup
+//STEP 1: Create an eks speciic permission
+const KubeCost_ClusterController_EKS_POLICY= `{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "eks:ListClusters",
+              "eks:DescribeCluster",
+              "eks:DescribeNodegroup",
+              "eks:ListNodegroups",
+              "eks:CreateNodegroup",
+              "eks:UpdateClusterConfig",
+              "eks:UpdateNodegroupConfig",
+              "eks:DeleteNodegroup",
+              "eks:ListTagsForResource",
+              "eks:TagResource",
+              "eks:UntagResource"
+          ],
+          "Resource": "*"
+      },
+      {
+          "Effect": "Allow",
+          "Action": [
+              "iam:GetRole",
+              "iam:ListAttachedRolePolicies",
+              "iam:PassRole"
+          ],
+          "Resource": "*"
+      }
+  ]
+}`
+
+// Create IAM policy for kube cost controller.  Attach json to the policy
+const kubecostcontrollerpolicy = new aws.iam.Policy(`${name}-KubeCostClusterControllerEKSPOLICY`, {
+  description: "Allows KubeCostController to turn on and off resources in cluster.",
+  path: "/",
+  policy: `${KubeCost_ClusterController_EKS_POLICY}`,
+});
+
+export const kubecostcontroller_iampolicy = kubecostcontrollerpolicy.name;
+
+// Create an IAM User
+const kubecostcontrolleruser = new aws.iam.User(`${name}-kubecostcontrolleruser`, {
+  tags: { "Name": `${name}-kubecostcontrolleruser` },
+},)
+
+export const kubecostcontrolleriamuser = kubecostcontrolleruser.name;
+
+// Create an IAM User Policy Attachment
+const kubecostcontrolleruserpa = new aws.iam.PolicyAttachment(`${name}-kubecostcontrolleruserpolicyattachment`, {
+  policyArn: kubecostcontrollerpolicy.arn,
+  users: [kubecostcontrolleruser.name],
+});
+
+export const kubecostcontrolleruserpa_id = kubecostcontrolleruserpa.id;
+
+// Create an IAM User Policy Attachment for the managed policy
+const kubecostcontrollerusermanagedpolicyattachment = new aws.iam.PolicyAttachment(`${name}-kubecostcontrollerusermanagedpolicyattachment`, {
+  policyArn: "arn:aws:iam::aws:policy/AutoScalingFullAccess",
+  users: [kubecostcontrolleruser.name],
+});
+
+export const kubecostcontrollerusermanagedpolicyattachment_id = kubecostcontrollerusermanagedpolicyattachment.id;
 
 // Create a managed nodegroup with spot instances.
 const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
@@ -282,7 +348,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.10.0",
+  version: "0.10.2",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
@@ -408,7 +474,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
       repo: "https://kubecost.github.io/cost-analyzer/",
   },
   values: {
-    
+    clusterController: {enabled: true},
     kubecostToken: kubecost_token,
     networkCosts: {
       enabled: true,
