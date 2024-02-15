@@ -1,0 +1,10 @@
+name: gcp-classic-python-bucket
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal Google Cloud Python Pulumi program
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: gcp-python

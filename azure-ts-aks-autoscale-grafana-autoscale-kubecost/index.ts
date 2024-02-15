@@ -275,7 +275,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
     chart: "k8s-monitoring",
-    version: "0.10.0",
+    version: "0.10.2",
     namespace: grafana_k8s_monitoring_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",

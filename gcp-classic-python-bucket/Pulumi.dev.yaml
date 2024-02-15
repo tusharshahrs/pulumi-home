@@ -1,0 +1,31 @@
+config:
+  gcp:project: "438338752289"
+  gcp-org:data:
+    folders:
+      Tushar Projects:
+        id: 1234567890123
+      Shah Projects:
+        id: 0987654321012
+      TusharShah Projects:
+        id: 1234567890124
+      ShahTushar Projects:
+        id: 0987654321013
+      TusharTushar Projects:
+        id: 1234567890125
+    projects:
+      438338752289:
+        - teamce1-123456
+        - teamce2-123457
+        - teamce3-123458
+        - teamce4-123459
+        - teamce5-123460
+        - engineering-project-123456
+        - engineering-project-123457
+      248032716856:
+        - ceteam1-123456
+        - ceteam2-123457
+        - ceteam3-123458
+        - ceteam4-123459
+        - ceteam5-123460
+        - projectengineering-project-123456
+        - projectengineering-project-123457
