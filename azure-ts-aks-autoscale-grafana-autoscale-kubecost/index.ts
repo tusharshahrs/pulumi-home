@@ -185,7 +185,7 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
    //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
     dnsPrefix: `${name}-dns`,
     enableRBAC: true,
-    kubernetesVersion: "1.26.10",
+    kubernetesVersion: "1.27",
     linuxProfile: {
         adminUsername: "aksuser",
         ssh: {
@@ -275,7 +275,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
     chart: "k8s-monitoring",
-    version: "0.10.2",
+    version: "0.10.3",
     namespace: grafana_k8s_monitoring_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",
