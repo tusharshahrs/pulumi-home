@@ -82,7 +82,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     instanceRole: roles[0],
     instanceType: "t3a.medium",
     desiredCapacity: 3,
-    version: "1.27",
+    version: "1.28",
     nodeRootVolumeEncrypted: true,
     nodeRootVolumeSize: 40,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
