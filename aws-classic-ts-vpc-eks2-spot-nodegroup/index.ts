@@ -80,7 +80,7 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     clusterSecurityGroup: eksclustersecuritygroup,
     //instanceProfileName: instance_profile[0].name,
     instanceRole: roles[0],
-    instanceType: "t3a.medium",
+    instanceType: "t3a.small",
     desiredCapacity: 3,
     version: "1.28",
     nodeRootVolumeEncrypted: true,
@@ -270,7 +270,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
       cluster: mycluster,
       capacityType: "SPOT",
-      instanceTypes: ["t3a.large"],
+      instanceTypes: ["t3a.medium"],
       nodeRole: roles[0],
       labels: { managed: "true", spot: "true" },
       tags: {
@@ -348,7 +348,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.10.3",
+  version: "0.11.1",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
