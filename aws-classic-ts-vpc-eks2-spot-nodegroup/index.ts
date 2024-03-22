@@ -348,7 +348,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.12.0",
+  version: "0.12.2",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
@@ -418,7 +418,7 @@ const nodegroupautodiscovery = pulumi.interpolate`asg:tag=k8s.io/cluster-autosca
 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`, {
   chart: "cluster-autoscaler",
-  version: "9.35.0",
+  version: "9.36.0",
   namespace: "kube-system", // required otherwise it will not show up in the cluster
   name: "cluster-autoscaler", // avoiding autonaming to help on troubleshooting
   repositoryOpts: {
