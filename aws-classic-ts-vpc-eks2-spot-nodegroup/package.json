@@ -5,10 +5,10 @@
         "@types/node": "^18"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.108.1",
-        "@pulumi/aws": "^6.25.1",
-        "@pulumi/awsx": "^2.5.0",
-        "@pulumi/kubernetes": "^4.9.0",
+        "@pulumi/pulumi": "^3.111.1",
+        "@pulumi/aws": "^6.27.0",
+        "@pulumi/awsx": "^2.6.0",
+        "@pulumi/kubernetes": "^4.9.1",
         "@pulumi/eks": "2.2.1"
     }
 }
