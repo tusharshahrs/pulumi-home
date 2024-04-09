@@ -485,7 +485,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
     //},
     prometheus: {
       server:{
-        retention: "1d",
+        retention: "3d", // 1d works for 2.1.0. starting with 2.2.1, it now needs to be 3d   
         global: { external_labels: {cluster_id: mycluster.eksCluster.name}}, // Found in https://github.com/kubecost/cost-analyzer-helm-chart/blob/develop/cost-analyzer/values.yaml#L838
       },
       kubeStateMetrics: {
