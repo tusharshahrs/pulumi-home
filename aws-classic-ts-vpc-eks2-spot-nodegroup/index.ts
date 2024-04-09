@@ -323,7 +323,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 // https://artifacthub.io/packages/helm/metrics-server/metrics-server
 const metrics_server = new k8s.helm.v3.Release(`${name}-metrics-server-helm`, {
   chart: "metrics-server",
-  version: "3.12.0",
+  version: "3.12.1",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubernetes-sigs.github.io/metrics-server/",
@@ -348,7 +348,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.12.3",
+  version: "0.13.1",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
@@ -468,7 +468,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
   chart: "cost-analyzer",
-  version: "2.1.0",
+  version: "2.2.1",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
