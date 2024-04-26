@@ -80,9 +80,9 @@ const mycluster = new eks.Cluster(`${name}-eks`, {
     clusterSecurityGroup: eksclustersecuritygroup,
     //instanceProfileName: instance_profile[0].name,
     instanceRole: roles[0],
-    instanceType: "t3a.medium",
+    instanceType: "t3a.small",
     desiredCapacity: 3,
-    version: "1.26",
+    version: "1.28",
     nodeRootVolumeEncrypted: true,
     nodeRootVolumeSize: 40,
     enabledClusterLogTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler", ],
@@ -270,7 +270,7 @@ const managed_node_group = new eks.ManagedNodeGroup(`${name}-manangednodegroup`,
     {
       cluster: mycluster,
       capacityType: "SPOT",
-      instanceTypes: ["t3a.large"],
+      instanceTypes: ["t3a.medium"],
       nodeRole: roles[0],
       labels: { managed: "true", spot: "true" },
       tags: {
@@ -323,7 +323,7 @@ export const namespace_metrics = metrics_namespace.metadata.name;
 // https://artifacthub.io/packages/helm/metrics-server/metrics-server
 const metrics_server = new k8s.helm.v3.Release(`${name}-metrics-server-helm`, {
   chart: "metrics-server",
-  version: "3.12.0",
+  version: "3.12.1",
   namespace: metrics_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubernetes-sigs.github.io/metrics-server/",
@@ -348,7 +348,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 // https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
   chart: "k8s-monitoring",
-  version: "0.10.2",
+  version: "1.0.3",
   //chart: "prometheus",
   //version: "25.11.0",
   namespace: grafana_k8s_monitoring_namespace.metadata.name,
@@ -418,7 +418,7 @@ const nodegroupautodiscovery = pulumi.interpolate`asg:tag=k8s.io/cluster-autosca
 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscaler`, {
   chart: "cluster-autoscaler",
-  version: "9.35.0",
+  version: "9.36.0",
   namespace: "kube-system", // required otherwise it will not show up in the cluster
   name: "cluster-autoscaler", // avoiding autonaming to help on troubleshooting
   repositoryOpts: {
@@ -468,7 +468,7 @@ export const namespace_kubecost = kubecost_namespace.metadata.name;
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
   chart: "cost-analyzer",
-  version: "2.0.2",
+  version: "2.2.2",
   namespace: kubecost_namespace.metadata.name,
   repositoryOpts: {
       repo: "https://kubecost.github.io/cost-analyzer/",
@@ -485,7 +485,7 @@ const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecost-helm`, {
     //},
     prometheus: {
       server:{
-        retention: "1d",
+        retention: "3d", // 1d works for 2.1.0. starting with 2.2.1, it now needs to be 3d   
         global: { external_labels: {cluster_id: mycluster.eksCluster.name}}, // Found in https://github.com/kubecost/cost-analyzer-helm-chart/blob/develop/cost-analyzer/values.yaml#L838
       },
       kubeStateMetrics: {

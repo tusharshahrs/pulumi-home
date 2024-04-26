@@ -185,7 +185,7 @@ const mycluster = new containerservice.ManagedCluster(`${name}-managedcluster`, 
    //https://learn.microsoft.com/en-us/azure/aks/faq#can-i-provide-my-own-name-for-the-aks-node-resource-group
     dnsPrefix: `${name}-dns`,
     enableRBAC: true,
-    kubernetesVersion: "1.26.10",
+    kubernetesVersion: "1.27",
     linuxProfile: {
         adminUsername: "aksuser",
         ssh: {
@@ -275,7 +275,7 @@ export const namespace_grafana_k8s_monitoring = grafana_k8s_monitoring_namespace
 
 const grafana_k8s_monitoring = new k8s.helm.v3.Release(`${name}-k8smonitoring-helm`, {
     chart: "k8s-monitoring",
-    version: "0.10.2",
+    version: "0.10.3",
     namespace: grafana_k8s_monitoring_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://grafana.github.io/helm-charts",
@@ -337,7 +337,7 @@ const kubecost_namespace = new k8s.core.v1.Namespace(`${name}-kubecost-ns`,
 // https://github.com/kubecost/cost-analyzer-helm-chart
 const kubecostchart = new k8s.helm.v3.Release(`${name}-kubecosthelm`, {
     chart: "cost-analyzer",
-    version: "2.0.2",
+    version: "2.1.0",
     namespace: kubecost_namespace.metadata.name,
     repositoryOpts: {
         repo: "https://kubecost.github.io/cost-analyzer/",
@@ -378,6 +378,7 @@ export const helm_chart_kubecost = kubecostchart.name;
 // Create an AD Application for cluster autoscaler.  Limitation of Azure of having 1:1 with service principal.
 // https://learn.microsoft.com/en-us/answers/questions/264240/creating-multiple-service-principals-for-single-aps  
 // Pre-Req for contributor role of cluster autoscaler service principal
+/*
 const adAppClusterautoscale = new azuread.Application(`${name}-aad-applicationclusterautoscale`,
     {
         displayName:`${name}-aad-applicationclusterautoscale`,
@@ -432,7 +433,7 @@ const ad_sp_passwordClusterautoscale_base64encoded = encodeToBase64(ad_sp_passwo
 const resourceGroup_base64encoded = encodeToBase64(resourceGroup.name);
 const subscriptionIDbase_64encoded = encodeToBase64(subscriptionID);
 const tenantid_base64encoded = encodeToBase64(tenantId);
-
+*/
 // command line helm install fails also because the application does not have permission for the rbac role that has been assigned to the service principal for contributor. 
 /* 
 const cluster_autoscaler = new k8s.helm.v3.Release(`${name}-cluster-autoscalerhelmr`, {
