@@ -4,7 +4,7 @@
   * [resource groups](https://www.pulumi.com/docs/reference/pkg/azure-native/resources/resourcegroup/)
   * [virtual network](https://www.pulumi.com/docs/reference/pkg/azure-native/network/virtualnetwork/)
   * [subnet](https://www.pulumi.com/docs/reference/pkg/azure-native/network/subnet/)
-  Hard Coded the azure vnet and auto calculated the public and private subnets
+  Hard Coded the azure vnet and auto-calculated the public and private subnets.  Must add [dependson](https://www.pulumi.com/docs/concepts/options/dependson/) and [parent](https://www.pulumi.com/docs/concepts/options/parent/) to get `autorest/azure: Service returned an error`
 
 ## Prerequisites
 
