@@ -2,10 +2,10 @@
     "name": "aws-classic-ts-vpc-natgatway-strategy",
     "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^14"
+        "@types/node": "^18"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.0.0",
-        "@pulumi/awsx": "^1.0.0-alpha.1660926965"
+        "@pulumi/pulumi": "^3.116.0",
+        "@pulumi/awsx": "^2.10.0"
     }
 }
