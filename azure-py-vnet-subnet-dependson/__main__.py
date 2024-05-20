@@ -12,7 +12,6 @@ name = "shaht"
 resource_group = resources.ResourceGroup(f"{name}-rg")
 export("resource_group_name", resource_group.name)
 
-
 # Create an Azure resource (Storage Account)
 account = storage.StorageAccount(
     f"{name}sa",
