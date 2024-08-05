@@ -1,12 +1,12 @@
 config:
   aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_AUTH:
-    secure: AAABAAhYKDUuPWfd4e00w/lqttOzkq82gbjfEGawma66B2BkPD4Fc+Bpxs0yi2hl/eQrY9FqkEBB99qZx2RUjT3qD1UUmSx1L96nYSzBLRZIgT2JvUcr/0LxNGvlF/ldW+vSq++bPHOxNtYJuLLqPSIap0kzop7s3eIQ6a/PccISrBqLAWl+AVlNzbu08jAZ59CnCSrAyV3xYlu8OJiCqMcfCklSshJ0DrgBIRbUzxcRkqL21G9orZKzIGU8RtC/
+    secure: AAABAB5ab07gqnIioSh104ecB8CwTSHMlQ4YqjNHfoa3SLh0eyEbRKYWQIzVFZakfbJCgwW7XB9og3CkFfON49lu8C5l/uGm/vy9TV1xvx22B4sZw2qWGHq+lFn9/YicnvR+eGWrf4jyHeh3UGU+3Qk9m81P1UiLVXN/rm9LiTm8n6O91aWXbtcRBShUy7YYLnUxVBeoFoj/MHX82TSIW3dJjSP4L/dB+/oegAzbk+4RHUGAeuBgsoIk7f5PpGckBmou3DyYh4dXHs/5tUVTRL4kvvIG74C0T8p835aVTLY35je70hIaVkUWNucXkYaN8x3GBMslbEYN96kmsYmlJOVkEbz9ISCh
   aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_LOKI_USERNAME:
-    secure: AAABALF4H4ADiMvHOIvECY2666Awb3olDqKR0EjUWmf46iet5HA=
+    secure: AAABAIQOatjLtDgjSvhpL+AwUii1rzSsR/pt2thqwW01xZWhN8M=
   aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_PROMETHEUS_USERNAME:
-    secure: AAABAFXVigRhvsUzVQG7YR4z3fr4gojv2vcZeO3Ith9EMIPs4/29
+    secure: AAABAG+C0fyaS6kl1uV5es0EjtGX1Cni61Mtn5aCuLSBqkZb2kNj
   aws-classic-ts-vpc-eks2-spot-nodegroup:GRAFANA_TEMPO_USERNAME:
-    secure: AAABADglwMGxXI8/FOQOZk8iltaoTHZC1LOJkmAwQK3lpp7ACCo=
+    secure: AAABAJUdmXwE51Y/7y6XfIeiYqBA9yBDcL6IZQSp+Fhb8w986sM=
   aws-classic-ts-vpc-eks2-spot-nodegroup:KUBECOST_TOKEN:
-    secure: AAABANyeYJUQV2Ap6s5g/x+yxUF3byt969713PAI9CbidaCydksVqOuANbzFvQ9TODVZWdB95+8fmKrFwwcigFKS6yY+BMXepO6z
+    secure: AAABAP9UsA9QuPGRXfOufhIn9+m+lEfx8h3W0cGLxEDrfqmjUDd56IkdpbAHAMq4DvI5aaTN07I3tEdCmf3GDD3iMe5w9f6Wp8eP
   aws:region: us-west-2
