@@ -2,13 +2,13 @@
     "name": "aws-classic-ts-vpc-eks2-spot-nodegroup",
     "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^20"
+        "@types/node": "^22"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.112.0",
-        "@pulumi/aws": "^6.32.0",
-        "@pulumi/awsx": "^2.9.0",
-        "@pulumi/kubernetes": "^4.11.0",
-        "@pulumi/eks": "2.3.0"
+        "@pulumi/pulumi": "^3.128.0",
+        "@pulumi/aws": "^6.48.0",
+        "@pulumi/awsx": "^2.13.0",
+        "@pulumi/kubernetes": "^4.15.0",
+        "@pulumi/eks": "2.7.7"
     }
 }

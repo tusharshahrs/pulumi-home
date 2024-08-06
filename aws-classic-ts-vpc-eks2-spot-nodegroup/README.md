@@ -1,6 +1,6 @@
 # AWS EKS2 SPOT Managed Nodes and Grafana Monitoring for Prometheus Metrics, Loki, Tempo, & Opencost
 
-AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](https://www.pulumi.com/registry/packages/eks/), [grafana .2](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/) with spot managed nodes in TypeScript. Creating helm release for grafana prometheus metrics, loki, tempo, and opencost.
+AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](https://www.pulumi.com/registry/packages/eks/), [grafana](https://www.pulumi.com/registry/packages/grafana/), [kubernetes 4](https://www.pulumi.com/registry/packages/kubernetes/) with spot managed nodes in TypeScript. Creating helm release for grafana prometheus metrics, loki, tempo, and opencost.
 
 ## Requirements
  -  Add the following managed policy arn role: `arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy` in `iam.ts`
@@ -15,11 +15,13 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 ## Grafana
     - prometheus k8s-monitoring. Sign up for a user account at: grafanalabs.com
     - installed via helm chart(release)
+    - Configurations are under -> Infrastructure -> Kubernetes -> Configuration
 
 ## Kubcost
  - requires aws ebs csi driver for k8s 1.23+
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
  - installed via helm chart(release)
+ - This is local, i.e. localhost:9090, not the cloud.  If you want cloud, change the `kubecost_token` to this: https://www.kubecost.com/install#show-instructions
 
  ## Cluster AutoScaler
  - installed via helm chart(release)
@@ -333,6 +335,13 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
    pulumi stack output --show-secrets kubeconfig
    ```
 
+   Export the kubeconfig
+   ```bash
+   pulumi stack output --show-secrets kubeconfig > kubeconfig
+   export KUBECONFIG=$PWD/kubeconfig
+   kubectl version
+   ```
+
 1. To view Prometheus metrics(Note, this makes it easy to identify the ebs permission issue in volume expansion for kubecost):
       https://REPLACEYOURID.grafana.net/a/grafana-k8s-app/navigation
 
@@ -366,6 +375,8 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 1. Clean up
    ```bash
    pulumi destroy -y
+   rm kubeconfig
+   unset KUBECONFIG
    ```
 
 1. Remove.  This will remove the *Pulumi.dev.yaml* file also
