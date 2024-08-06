@@ -21,6 +21,7 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
  - requires aws ebs csi driver for k8s 1.23+
  - Disabled node-exporter and kube-state-metrics (recommended) since they are installed due to the prometheus helm chart.
  - installed via helm chart(release)
+ - This is local, i.e. localhost:9090, not the cloud.  If you want cloud, change the `kubecost_token` to this: https://www.kubecost.com/install#show-instructions
 
  ## Cluster AutoScaler
  - installed via helm chart(release)
