@@ -334,6 +334,13 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
    pulumi stack output --show-secrets kubeconfig
    ```
 
+   Export the kubeconfig
+   ```bash
+   pulumi stack output --show-secrets kubeconfig > kubeconfig
+   export KUBECONFIG=$PWD/kubeconfig
+   kubectl version
+   ```
+
 1. To view Prometheus metrics(Note, this makes it easy to identify the ebs permission issue in volume expansion for kubecost):
       https://REPLACEYOURID.grafana.net/a/grafana-k8s-app/navigation
 
@@ -367,6 +374,8 @@ AWS vpc with [awsx 2](https://www.pulumi.com/registry/packages/awsx/), [eks 2](h
 1. Clean up
    ```bash
    pulumi destroy -y
+   rm kubeconfig
+   unset KUBECONFIG
    ```
 
 1. Remove.  This will remove the *Pulumi.dev.yaml* file also
