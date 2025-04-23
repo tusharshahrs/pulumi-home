@@ -13,6 +13,14 @@ my_vpc_cidr_block = config.get("vpc_cidr_block") or "10.0.0.0/23"
 my_number_of_availability_zones = config.get_int("number_of_availability_zones") or 2
 myname = config.get("nameset") or "demo"
 
+awsConfig = Config("aws")
+awsRegion = awsConfig.get("region")
+if awsRegion == "us-west-2":
+    myami = "ami-0d61ea20f09848335" # This is the AMI ID for Amazon Linux 2 in us-west-2; update as needed
+elif awsRegion == "us-east-1":      
+    myami = "ami-0e449927258d45bc4" # This is the AMI ID for Amazon Linux 2 in us-east-1; update as needed
+
+
 # Create a VPC with the given CIDR block and number of availability zones
 my_vpc = awsx.ec2.Vpc(
     f"{myname}-vpc",
@@ -80,10 +88,10 @@ for i in range(2):
     instance = aws.ec2.Instance(
         f"{myname}-instance-{i}",
         instance_type="t3a.small",
-        subnet_id=my_vpc.private_subnet_ids[0],
+        subnet_id=my_vpc.private_subnet_ids[1],
         associate_public_ip_address=False,   
         
-        ami="ami-0d61ea20f09848335",  # This is the AMI ID for Amazon Linux 2 in us-west-2; update as needed
+        ami=myami,
         key_name=mykeypair.key_name,
         vpc_security_group_ids=[security_group.id],
         tags={
@@ -105,6 +113,3 @@ export("vpc_id", my_vpc.vpc_id)
 export("public_subnet_ids", my_vpc.public_subnet_ids)
 # Create a private subnet in the VPC
 export("private_subnet_ids", my_vpc.private_subnet_ids)
-
-
-
