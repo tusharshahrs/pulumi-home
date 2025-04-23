@@ -1,0 +1,6 @@
+config:
+  aws:region: us-east-1
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:nameset: shahtvirginia
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:number_of_availability_zones: "3"
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:vpc_cidr_block: 10.0.0.0/23
+  aws:profile: default
