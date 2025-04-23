@@ -1,0 +1,5 @@
+config:
+  aws:region: us-west-2
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:vpc_cidr_block: 10.0.0.0/24
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:number_of_availability_zones: "3"
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:nameset: shaht
