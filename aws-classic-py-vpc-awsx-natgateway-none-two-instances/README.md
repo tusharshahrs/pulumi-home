@@ -1,6 +1,6 @@
 # AWS AWSX Multilang Vpc Single Nat Gateway in Python
 
-[AWSX](https://www.pulumi.com/registry/packages/awsx/)multilang VPC, igw, zero nat gateway strategy, public and private subnets. Launching multiple instances in oregon and nvirginia.
+[AWSX](https://www.pulumi.com/registry/packages/awsx/) VPC, igw, zero nat gateway strategy, public and private subnets. Launching multiple instances in oregon and nvirginia.
 
 ## Deployment
 
