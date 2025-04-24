@@ -1,6 +1,6 @@
 # AWS AWSX Multilang Vpc Single Nat Gateway in Python
 
-[AWSX](https://www.pulumi.com/registry/packages/awsx/)multilang VPC, igw, zero nat gateway strategy, public and private subnets
+[AWSX](https://www.pulumi.com/registry/packages/awsx/)multilang VPC, igw, zero nat gateway strategy, public and private subnets. Launching multiple instances in oregon and nvirginia.
 
 ## Deployment
 
@@ -31,6 +31,10 @@
 
       ```bash
    pulumi config set aws:region us-west-2 # any valid aws region
+   pulumi config set nameset dev # optional
+   pulumi config set number_of_availability_zones  3 # optional
+   pulumi config set number_of_servers             3 # optional
+   pulumi config set vpc_cidr_block                10.0.0.0/23 # optional
    ```
 
 1. Launch
@@ -43,117 +47,115 @@
    ```bash
     Previewing update (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/shaht/aws-classic-py-vpc-awsx-natgateway-none-two-instances/dev/previews/89408b83-492b-4d7c-aa95-ec03ecd1112a
+    View in Browser (Ctrl+O): https://app.pulumi.com/shaht/aws-classic-py-vpc-awsx-natgateway-none-two-instances/dev/previews/be37cfcb-fe62-4114-ae04-b053ef2ae5ce
 
         Type                                          Name                                                       Plan       
     +   pulumi:pulumi:Stack                           aws-classic-py-vpc-awsx-natgateway-none-two-instances-dev  create     
-    +   ├─ tls:index:PrivateKey                       shaht-privatekey                                           create     
-    +   ├─ awsx:ec2:Vpc                               shaht-vpc                                                  create     
-    +   │  └─ aws:ec2:Vpc                             shaht-vpc                                                  create     
-    +   │     ├─ aws:ec2:InternetGateway              shaht-vpc                                                  create     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-3                                        create     
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-3                                        create     
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-3                                        create     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-public-1                                         create     
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-public-1                                         create     
-    +   │     │     ├─ aws:ec2:Route                  shaht-vpc-public-1                                         create     
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-public-1                                         create     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-2                                        create     
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-2                                        create     
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-2                                        create     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-1                                        create     
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-1                                        create     
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-1                                        create     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-public-3                                         create     
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-public-3                                         create     
-    +   │     │     ├─ aws:ec2:Route                  shaht-vpc-public-3                                         create     
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-public-3                                         create     
-    +   │     └─ aws:ec2:Subnet                       shaht-vpc-public-2                                         create     
-    +   │        └─ aws:ec2:RouteTable                shaht-vpc-public-2                                         create     
-    +   │           ├─ aws:ec2:RouteTableAssociation  shaht-vpc-public-2                                         create     
-    +   │           └─ aws:ec2:Route                  shaht-vpc-public-2                                         create     
-    +   ├─ aws:ec2:KeyPair                            shaht-keypair                                              create     
-    +   ├─ aws:ec2:Instance                           shaht-instance-1                                           create     
-    +   ├─ aws:ec2:Instance                           shaht-instance-0                                           create     
-    +   └─ aws:ec2:SecurityGroup                      shaht-securitygroup                                        create     
+    +   ├─ awsx:ec2:Vpc                               shahtspotscheduler-vpc                                     create     
+    +   │  └─ aws:ec2:Vpc                             shahtspotscheduler-vpc                                     create     
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-3                            create     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-3                            create     
+    +   │     │     ├─ aws:ec2:Route                  shahtspotscheduler-vpc-public-3                            create     
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-3                            create     
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-2                            create     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-2                            create     
+    +   │     │     ├─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-2                            create     
+    +   │     │     └─ aws:ec2:Route                  shahtspotscheduler-vpc-public-2                            create     
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-1                           create     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-1                           create     
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-1                           create     
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-1                            create     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-1                            create     
+    +   │     │     ├─ aws:ec2:Route                  shahtspotscheduler-vpc-public-1                            create     
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-1                            create     
+    +   │     ├─ aws:ec2:InternetGateway              shahtspotscheduler-vpc                                     create     
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-2                           create     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-2                           create     
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-2                           create     
+    +   │     └─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-3                           create     
+    +   │        └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-3                           create     
+    +   │           └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-3                           create     
+    +   ├─ tls:index:PrivateKey                       shahtspotscheduler-privatekey                              create     
+    +   ├─ aws:ec2:KeyPair                            shahtspotscheduler-keypair                                 create     
+    +   ├─ aws:ec2:SecurityGroup                      shahtspotscheduler-securitygroup                           create     
+    +   ├─ aws:ec2:Instance                           shahtspotscheduler-instance-1                              create     
+    +   └─ aws:ec2:Instance                           shahtspotscheduler-instance-0                              create     
 
     Outputs:
-        ec2_instance_ids   : [
+        ec2_instance_ids  : [
             [0]: [unknown]
             [1]: [unknown]
         ]
-        mykeypair_id       : [unknown]
-        private_subnet_id_0: [unknown]
-        private_subnet_ids : [unknown]
-        public_subnet_ids  : [unknown]
-        security_group_id  : [unknown]
-        sshPrivateKey_id   : [unknown]
-        vpc_id             : [unknown]
+        mykeypair_id      : [unknown]
+        private_subnet_ids: [unknown]
+        public_subnet_ids : [unknown]
+        security_group_id : [unknown]
+        sshPrivateKey_id  : [unknown]
+        vpc_id            : [unknown]
 
     Resources:
         + 30 to create
 
     Updating (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/shaht/aws-classic-py-vpc-awsx-natgateway-none-two-instances/dev/updates/7
+    View in Browser (Ctrl+O): https://app.pulumi.com/shaht/aws-classic-py-vpc-awsx-natgateway-none-two-instances/dev/updates/10
 
         Type                                          Name                                                       Status              
-    +   pulumi:pulumi:Stack                           aws-classic-py-vpc-awsx-natgateway-none-two-instances-dev  created (49s)       
-    +   ├─ awsx:ec2:Vpc                               shaht-vpc                                                  created (2s)        
-    +   │  └─ aws:ec2:Vpc                             shaht-vpc                                                  created (12s)       
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-public-1                                         created (11s)       
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-public-1                                         created (1s)        
-    +   │     │     ├─ aws:ec2:Route                  shaht-vpc-public-1                                         created (1s)        
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-public-1                                         created (1s)        
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-3                                        created (1s)        
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-3                                        created (1s)        
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-3                                        created (0.84s)     
-    +   │     ├─ aws:ec2:InternetGateway              shaht-vpc                                                  created (1s)        
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-2                                        created (1s)        
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-2                                        created (1s)        
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-2                                        created (0.64s)     
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-public-2                                         created (11s)       
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-public-2                                         created (1s)        
-    +   │     │     ├─ aws:ec2:RouteTableAssociation  shaht-vpc-public-2                                         created (1s)        
-    +   │     │     └─ aws:ec2:Route                  shaht-vpc-public-2                                         created (1s)        
-    +   │     ├─ aws:ec2:Subnet                       shaht-vpc-private-1                                        created (1s)        
-    +   │     │  └─ aws:ec2:RouteTable                shaht-vpc-private-1                                        created (1s)        
-    +   │     │     └─ aws:ec2:RouteTableAssociation  shaht-vpc-private-1                                        created (0.64s)     
-    +   │     └─ aws:ec2:Subnet                       shaht-vpc-public-3                                         created (12s)       
-    +   │        └─ aws:ec2:RouteTable                shaht-vpc-public-3                                         created (0.91s)     
-    +   │           ├─ aws:ec2:Route                  shaht-vpc-public-3                                         created (1s)        
-    +   │           └─ aws:ec2:RouteTableAssociation  shaht-vpc-public-3                                         created (1s)        
-    +   ├─ tls:index:PrivateKey                       shaht-privatekey                                           created (1s)        
-    +   ├─ aws:ec2:KeyPair                            shaht-keypair                                              created (0.90s)     
-    +   ├─ aws:ec2:SecurityGroup                      shaht-securitygroup                                        created (2s)        
-    +   ├─ aws:ec2:Instance                           shaht-instance-1                                           created (13s)       
-    +   └─ aws:ec2:Instance                           shaht-instance-0                                           created (13s)       
+    +   pulumi:pulumi:Stack                           aws-classic-py-vpc-awsx-natgateway-none-two-instances-dev  created (54s)       
+    +   ├─ tls:index:PrivateKey                       shahtspotscheduler-privatekey                              created (0.90s)     
+    +   ├─ awsx:ec2:Vpc                               shahtspotscheduler-vpc                                     created (2s)        
+    +   │  └─ aws:ec2:Vpc                             shahtspotscheduler-vpc                                     created (12s)       
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-3                           created (0.97s)     
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-3                           created (1s)        
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-3                           created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-1                            created (12s)       
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-1                            created (1s)        
+    +   │     │     ├─ aws:ec2:Route                  shahtspotscheduler-vpc-public-1                            created (2s)        
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-1                            created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-2                            created (13s)       
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-2                            created (1s)        
+    +   │     │     ├─ aws:ec2:Route                  shahtspotscheduler-vpc-public-2                            created (2s)        
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-2                            created (1s)        
+    +   │     ├─ aws:ec2:InternetGateway              shahtspotscheduler-vpc                                     created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-public-3                            created (11s)       
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-public-3                            created (0.91s)     
+    +   │     │     ├─ aws:ec2:Route                  shahtspotscheduler-vpc-public-3                            created (1s)        
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-public-3                            created (1s)        
+    +   │     ├─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-2                           created (2s)        
+    +   │     │  └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-2                           created (1s)        
+    +   │     │     └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-2                           created (1s)        
+    +   │     └─ aws:ec2:Subnet                       shahtspotscheduler-vpc-private-1                           created (1s)        
+    +   │        └─ aws:ec2:RouteTable                shahtspotscheduler-vpc-private-1                           created (1s)        
+    +   │           └─ aws:ec2:RouteTableAssociation  shahtspotscheduler-vpc-private-1                           created (1s)        
+    +   ├─ aws:ec2:KeyPair                            shahtspotscheduler-keypair                                 created (0.89s)     
+    +   ├─ aws:ec2:SecurityGroup                      shahtspotscheduler-securitygroup                           created (2s)        
+    +   ├─ aws:ec2:Instance                           shahtspotscheduler-instance-1                              created (13s)       
+    +   └─ aws:ec2:Instance                           shahtspotscheduler-instance-0                              created (13s)       
 
     Outputs:
-        ec2_instance_ids   : [
-            [0]: "i-0c3e830e221e40c85"
-            [1]: "i-0cda0a021edd626df"
+        ec2_instance_ids  : [
+            [0]: "i-0b09d9181ab55b0c0"
+            [1]: "i-019dd544617646de1"
         ]
-        mykeypair_id       : "shaht-keypair-c578f7f"
-        private_subnet_id_0: "subnet-0e33e2ca1662eda3c"
-        private_subnet_ids : [
-            [0]: "subnet-0e33e2ca1662eda3c"
-            [1]: "subnet-04b6d8623c1c7bc00"
-            [2]: "subnet-0fafef95c7552d1d3"
+        mykeypair_id      : "shahtspotscheduler-keypair-53c5f4c"
+        private_subnet_ids: [
+            [0]: "subnet-0c7a11804699f98cb"
+            [1]: "subnet-0e7259facbad29a7f"
+            [2]: "subnet-03341251293474497"
         ]
-        public_subnet_ids  : [
-            [0]: "subnet-000f246f7d8a76e08"
-            [1]: "subnet-0a481c430a62873f8"
-            [2]: "subnet-0c4e55909cb6fc64f"
+        public_subnet_ids : [
+            [0]: "subnet-06a9271f9f350c5ac"
+            [1]: "subnet-0453990a33ae938e5"
+            [2]: "subnet-01cc4c1e37e78fdde"
         ]
-        security_group_id  : "sg-0faee11193266d116"
-        sshPrivateKey_id   : "0216316310e7e410e514732005529ca9b58c2652"
-        vpc_id             : "vpc-0447b489da5ac50ec"
+        security_group_id : "sg-02fe045e7fd258368"
+        sshPrivateKey_id  : "27f232127a88ceb2d64db133bd756c5621daa1db"
+        vpc_id            : "vpc-0e62724f220ba331d"
 
     Resources:
         + 30 created
 
-    Duration: 50s
+    Duration: 56s
    ```
 
 1. View the outputs
@@ -165,16 +167,15 @@
    ```bash
    Current stack outputs (4):
     OUTPUT                 VALUE
-    Current stack outputs (8):
-        OUTPUT               VALUE
-        ec2_instance_ids     ["i-0c3e830e221e40c85","i-0cda0a021edd626df"]
-        mykeypair_id         shaht-keypair-c578f7f
-        private_subnet_id_0  subnet-0e33e2ca1662eda3c
-        private_subnet_ids   ["subnet-0e33e2ca1662eda3c","subnet-04b6d8623c1c7bc00","subnet-0fafef95c7552d1d3"]
-        public_subnet_ids    ["subnet-000f246f7d8a76e08","subnet-0a481c430a62873f8","subnet-0c4e55909cb6fc64f"]
-        security_group_id    sg-0faee11193266d116
-        sshPrivateKey_id     0216316310e7e410e514732005529ca9b58c2652
-        vpc_id               vpc-0447b489da5ac50ec
+    Current stack outputs (7):
+        OUTPUT              VALUE
+        ec2_instance_ids    ["i-0b09d9181ab55b0c0","i-019dd544617646de1"]
+        mykeypair_id        shahtspotscheduler-keypair-53c5f4c
+        private_subnet_ids  ["subnet-0c7a11804699f98cb","subnet-0e7259facbad29a7f","subnet-03341251293474497"]
+        public_subnet_ids   ["subnet-06a9271f9f350c5ac","subnet-0453990a33ae938e5","subnet-01cc4c1e37e78fdde"]
+        security_group_id   sg-02fe045e7fd258368
+        sshPrivateKey_id    27f232127a88ceb2d64db133bd756c5621daa1db
+        vpc_id              vpc-0e62724f220ba331d
    ```
 
 1. Clean up
