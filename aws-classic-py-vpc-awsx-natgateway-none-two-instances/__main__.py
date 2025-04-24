@@ -10,8 +10,9 @@ import pulumi_tls as tls
 config = Config()
 
 my_vpc_cidr_block = config.get("vpc_cidr_block") or "10.0.0.0/23"
-my_number_of_availability_zones = config.get_int("number_of_availability_zones") or 2
+my_number_of_availability_zones = config.get_int("number_of_availability_zones") or 3
 myname = config.get("nameset") or "demo"
+mynumber_of_servers = config.get_int("number_of_servers") or 3
 
 awsConfig = Config("aws")
 awsRegion = awsConfig.get("region")
@@ -80,15 +81,18 @@ security_group = aws.ec2.SecurityGroup(
 
 export("security_group_id", security_group.id)
 
-export("private_subnet_id_0",my_vpc.private_subnet_ids[0])
+#export("private_subnet_id_0",my_vpc.private_subnet_ids[0])
 
 # Launch 10 EC2 instances
 instance_ids = []
-for i in range(2):
+for i in range(mynumber_of_servers):
+    azlocation = i % 3
+    if azlocation == 0 and awsRegion == "us-east-1":
+        azlocation = azlocation + 1
     instance = aws.ec2.Instance(
         f"{myname}-instance-{i}",
         instance_type="t3a.small",
-        subnet_id=my_vpc.private_subnet_ids[1],
+        subnet_id=my_vpc.private_subnet_ids[(azlocation)], # This will distribute instances across the last 2 private subnets excluding us-east-1a (northern virginia does not work with instance type t3a.small
         associate_public_ip_address=False,   
         
         ami=myami,
