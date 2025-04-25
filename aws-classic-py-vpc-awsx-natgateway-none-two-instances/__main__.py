@@ -91,7 +91,8 @@ for i in range(mynumber_of_servers):
         azlocation = azlocation + 1
     instance = aws.ec2.Instance(
         f"{myname}-instance-{i}",
-        instance_type="t3a.small",
+        instance_type="t3a.nano",
+        #instance_type="t3a.small",
         subnet_id=my_vpc.private_subnet_ids[(azlocation)], # This will distribute instances across the last 2 private subnets excluding us-east-1a (northern virginia does not work with instance type t3a.small
         associate_public_ip_address=False,   
         
