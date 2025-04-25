@@ -3,4 +3,4 @@ config:
   aws-classic-py-vpc-awsx-natgateway-none-two-instances:nameset: shahtspotschedulernv
   aws-classic-py-vpc-awsx-natgateway-none-two-instances:number_of_availability_zones: "3"
   aws-classic-py-vpc-awsx-natgateway-none-two-instances:vpc_cidr_block: 10.0.0.0/23
-  aws-classic-py-vpc-awsx-natgateway-none-two-instances:number_of_servers: "3"
+  aws-classic-py-vpc-awsx-natgateway-none-two-instances:number_of_servers: "6"
