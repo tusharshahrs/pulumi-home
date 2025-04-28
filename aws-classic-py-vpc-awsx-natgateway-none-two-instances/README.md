@@ -1,6 +1,6 @@
-# AWS AWSX Multilang Vpc Single Nat Gateway in Python
+# AWS AWSX Multilang Vpc ZERO Nat Gateways in Python
 
-[AWSX](https://www.pulumi.com/registry/packages/awsx/) VPC, igw, zero nat gateway strategy, public and private subnets. Launching multiple instances in oregon and nvirginia.
+[AWSX](https://www.pulumi.com/registry/packages/awsx/) VPC, igw, zero nat gateway strategy, public and private subnets. Launching multiple instances in oregon and northern virginia.
 
 ## Deployment
 
@@ -33,7 +33,7 @@
    pulumi config set aws:region us-west-2 # any valid aws region
    pulumi config set nameset dev # optional
    pulumi config set number_of_availability_zones  3 # optional
-   pulumi config set number_of_servers             3 # optional
+   pulumi config set number_of_servers             6 # optional
    pulumi config set vpc_cidr_block                10.0.0.0/23 # optional
    ```
 
