@@ -104,6 +104,7 @@ for i in range(mynumber_of_servers):
             "environment": "dev",
             "team": "finops",
             "purpose": "spotscheduler",
+            #"schedule": "08:15-17:30;MO,TU,WE,TH,FR;America/New_York"
         },
     opts=ResourceOptions(depends_on=[my_vpc, security_group, mykeypair]),
     )
